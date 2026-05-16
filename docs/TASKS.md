@@ -81,16 +81,17 @@ Scop: proiectul pornește curat.
 
 ## Phase 7: Streamlit UI
 
-- [x] **P7.01** — App entry point (`app/streamlit_app.py`) with navigation links and welcome page
-- [x] **P7.02** — Today page (`app/pages/1_Today.py`) with filters, metrics cards, domain table placeholder
-- [x] **P7.03** — This Week page (`app/pages/2_This_Week.py`) with filters, metrics, domain table placeholder
-- [x] **P7.04** — Stats page (`app/pages/3_Stats.py`) with metric cards, progress bar, country progress table placeholder
+- [x] **P7.01** — Main Streamlit entry point (`app/streamlit_app.py`) with internal top navigation
+- [x] **P7.02** — Collected Data tab with filters, responsive domain cards, inline review status updates, and comment popovers
+- [x] **P7.03** — Reports tab with metric cards, crawl progress bar, and country-by-country status table
+- [x] **P7.04** — Dark/light theme switcher with centralized CSS variables
 - [x] **P7.05** — Metrics cards component (`app/components/metrics_cards.py`): render_metrics_cards, render_progress_bar
-- [x] **P7.06** — Filters component (`app/components/filters.py`): show_reviewed checkbox, sort_by selectbox, min_score slider
-- [x] **P7.07** — Domain table component (`app/components/domain_table.py`): st.dataframe with column config (LinkColumn, SelectboxColumn, etc.)
-- [x] **P7.08** — Comments dialog component (`app/components/comments_dialog.py`): expander with comments list, timezone conversion to Europe/Bucharest, add comment form
+- [x] **P7.06** — Filters component (`app/components/filters.py`): search, status, category, sort, min score, show reviewed
+- [x] **P7.07** — Domain table component (`app/components/domain_table.py`): card rows with clickable domain, score badge, details expander, status selectbox, comments popover
+- [x] **P7.08** — Comments UX: timeline-style comment list plus add-comment form inside row popovers
 - [x] **P7.09** — 3 tests for UI components
-- [x] **P7.10** — Ruff per-file-ignores for N999 on Streamlit pages (numeric prefix naming)
+- [x] **P7.10** — Legacy Streamlit pages retained but no longer used as the primary navigation experience
+- [x] **P7.11** — Dashboard visual polish: scroll restoration, fixed navbar divider, persistent theme state, consistent panel surfaces, wider content gutters, centered navbar pills, right-aligned theme toggle, and aligned table controls
 
 ---
 

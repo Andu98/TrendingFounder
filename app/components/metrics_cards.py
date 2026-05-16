@@ -1,15 +1,19 @@
 import streamlit as st
 
 
+def _metric_card(label: str, value: str | int, detail: str = "") -> str:
+    detail_html = f"<div class='tf-metric-detail'>{detail}</div>" if detail else ""
+    return (
+        "<div class='tf-metric-card'>"
+        f"<div class='tf-metric-label'>{label}</div>"
+        f"<div class='tf-metric-value'>{value}</div>"
+        f"{detail_html}"
+        "</div>"
+    )
+
+
 def render_metrics_cards(metrics: dict) -> None:
-    """Render a row of metric cards.
-
-    Expected keys:
-        countries_ran, countries_total, new_domains, duplicates,
-        llm_processed, high_score_today, reviewed_today
-    """
-    cols = st.columns(4)
-
+    """Render dashboard metric cards."""
     defaults = {
         "countries_ran": 0,
         "countries_total": 0,
@@ -21,17 +25,19 @@ def render_metrics_cards(metrics: dict) -> None:
     }
     metrics = {**defaults, **metrics}
 
-    with cols[0]:
-        st.metric(
-            "Countries Crawled",
-            f"{metrics['countries_ran']} / {metrics['countries_total']}",
-        )
-    with cols[1]:
-        st.metric("New Domains", metrics["new_domains"])
-    with cols[2]:
-        st.metric("Duplicates", metrics["duplicates"])
-    with cols[3]:
-        st.metric("High Score (>80)", metrics["high_score_today"])
+    cards = [
+        ("Countries Crawled", f"{metrics['countries_ran']} / {metrics['countries_total']}", "Completed today"),
+        ("New Domains", metrics["new_domains"], "Fresh discoveries"),
+        ("Duplicates", metrics["duplicates"], "Already known"),
+        ("LLM Processed", metrics["llm_processed"], "Enriched domains"),
+        ("High Score", metrics["high_score_today"], "Score at least 80"),
+        ("Reviewed", metrics["reviewed_today"], "Triaged today"),
+    ]
+
+    for row_start in range(0, len(cards), 3):
+        cols = st.columns(3, gap="medium")
+        for col, (label, value, detail) in zip(cols, cards[row_start : row_start + 3]):
+            col.markdown(_metric_card(label, value, detail), unsafe_allow_html=True)
 
 
 def render_progress_bar(current: int, total: int) -> None:

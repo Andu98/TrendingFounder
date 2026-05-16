@@ -236,25 +236,29 @@ Known giants list: google.com, youtube.com, facebook.com, amazon.com, microsoft.
 
 ---
 
-## Streamlit UI Pages
+## Streamlit UI
 
-### Today (`app/pages/1_Today.py`)
-- Title: "Best Score Today Across the World"
-- Filters: show reviewed toggle, sort by (Score desc/asc, Newest, Country count), min score slider
-- Metrics: Countries Crawled, New Domains, Duplicates, High Score (>80)
-- Domain table: per-row Site (link), Summary, Score, First country, Countries, Ranking types, Status (selectbox), Comments (popover button)
-- Reviews status persisted to DB on change
-- Comments: popover per domain with add form
+The visible dashboard is centralized in `app/streamlit_app.py`. The legacy files under `app/pages/` can remain for reference, but the primary UX is not the Streamlit sidebar multipage navigation.
 
-### This Week (`app/pages/2_This_Week.py`)
-- Same layout as Today but for last 7 days
-- Extra columns: First seen, Last seen, Observed count
+### Collected Data tab
+- Default active tab when the app opens
+- Header: "Collected Data" plus filtered domain count
+- Filters: search, review status, category, sort, min score, show reviewed
+- Domain cards: clickable domain URL, category pill, business-model pill when known, score badge, summary, first country, inline status selectbox, comments popover
+- Details expander: countries found in, ranking types, target users, localization angle, risk notes, first seen, initial score
+- Review status persists through `DomainRepository.update_review_status()`
+- Comments persist through `CommentRepository.add_comment()`
 
-### Stats (`app/pages/3_Stats.py`)
-- Title: "Crawl Stats"
+### Reports tab
+- Replaces the old Stats page as the main crawl reporting surface
 - Metrics: Countries Crawled, New Domains, Duplicates, LLM Processed, High Score, Reviewed
-- Progress bar: countries_completed / countries_total
-- Country-by-country status table
+- Crawl progress bar: countries_completed / countries_total
+- Country-by-country status table with visually distinct status pills
+
+### Theme
+- Top navbar includes a dark/light mode switcher
+- CSS is centralized in `streamlit_app.py` through theme variables
+- Default theme is dark
 
 ---
 
@@ -262,17 +266,17 @@ Known giants list: google.com, youtube.com, facebook.com, amazon.com, microsoft.
 
 ```
 app/
-  streamlit_app.py          # Entry point, navigation links
+  streamlit_app.py          # Primary single-screen app, top nav, theme CSS
   data_loader.py            # load_today_data(), load_stats(), load_comments(), load_high_score_count()
   components/
     domain_table.py         # render_domain_table() — manual row rendering with inline editing
-    filters.py              # render_filters() — show reviewed, sort, min score
+    filters.py              # render_filters() — search/status/category/sort/min score/show reviewed
     metrics_cards.py        # render_metrics_cards(), render_progress_bar()
     comments_dialog.py      # (deprecated — inline popovers used instead)
   pages/
-    1_Today.py              # Today view
-    2_This_Week.py          # Weekly view
-    3_Stats.py              # Crawl stats
+    1_Today.py              # Legacy page, not primary UX
+    2_This_Week.py          # Legacy page, not primary UX
+    3_Stats.py              # Legacy page, not primary UX
 ```
 
 ---

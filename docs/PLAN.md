@@ -158,9 +158,10 @@ Separat:
 ```text
 Streamlit UI
   -> reads views from Supabase
-  -> shows Today / This Week / Stats
+  -> opens one main dashboard screen
+  -> top navigation: Collected Data / Reports
   -> allows status update: OK / Exists / Bad
-  -> allows comments modal
+  -> allows comments popover per domain
 ```
 
 ---
@@ -174,15 +175,15 @@ TrendingFounder/
   app/
     streamlit_app.py
     data_loader.py
-    pages/
-      1_Today.py
-      2_This_Week.py
-      3_Stats.py
     components/
       domain_table.py
-      comments_dialog.py
       metrics_cards.py
       filters.py
+      comments_dialog.py  # legacy/reference only
+    pages/
+      1_Today.py          # legacy/reference only
+      2_This_Week.py      # legacy/reference only
+      3_Stats.py          # legacy/reference only
 
   src/
     config/
@@ -543,64 +544,55 @@ best_score_week = max(observation_score from last 7 days)
 
 ## 11. UI Streamlit
 
-Streamlit are `st.data_editor`, care permite editarea datelor în tabel, iar `CheckboxColumn` permite coloane interactive de tip checkbox. ([Streamlit Docs][6])
+Dashboard-ul principal este o singură aplicație Streamlit în `app/streamlit_app.py`, cu top navigation intern. Fișierele vechi din `app/pages/` pot rămâne ca referință, dar nu sunt UX-ul principal.
 
-### 11.1 Pagina Today
+### 11.1 Tab Collected Data
 
 Titlu:
 
 ```text
-Best Score Today Across the World
+Collected Data
 ```
 
-Coloane:
+Conținut:
 
 ```text
-Site
+Domain link
+Category pill
+Business model pill
+Score badge
 Summary
-Score
 First country
-Seen today in countries
-Ranking types
-OK
-Already exists
-Bad
-Comments
+Status selectbox
+Comments popover
+Details expander
 ```
 
 Comportament:
 
 * sort default: `best_score_today desc`;
-* toggle: “show reviewed”;
+* filtre: search / status / category / min score / show reviewed;
 * optional sort: score / newest / country count;
 * click pe site deschide URL;
-* statusurile sunt exclusive: doar una dintre OK / Exists / Bad.
+* statusurile sunt exclusive prin `review_status`;
+* schimbarea statusului se salvează prin repository-ul existent;
+* comentariile se văd și se adaugă în popover per domeniu.
 
-Pentru exclusivitate, mai bine nu folosești 3 booleene în DB. În DB folosești `review_status`. În UI poți afișa 3 checkbox-uri, dar la salvare convertești în enum.
-
-### 11.2 Pagina This Week
-
-Titlu:
+Detalii care stau în expander:
 
 ```text
-Best Score This Week
-```
-
-Afișează domenii cu observații în ultimele 7 zile.
-
-Extra coloane:
-
-```text
+Countries found in
+Ranking types
+Target users
+Localization angle
+Risk notes
 First seen
-Last seen
-Countries this week
-Best score week
-Times observed
+Initial score
 ```
 
-### 11.3 Pagina Stats
+### 11.2 Tab Reports
 
-Carduri:
+Înlocuiește vechea pagină Stats ca suprafață principală de raportare.
 
 ```text
 Countries crawled today: 137 / 210
@@ -632,6 +624,10 @@ cu tabel mic:
 ```text
 Country | Status | Items found | New | Duplicates | Error
 ```
+
+### 11.3 Theme
+
+Dashboard-ul are switcher light/dark în navbar. CSS-ul stă centralizat în `streamlit_app.py` prin variabile de temă.
 
 ### 11.4 Comments modal
 
@@ -729,10 +725,10 @@ Inițial:
 [ ] Add LM Studio client
 [ ] Add LLM enrichment prompt
 [ ] Add scoring engine
-[ ] Add Streamlit Today page
-[ ] Add Streamlit This Week page
-[ ] Add Stats page
-[ ] Add comments modal
+[ ] Add Streamlit main dashboard
+[ ] Add Collected Data tab
+[ ] Add Reports tab
+[ ] Add comments popover
 [ ] Add tests
 [ ] Add runbook
 ```
@@ -837,11 +833,12 @@ Scop: dashboard folosibil pe mobil.
 Livrabile:
 
 ```text
-Today page
-This Week page
-Stats page
+single main Streamlit app
+Collected Data tab
+Reports tab
 status update
-comments modal
+comments popover
+light/dark theme switcher
 basic responsive layout
 ```
 
@@ -891,7 +888,7 @@ Always create observations for repeated appearances.
 
 Store timestamps in UTC. Convert to Europe/Bucharest only for display.
 
-Use review_status as the source of truth. UI checkboxes are only presentation.
+Use review_status as the source of truth. UI controls are only presentation.
 ```
 
 ---
@@ -907,7 +904,7 @@ Countries: toate țările Cloudflare de tip COUNTRY
 Ranking types: TRENDING_RISE + TRENDING_STEADY
 Limit: 50 sau 100
 LLM: doar domenii noi
-UI: Today, This Week, Stats
+UI: single Streamlit dashboard with Collected Data + Reports tabs
 Review: pending / ok / exists / bad
 Comments: simplu
 ```

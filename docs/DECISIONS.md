@@ -112,7 +112,9 @@ If the LLM request fails (HTTP error, timeout, invalid response, validation erro
 
 **Status:** Accepted
 
-Streamlit requires pages to be named with numeric prefixes (`1_Today.py`, `2_This_Week.py`, `3_Stats.py`) for ordering in the sidebar. This conflicts with Python's PEP 8 module naming convention. Ruff's `N999` rule is ignored for `app/pages/*.py` files via `per-file-ignores` in `pyproject.toml`.
+Legacy Streamlit page files use numeric prefixes (`1_Today.py`, `2_This_Week.py`, `3_Stats.py`) for ordering in the sidebar. This conflicts with Python's PEP 8 module naming convention, so Ruff's `N999` rule is ignored for `app/pages/*.py` files via `per-file-ignores` in `pyproject.toml`.
+
+These files are retained for compatibility/reference, but the primary dashboard UX is now centralized in `app/streamlit_app.py` with internal top navigation.
 
 ## ADR-020: Orchestrator processes countries sequentially, not in parallel
 
@@ -145,3 +147,11 @@ LM Studio's OpenAI-compatible endpoint does not support the legacy `response_for
 **Status:** Accepted
 
 Cloudflare Radar sometimes returns public suffixes (e.g., `ac.za`) or other non-registrable domain strings in the trending domains list. `tldextract` correctly rejects these as they have no registrable domain part. Rather than crashing the entire country's processing, these entries are now skipped with a warning log. This ensures that a single bad domain doesn't cause 5-10 other valid domains from that country to be lost.
+
+## ADR-024: Use a single Streamlit app with internal navigation
+
+**Status:** Accepted
+
+The main dashboard is centralized in `app/streamlit_app.py` instead of relying on Streamlit's sidebar multipage navigation. The app uses a top navbar with two internal tabs: Collected Data and Reports.
+
+This keeps the first screen focused, avoids exposing legacy Today/This Week/Stats pages as the main UX, and allows shared theme styling, filters, domain cards, inline status updates, comments, and reports to live in one cohesive Streamlit experience.

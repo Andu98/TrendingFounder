@@ -92,6 +92,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - **`.env.example` improved**: Added comments with links to where to get each credential.
 
 ### Bug fixes & improvements (session 2026-05-16)
+- **Streamlit dashboard centralized**: `app/streamlit_app.py` is now the primary UX with top navigation for Collected Data and Reports. Legacy `app/pages/*` files are retained but no longer drive the main navigation.
+- **Collected Data UI refreshed**: Added responsive domain cards, richer filters, clickable domain links, category/business-model pills, score badges, details expanders, inline status selectboxes, and comment popovers.
+- **Reports tab added**: Replaces the old Stats page in the main UX with metric cards, crawl progress, and country-by-country crawl status rows.
+- **Theme switcher added**: Top navbar includes light/dark mode with centralized Streamlit CSS variables and improved input/toggle/card contrast.
+- **Dashboard visual polish**: Fixed main app scrolling, squared the fixed navbar, added a navbar divider, tightened page top spacing, increased content gutters, centered top navigation, right-aligned the Dark mode toggle, and aligned table headers with row controls.
+- **Theme persistence improved**: Dark/light preference now survives refreshes via URL query state plus browser storage sync, avoiding the previous refresh mismatch.
+- **Collected Data surface consistency**: Filters panel now uses the same dark surface treatment as Reports cards while row Details expanders keep their nested style.
 - **Crawl resume wired into orchestrator**: Orchestrator now uses `get_or_create_today_run()` instead of `create_run()`. On restart, skips already-completed/failed countries. (`src/crawler/orchestrator.py`, `src/crawler/progress.py`, `src/db/repositories.py`)
 - **`CrawlCountryStatusRepository.get_country_statuses_for_run()`**: New method to query processed countries for a given run, enabling resume support.
 - **`pytest-asyncio` upgraded** 0.25.0 → 1.3.0 — fixes 92 `DeprecationWarning`s on Python 3.14+.

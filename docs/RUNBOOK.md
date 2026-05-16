@@ -44,21 +44,21 @@ The run status is saved as "partial" and all already-processed countries are ski
 
 ### Morning: Check crawl status
 
-1. Open Streamlit dashboard → Stats page
+1. Open Streamlit dashboard → Reports tab
 2. Check "Countries Crawled" metric
-3. Review "Failed countries" table
+3. Review the country-by-country status table for failed countries
 4. If crawl is stuck (status = "running" for > 2 hours), investigate logs
 
 ### Midday: Review domains
 
-1. Open Today page
+1. Open Streamlit dashboard → Collected Data tab
 2. Sort by Score (desc)
 3. Review top domains, mark as OK / Exists / Bad
 4. Add comments for interesting finds
 
 ### Evening: Verify completion
 
-1. Check Stats page for completed status
+1. Check Reports tab for completed status
 2. Verify new_domains_count matches expectations
 3. Check LLM processed count
 

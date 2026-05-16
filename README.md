@@ -37,18 +37,20 @@ streamlit run app/streamlit_app.py
 ## Project Structure
 
 ```
-trendradar/
-  app/                  # Streamlit UI
-    pages/              # Today, This Week, Stats, Settings
-    components/         # Reusable UI components
-  src/                  # Core application code
+TrendingFounder/
+  app/
+    streamlit_app.py    # Primary dashboard: Collected Data + Reports
+    data_loader.py      # Supabase view loaders for Streamlit
+    components/         # Domain cards, filters, metrics, comments UI
+    pages/              # Legacy/reference Streamlit pages
+  src/
     config/             # Settings and constants
-    cloudflare/         # Cloudflare Radar API client
+    cloudflare/         # Cloudflare Radar API client and schemas
     domains/            # Normalization, deduplication, scoring
-    llm/                # LM Studio client and prompts
-    db/                 # Supabase client and repositories
-    crawler/            # Daily crawl orchestration
-    utils/              # Logging, timezone, retry helpers
+    llm/                # LM Studio client, prompts, schemas
+    db/                 # Supabase client, repositories, queries
+    crawler/            # Daily crawl orchestration and progress tracking
+    utils/              # Logging helpers
   supabase/             # SQL schemas and migrations
   tests/                # pytest test suite
   docs/                 # Project documentation
