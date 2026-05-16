@@ -1,0 +1,104 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
+
+## [Unreleased]
+
+### Added
+- Project skeleton with src/ package structure
+- Settings loader via pydantic-settings
+- Constants for ranking types, review status, scoring weights
+- Loguru logging setup with console and rotating file sinks
+- pyproject.toml with dependencies and tool config
+- .env.example with documented variables
+- README.md with quick start and project overview
+- AGENTS.md with agent rules
+- DECISIONS.md with ADR-001 through ADR-020
+- API_CONTRACTS.md with Cloudflare Radar endpoint docs
+- Initial TASKS.md phase checklist
+
+### Phase 2: Cloudflare ingestion
+- Cloudflare async HTTP client (`src/cloudflare/client.py`) with Bearer auth, tenacity retry/backoff, 429 rate-limit handling
+- Radar service (`src/cloudflare/radar_service.py`) with `get_geolocations()` (filters COUNTRY type) and `get_top_domains()` (per location + ranking type)
+- Pydantic response schemas (`src/cloudflare/schemas.py`) for geolocations and ranking/top endpoints
+- Raw payload error logging on API failures
+- 10 new tests: client auth/429/4xx, schema parsing, service geolocation filtering, ranking entry extraction
+- pytest-asyncio added for async test support
+
+### Phase 3: Supabase schema
+- SQL schema `001_core.sql`: domains, domain_observations, crawl_runs, crawl_country_status, domain_comments tables with proper indexes and constraints
+- SQL schema `002_views.sql`: v_domains_today, v_domains_this_week, v_crawl_stats, v_crawl_country_progress views
+- SQL schema `003_rls.sql`: RLS policies (full-access placeholders for internal tool)
+- Supabase client wrapper (`src/db/supabase_client.py`) using service role key
+- Repository layer (`src/db/repositories.py`): DomainRepository, ObservationRepository, CrawlRunRepository, CrawlCountryStatusRepository, CommentRepository
+- SQL queries module (`src/db/queries.py`) with named queries for dashboard views
+- 13 new tests covering all repository CRUD operations
+
+### Phase 4: Deduplication
+- Domain normalization (`src/domains/normalize.py`) using tldextract for correct public suffix handling (co.uk, com.br, etc.)
+- Dedupe logic (`src/domains/dedupe.py`): `dedupe_and_insert()` upserts new domains, skips LLM for existing, always inserts observation
+- `DedupeResult` dataclass with domain_id, is_new flag, normalized_domain
+- `build_display_url()` and `is_known_giant()` helpers
+- 24 new tests: normalization edge cases (HTTPS, subdomains, international TLDs, invalid input), dedupe scenarios
+
+### Phase 5: LLM enrichment
+- LM Studio OpenAI-compatible client (`src/llm/lmstudio_client.py`) using httpx with `response_format: json_object`, 60s timeout
+- LLM response Pydantic schema (`src/llm/schemas.py`) with score validation (1-5), min-length summary, valid category/business model constraints
+- Enrichment prompt (`src/llm/prompts.py`) with strict JSON system prompt and dynamic field builder (title, meta description, categories, country, ranking, rank, pct change, homepage snippet)
+- Response parsing: strips markdown code blocks, validates JSON, validates Pydantic schema
+- Graceful fallback: HTTP errors, invalid JSON, validation failures return `LLMEnrichmentResult.failed()` with error details
+- Known giant annotation appended to risk_notes
+- 14 new tests: client error handling, prompt building, schema validation
+
+### Phase 6: Scoring engine
+- Scoring engine (`src/domains/scoring.py`): `score_observation()` with full `ScoreBreakdown` dataclass
+- All scoring components implemented: base (20), ranking type bonus, rank tiers, pct rank change (capped at 20), multi-country bonus (capped at 20), category bonus/penalty, novelty (today=20, week=8), LLM potential (0-20), known giant penalty (-50), already reviewed penalty (-100)
+- 31 new tests covering every scoring component and edge cases
+
+### Phase 7: Streamlit UI
+- App entry point (`app/streamlit_app.py`) with navigation links and welcome page
+- Today page (`app/pages/1_Today.py`), This Week page (`app/pages/2_This_Week.py`), Stats page (`app/pages/3_Stats.py`) with filters, metrics, and placeholder tables
+- Metrics cards component (`app/components/metrics_cards.py`): 4-column metric layout, progress bar
+- Filters component (`app/components/filters.py`): show_reviewed checkbox, sort_by selectbox, min_score slider
+- Domain table component (`app/components/domain_table.py`): st.dataframe with LinkColumn, SelectboxColumn for status, column config
+- Comments dialog component (`app/components/comments_dialog.py`): expander with comment list, Europe/Bucharest timezone conversion, add comment form
+- 3 new tests for UI components
+- Ruff per-file-ignores for N999 on Streamlit page files (numeric prefix naming convention)
+
+### Phase 8: Hardening
+- Crawl orchestrator (`src/crawler/orchestrator.py`): full pipeline — Cloudflare fetch → normalize → dedupe → insert observation → LLM enrichment (new domains only) → scoring → DB
+- Daily crawl entry point (`src/crawler/run_daily.py`): CLI with `--limit`, `--date`, `--skip-llm` flags
+- Progress tracker (`src/crawler/progress.py`): `get_or_create_today_run()` with resume detection, `format_progress()` for human-readable status
+- Run resume: detects existing running/partial runs and continues from where it left off
+- Partial failure support: crawl_run status set to "partial" when some countries fail but others succeed
+- RUNBOOK.md: daily operations checklist, troubleshooting guide, DB maintenance queries, monitoring thresholds
+- 8 new tests: progress formatting, run resume logic, orchestrator end-to-end flow with mocked dependencies
+
+### Bug fixes & improvements
+- **LM Studio `json_schema` fix**: Changed `response_format` from `{"type": "json_object"}` to `{"type": "json_schema", "json_schema": {...}}` — LM Studio requires OpenAI-compatible JSON schema format, not legacy `json_object`. Fixes 400 Bad Request on all LLM calls.
+- **Graceful stop mechanism**: Added `.crawl_stop` file-based stop signal. Create the file in the project root to pause the crawl gracefully after the current country finishes. The run status is set to "partial" and can be resumed by running the crawl again.
+- **Unparseable domain skip**: Cloudflare sometimes returns public suffixes as domains (e.g., `ac.za`). These now get skipped with a warning log instead of crashing the entire country. Argentina no longer fails.
+- **Hardcoded country fallback**: When Cloudflare geolocations API returns <50 countries, the crawler falls back to a hardcoded list of 250 ISO country codes (including Zimbabwe).
+- **Streamlit UI wired to Supabase**: Today, This Week, and Stats pages now read live data from Supabase views (`v_domains_today`, `v_domains_this_week`, `v_crawl_country_progress`).
+- **Categories converted to dicts**: Pydantic `Category` objects are now converted to plain dicts before passing to the LLM client, avoiding serialization issues.
+- **SQL view alias fixes**: Reserved PostgreSQL keywords (`do`, `cr`) replaced with safe aliases (`obs`, `runs`, `dom`) in `002_views.sql`.
+- **`RankingMeta` None handling**: Added `field_validator` to allow `None` for optional list fields (`units`, `dateRange`).
+- **`CrawlRunRepository.update_progress()`**: Added missing `countries_total` parameter.
+- **`final_status` enum fix**: Orchestrator now uses `CrawlRunStatus` enum instead of raw strings for run completion status.
+- **`app/data_loader.py`**: New module to load data from Supabase views into pandas DataFrames for Streamlit.
+- **Docs populated**: README.md, AGENTS.md, API_CONTRACTS.md, DECISIONS.md (ADR-001 to ADR-020), RUNBOOK.md, TASKS.md all created with comprehensive content.
+- **`.env.example` improved**: Added comments with links to where to get each credential.
+
+### Bug fixes & improvements (session 2026-05-16)
+- **Crawl resume wired into orchestrator**: Orchestrator now uses `get_or_create_today_run()` instead of `create_run()`. On restart, skips already-completed/failed countries. (`src/crawler/orchestrator.py`, `src/crawler/progress.py`, `src/db/repositories.py`)
+- **`CrawlCountryStatusRepository.get_country_statuses_for_run()`**: New method to query processed countries for a given run, enabling resume support.
+- **`pytest-asyncio` upgraded** 0.25.0 → 1.3.0 — fixes 92 `DeprecationWarning`s on Python 3.14+.
+- **Streamlit `page_link` paths fixed**: Changed `app/pages/...` → `pages/...` (relative to entrypoint directory).
+- **`ButtonColumn` removed**: Streamlit 1.57.0 doesn't have `ButtonColumn`; replaced with `TextColumn` in `domain_table.py`.
+- **LM Studio client retry**: Extracted `_post()` method with tenacity retry (4 attempts, exponential backoff 2-30s) for transient HTTP errors, matching Cloudflare client pattern. (`src/llm/lmstudio_client.py`)
+- **Stats page fixed**: Replaced broken local `load_stats()` (queried with `None` date) with `data_loader.load_stats()`. (`app/pages/3_Stats.py`)
+- **Domain table rewritten**: Replaced `st.data_editor` with manual per-row rendering using `st.columns`. Added inline `st.selectbox` for Status and `st.popover` for Comments per row. `load_comments()` added to `data_loader`. (`app/components/domain_table.py`, `app/data_loader.py`)
+- **`high_score_today` un-hardcoded**: Now queries `v_domains_today` for actual count instead of always showing 0. (`app/pages/1_Today.py`, `app/pages/3_Stats.py`)
+- **Docs updated**: README phase statuses corrected, PLAN.md structure tree synced with codebase, TASKS.md got consistent `PX.XX` numbering.

@@ -170,14 +170,14 @@ Streamlit UI
 Aș cere agentului să creeze structura asta:
 
 ```text
-trendradar/
+TrendingFounder/
   app/
     streamlit_app.py
+    data_loader.py
     pages/
       1_Today.py
       2_This_Week.py
       3_Stats.py
-      4_Settings.py
     components/
       domain_table.py
       comments_dialog.py
@@ -198,7 +198,6 @@ trendradar/
       normalize.py
       dedupe.py
       scoring.py
-      enrichment.py
 
     llm/
       lmstudio_client.py
@@ -216,16 +215,13 @@ trendradar/
       progress.py
 
     utils/
-      timezones.py
       logging.py
-      retry.py
 
   supabase/
     schemas/
       001_core.sql
       002_views.sql
       003_rls.sql
-    migrations/
 
   docs/
     AGENTS.md
@@ -238,10 +234,20 @@ trendradar/
     PROMPTS.md
 
   tests/
+    test_cloudflare_client.py
+    test_cloudflare_radar_service.py
+    test_cloudflare_schemas.py
+    test_constants.py
+    test_crawler.py
+    test_db_repositories.py
+    test_domain_dedupe.py
     test_domain_normalize.py
+    test_llm_enrichment.py
+    test_llm_prompts.py
+    test_llm_schemas.py
     test_scoring.py
-    test_cloudflare_response_mapping.py
-    test_dedupe.py
+    test_settings.py
+    test_ui_metrics.py
 
   .env.example
   pyproject.toml
