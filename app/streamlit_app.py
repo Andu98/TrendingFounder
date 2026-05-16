@@ -1,8 +1,10 @@
 # ruff: noqa: E402
 
+import base64
 import sys
+from datetime import date
 from html import escape
-from math import isnan
+from math import ceil, isnan
 from pathlib import Path
 
 import streamlit as st
@@ -18,16 +20,18 @@ from app.components.filters import render_filters
 from app.components.metrics_cards import render_metrics_cards, render_progress_bar
 from app.data_loader import (
     CATEGORY_FILTER_OPTIONS,
+    DEFAULT_PAGE_SIZE,
+    PAGE_SIZE_OPTIONS,
     SORT_OPTIONS,
     STATUS_FILTER_OPTIONS,
+    load_collected_data,
     load_comments,
     load_country_progress,
     load_high_score_count,
     load_reviewed_count,
     load_stats,
-    load_today_data,
 )
-from src.config.constants import ReviewStatus
+from src.config.constants import COUNTRY_CODES, ReviewStatus
 from src.db.repositories import CommentRepository, DomainRepository
 
 NAV_ITEMS = ["Collected Data", "Reports"]
@@ -202,24 +206,37 @@ def inject_styles(theme_name: str) -> None:
             __THEME_VARS__
         }
 
+        html,
+        body,
+        #root,
         .stApp {
             background: var(--tf-bg) !important;
-            color: var(--tf-text);
             border-radius: 0 !important;
+            color: var(--tf-text);
+            overflow-x: hidden;
+            overflow-y: auto !important;
         }
 
         .stApp > div,
         .stApp > div > div,
-        .stApp > div > div > div {
+        .stApp > div > div > div,
+        .block-container,
+        .block-container > div {
             border-radius: 0 !important;
+        }
+
+        .st-emotion-cache-tn0cau {
+            gap: 0 !important;
         }
 
         .block-container {
             max-width: 100%;
             padding: 0;
-            border-radius: 0 !important;
         }
-        [data-testid="stSidebar"], [data-testid="collapsedControl"],
+
+        [data-testid="stSidebar"],
+        [data-testid="collapsedControl"],
+        [data-testid="stHeader"],
         button[data-testid="stExpandSidebarButton"],
         button[data-testid="stBaseButton-headerNoPadding"],
         button[data-testid="stBaseButton-header"],
@@ -227,527 +244,75 @@ def inject_styles(theme_name: str) -> None:
             display: none !important;
         }
 
-        [data-testid="stHeader"] {
-            display: none !important;
-        }
-
-        .block-container {
-            max-width: 100%;
-            padding: 0;
-            border-radius: 0 !important;
-        }
-
-        html, body, #root, .stApp {
-            border-radius: 0 !important;
-            overflow-x: hidden;
-            overflow-y: auto !important;
-        }
-
-        .stApp > div:first-child,
-        .block-container {
-            border-radius: 0 !important;
-        }
-
-        /* Remove border-radius and overflow from all parents of navbar */
-        .stApp > div,
-        .stApp > div > div,
-        .stApp > div > div > div,
-        .stApp > div > div > div > div,
-        .block-container > div,
-        .block-container > div > div {
-            border-radius: 0 !important;
-            overflow: visible !important;
-        }
-
-        div[data-testid="stVerticalBlock"]:has(.tf-navbar-anchor) {
-            background: var(--tf-surface);
-            border-bottom: 1px solid var(--tf-border);
-            padding: 0.5rem 2rem;
-            width: 100vw;
-            margin-left: calc(-50vw + 50%);
-            margin-top: -1rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-radius: 0 !important;
-        }
-
-        /* Remove border-radius and overflow from all parents of navbar */
-        .stApp > div,
-        .stApp > div > div,
-        .stApp > div > div > div,
-        .stApp > div > div > div > div,
-        .block-container > div,
-        .block-container > div > div {
-            border-radius: 0 !important;
-            overflow: visible !important;
-        }
-
-        div[data-testid="stVerticalBlock"]:has(.tf-navbar-anchor) {
-            background: var(--tf-surface);
-            border-bottom: 1px solid var(--tf-border);
-            padding: 0.5rem 2rem;
-            width: 100vw;
-            margin-left: calc(-50vw + 50%);
-            margin-top: -1rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-radius: 0 !important;
-        }
-
-        /* Remove border-radius and overflow from all parents of navbar */
-        .stApp > div,
-        .stApp > div > div,
-        .stApp > div > div > div,
-        .stApp > div > div > div > div,
-        .block-container > div,
-        .block-container > div > div {
-            border-radius: 0 !important;
-            overflow: visible !important;
-        }
-
-        div[data-testid="stVerticalBlock"]:has(.tf-navbar-anchor) {
-            background: var(--tf-surface);
-            border-bottom: 1px solid var(--tf-border);
-            padding: 0.5rem 2rem;
-            width: 100vw;
-            margin-left: calc(-50vw + 50%);
-            margin-top: -1rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-radius: 0 !important;
-        }
-
-        /* Remove border-radius and overflow from all parents of navbar */
-        .stApp > div,
-        .stApp > div > div,
-        .stApp > div > div > div,
-        .stApp > div > div > div > div,
-        .block-container > div,
-        .block-container > div > div {
-            border-radius: 0 !important;
-            overflow: visible !important;
-        }
-
-        div[data-testid="stVerticalBlock"]:has(.tf-navbar-anchor) {
-            background: var(--tf-surface);
-            border-bottom: 1px solid var(--tf-border);
-            padding: 0.5rem 2rem;
-            width: 100vw;
-            margin-left: calc(-50vw + 50%);
-            margin-top: -1rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-radius: 0 !important;
-        }
-
-        /* Remove border-radius and overflow from all parents of navbar */
-        .stApp > div,
-        .stApp > div > div,
-        .stApp > div > div > div,
-        .stApp > div > div > div > div,
-        .block-container > div,
-        .block-container > div > div {
-            border-radius: 0 !important;
-            overflow: visible !important;
-        }
-
-        div[data-testid="stVerticalBlock"]:has(.tf-navbar-anchor) {
-            background: var(--tf-surface);
-            border-bottom: 1px solid var(--tf-border);
-            padding: 0.5rem 2rem;
-            width: 100vw;
-            margin-left: calc(-50vw + 50%);
-            margin-top: -1rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-radius: 0 !important;
-        }
-
-        /* Remove border-radius and overflow from all parents of navbar */
-        .stApp > div,
-        .stApp > div > div,
-        .stApp > div > div > div,
-        .stApp > div > div > div > div,
-        .block-container > div,
-        .block-container > div > div {
-            border-radius: 0 !important;
-            overflow: visible !important;
-        }
-
-        div[data-testid="stVerticalBlock"]:has(.tf-navbar-anchor) {
-            background: var(--tf-surface);
-            border-bottom: 1px solid var(--tf-border);
-            padding: 0.5rem 2rem;
-            width: 100vw;
-            margin-left: calc(-50vw + 50%);
-            margin-top: -1rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-radius: 0 !important;
-        }
-
-        /* Remove border-radius and overflow from all parents of navbar */
-        .stApp > div,
-        .stApp > div > div,
-        .stApp > div > div > div,
-        .stApp > div > div > div > div,
-        .block-container > div,
-        .block-container > div > div {
-            border-radius: 0 !important;
-            overflow: visible !important;
-        }
-
-        div[data-testid="stVerticalBlock"]:has(.tf-navbar-anchor) {
-            background: var(--tf-surface);
-            border-bottom: 1px solid var(--tf-border);
-            padding: 0.5rem 2rem;
-            width: 100vw;
-            margin-left: calc(-50vw + 50%);
-            margin-top: -1rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-radius: 0 !important;
-        }
-
-        /* Remove border-radius and overflow from all parents of navbar */
-        .stApp > div,
-        .stApp > div > div,
-        .stApp > div > div > div,
-        .stApp > div > div > div > div,
-        .block-container > div,
-        .block-container > div > div {
-            border-radius: 0 !important;
-            overflow: visible !important;
-        }
-
-        div[data-testid="stVerticalBlock"]:has(.tf-navbar-anchor) {
-            background: var(--tf-surface);
-            border-bottom: 1px solid var(--tf-border);
-            padding: 0.5rem 2rem;
-            width: 100vw;
-            margin-left: calc(-50vw + 50%);
-            margin-top: -1rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-radius: 0 !important;
-        }
-
-        /* Remove border-radius and overflow from all parents of navbar */
-        .stApp > div,
-        .stApp > div > div,
-        .stApp > div > div > div,
-        .stApp > div > div > div > div,
-        .block-container > div,
-        .block-container > div > div {
-            border-radius: 0 !important;
-            overflow: visible !important;
-        }
-
-        div[data-testid="stVerticalBlock"]:has(.tf-navbar-anchor) {
-            background: var(--tf-surface);
-            border-bottom: 1px solid var(--tf-border);
-            padding: 0.5rem 2rem;
-            width: 100vw;
-            margin-left: calc(-50vw + 50%);
-            margin-top: -1rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-radius: 0 !important;
-        }
-
-        /* Remove border-radius and overflow from all parents of navbar */
-        .stApp > div,
-        .stApp > div > div,
-        .stApp > div > div > div,
-        .stApp > div > div > div > div,
-        .block-container > div,
-        .block-container > div > div {
-            border-radius: 0 !important;
-            overflow: visible !important;
-        }
-
-        div[data-testid="stVerticalBlock"]:has(.tf-navbar-anchor) {
-            background: var(--tf-surface);
-            border-bottom: 1px solid var(--tf-border);
-            padding: 0.5rem 2rem;
-            width: 100vw;
-            margin-left: calc(-50vw + 50%);
-            margin-top: -1rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-radius: 0 !important;
-        }
-
-        /* Remove border-radius and overflow from all parents of navbar */
-        .stApp > div,
-        .stApp > div > div,
-        .stApp > div > div > div,
-        .stApp > div > div > div > div,
-        .block-container > div,
-        .block-container > div > div {
-            border-radius: 0 !important;
-            overflow: visible !important;
-        }
-
-        div[data-testid="stVerticalBlock"]:has(.tf-navbar-anchor) {
-            background: var(--tf-surface);
-            border-bottom: 1px solid var(--tf-border);
-            padding: 0.5rem 2rem;
-            width: 100vw;
-            margin-left: calc(-50vw + 50%);
-            margin-top: -1rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-radius: 0 !important;
-        }
-
-        /* Remove border-radius and overflow from all parents of navbar */
-        .stApp > div,
-        .stApp > div > div,
-        .stApp > div > div > div,
-        .stApp > div > div > div > div,
-        .block-container > div,
-        .block-container > div > div {
-            border-radius: 0 !important;
-            overflow: visible !important;
-        }
-
-        div[data-testid="stVerticalBlock"]:has(.tf-navbar-anchor) {
-            background: var(--tf-surface);
-            border-bottom: 1px solid var(--tf-border);
-            padding: 0.5rem 2rem;
-            width: 100vw;
-            margin-left: calc(-50vw + 50%);
-            margin-top: -1rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-radius: 0 !important;
-        }
-
-        /* Remove border-radius and overflow from all parents of navbar */
-        .stApp > div,
-        .stApp > div > div,
-        .stApp > div > div > div,
-        .stApp > div > div > div > div,
-        .block-container > div,
-        .block-container > div > div {
-            border-radius: 0 !important;
-            overflow: visible !important;
-        }
-
-        div[data-testid="stVerticalBlock"]:has(.tf-navbar-anchor) {
-            background: var(--tf-surface);
-            border-bottom: 1px solid var(--tf-border);
-            padding: 0.5rem 2rem;
-            width: 100vw;
-            margin-left: calc(-50vw + 50%);
-            margin-top: -1rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-radius: 0 !important;
-        }
-
-        /* Remove border-radius and overflow from all parents of navbar */
-        .stApp > div,
-        .stApp > div > div,
-        .stApp > div > div > div,
-        .stApp > div > div > div > div,
-        .block-container > div,
-        .block-container > div > div {
-            border-radius: 0 !important;
-            overflow: visible !important;
-        }
-
-        div[data-testid="stVerticalBlock"]:has(.tf-navbar-anchor) {
-            background: var(--tf-surface);
-            border-bottom: 1px solid var(--tf-border);
-            padding: 0.5rem 2rem;
-            width: 100vw;
-            margin-left: calc(-50vw + 50%);
-            margin-top: -1rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-radius: 0 !important;
-        }
-
-        /* Remove border-radius and overflow from all parents of navbar */
-        .stApp > div,
-        .stApp > div > div,
-        .stApp > div > div > div,
-        .stApp > div > div > div > div,
-        .block-container > div,
-        .block-container > div > div {
-            border-radius: 0 !important;
-            overflow: visible !important;
-        }
-
-        div[data-testid="stVerticalBlock"]:has(.tf-navbar-anchor) {
-            background: var(--tf-surface);
-            border-bottom: 1px solid var(--tf-border);
-            padding: 0.5rem 2rem;
-            width: 100vw;
-            margin-left: calc(-50vw + 50%);
-            margin-top: -1rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-radius: 0 !important;
-        }
-
-        /* Remove border-radius and overflow from all parents of navbar */
-        .stApp > div,
-        .stApp > div > div,
-        .stApp > div > div > div,
-        .stApp > div > div > div > div,
-        .block-container > div,
-        .block-container > div > div {
-            border-radius: 0 !important;
-            overflow: visible !important;
-        }
-
-        div[data-testid="stVerticalBlock"]:has(.tf-navbar-anchor) {
-            background: var(--tf-surface);
-            border-bottom: 1px solid var(--tf-border);
-            padding: 0.5rem 2rem;
-            width: 100vw;
-            margin-left: calc(-50vw + 50%);
-            margin-top: -1rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-radius: 0 !important;
-        }
-
-        /* Remove border-radius and overflow from all parents of navbar */
-        .stApp > div,
-        .stApp > div > div,
-        .stApp > div > div > div,
-        .stApp > div > div > div > div,
-        .block-container > div,
-        .block-container > div > div {
-            border-radius: 0 !important;
-            overflow: visible !important;
-        }
-
-        div[data-testid="stVerticalBlock"]:has(.tf-navbar-anchor) {
-            background: var(--tf-surface);
-            border-bottom: 1px solid var(--tf-border);
-            padding: 0.5rem 2rem;
-            width: 100vw;
-            margin-left: calc(-50vw + 50%);
-            margin-top: -1rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-radius: 0 !important;
-        }
-
-        /* Remove border-radius and overflow from all parents of navbar */
-        .stApp > div,
-        .stApp > div > div,
-        .stApp > div > div > div,
-        .stApp > div > div > div > div,
-        .block-container > div,
-        .block-container > div > div {
-            border-radius: 0 !important;
-            overflow: visible !important;
-        }
-
-        div[data-testid="stVerticalBlock"]:has(.tf-navbar-anchor) {
-            background: var(--tf-surface);
-            border-bottom: 1px solid var(--tf-border);
-            padding: 0.5rem 2rem;
-            width: 100vw;
-            margin-left: calc(-50vw + 50%);
-            margin-top: -1rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-radius: 0 !important;
-        }
-
-        /* Remove border-radius and overflow from all parents of navbar */
-        .stApp > div,
-        .stApp > div > div,
-        .stApp > div > div > div,
-        .stApp > div > div > div > div,
-        .block-container > div,
-        .block-container > div > div {
-            border-radius: 0 !important;
-            overflow: visible !important;
-        }
-
-        div[data-testid="stVerticalBlock"]:has(.tf-navbar-anchor) {
-            background: var(--tf-surface);
-            border-bottom: 1px solid var(--tf-border);
-            padding: 0.5rem 2rem;
-            width: 100vw;
-            margin-left: calc(-50vw + 50%);
-            margin-top: -1rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-radius: 0 !important;
-        }
-
-        div[data-testid="stVerticalBlock"]:has(.tf-navbar-anchor) > div {
-            border-radius: 0 !important;
-            background: transparent !important;
-        }
-
-        div[data-testid="stVerticalBlock"]:has(.tf-navbar-anchor) [data-testid="column"] {
-            border-radius: 0 !important;
-            background: transparent !important;
-            padding: 0 !important;
-        }
-
-        div[data-testid="stVerticalBlock"]:has(.tf-navbar-anchor) [data-testid="stHorizontalBlock"] {
-            border-radius: 0 !important;
-            background: transparent !important;
-        }
-
-        div[data-testid="stVerticalBlock"]:has(.tf-navbar-anchor) .st-key-main_nav {
-            display: flex;
-            justify-content: center;
-        }
-
-        div[data-testid="stVerticalBlock"]:has(.tf-navbar-anchor) .st-key-theme_switch {
-            display: flex;
-            justify-content: flex-end;
-        }
-
-        .tf-content-wrapper,
-        div[data-testid="stVerticalBlock"].st-key-page_content {
-            box-sizing: border-box;
-            max-width: 1360px;
-            margin: 0 auto;
-            padding: 2.25rem clamp(3rem, 4vw, 3.75rem) 3rem;
-            width: 100%;
-        }
-
         h1, h2, h3, p, span, label {
             color: var(--tf-text);
         }
 
+        div[data-testid="stVerticalBlock"].st-key-top_navbar {
+            background: var(--tf-surface) !important;
+            border-bottom: 1px solid var(--tf-border) !important;
+            border-radius: 0 !important;
+            box-sizing: border-box !important;
+            margin: 0 !important;
+            padding: 0.65rem clamp(1.25rem, 3vw, 2.5rem) !important;
+            position: static !important;
+            width: 100% !important;
+            z-index: auto !important;
+        }
+
+        div[data-testid="stVerticalBlock"].st-key-top_navbar > div,
+        div[data-testid="stVerticalBlock"].st-key-top_navbar [data-testid="stLayoutWrapper"],
+        div[data-testid="stVerticalBlock"].st-key-top_navbar [data-testid="stHorizontalBlock"],
+        div[data-testid="stVerticalBlock"].st-key-top_navbar [data-testid="stColumn"],
+        div[data-testid="stVerticalBlock"].st-key-top_navbar [data-testid="stElementContainer"] {
+            background: transparent !important;
+            border: 0 !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+        }
+
+        div[data-testid="stVerticalBlock"].st-key-page_content {
+            box-sizing: border-box;
+            margin: 0 auto;
+            max-width: 1360px;
+            padding: 2.25rem clamp(3rem, 4vw, 3.75rem) 3rem;
+            width: 100%;
+        }
+
+        .st-key-mobile_navbar {
+            display: none !important;
+        }
+
+        .tf-brand {
+            align-items: center;
+            display: flex;
+            gap: 0.8rem;
+            min-width: 0;
+        }
+
+        .tf-brand-logo,
+        .tf-brand-mark {
+            align-items: center;
+            background: linear-gradient(135deg, var(--tf-accent), var(--tf-accent-2));
+            border-radius: 999px;
+            box-shadow: 0 12px 35px rgba(24, 196, 199, 0.24);
+            color: var(--tf-brand-mark-text);
+            display: inline-flex;
+            flex: 0 0 auto;
+            font-size: 0.75rem;
+            font-weight: 900;
+            height: 2.65rem;
+            justify-content: center;
+            object-fit: cover;
+            width: 2.65rem;
+        }
+
         .tf-brand-title {
             color: var(--tf-text);
-            font-size: 1.25rem;
-            font-weight: 800;
+            font-size: 1.18rem;
+            font-weight: 850;
             line-height: 1.1;
+            white-space: nowrap;
         }
 
         .tf-brand-subtitle,
@@ -769,31 +334,65 @@ def inject_styles(theme_name: str) -> None:
             margin: 0 0 0.35rem;
         }
 
-        .st-key-main_nav div[data-testid="stPills"] {
+        .st-key-desktop_navbar [data-testid="stHorizontalBlock"] {
+            align-items: center !important;
+            display: grid !important;
+            gap: clamp(1rem, 3vw, 2rem) !important;
+            grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) !important;
+            width: 100% !important;
+        }
+
+        .st-key-desktop_navbar [data-testid="stColumn"] {
+            min-width: 0 !important;
+            width: 100% !important;
+        }
+
+        .st-key-desktop_navbar [data-testid="stColumn"]:has(.st-key-desktop_main_nav) {
+            justify-self: center !important;
+            width: auto !important;
+        }
+
+        .st-key-desktop_main_nav div[data-testid="stPills"],
+        .st-key-mobile_main_nav div[data-testid="stPills"] {
             justify-content: center;
         }
 
-        .st-key-main_nav button {
+        .st-key-desktop_main_nav button,
+        .st-key-mobile_main_nav button {
             background: var(--tf-surface) !important;
-            border-radius: 999px !important;
             border: 1px solid var(--tf-border) !important;
+            border-radius: 999px !important;
             color: var(--tf-muted) !important;
             font-weight: 750 !important;
             min-height: 2.25rem;
         }
 
-        .st-key-main_nav button[data-testid="stBaseButton-pillsActive"] {
+        .st-key-desktop_main_nav button[data-testid="stBaseButton-pillsActive"],
+        .st-key-mobile_main_nav button[data-testid="stBaseButton-pillsActive"] {
             background: var(--tf-accent) !important;
             border-color: var(--tf-accent) !important;
             color: var(--tf-button-active-text) !important;
         }
 
-        .st-key-theme_switch {
+        .st-key-desktop_theme_switch,
+        .st-key-mobile_theme_switch {
             display: flex;
             justify-content: flex-end;
+            margin-left: auto;
+            width: 100%;
         }
 
-        .st-key-theme_switch label {
+        .st-key-desktop_theme_switch > div,
+        .st-key-mobile_theme_switch > div,
+        .st-key-desktop_theme_switch label,
+        .st-key-mobile_theme_switch label {
+            justify-content: flex-end !important;
+            width: 100% !important;
+        }
+
+        .st-key-desktop_theme_switch label,
+        .st-key-mobile_theme_switch label,
+        .st-key-filter_show_reviewed label {
             color: var(--tf-muted) !important;
             font-size: 0.86rem !important;
             font-weight: 750 !important;
@@ -801,21 +400,30 @@ def inject_styles(theme_name: str) -> None:
             white-space: nowrap;
         }
 
-        .st-key-theme_switch label > div:first-child,
+        .st-key-desktop_theme_switch label > div:first-child,
+        .st-key-mobile_theme_switch label > div:first-child,
         .st-key-filter_show_reviewed label > div:first-child {
             background: var(--tf-toggle-track) !important;
             border: 1px solid var(--tf-card-border) !important;
         }
 
-        .st-key-theme_switch label > div:first-child div,
+        .st-key-desktop_theme_switch label > div:first-child div,
+        .st-key-mobile_theme_switch label > div:first-child div,
         .st-key-filter_show_reviewed label > div:first-child div {
             background: var(--tf-toggle-knob) !important;
         }
 
-        .st-key-theme_switch p,
+        .st-key-desktop_theme_switch p,
+        .st-key-mobile_theme_switch p,
         .st-key-filter_show_reviewed p {
             color: var(--tf-text) !important;
             font-weight: 750 !important;
+        }
+
+        .st-key-desktop_theme_switch label:has(input[aria-checked="true"]) > div:first-child,
+        .st-key-mobile_theme_switch label:has(input[aria-checked="true"]) > div:first-child,
+        .st-key-filter_show_reviewed label:has(input[aria-checked="true"]) > div:first-child {
+            background: var(--tf-accent) !important;
         }
 
         div[data-testid="stExpander"] {
@@ -833,7 +441,8 @@ def inject_styles(theme_name: str) -> None:
             font-weight: 750;
         }
 
-        div[data-testid="stExpander"]:has(.tf-filters-anchor) {
+        div[data-testid="stExpander"]:has(.tf-filters-anchor),
+        div[data-testid="stVerticalBlock"].st-key-page_content div[data-testid="stExpander"]:has(.tf-filters-anchor) {
             background: var(--tf-surface) !important;
             border: 1px solid var(--tf-card-border) !important;
             box-shadow: var(--tf-shadow) !important;
@@ -853,9 +462,9 @@ def inject_styles(theme_name: str) -> None:
         [data-baseweb="select"] > div {
             background: var(--tf-input-bg) !important;
             border: 1px solid var(--tf-border) !important;
+            box-shadow: none !important;
             color: var(--tf-text) !important;
             outline: none !important;
-            box-shadow: none !important;
         }
 
         [data-testid="stTextInput"] input,
@@ -866,9 +475,9 @@ def inject_styles(theme_name: str) -> None:
 
         [data-testid="stTextInput"] input::placeholder,
         [data-testid="stTextArea"] textarea::placeholder {
+            -webkit-text-fill-color: var(--tf-placeholder) !important;
             color: var(--tf-placeholder) !important;
             opacity: 1 !important;
-            -webkit-text-fill-color: var(--tf-placeholder) !important;
         }
 
         [data-baseweb="select"] span,
@@ -882,28 +491,6 @@ def inject_styles(theme_name: str) -> None:
             font-size: 0.94rem !important;
         }
 
-        [data-testid="stCheckbox"] label {
-            font-size: 0.94rem !important;
-        }
-
-        [data-testid="stSlider"] [role="slider"] {
-            background: var(--tf-accent) !important;
-            border-color: var(--tf-accent) !important;
-        }
-
-        .st-key-filter_show_reviewed label:has(input[aria-checked="true"]) > div:first-child {
-            background: var(--tf-accent) !important;
-        }
-
-        .st-key-filter_show_reviewed label:has(input[aria-checked="true"]) > div:first-child div,
-        .st-key-theme_switch label:has(input[aria-checked="true"]) > div:first-child div {
-            background: var(--tf-toggle-knob) !important;
-        }
-
-        .st-key-theme_switch label:has(input[aria-checked="true"]) > div:first-child {
-            background: var(--tf-accent) !important;
-        }
-
         [data-testid="stVerticalBlockBorderWrapper"] {
             background: var(--tf-surface) !important;
             border: 1px solid var(--tf-card-border) !important;
@@ -911,44 +498,15 @@ def inject_styles(theme_name: str) -> None:
             box-shadow: var(--tf-shadow);
         }
 
-        [data-testid="stVerticalBlock"]:has(.tf-domain-link):has(.tf-details-spacer):not(:has(.tf-brand)):not(:has(.tf-filters-anchor)):not(.st-key-page_content) {
-            background: var(--tf-surface) !important;
-            border: 1px solid var(--tf-card-border) !important;
-            border-radius: 12px !important;
-            box-shadow: var(--tf-shadow) !important;
-            margin-bottom: 0.85rem !important;
-            padding: 1rem !important;
-        }
-
-        [data-testid="stVerticalBlock"]:has(.tf-domain-link):has(.tf-details-spacer):not(:has(.tf-brand)):not(:has(.tf-filters-anchor)):not(.st-key-page_content)
-        div[data-testid="stExpander"] {
-            background: var(--tf-surface-2) !important;
-            border: 1px solid var(--tf-card-border) !important;
-            box-shadow: none !important;
-        }
-
-        [data-testid="stVerticalBlock"]:has(.tf-domain-link):has(.tf-details-spacer):not(:has(.tf-brand)):not(:has(.tf-filters-anchor)):not(.st-key-page_content)
-        div[data-testid="stExpander"] summary {
+        [data-testid="stVerticalBlockBorderWrapper"]:has(.tf-domain-link) {
             background: transparent !important;
-            border-bottom: 0 !important;
-        }
-
-        div[data-testid="stVerticalBlock"].st-key-page_content div[data-testid="stExpander"]:has(.tf-filters-anchor) {
-            background: var(--tf-surface) !important;
-            border: 1px solid var(--tf-card-border) !important;
-            box-shadow: var(--tf-shadow) !important;
-        }
-
-        div[data-testid="stVerticalBlock"].st-key-page_content div[data-testid="stExpander"]:has(.tf-filters-anchor) summary {
-            background: var(--tf-surface) !important;
-            border-bottom: 1px solid var(--tf-card-border) !important;
+            border: 0 !important;
+            box-shadow: none !important;
+            padding: 0 !important;
         }
 
         .tf-table-head-wrapper {
-            width: 100% !important;
-        }
-
-        .tf-table-head-wrapper > div:first-child {
+            overflow-x: auto;
             width: 100% !important;
         }
 
@@ -971,35 +529,77 @@ def inject_styles(theme_name: str) -> None:
             width: 100% !important;
         }
 
-        .stElementContainer:has(.tf-table-head-wrapper) {
-            width: 100% !important;
+        .tf-table-head-mobile,
+        .tf-mobile-field-label {
+            display: none !important;
         }
 
+        .stElementContainer:has(.tf-mobile-widget-label) {
+            display: none !important;
+        }
+
+        .stElementContainer:has(.tf-table-head-wrapper),
         .stElementContainer:has(.tf-table-head-wrapper) .stMarkdown,
         .stElementContainer:has(.tf-table-head-wrapper) .stMarkdown > div {
             width: 100% !important;
         }
 
-        @media (min-width: 761px) {
-            [data-testid="stVerticalBlock"]:has(.tf-domain-link):has(.tf-details-spacer):not(:has(.tf-brand)):not(:has(.tf-filters-anchor)):not(.st-key-page_content)
-            [data-testid="stHorizontalBlock"]:has(.tf-domain-link) {
-                align-items: center !important;
-                display: grid !important;
-                gap: 1rem !important;
-                grid-template-columns: 2fr 0.65fr 3.1fr 0.65fr 1.8fr 0.6fr !important;
-                width: 100% !important;
-            }
+        [data-testid="stVerticalBlock"]:has(
+            > [data-testid="stLayoutWrapper"] > [data-testid="stHorizontalBlock"] .tf-domain-link
+        ) {
+            background: var(--tf-surface) !important;
+            border: 1px solid var(--tf-card-border) !important;
+            border-radius: 12px !important;
+            box-shadow: var(--tf-shadow) !important;
+            margin-bottom: 0.85rem !important;
+            overflow-x: auto !important;
+            overflow-y: visible !important;
+            padding: 1rem !important;
+        }
 
-            [data-testid="stVerticalBlock"]:has(.tf-domain-link):has(.tf-details-spacer):not(:has(.tf-brand)):not(:has(.tf-filters-anchor)):not(.st-key-page_content)
-            [data-testid="stHorizontalBlock"]:has(.tf-domain-link) > [data-testid="stColumn"] {
-                margin: 0 !important;
-                min-width: 0 !important;
-                width: 100% !important;
-            }
+        [data-testid="stHorizontalBlock"]:has(.tf-domain-link) {
+            align-items: center !important;
+            display: grid !important;
+            gap: 1rem !important;
+            grid-template-columns: 2fr 0.65fr 3.1fr 0.65fr 1.8fr 0.6fr !important;
+            width: 100% !important;
+        }
+
+        [data-testid="stHorizontalBlock"]:has(.tf-domain-link) > [data-testid="stColumn"] {
+            flex: unset !important;
+            margin: 0 !important;
+            max-width: none !important;
+            min-width: 0 !important;
+            width: 100% !important;
+        }
+
+        [data-testid="stVerticalBlock"]:has(
+            > [data-testid="stLayoutWrapper"] > [data-testid="stHorizontalBlock"] .tf-domain-link
+        )
+        div[data-testid="stExpander"] {
+            background: var(--tf-surface-2) !important;
+            border: 1px solid var(--tf-card-border) !important;
+            box-shadow: none !important;
+        }
+
+        [data-testid="stVerticalBlock"]:has(
+            > [data-testid="stLayoutWrapper"] > [data-testid="stHorizontalBlock"] .tf-domain-link
+        )
+        div[data-testid="stExpander"] summary {
+            background: transparent !important;
+            border-bottom: 0 !important;
         }
 
         .tf-domain-cell {
             min-width: 0;
+        }
+
+        .tf-domain-primary {
+            min-width: 0;
+        }
+
+        .tf-score-mobile {
+            display: none;
         }
 
         .tf-details-spacer {
@@ -1064,6 +664,7 @@ def inject_styles(theme_name: str) -> None:
         }
 
         .tf-score {
+            border: 2px solid;
             border-radius: 999px;
             display: inline-flex;
             font-size: 0.9rem;
@@ -1071,7 +672,6 @@ def inject_styles(theme_name: str) -> None:
             justify-content: center;
             min-width: 3.15rem;
             padding: 0.45rem 0.7rem;
-            border: 2px solid;
         }
 
         .tf-score-high {
@@ -1214,35 +814,6 @@ def inject_styles(theme_name: str) -> None:
             padding: 0.36rem 0.65rem;
         }
 
-        .tf-domain-card [data-baseweb="select"] > div {
-            background: var(--tf-surface-2) !important;
-            border: 1px solid var(--tf-card-border) !important;
-            border-radius: 999px !important;
-            min-height: 2.2rem !important;
-        }
-
-        .tf-domain-card [data-baseweb="select"] > div:hover {
-            border-color: var(--tf-accent) !important;
-        }
-
-        .tf-domain-card [data-baseweb="select"] div[role="button"] {
-            padding: 0.25rem 0.5rem !important;
-        }
-
-        .tf-actions-btn {
-            background: var(--tf-surface-2) !important;
-            border: 1px solid var(--tf-card-border) !important;
-            border-radius: 999px !important;
-            color: var(--tf-text) !important;
-            min-height: 2.2rem !important;
-            padding: 0.25rem 0.6rem !important;
-            font-weight: 700 !important;
-        }
-
-        .tf-actions-btn:hover {
-            border-color: var(--tf-accent) !important;
-        }
-
         .tf-status-pending {
             background: var(--tf-status-pending-bg);
             border: 1px solid var(--tf-status-pending-border);
@@ -1275,10 +846,23 @@ def inject_styles(theme_name: str) -> None:
             background: var(--tf-surface-2) !important;
             border: 1px solid var(--tf-border) !important;
             color: var(--tf-text) !important;
+            font-weight: 750 !important;
         }
 
         button[data-testid="stPopoverButton"] * {
             color: var(--tf-text) !important;
+        }
+
+        .st-key-mobile_navbar button[data-testid="stPopoverButton"] {
+            border-radius: 999px !important;
+            font-size: 1.2rem !important;
+            min-height: 2.55rem !important;
+            padding: 0.2rem 0.65rem !important;
+        }
+
+        .st-key-mobile_navbar button[data-testid="stPopoverButton"] div[aria-hidden="true"],
+        .st-key-mobile_navbar button[data-testid="stPopoverButton"] svg {
+            display: none !important;
         }
 
         .tf-report-table-head {
@@ -1304,6 +888,26 @@ def inject_styles(theme_name: str) -> None:
             margin: 1.1rem 0 0.6rem;
         }
 
+        .tf-page-indicator {
+            align-items: center;
+            color: var(--tf-muted);
+            display: flex;
+            font-size: 0.88rem;
+            font-weight: 760;
+            height: 2.5rem;
+            justify-content: center;
+            white-space: nowrap;
+        }
+
+        .tf-page-size-note {
+            color: var(--tf-muted);
+            font-size: 0.78rem;
+            font-weight: 760;
+            padding-top: 0.55rem;
+            text-align: right;
+            white-space: nowrap;
+        }
+
         button[kind="primary"] {
             background: var(--tf-accent) !important;
             border-color: var(--tf-accent) !important;
@@ -1311,281 +915,219 @@ def inject_styles(theme_name: str) -> None:
             font-weight: 850 !important;
         }
 
-@media (max-width: 760px) {
-            :root { --tf-navbar-height: 88px; }
-            .block-container {
-                padding: 0;
-            }
-
-            div[data-testid="stVerticalBlock"]:has(.tf-navbar-anchor) {
-                padding: 0.75rem 1rem;
-                width: 100vw;
-                margin-left: calc(-50vw + 50%);
-            }
-
-            .tf-content-wrapper {
-                padding: 1rem 1rem 2rem;
-            }
-
-            .st-key-main_nav div[data-testid="stPills"] {
-                justify-content: flex-start;
-            }
-
-            .st-key-main_nav button {
-                font-size: 0.85rem !important;
-                padding: 0.4rem 0.6rem !important;
-            }
-
-            .st-key-theme_switch {
-                justify-content: flex-start;
-            }
-
-            .tf-page-title {
-                font-size: 1.65rem;
-            }
-
-            .tf-table-head,
-            .tf-report-table-head {
-                display: none;
-            }
-
-            .tf-metric-card {
-                min-height: 0;
-            }
-
-            .tf-brand-title {
-                font-size: 1rem;
-            }
-
-            .tf-brand-subtitle {
-                font-size: 0.7rem;
-            }
-        }
-
-            .tf-topbar {
-                align-items: flex-start;
-                flex-direction: column;
-                gap: 0.85rem;
-            }
-
-.st-key-main_nav div[data-testid="stPills"] {
-            justify-content: center;
-            gap: 0.5rem;
-        }
-
-        .st-key-main_nav button {
-            background: transparent !important;
-            border: none !important;
-            border-bottom: 2px solid transparent !important;
-            border-radius: 0 !important;
-            color: var(--tf-muted) !important;
-            font-weight: 600 !important;
-            font-size: 0.95rem !important;
-            min-height: 2.5rem;
-            padding: 0.5rem 1rem !important;
-            transition: all 0.2s ease !important;
-        }
-
-        .st-key-main_nav button:hover {
-            color: var(--tf-text) !important;
-            background: var(--tf-surface) !important;
-        }
-
-        .st-key-main_nav button[data-testid="stBaseButton-pillsActive"] {
-            background: transparent !important;
-            border-color: var(--tf-accent) !important;
-            color: var(--tf-accent) !important;
-        }
-
-            .st-key-theme_switch {
-                justify-content: flex-start;
-            }
-
-            .tf-page-title {
-                font-size: 1.65rem;
-            }
-
-            .tf-table-head,
-            .tf-report-table-head {
-                display: none;
-            }
-
-            .tf-metric-card {
-                min-height: 0;
-            }
-        }
-
-        /* Ensure navbar sits flush with the very top and keep content visible */
-        html, body, #root, .stApp {
-            margin: 0 !important;
-            padding: 0 !important;
-        }
-
-        :root {
-            --tf-navbar-height: 72px;
-        }
-
-        div[data-testid="stVerticalBlock"]:has(.tf-navbar-anchor) {
-            position: fixed !important;
-            top: 0 !important;
-            left: 0 !important;
-            right: 0 !important;
-            width: 100vw !important;
-            min-height: var(--tf-navbar-height) !important;
-            padding: 0.5rem 2rem !important;
-            margin-top: 0 !important;
-            z-index: 1100 !important;
-            background: var(--tf-surface) !important;
-            border-bottom: 1px solid var(--tf-border) !important;
-            box-sizing: border-box !important;
-            display: flex !important;
-            align-items: center !important;
-        }
-
-        /* Make inner wrapper stretch and vertically center contents */
-        div[data-testid="stVerticalBlock"]:has(.tf-navbar-anchor) > div {
-            height: 100% !important;
-            display: flex !important;
-            align-items: center !important;
-            gap: 1rem;
-            padding: 0 !important;
-            box-sizing: border-box !important;
-        }
-
-        /* Ensure brand, nav and theme widgets are vertically centered */
-        div[data-testid="stVerticalBlock"]:has(.tf-navbar-anchor) .tf-brand,
-        div[data-testid="stVerticalBlock"]:has(.tf-navbar-anchor) .st-key-main_nav,
-        div[data-testid="stVerticalBlock"]:has(.tf-navbar-anchor) .st-key-theme_switch {
-            height: 100% !important;
-            display: flex !important;
-            align-items: center !important;
-        }
-
-        div[data-testid="stVerticalBlock"]:has(.tf-navbar-anchor) img {
-            max-height: calc(var(--tf-navbar-height) - 18px) !important;
-            height: auto !important;
-        }
-
-        /* Ensure page content is pushed below the fixed navbar */
-        .tf-content-wrapper,
-        div[data-testid="stVerticalBlock"].st-key-page_content {
-            padding-top: 2.25rem !important;
-        }
-
         @media (min-width: 761px) {
-            .tf-content-wrapper,
-            div[data-testid="stVerticalBlock"].st-key-page_content {
-                padding-left: clamp(3rem, 4vw, 3.75rem) !important;
-                padding-right: clamp(3rem, 4vw, 3.75rem) !important;
+            .st-key-desktop_navbar {
+                display: block !important;
+            }
+
+            .st-key-mobile_navbar {
+                display: none !important;
+            }
+
+            .st-key-top_navbar [data-testid="stColumn"]:has(.st-key-desktop_theme_switch) {
+                align-items: center !important;
+                display: flex !important;
+                justify-content: flex-end !important;
             }
         }
 
         @media (max-width: 760px) {
-            .tf-content-wrapper,
-            div[data-testid="stVerticalBlock"].st-key-page_content {
-                padding-left: 1.15rem !important;
-                padding-right: 1.15rem !important;
-                padding-top: 1.35rem !important;
-            }
-        }
-
-        html,
-        body {
-            overflow-x: hidden !important;
-            overflow-y: auto !important;
-        }
-
-        [data-testid="stAppViewContainer"],
-        [data-testid="stMain"],
-        .stMain {
-            overflow-x: hidden !important;
-            overflow-y: auto !important;
-        }
-
-        div[data-testid="stVerticalBlock"]:has(.tf-navbar-anchor) {
-            background: transparent !important;
-            border-bottom: 0 !important;
-            display: block !important;
-            margin: 0 !important;
-            min-height: 0 !important;
-            padding: 0 !important;
-            position: static !important;
-            width: auto !important;
-        }
-
-        div[data-testid="stVerticalBlock"]:has(.tf-navbar-anchor) > div {
-            align-items: stretch !important;
-            display: block !important;
-            gap: 0 !important;
-            height: auto !important;
-        }
-
-        div[data-testid="stVerticalBlock"].st-key-top_navbar {
-            align-items: center !important;
-            background: var(--tf-surface) !important;
-            border: 0 !important;
-            border-bottom: 1px solid var(--tf-border) !important;
-            border-radius: 0 !important;
-            box-sizing: border-box !important;
-            display: flex !important;
-            left: 0 !important;
-            margin: 0 !important;
-            min-height: var(--tf-navbar-height) !important;
-            padding: 0.5rem 2rem !important;
-            position: fixed !important;
-            right: 0 !important;
-            box-shadow: 0 1px 0 var(--tf-border) !important;
-            top: 0 !important;
-            width: 100vw !important;
-            z-index: 1100 !important;
-        }
-
-        div[data-testid="stVerticalBlock"].st-key-top_navbar,
-        div[data-testid="stVerticalBlock"].st-key-top_navbar > div,
-        div[data-testid="stVerticalBlock"].st-key-top_navbar [data-testid="stLayoutWrapper"],
-        div[data-testid="stVerticalBlock"].st-key-top_navbar [data-testid="stHorizontalBlock"],
-        div[data-testid="stVerticalBlock"].st-key-top_navbar [data-testid="column"],
-        div[data-testid="stVerticalBlock"].st-key-top_navbar [data-testid="stElementContainer"] {
-            border-radius: 0 !important;
-        }
-
-        div[data-testid="stVerticalBlock"].st-key-top_navbar > div,
-        div[data-testid="stVerticalBlock"].st-key-top_navbar [data-testid="stLayoutWrapper"],
-        div[data-testid="stVerticalBlock"].st-key-top_navbar [data-testid="stHorizontalBlock"] {
-            align-items: center !important;
-            background: transparent !important;
-            border: 0 !important;
-            box-sizing: border-box !important;
-            display: flex !important;
-            gap: 1rem;
-            height: 100% !important;
-            width: 100% !important;
-        }
-
-        div[data-testid="stVerticalBlock"].st-key-top_navbar [data-testid="column"] {
-            background: transparent !important;
-            border: 0 !important;
-            box-shadow: none !important;
-            padding: 0 !important;
-        }
-
-        @media (min-width: 761px) {
-            div[data-testid="stVerticalBlock"].st-key-top_navbar .st-key-main_nav {
-                margin-left: auto !important;
-                margin-right: auto !important;
+            .st-key-desktop_navbar {
+                display: none !important;
             }
 
-            div[data-testid="stVerticalBlock"].st-key-top_navbar [data-testid="stColumn"]:has(.st-key-theme_switch) {
+            .st-key-mobile_navbar {
+                display: block !important;
+            }
+
+            div[data-testid="stVerticalBlock"].st-key-top_navbar {
+                padding: 0.55rem 1rem !important;
+            }
+
+            .st-key-mobile_navbar [data-testid="stHorizontalBlock"] {
+                align-items: center !important;
+                display: grid !important;
+                grid-template-columns: minmax(0, 1fr) 3rem minmax(0, 1fr) !important;
+                gap: 0.7rem !important;
+                width: 100% !important;
+            }
+
+            .st-key-mobile_navbar [data-testid="stColumn"] {
+                min-width: 0 !important;
+                width: 100% !important;
+            }
+
+            .st-key-mobile_navbar .tf-brand {
+                gap: 0.65rem;
+            }
+
+            .st-key-mobile_navbar .tf-brand-logo,
+            .st-key-mobile_navbar .tf-brand-mark {
+                height: 2.25rem;
+                width: 2.25rem;
+            }
+
+            .st-key-mobile_navbar .tf-brand-title {
+                font-size: 1rem;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .st-key-mobile_navbar .tf-brand-subtitle {
+                display: none;
+            }
+
+            .st-key-mobile_main_nav div[data-testid="stPills"] {
+                justify-content: flex-start;
+            }
+
+            .st-key-mobile_navbar [data-testid="stColumn"]:has(.st-key-mobile_theme_switch) {
                 align-items: center !important;
                 display: flex !important;
                 justify-content: flex-end !important;
             }
 
-            div[data-testid="stVerticalBlock"].st-key-top_navbar [data-testid="stColumn"]:has(.st-key-theme_switch) > [data-testid="stVerticalBlock"],
-            div[data-testid="stVerticalBlock"].st-key-top_navbar .st-key-theme_switch {
-                align-items: center !important;
-                justify-content: flex-end !important;
-                margin-left: auto !important;
+            .st-key-mobile_theme_switch {
+                justify-content: flex-end;
+                margin-top: 0;
+            }
+
+            div[data-testid="stVerticalBlock"].st-key-page_content {
+                padding: 1.25rem 1rem 2rem;
+            }
+
+            .tf-page-title {
+                font-size: 1.6rem;
+            }
+
+            .tf-page-indicator {
+                font-size: 0.8rem;
+                justify-content: flex-start;
+            }
+
+            .tf-page-size-note {
+                text-align: left;
+            }
+
+            .tf-table-head-wrapper {
+                overflow-x: visible;
+            }
+
+            .tf-table-head-desktop {
+                display: none !important;
+            }
+
+            .tf-table-head-mobile {
+                display: grid !important;
+                grid-template-columns: 1fr auto auto;
+                min-width: 0;
+                width: 100% !important;
+            }
+
+            [data-testid="stVerticalBlock"]:has(
+                > [data-testid="stLayoutWrapper"] > [data-testid="stHorizontalBlock"] .tf-domain-link
+            ) {
+                max-width: 100% !important;
+                overflow-x: visible !important;
+                width: 100% !important;
+            }
+
+            [data-testid="stVerticalBlock"]:has(
+                > [data-testid="stLayoutWrapper"] > [data-testid="stHorizontalBlock"] .tf-domain-link
+            ) [data-testid="stLayoutWrapper"],
+            [data-testid="stVerticalBlock"]:has(
+                > [data-testid="stLayoutWrapper"] > [data-testid="stHorizontalBlock"] .tf-domain-link
+            ) [data-testid="stElementContainer"],
+            [data-testid="stVerticalBlock"]:has(
+                > [data-testid="stLayoutWrapper"] > [data-testid="stHorizontalBlock"] .tf-domain-link
+            ) .stMarkdown,
+            [data-testid="stVerticalBlock"]:has(
+                > [data-testid="stLayoutWrapper"] > [data-testid="stHorizontalBlock"] .tf-domain-link
+            ) .stMarkdown > div {
+                max-width: 100% !important;
+                min-width: 0 !important;
+                width: 100% !important;
+            }
+
+            [data-testid="stHorizontalBlock"]:has(.tf-domain-link) {
+                align-items: stretch !important;
+                display: grid !important;
+                gap: 0.8rem !important;
+                grid-template-columns: minmax(0, 1fr) !important;
+                max-width: 100% !important;
+                min-width: 0 !important;
+                width: 100% !important;
+            }
+
+            [data-testid="stHorizontalBlock"]:has(.tf-domain-link) > [data-testid="stColumn"] {
+                max-width: 100% !important;
+                min-width: 0 !important;
+                width: 100% !important;
+            }
+
+            [data-testid="stHorizontalBlock"]:has(.tf-domain-link) > [data-testid="stColumn"]:nth-child(2) {
+                display: none !important;
+            }
+
+            [data-testid="stVerticalBlock"]:has(
+                > [data-testid="stLayoutWrapper"] > [data-testid="stHorizontalBlock"] .tf-domain-link
+            )
+            div[data-testid="stExpander"] {
+                max-width: 100% !important;
+                min-width: 0 !important;
+                width: 100% !important;
+            }
+
+            .tf-mobile-field-label {
+                color: var(--tf-muted);
+                display: block !important;
+                font-size: 0.72rem;
+                font-weight: 850;
+                letter-spacing: 0.04em;
+                margin-bottom: 0.28rem;
+                text-transform: uppercase;
+            }
+
+            .stElementContainer:has(.tf-mobile-widget-label) {
+                display: block !important;
+            }
+
+            .tf-domain-cell,
+            .tf-summary {
+                overflow-wrap: anywhere;
+                width: 100%;
+            }
+
+            .tf-domain-primary {
+                align-items: flex-start;
+                display: flex;
+                gap: 0.75rem;
+                justify-content: space-between;
+                width: 100%;
+            }
+
+            .tf-domain-primary .tf-domain-link {
+                min-width: 0;
+            }
+
+            .tf-score-mobile {
+                display: flex;
+                flex: 0 0 auto;
+                justify-content: flex-end;
+            }
+
+            .tf-score-mobile .tf-score {
+                font-size: 0.82rem;
+                min-width: 2.75rem;
+                padding: 0.34rem 0.55rem;
+            }
+
+            .tf-report-table-head {
+                display: none;
+            }
+
+            .tf-metric-card {
+                min-height: 0;
             }
         }
         </style>
@@ -1596,66 +1138,134 @@ def inject_styles(theme_name: str) -> None:
 
 def ensure_ui_state() -> None:
     query_theme = _theme_from_query_params()
+    nav_keys = ("desktop_main_nav", "mobile_main_nav")
+    theme_keys = ("desktop_theme_switch", "mobile_theme_switch")
 
     if "active_tab" not in st.session_state:
         st.session_state.active_tab = NAV_ITEMS[0]
+    elif st.session_state.active_tab not in NAV_ITEMS:
+        st.session_state.active_tab = NAV_ITEMS[0]
 
+    for key in nav_keys:
+        selected = st.session_state.get(key)
+        previous = st.session_state.get(f"_{key}_last", selected)
+        if selected in NAV_ITEMS and selected != previous:
+            st.session_state.active_tab = selected
+            break
+
+    for key in nav_keys:
+        st.session_state[key] = st.session_state.active_tab
+        st.session_state[f"_{key}_last"] = st.session_state.active_tab
+
+    query_theme_changed = False
     if "theme_switch" not in st.session_state:
         st.session_state.theme_switch = query_theme != "Light"
         st.session_state.theme_query_applied = query_theme
+        query_theme_changed = True
     elif query_theme and st.session_state.get("theme_query_applied") != query_theme:
         st.session_state.theme_switch = query_theme == "Dark"
         st.session_state.theme_query_applied = query_theme
+        query_theme_changed = True
+
+    if not query_theme_changed:
+        for key in theme_keys:
+            selected = bool(st.session_state.get(key, st.session_state.theme_switch))
+            previous = bool(st.session_state.get(f"_{key}_last", selected))
+            if selected != previous:
+                st.session_state.theme_switch = selected
+                break
 
     st.session_state.theme_mode = "Dark" if st.session_state.theme_switch else "Light"
+
+    for key in theme_keys:
+        st.session_state[key] = st.session_state.theme_switch
+        st.session_state[f"_{key}_last"] = st.session_state.theme_switch
+
+
+def _logo_data_uri() -> str | None:
+    logo_path = Path(__file__).resolve().parent.parent / "assets" / "logo.png"
+    if not logo_path.exists():
+        return None
+
+    encoded = base64.b64encode(logo_path.read_bytes()).decode("ascii")
+    return f"data:image/png;base64,{encoded}"
+
+
+def _brand_html(*, compact: bool = False) -> str:
+    logo_uri = _logo_data_uri()
+    logo_html = (
+        f'<img class="tf-brand-logo" src="{logo_uri}" alt="TrendingFounder logo" />'
+        if logo_uri
+        else '<div class="tf-brand-mark">TF</div>'
+    )
+    compact_class = " tf-brand-compact" if compact else ""
+    subtitle = "" if compact else '<div class="tf-brand-subtitle">Domain Discovery Dashboard</div>'
+    return (
+        f'<div class="tf-brand{compact_class}">'
+        f"{logo_html}"
+        "<div>"
+        '<div class="tf-brand-title">TrendingFounder</div>'
+        f"{subtitle}"
+        "</div>"
+        "</div>"
+    )
+
+
+def _sync_nav_from_widgets() -> None:
+    for key in ("desktop_main_nav", "mobile_main_nav"):
+        selected = st.session_state.get(key)
+        previous = st.session_state.get(f"_{key}_last", selected)
+        if selected in NAV_ITEMS and selected != previous:
+            st.session_state.active_tab = selected
+            break
+
+    for key in ("desktop_main_nav", "mobile_main_nav"):
+        selected = st.session_state.get(key)
+        st.session_state[f"_{key}_last"] = selected if selected in NAV_ITEMS else st.session_state.active_tab
+
+
+def _sync_theme_from_widgets() -> None:
+    for key in ("desktop_theme_switch", "mobile_theme_switch"):
+        selected = bool(st.session_state.get(key))
+        previous = bool(st.session_state.get(f"_{key}_last", selected))
+        if selected != previous:
+            st.session_state.theme_switch = selected
+            break
+
+    st.session_state.theme_mode = "Dark" if st.session_state.theme_switch else "Light"
+    for key in ("desktop_theme_switch", "mobile_theme_switch"):
+        st.session_state[f"_{key}_last"] = bool(st.session_state.get(key))
 
 
 def render_navbar() -> str:
     ensure_ui_state()
 
-    project_root = Path(__file__).resolve().parent.parent
-    logo_path = project_root / "assets" / "logo.png"
+    with st.container(key="desktop_navbar"):
+        brand_col, nav_col, theme_col = st.columns([1.05, 1, 1.05], vertical_alignment="center")
+        brand_col.markdown(_brand_html(), unsafe_allow_html=True)
+        nav_col.pills(
+            "Navigation",
+            NAV_ITEMS,
+            key="desktop_main_nav",
+            label_visibility="collapsed",
+        )
+        theme_col.toggle("Dark mode", key="desktop_theme_switch")
 
-    brand_col, nav_col, theme_col = st.columns([1, 1, 1], vertical_alignment="center")
-
-    with brand_col:
-        if logo_path.exists():
-            col_logo, col_title = st.columns([0.25, 1], gap="small")
-            with col_logo:
-                st.image(str(logo_path), width=42)
-            with col_title:
-                st.markdown(
-                    """
-                    <div class="tf-brand-title">TrendingFounder</div>
-                    <div class="tf-brand-subtitle">Domain Discovery Dashboard</div>
-                    """,
-                    unsafe_allow_html=True,
+    with st.container(key="mobile_navbar"):
+        brand_col, menu_col, theme_col = st.columns([1, 0.2, 1], vertical_alignment="center")
+        brand_col.markdown(_brand_html(compact=True), unsafe_allow_html=True)
+        with menu_col:
+            with st.popover("☰", use_container_width=True):
+                st.pills(
+                    "Navigation",
+                    NAV_ITEMS,
+                    key="mobile_main_nav",
+                    label_visibility="collapsed",
                 )
-        else:
-            st.markdown(
-                """
-                <div class="tf-brand">
-                    <div class="tf-brand-mark">TF</div>
-                    <div>
-                        <div class="tf-brand-title">TrendingFounder</div>
-                        <div class="tf-brand-subtitle">Domain Discovery Dashboard</div>
-                    </div>
-                </div>
-                """,
-                unsafe_allow_html=True,
-            )
-    selected = nav_col.pills(
-        "Navigation",
-        NAV_ITEMS,
-        default=st.session_state.active_tab,
-        key="main_nav",
-        label_visibility="collapsed",
-    )
-    dark_mode = theme_col.toggle("Dark mode", key="theme_switch")
-    st.session_state.theme_mode = "Dark" if dark_mode else "Light"
+        theme_col.toggle("Dark mode", key="mobile_theme_switch", label_visibility="collapsed")
 
-    if selected:
-        st.session_state.active_tab = selected
+    _sync_nav_from_widgets()
+    _sync_theme_from_widgets()
     return st.session_state.active_tab
 
 
@@ -1688,43 +1298,149 @@ def _session_option(key: str, options: list[str], default: str) -> str:
     return value if value in options else default
 
 
-def _session_int(key: str, default: int = 0, minimum: int = 0, maximum: int = 200) -> int:
+def _date_range_from_session() -> tuple[date, date]:
+    value = st.session_state.get("filter_date_range")
+    today = date.today()
+    if isinstance(value, date):
+        return value, value
+    if isinstance(value, tuple | list):
+        if not value:
+            return today, today
+        start = value[0] or today
+        end = value[1] if len(value) > 1 and value[1] else start
+        return (end, start) if start > end else (start, end)
+    return today, today
+
+
+def _session_page_size() -> int:
     try:
-        value = int(st.session_state.get(key, default))
+        value = int(st.session_state.get("collected_page_size", DEFAULT_PAGE_SIZE))
     except (TypeError, ValueError):
-        value = default
-    return max(minimum, min(value, maximum))
+        value = DEFAULT_PAGE_SIZE
+    if value not in PAGE_SIZE_OPTIONS:
+        value = DEFAULT_PAGE_SIZE
+    st.session_state.collected_page_size = value
+    return value
+
+
+def _filter_signature(filters: dict, page_size: int) -> tuple:
+    return (
+        filters["date_start"].isoformat(),
+        filters["date_end"].isoformat(),
+        filters["search_query"].strip(),
+        filters["status_filter"],
+        filters["category_filter"],
+        filters["show_reviewed"],
+        filters["sort_by"],
+        page_size,
+    )
+
+
+def _sync_collected_pagination(filters: dict) -> tuple[int, int]:
+    page_size = _session_page_size()
+    signature = _filter_signature(filters, page_size)
+    if st.session_state.get("_collected_filter_signature") != signature:
+        st.session_state.collected_page = 1
+        st.session_state._collected_filter_signature = signature
+
+    try:
+        page = int(st.session_state.get("collected_page", 1))
+    except (TypeError, ValueError):
+        page = 1
+    page = max(1, page)
+    st.session_state.collected_page = page
+    return page, page_size
 
 
 def current_filter_values() -> dict:
     """Read filter widget state before rendering widgets to avoid header reflow."""
+    date_start, date_end = _date_range_from_session()
     return {
         "search_query": str(st.session_state.get("filter_search", "")),
         "status_filter": _session_option("filter_status", STATUS_FILTER_OPTIONS, STATUS_FILTER_OPTIONS[0]),
         "category_filter": _session_option("filter_category", CATEGORY_FILTER_OPTIONS, CATEGORY_FILTER_OPTIONS[0]),
         "show_reviewed": bool(st.session_state.get("filter_show_reviewed", True)),
         "sort_by": _session_option("filter_sort", SORT_OPTIONS, SORT_OPTIONS[0]),
-        "min_score": _session_int("filter_min_score"),
+        "min_score": 0,
+        "date_start": date_start,
+        "date_end": date_end,
     }
+
+
+def _date_range_label(date_start: date, date_end: date) -> str:
+    if date_start == date_end == date.today():
+        return "Best score today across the world"
+    if date_start == date_end:
+        return f"Best score on {date_start.isoformat()}"
+    return f"Best score from {date_start.isoformat()} to {date_end.isoformat()}"
+
+
+def render_pagination_controls(
+    total_count: int,
+    page: int,
+    page_size: int,
+    key_prefix: str,
+    show_page_size: bool = True,
+) -> None:
+    total_pages = max(1, ceil(total_count / page_size)) if page_size else 1
+    page = min(max(1, page), total_pages)
+
+    prev_col, info_col, next_col, size_col = st.columns([0.8, 1.4, 0.8, 1.0], vertical_alignment="center")
+    if prev_col.button("Previous", key=f"{key_prefix}_prev", disabled=page <= 1, use_container_width=True):
+        st.session_state.collected_page = max(1, page - 1)
+        st.rerun()
+
+    info_col.markdown(
+        f"<div class='tf-page-indicator'>Page {page} / {total_pages} · {total_count} total</div>",
+        unsafe_allow_html=True,
+    )
+
+    if next_col.button("Next", key=f"{key_prefix}_next", disabled=page >= total_pages, use_container_width=True):
+        st.session_state.collected_page = min(total_pages, page + 1)
+        st.rerun()
+
+    if show_page_size:
+        selected_size = size_col.selectbox(
+            "Page size",
+            PAGE_SIZE_OPTIONS,
+            index=PAGE_SIZE_OPTIONS.index(page_size),
+            key=f"{key_prefix}_page_size",
+        )
+        if selected_size != page_size:
+            st.session_state.collected_page_size = selected_size
+            st.session_state.collected_page = 1
+            st.rerun()
+    else:
+        size_col.markdown(
+            f"<div class='tf-page-size-note'>{page_size} rows / page</div>",
+            unsafe_allow_html=True,
+        )
 
 
 def render_collected_data_page() -> None:
     filters = current_filter_values()
+    page, page_size = _sync_collected_pagination(filters)
 
-    df = load_today_data(
+    df, total_count = load_collected_data(
         show_reviewed=filters["show_reviewed"],
         sort_by=filters["sort_by"],
-        min_score=filters["min_score"],
         search_query=filters["search_query"],
         status_filter=filters["status_filter"],
         category_filter=filters["category_filter"],
+        date_start=filters["date_start"],
+        date_end=filters["date_end"],
+        page=page,
+        page_size=page_size,
     )
-    domain_count = 0 if df.empty else len(df)
+    if df.empty and page > 1:
+        st.session_state.collected_page = 1
+        st.rerun()
+
     render_page_header(
         "Collected Data",
-        f"{domain_count} domains found · Best score today across the world",
+        f"{total_count} domains found · {_date_range_label(filters['date_start'], filters['date_end'])}",
     )
-    render_filters(show_reviewed_default=filters["show_reviewed"], expanded=True)
+    render_filters(show_reviewed_default=filters["show_reviewed"], expanded=False)
 
     comments_data = load_comments(df["id"].tolist()) if not df.empty and "id" in df.columns else {}
     render_domain_table(
@@ -1733,6 +1449,7 @@ def render_collected_data_page() -> None:
         on_add_comment=on_add_comment,
         comments_data=comments_data,
     )
+    render_pagination_controls(total_count, page, page_size, "pagination_bottom", show_page_size=True)
 
 
 def _status_pill(status: str) -> str:
@@ -1750,6 +1467,13 @@ def _is_missing(value) -> bool:
 
 def _display_value(value, default: str = "N/A") -> str:
     return default if _is_missing(value) else str(value)
+
+
+def _country_display_name(country_code, country_name="") -> str:
+    if not _is_missing(country_name):
+        return str(country_name)
+    code = _display_value(country_code, "")
+    return COUNTRY_CODES.get(code.upper(), code) if code else "N/A"
 
 
 def _int_value(value) -> int:
@@ -1788,9 +1512,7 @@ def render_country_status_table(country_df) -> None:
         return
 
     for _, row in country_df.iterrows():
-        country_code = _display_value(row.get("country_code"))
-        country_name = "" if _is_missing(row.get("country_name")) else str(row.get("country_name"))
-        country_label = f"{country_code} · {country_name}" if country_name else str(country_code)
+        country_label = _country_display_name(row.get("country_code"), row.get("country_name"))
 
         with st.container(border=True):
             cols = st.columns([1.2, 1, 0.8, 0.9, 0.9, 2], gap="medium", vertical_alignment="center")

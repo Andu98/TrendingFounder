@@ -1,6 +1,9 @@
+from datetime import date, datetime
+
 import pandas as pd
 import streamlit as st
 
+from src.config.constants import COUNTRY_CODES
 from src.db.repositories import CrawlRunRepository
 from src.db.supabase_client import get_supabase_client
 
@@ -27,6 +30,8 @@ CATEGORY_FILTER_OPTIONS = [
 
 STATUS_FILTER_OPTIONS = ["All Statuses", "pending", "ok", "exists", "bad"]
 SORT_OPTIONS = ["Score High → Low", "Score Low → High", "Newest", "Country Count"]
+DEFAULT_PAGE_SIZE = 50
+PAGE_SIZE_OPTIONS = [10, 25, 50, 100]
 
 
 def _as_list(value) -> list:
@@ -53,6 +58,40 @@ def _first_value(values: list, fallback: str = "") -> str:
     return str(values[0]) if values else fallback
 
 
+def _country_name(value) -> str:
+    if value is None:
+        return ""
+    try:
+        if pd.isna(value):
+            return ""
+    except (TypeError, ValueError):
+        pass
+    text = str(value).strip()
+    return COUNTRY_CODES.get(text.upper(), text)
+
+
+def _country_names(values: list) -> list[str]:
+    names = []
+    for value in values:
+        name = _country_name(value)
+        if name:
+            names.append(name)
+    return names
+
+
+def _first_country_name(row: pd.Series) -> str:
+    explicit_name = _country_name(row.get("first_country_name"))
+    if explicit_name:
+        return explicit_name
+
+    names = row.get("Country Names") or []
+    first_name = _first_value(names)
+    if first_name:
+        return first_name
+
+    return _country_name(row.get("first_country_code"))
+
+
 def _series(df: pd.DataFrame, column: str, default=None) -> pd.Series:
     if column in df.columns:
         return df[column]
@@ -61,6 +100,16 @@ def _series(df: pd.DataFrame, column: str, default=None) -> pd.Series:
 
 def _numeric_series(df: pd.DataFrame, column: str, default: int = 0) -> pd.Series:
     return pd.to_numeric(_series(df, column, default), errors="coerce").fillna(default)
+
+
+def _date_iso(value: date | datetime | str | None, default: date | None = None) -> str:
+    if value is None:
+        value = default or date.today()
+    if isinstance(value, datetime):
+        return value.date().isoformat()
+    if isinstance(value, date):
+        return value.isoformat()
+    return str(value)
 
 
 def _display_url(row: pd.Series) -> str:
@@ -123,12 +172,13 @@ def _format_today_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     df["Comments"] = _numeric_series(df, "comment_count").round().astype(int)
     df["Countries"] = _numeric_series(df, "countries_today").round().astype(int)
     df["Country Codes"] = _series(df, "country_codes", []).apply(_as_list)
+    df["Country Names"] = df["Country Codes"].apply(_country_names)
     df["Ranking types"] = _series(df, "ranking_types", []).apply(_as_list)
-    df["First country"] = df.apply(
-        lambda row: _first_value(row["Country Codes"], str(row.get("first_country_code") or "")),
-        axis=1,
-    )
+    df["First country"] = df.apply(_first_country_name, axis=1)
     df["First seen"] = _series(df, "first_seen_at").fillna(_series(df, "first_seen_date")).fillna("")
+    df["First seen in range"] = _series(df, "first_seen_in_range").fillna("")
+    df["Last seen in range"] = _series(df, "last_seen_in_range").fillna("")
+    df["Times observed"] = _numeric_series(df, "times_observed").round().astype(int)
     df["Initial score"] = _numeric_series(df, "initial_score").round().astype(int)
 
     columns = [
@@ -140,6 +190,7 @@ def _format_today_dataframe(df: pd.DataFrame) -> pd.DataFrame:
         "First country",
         "Countries",
         "Country Codes",
+        "Country Names",
         "Ranking types",
         "Status",
         "Comments",
@@ -149,9 +200,62 @@ def _format_today_dataframe(df: pd.DataFrame) -> pd.DataFrame:
         "Localization Angle",
         "Risk Notes",
         "First seen",
+        "First seen in range",
+        "Last seen in range",
+        "Times observed",
         "Initial score",
     ]
     return df[[column for column in columns if column in df.columns]]
+
+
+def load_collected_data(
+    show_reviewed: bool = False,
+    sort_by: str = "Score High → Low",
+    search_query: str = "",
+    status_filter: str = "All Statuses",
+    category_filter: str = "All Categories",
+    date_start: date | datetime | str | None = None,
+    date_end: date | datetime | str | None = None,
+    page: int = 1,
+    page_size: int = DEFAULT_PAGE_SIZE,
+) -> tuple[pd.DataFrame, int]:
+    """Load filtered domain rows through the Supabase range RPC."""
+    try:
+        start_iso = _date_iso(date_start)
+        end_iso = _date_iso(date_end) if date_end is not None else start_iso
+        page = max(1, int(page or 1))
+        page_size = max(1, int(page_size or DEFAULT_PAGE_SIZE))
+
+        client = get_supabase_client()
+        response = (
+            client.rpc(
+                "get_domains_for_range",
+                {
+                    "start_date": start_iso,
+                    "end_date": end_iso,
+                    "show_reviewed": show_reviewed,
+                    "status_filter": status_filter,
+                    "category_filter": category_filter,
+                    "search_query": search_query,
+                    "sort_by": sort_by,
+                    "page": page,
+                    "page_size": page_size,
+                },
+            )
+            .execute()
+        )
+
+        if not response.data:
+            return pd.DataFrame(), 0
+
+        df = pd.DataFrame(response.data)
+        total_count = int(_numeric_series(df, "total_count").max()) if "total_count" in df.columns else len(df)
+        df = _enrich_domain_details(df)
+        return _format_today_dataframe(df), total_count
+
+    except Exception as e:
+        st.error(f"Failed to load data: {e}")
+        return pd.DataFrame(), 0
 
 
 def load_today_data(
@@ -162,58 +266,21 @@ def load_today_data(
     status_filter: str = "All Statuses",
     category_filter: str = "All Categories",
 ) -> pd.DataFrame:
-    """Load today's domains from Supabase view."""
-    try:
-        client = get_supabase_client()
-        query = client.table("v_domains_today").select("*")
-
-        if status_filter and status_filter != "All Statuses":
-            query = query.eq("review_status", status_filter)
-        elif not show_reviewed:
-            query = query.eq("review_status", "pending")
-
-        response = query.execute()
-
-        if not response.data:
-            return pd.DataFrame()
-
-        df = pd.DataFrame(response.data)
-        df = _enrich_domain_details(df)
-
-        if "best_score_today" in df.columns:
-            df = df[df["best_score_today"] >= min_score]
-
-        if search_query:
-            query_text = search_query.strip()
-            if query_text:
-                domain_series = _series(df, "normalized_domain", "").astype(str)
-                url_series = _series(df, "display_url", "").astype(str)
-                df = df[
-                    domain_series.str.contains(query_text, case=False, na=False)
-                    | url_series.str.contains(query_text, case=False, na=False)
-                ]
-
-        if category_filter and category_filter != "All Categories":
-            df = df[_series(df, "llm_category", "Other").fillna("Other") == category_filter]
-
-        if df.empty:
-            return pd.DataFrame()
-
-        if sort_by in ("Score High → Low", "Score (desc)"):
-            df = df.sort_values("best_score_today", ascending=False)
-        elif sort_by in ("Score Low → High", "Score (asc)"):
-            df = df.sort_values("best_score_today", ascending=True)
-        elif sort_by == "Newest":
-            newest_col = "first_seen_at" if "first_seen_at" in df.columns else "first_seen_date"
-            df = df.sort_values(newest_col, ascending=False)
-        elif sort_by in ("Country Count", "Country count"):
-            df = df.sort_values("countries_today", ascending=False)
-
-        return _format_today_dataframe(df)
-
-    except Exception as e:
-        st.error(f"Failed to load data: {e}")
-        return pd.DataFrame()
+    """Load today's domains. Kept for legacy Streamlit pages."""
+    df, _ = load_collected_data(
+        show_reviewed=show_reviewed,
+        sort_by=sort_by,
+        search_query=search_query,
+        status_filter=status_filter,
+        category_filter=category_filter,
+        date_start=date.today(),
+        date_end=date.today(),
+        page=1,
+        page_size=10_000,
+    )
+    if min_score and "Score" in df.columns:
+        return df[df["Score"] >= min_score]
+    return df
 
 
 def load_stats() -> dict:

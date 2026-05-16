@@ -5,6 +5,8 @@ from urllib.parse import urlparse
 
 import streamlit as st
 
+from src.config.constants import COUNTRY_CODES
+
 STATUS_OPTIONS = ["pending", "ok", "exists", "bad"]
 
 
@@ -42,6 +44,15 @@ def _list(value) -> list[str]:
     if "," in text:
         return [part.strip() for part in text.split(",") if part.strip()]
     return [text]
+
+
+def _country_name(value) -> str:
+    text = _text(value).strip()
+    return COUNTRY_CODES.get(text.upper(), text)
+
+
+def _country_names(value) -> list[str]:
+    return [name for item in _list(value) if (name := _country_name(item))]
 
 
 def _domain_from_url(url: str, fallback: str = "") -> str:
@@ -167,13 +178,18 @@ def render_domain_table(
     st.markdown(
         """
         <div class="tf-table-head-wrapper">
-            <div class="tf-table-head">
+            <div class="tf-table-head tf-table-head-desktop">
                 <span>Domain</span>
                 <span>Score</span>
                 <span>Summary</span>
                 <span>Country</span>
                 <span>Status</span>
                 <span>Actions</span>
+            </div>
+            <div class="tf-table-head tf-table-head-mobile">
+                <span>Domain</span>
+                <span>Score</span>
+                <span>Review</span>
             </div>
         </div>
         """,
@@ -192,10 +208,13 @@ def render_domain_table(
         category = _text(row.get("Category"), "Other")
         business_model = _text(row.get("Business Model"), "unknown")
         model_pill = _business_model_pill(business_model)
+        score_badge = _score_badge(score)
         comment_count = _int(row.get("Comments"))
         countries = _int(row.get("Countries"))
-        first_country = _text(row.get("First country"), "N/A")
-        country_codes = _list(row.get("Country Codes"))
+        first_country = _country_name(row.get("First country")) or "N/A"
+        country_names = _country_names(row.get("Country Names")) or _country_names(row.get("Country Codes"))
+        if not country_names and first_country != "N/A":
+            country_names = [first_country]
         ranking_types = _list(row.get("Ranking types"))
 
         with st.container(border=True):
@@ -204,7 +223,10 @@ def render_domain_table(
             cols[0].markdown(
                 (
                     "<div class='tf-domain-cell'>"
+                    "<div class='tf-domain-primary'>"
                     f"<a class='tf-domain-link' href='{escape(site_url)}' target='_blank'>{escape(domain_name)}</a>"
+                    f"<div class='tf-score-mobile'>{score_badge}</div>"
+                    "</div>"
                     "<div class='tf-domain-pills'>"
                     f"{_pill(category, 'tf-category-pill')}"
                     f"{model_pill}"
@@ -213,17 +235,27 @@ def render_domain_table(
                 ),
                 unsafe_allow_html=True,
             )
-            cols[1].markdown(_score_badge(score), unsafe_allow_html=True)
+            cols[1].markdown(score_badge, unsafe_allow_html=True)
             cols[2].markdown(
-                f"<div class='tf-summary' title='{escape(summary)}'>{escape(summary)}</div>",
+                (
+                    "<div class='tf-mobile-field-label'>Summary</div>"
+                    f"<div class='tf-summary' title='{escape(summary)}'>{escape(summary)}</div>"
+                ),
                 unsafe_allow_html=True,
             )
             extra_countries = f" +{countries - 1}" if countries > 1 else ""
             cols[3].markdown(
-                f"<span class='tf-country'>{escape(first_country)}{escape(extra_countries)}</span>",
+                (
+                    "<div class='tf-mobile-field-label'>Country</div>"
+                    f"<span class='tf-country'>{escape(first_country)}{escape(extra_countries)}</span>"
+                ),
                 unsafe_allow_html=True,
             )
 
+            cols[4].markdown(
+                "<div class='tf-mobile-field-label tf-mobile-widget-label'>Status</div>",
+                unsafe_allow_html=True,
+            )
             new_status = cols[4].selectbox(
                 "Status",
                 STATUS_OPTIONS,
@@ -235,6 +267,10 @@ def render_domain_table(
                 on_status_change(domain_id, new_status)
 
             with cols[5]:
+                st.markdown(
+                    "<div class='tf-mobile-field-label tf-mobile-widget-label'>Comments</div>",
+                    unsafe_allow_html=True,
+                )
                 _render_comments(domain_id, comment_count, comments_data.get(domain_id, []), on_add_comment)
 
             st.markdown("<div class='tf-details-spacer'></div>", unsafe_allow_html=True)
@@ -243,19 +279,35 @@ def render_domain_table(
 
                 with detail_cols[0]:
                     st.markdown("<div class='tf-detail-title'>Countries Found In</div>", unsafe_allow_html=True)
-                    st.markdown(_pills(country_codes, "tf-country-pill"), unsafe_allow_html=True)
+                    st.markdown(_pills(country_names, "tf-country-pill"), unsafe_allow_html=True)
 
                 with detail_cols[1]:
                     st.markdown("<div class='tf-detail-title'>Ranking Types</div>", unsafe_allow_html=True)
                     st.markdown(_pills(ranking_types, "tf-ranking-pill"), unsafe_allow_html=True)
 
                 with detail_cols[2]:
+                    range_details = ""
+                    if not _is_blank(row.get("First seen in range")):
+                        range_details += _detail_value(
+                            "First seen in range",
+                            _format_timestamp(row.get("First seen in range")),
+                        )
+                    if not _is_blank(row.get("Last seen in range")):
+                        range_details += _detail_value(
+                            "Last seen in range",
+                            _format_timestamp(row.get("Last seen in range")),
+                        )
+                    times_observed = _int(row.get("Times observed"))
+                    if times_observed:
+                        range_details += _detail_value("Times observed", str(times_observed))
+
                     details_html = (
                         "<div class='tf-detail-grid'>"
                         + _detail_value("Target users", _text(row.get("Target Users"), "N/A"))
                         + _detail_value("Localization angle", _text(row.get("Localization Angle"), "N/A"))
                         + _detail_value("Risk notes", _text(row.get("Risk Notes"), "None"))
                         + _detail_value("First seen", _format_timestamp(row.get("First seen")))
+                        + range_details
                         + _detail_value("Initial score", str(_int(row.get("Initial score"))))
                         + _detail_value("Review status", status)
                         + "</div>"

@@ -10,6 +10,7 @@ if str(project_root) not in sys.path:
 
 from app.components.metrics_cards import render_metrics_cards, render_progress_bar
 from app.data_loader import load_high_score_count, load_stats
+from src.config.constants import COUNTRY_CODES
 from src.db.supabase_client import get_supabase_client
 
 st.set_page_config(page_title="Stats", page_icon="📈", layout="wide")
@@ -26,6 +27,16 @@ def load_country_progress():
     except Exception:
         pass
     return pd.DataFrame()
+
+
+def country_display_name(row: pd.Series) -> str:
+    country_name_value = row.get("country_name")
+    country_name = "" if pd.isna(country_name_value) else str(country_name_value).strip()
+    if country_name:
+        return country_name
+    country_code_value = row.get("country_code")
+    country_code = "" if pd.isna(country_code_value) else str(country_code_value).strip()
+    return COUNTRY_CODES.get(country_code.upper(), country_code)
 
 
 stats = load_stats()
@@ -61,8 +72,9 @@ st.subheader("Today's Crawl Status by Country")
 if country_df.empty:
     st.info("No crawl data available for today.")
 else:
+    country_df["country_display_name"] = country_df.apply(country_display_name, axis=1)
     display_cols = {
-        "country_code": "Country",
+        "country_display_name": "Country",
         "country_status": "Status",
         "items_found": "Items found",
         "new_domains": "New",
