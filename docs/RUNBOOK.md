@@ -22,6 +22,12 @@ python -m src.crawler.run_daily --date 2026-05-15
 streamlit run app/streamlit_app.py
 ```
 
+## Database Setup
+
+Before using the Collected Data date-range filter in a real Supabase environment, apply the SQL in `supabase/schemas/002_views.sql`. The dashboard depends on the `get_domains_for_range(...)` RPC for server-side filtering, aggregation, sorting, total counts, and pagination.
+
+The app does not apply this SQL automatically. Run it through the Supabase SQL editor or your normal migration process before testing the new range filter.
+
 ## Pause & Resume Crawl
 
 To pause a running crawl gracefully:
@@ -52,9 +58,11 @@ The run status is saved as "partial" and all already-processed countries are ski
 ### Midday: Review domains
 
 1. Open Streamlit dashboard → Collected Data tab
-2. Sort by Score (desc)
-3. Review top domains, mark as OK / Exists / Bad
-4. Add comments for interesting finds
+2. Use the Date range filter; default is Today
+3. Keep the default 50 rows per page or switch to 10 / 25 / 100 as needed
+4. Sort by Score (desc)
+5. Review top domains, mark as OK / Exists / Bad
+6. Add comments for interesting finds
 
 ### Evening: Verify completion
 
@@ -98,6 +106,10 @@ The client automatically retries with exponential backoff. If you see persistent
 1. Verify `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` in `.env`
 2. Check Supabase project status at https://app.supabase.com
 3. Verify network connectivity: `curl -I $SUPABASE_URL/rest/v1/`
+
+### Collected Data range filter fails
+
+If the dashboard shows an RPC error for `get_domains_for_range`, apply the latest `supabase/schemas/002_views.sql` in Supabase. This RPC is required for the date-range filter and server-side pagination.
 
 ## Database Maintenance
 

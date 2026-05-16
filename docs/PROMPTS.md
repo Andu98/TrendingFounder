@@ -242,10 +242,11 @@ The visible dashboard is centralized in `app/streamlit_app.py`. The legacy files
 
 ### Collected Data tab
 - Default active tab when the app opens
-- Header: "Collected Data" plus filtered domain count
-- Filters: search, review status, category, sort, min score, show reviewed
+- Header: "Collected Data" plus total filtered domain count from the server-side query
+- Filters: date range, search, review status, category, sort, show reviewed
+- Pagination: 50 rows by default, with 10 / 25 / 50 / 100 row options
 - Domain cards: clickable domain URL, category pill, business-model pill when known, score badge, summary, first country, inline status selectbox, comments popover
-- Details expander: countries found in, ranking types, target users, localization angle, risk notes, first seen, initial score
+- Details expander: countries found in, ranking types, target users, localization angle, risk notes, first seen, first/last seen in range, times observed, initial score
 - Review status persists through `DomainRepository.update_review_status()`
 - Comments persist through `CommentRepository.add_comment()`
 
@@ -267,10 +268,10 @@ The visible dashboard is centralized in `app/streamlit_app.py`. The legacy files
 ```
 app/
   streamlit_app.py          # Primary single-screen app, top nav, theme CSS
-  data_loader.py            # load_today_data(), load_stats(), load_comments(), load_high_score_count()
+  data_loader.py            # load_collected_data(), load_today_data(), load_stats(), load_comments(), load_high_score_count()
   components/
     domain_table.py         # render_domain_table() — manual row rendering with inline editing
-    filters.py              # render_filters() — search/status/category/sort/min score/show reviewed
+    filters.py              # render_filters() — date range/search/status/category/sort/show reviewed
     metrics_cards.py        # render_metrics_cards(), render_progress_bar()
     comments_dialog.py      # (deprecated — inline popovers used instead)
   pages/

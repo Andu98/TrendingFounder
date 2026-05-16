@@ -29,7 +29,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Phase 3: Supabase schema
 - SQL schema `001_core.sql`: domains, domain_observations, crawl_runs, crawl_country_status, domain_comments tables with proper indexes and constraints
-- SQL schema `002_views.sql`: v_domains_today, v_domains_this_week, v_crawl_stats, v_crawl_country_progress views
+- SQL schema `002_views.sql`: v_domains_today, v_domains_this_week, v_crawl_stats, v_crawl_country_progress views, plus `get_domains_for_range(...)` RPC for server-side dashboard filtering/pagination
 - SQL schema `003_rls.sql`: RLS policies (full-access placeholders for internal tool)
 - Supabase client wrapper (`src/db/supabase_client.py`) using service role key
 - Repository layer (`src/db/repositories.py`): DomainRepository, ObservationRepository, CrawlRunRepository, CrawlCountryStatusRepository, CommentRepository
@@ -61,7 +61,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - App entry point (`app/streamlit_app.py`) with navigation links and welcome page
 - Today page (`app/pages/1_Today.py`), This Week page (`app/pages/2_This_Week.py`), Stats page (`app/pages/3_Stats.py`) with filters, metrics, and placeholder tables
 - Metrics cards component (`app/components/metrics_cards.py`): 4-column metric layout, progress bar
-- Filters component (`app/components/filters.py`): show_reviewed checkbox, sort_by selectbox, min_score slider
+- Filters component (`app/components/filters.py`): date range, search, status, category, sort, and show_reviewed controls
 - Domain table component (`app/components/domain_table.py`): st.dataframe with LinkColumn, SelectboxColumn for status, column config
 - Comments dialog component (`app/components/comments_dialog.py`): expander with comment list, Europe/Bucharest timezone conversion, add comment form
 - 3 new tests for UI components
@@ -94,9 +94,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Bug fixes & improvements (session 2026-05-16)
 - **Streamlit dashboard centralized**: `app/streamlit_app.py` is now the primary UX with top navigation for Collected Data and Reports. Legacy `app/pages/*` files are retained but no longer drive the main navigation.
 - **Collected Data UI refreshed**: Added responsive domain cards, richer filters, clickable domain links, category/business-model pills, score badges, details expanders, inline status selectboxes, and comment popovers.
+- **Collected Data server-side pagination**: Added date range filtering and 10 / 25 / 50 / 100 row pagination backed by the new `get_domains_for_range(...)` Supabase RPC, so the dashboard only loads the current page of domains.
 - **Reports tab added**: Replaces the old Stats page in the main UX with metric cards, crawl progress, and country-by-country crawl status rows.
 - **Theme switcher added**: Top navbar includes light/dark mode with centralized Streamlit CSS variables and improved input/toggle/card contrast.
-- **Dashboard visual polish**: Fixed main app scrolling, squared the fixed navbar, added a navbar divider, tightened page top spacing, increased content gutters, centered top navigation, right-aligned the Dark mode toggle, and aligned table headers with row controls.
+- **Dashboard visual polish**: Fixed main app scrolling, switched the navbar back to normal page flow, added a mobile burger menu with navigation and Dark mode controls, tightened page top spacing, and restored stacked mobile domain cards with a compact mobile header.
 - **Theme persistence improved**: Dark/light preference now survives refreshes via URL query state plus browser storage sync, avoiding the previous refresh mismatch.
 - **Collected Data surface consistency**: Filters panel now uses the same dark surface treatment as Reports cards while row Details expanders keep their nested style.
 - **Crawl resume wired into orchestrator**: Orchestrator now uses `get_or_create_today_run()` instead of `create_run()`. On restart, skips already-completed/failed countries. (`src/crawler/orchestrator.py`, `src/crawler/progress.py`, `src/db/repositories.py`)

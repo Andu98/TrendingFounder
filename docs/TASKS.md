@@ -86,12 +86,13 @@ Scop: proiectul pornește curat.
 - [x] **P7.03** — Reports tab with metric cards, crawl progress bar, and country-by-country status table
 - [x] **P7.04** — Dark/light theme switcher with centralized CSS variables
 - [x] **P7.05** — Metrics cards component (`app/components/metrics_cards.py`): render_metrics_cards, render_progress_bar
-- [x] **P7.06** — Filters component (`app/components/filters.py`): search, status, category, sort, min score, show reviewed
+- [x] **P7.06** — Filters component (`app/components/filters.py`): date range, search, status, category, sort, show reviewed
 - [x] **P7.07** — Domain table component (`app/components/domain_table.py`): card rows with clickable domain, score badge, details expander, status selectbox, comments popover
 - [x] **P7.08** — Comments UX: timeline-style comment list plus add-comment form inside row popovers
 - [x] **P7.09** — 3 tests for UI components
 - [x] **P7.10** — Legacy Streamlit pages retained but no longer used as the primary navigation experience
-- [x] **P7.11** — Dashboard visual polish: scroll restoration, fixed navbar divider, persistent theme state, consistent panel surfaces, wider content gutters, centered navbar pills, right-aligned theme toggle, and aligned table controls
+- [x] **P7.11** — Dashboard visual polish: normal-scroll navbar, mobile burger menu, persistent theme state, consistent panel surfaces, wider content gutters, stacked mobile domain cards, and compact mobile table header
+- [x] **P7.12** — Server-side Collected Data pagination and date range filtering via Supabase RPC (`get_domains_for_range`)
 
 ---
 

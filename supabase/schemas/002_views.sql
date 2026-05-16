@@ -4,22 +4,22 @@
 -- Today view: best score today across all countries
 CREATE OR REPLACE VIEW v_domains_today AS
 SELECT
-    d.id,
-    d.normalized_domain,
-    d.display_url,
-    d.first_seen_date,
-    d.llm_summary,
-    d.llm_category,
-    d.llm_business_model,
-    d.review_status,
-    d.initial_score,
-    d.latest_best_score,
-    MAX(do.observation_score) AS best_score_today,
-    COUNT(DISTINCT do.country_code) AS countries_today,
-    COUNT(DISTINCT do.ranking_type) AS ranking_types_count,
-    ARRAY_AGG(DISTINCT do.country_code) AS country_codes,
-    ARRAY_AGG(DISTINCT do.ranking_type) AS ranking_types,
-    (SELECT COUNT(*) FROM domain_comments c WHERE c.domain_id = d.id) AS comment_count
+    dom.id,
+    dom.normalized_domain,
+    dom.display_url,
+    dom.first_seen_date,
+    dom.llm_summary,
+    dom.llm_category,
+    dom.llm_business_model,
+    dom.review_status,
+    dom.initial_score,
+    dom.latest_best_score,
+    MAX(obs.observation_score) AS best_score_today,
+    COUNT(DISTINCT obs.country_code) AS countries_today,
+    COUNT(DISTINCT obs.ranking_type) AS ranking_types_count,
+    ARRAY_AGG(DISTINCT obs.country_code) AS country_codes,
+    ARRAY_AGG(DISTINCT obs.ranking_type) AS ranking_types,
+    (SELECT COUNT(*) FROM domain_comments c WHERE c.domain_id = dom.id) AS comment_count
 FROM domains dom
 JOIN domain_observations obs ON obs.domain_id = dom.id
 WHERE obs.observed_date = CURRENT_DATE
@@ -48,6 +48,142 @@ WHERE obs.observed_date >= CURRENT_DATE - INTERVAL '7 days'
 GROUP BY dom.id, dom.normalized_domain, dom.display_url, dom.first_seen_date,
     dom.llm_summary, dom.llm_category, dom.llm_business_model,
     dom.review_status, dom.initial_score, dom.latest_best_score;
+
+-- Date range RPC: filtered, aggregated, sorted, and paginated in the database
+CREATE OR REPLACE FUNCTION get_domains_for_range(
+    start_date DATE DEFAULT CURRENT_DATE,
+    end_date DATE DEFAULT CURRENT_DATE,
+    show_reviewed BOOLEAN DEFAULT FALSE,
+    status_filter TEXT DEFAULT 'All Statuses',
+    category_filter TEXT DEFAULT 'All Categories',
+    search_query TEXT DEFAULT '',
+    sort_by TEXT DEFAULT 'Score High → Low',
+    page INTEGER DEFAULT 1,
+    page_size INTEGER DEFAULT 50
+)
+RETURNS TABLE (
+    id UUID,
+    normalized_domain TEXT,
+    display_url TEXT,
+    first_seen_date DATE,
+    llm_summary TEXT,
+    llm_category TEXT,
+    llm_business_model TEXT,
+    review_status TEXT,
+    initial_score NUMERIC,
+    latest_best_score NUMERIC,
+    best_score_today NUMERIC,
+    countries_today BIGINT,
+    ranking_types_count BIGINT,
+    country_codes TEXT[],
+    ranking_types TEXT[],
+    first_seen_in_range DATE,
+    last_seen_in_range DATE,
+    times_observed BIGINT,
+    comment_count BIGINT,
+    total_count BIGINT
+)
+LANGUAGE sql
+STABLE
+AS $$
+WITH params AS (
+    SELECT
+        LEAST(COALESCE($1, CURRENT_DATE), COALESCE($2, COALESCE($1, CURRENT_DATE))) AS date_start,
+        GREATEST(COALESCE($1, CURRENT_DATE), COALESCE($2, COALESCE($1, CURRENT_DATE))) AS date_end,
+        COALESCE($3, FALSE) AS show_reviewed,
+        NULLIF(TRIM($4), '') AS status_filter,
+        NULLIF(TRIM($5), '') AS category_filter,
+        NULLIF(TRIM($6), '') AS search_query,
+        COALESCE(NULLIF(TRIM($7), ''), 'Score High → Low') AS sort_label,
+        GREATEST(COALESCE($8, 1), 1) AS page_number,
+        GREATEST(COALESCE($9, 50), 1) AS rows_per_page
+),
+aggregated AS (
+    SELECT
+        dom.id,
+        dom.normalized_domain,
+        dom.display_url,
+        dom.first_seen_date,
+        dom.llm_summary,
+        dom.llm_category,
+        dom.llm_business_model,
+        dom.review_status,
+        dom.initial_score,
+        dom.latest_best_score,
+        MAX(obs.observation_score) AS best_score_today,
+        COUNT(DISTINCT obs.country_code) AS countries_today,
+        COUNT(DISTINCT obs.ranking_type) AS ranking_types_count,
+        (ARRAY_AGG(DISTINCT obs.country_code ORDER BY obs.country_code)
+            FILTER (WHERE obs.country_code IS NOT NULL))::TEXT[] AS country_codes,
+        (ARRAY_AGG(DISTINCT obs.ranking_type ORDER BY obs.ranking_type)
+            FILTER (WHERE obs.ranking_type IS NOT NULL))::TEXT[] AS ranking_types,
+        MIN(obs.observed_date) AS first_seen_in_range,
+        MAX(obs.observed_date) AS last_seen_in_range,
+        COUNT(*) AS times_observed,
+        (SELECT COUNT(*) FROM domain_comments c WHERE c.domain_id = dom.id) AS comment_count
+    FROM params p
+    JOIN domain_observations obs
+        ON obs.observed_date BETWEEN p.date_start AND p.date_end
+    JOIN domains dom ON dom.id = obs.domain_id
+    WHERE
+        CASE
+            WHEN p.status_filter IS NOT NULL AND p.status_filter <> 'All Statuses'
+                THEN dom.review_status = p.status_filter
+            WHEN NOT p.show_reviewed
+                THEN dom.review_status = 'pending'
+            ELSE TRUE
+        END
+        AND (
+            p.category_filter IS NULL
+            OR p.category_filter = 'All Categories'
+            OR COALESCE(NULLIF(dom.llm_category, ''), 'Other') = p.category_filter
+        )
+        AND (
+            p.search_query IS NULL
+            OR dom.normalized_domain ILIKE '%' || p.search_query || '%'
+            OR COALESCE(dom.display_url, '') ILIKE '%' || p.search_query || '%'
+        )
+    GROUP BY dom.id, dom.normalized_domain, dom.display_url, dom.first_seen_date,
+        dom.llm_summary, dom.llm_category, dom.llm_business_model,
+        dom.review_status, dom.initial_score, dom.latest_best_score
+),
+counted AS (
+    SELECT aggregated.*, COUNT(*) OVER() AS total_count
+    FROM aggregated
+)
+SELECT
+    counted.id,
+    counted.normalized_domain,
+    counted.display_url,
+    counted.first_seen_date,
+    counted.llm_summary,
+    counted.llm_category,
+    counted.llm_business_model,
+    counted.review_status,
+    counted.initial_score,
+    counted.latest_best_score,
+    counted.best_score_today,
+    counted.countries_today,
+    counted.ranking_types_count,
+    counted.country_codes,
+    counted.ranking_types,
+    counted.first_seen_in_range,
+    counted.last_seen_in_range,
+    counted.times_observed,
+    counted.comment_count,
+    counted.total_count
+FROM counted
+CROSS JOIN params p
+ORDER BY
+    CASE WHEN p.sort_label IN ('Score High → Low', 'Score (desc)') THEN counted.best_score_today END DESC NULLS LAST,
+    CASE WHEN p.sort_label IN ('Score Low → High', 'Score (asc)') THEN counted.best_score_today END ASC NULLS LAST,
+    CASE WHEN p.sort_label = 'Newest' THEN counted.last_seen_in_range END DESC NULLS LAST,
+    CASE WHEN p.sort_label IN ('Country Count', 'Country count') THEN counted.countries_today END DESC NULLS LAST,
+    counted.best_score_today DESC NULLS LAST,
+    counted.normalized_domain ASC
+LIMIT (SELECT rows_per_page FROM params)
+OFFSET (SELECT (page_number - 1) * rows_per_page FROM params);
+$$;
 
 -- Stats view: aggregated metrics for the dashboard
 CREATE OR REPLACE VIEW v_crawl_stats AS

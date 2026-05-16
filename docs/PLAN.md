@@ -570,8 +570,11 @@ Details expander
 
 Comportament:
 
+* date range default: Today;
 * sort default: `best_score_today desc`;
-* filtre: search / status / category / min score / show reviewed;
+* filtre: date range / search / status / category / show reviewed;
+* paginare server-side: 50 rows default, opțiuni 10 / 25 / 50 / 100;
+* datele principale vin prin RPC-ul Supabase `get_domains_for_range(...)`, care agregă, filtrează, sortează și aplică `LIMIT/OFFSET` în DB;
 * optional sort: score / newest / country count;
 * click pe site deschide URL;
 * statusurile sunt exclusive prin `review_status`;
@@ -587,6 +590,9 @@ Target users
 Localization angle
 Risk notes
 First seen
+First seen in range
+Last seen in range
+Times observed
 Initial score
 ```
 
