@@ -602,6 +602,11 @@ def inject_styles(theme_name: str) -> None:
             display: none;
         }
 
+        .tf-domain-url-mobile,
+        .tf-summary-mobile {
+            display: none;
+        }
+
         .tf-details-spacer {
             height: 0.55rem;
         }
@@ -947,7 +952,7 @@ def inject_styles(theme_name: str) -> None:
             .st-key-mobile_navbar [data-testid="stHorizontalBlock"] {
                 align-items: center !important;
                 display: grid !important;
-                grid-template-columns: minmax(0, 1fr) 3rem minmax(0, 1fr) !important;
+                grid-template-columns: minmax(0, 1fr) 3rem !important;
                 gap: 0.7rem !important;
                 width: 100% !important;
             }
@@ -981,15 +986,15 @@ def inject_styles(theme_name: str) -> None:
                 justify-content: flex-start;
             }
 
-            .st-key-mobile_navbar [data-testid="stColumn"]:has(.st-key-mobile_theme_switch) {
-                align-items: center !important;
-                display: flex !important;
-                justify-content: flex-end !important;
+            .st-key-mobile_theme_switch {
+                justify-content: flex-start;
+                margin-left: 0;
+                margin-top: 0.7rem;
             }
 
-            .st-key-mobile_theme_switch {
-                justify-content: flex-end;
-                margin-top: 0;
+            .st-key-mobile_theme_switch > div,
+            .st-key-mobile_theme_switch label {
+                justify-content: flex-start !important;
             }
 
             div[data-testid="stVerticalBlock"].st-key-page_content {
@@ -1069,6 +1074,10 @@ def inject_styles(theme_name: str) -> None:
                 display: none !important;
             }
 
+            [data-testid="stHorizontalBlock"]:has(.tf-domain-link) > [data-testid="stColumn"]:nth-child(3) {
+                display: none !important;
+            }
+
             [data-testid="stVerticalBlock"]:has(
                 > [data-testid="stLayoutWrapper"] > [data-testid="stHorizontalBlock"] .tf-domain-link
             )
@@ -1108,6 +1117,29 @@ def inject_styles(theme_name: str) -> None:
 
             .tf-domain-primary .tf-domain-link {
                 min-width: 0;
+            }
+
+            .tf-domain-url-mobile {
+                color: var(--tf-muted);
+                display: block;
+                font-size: 0.78rem;
+                font-weight: 650;
+                line-height: 1.35;
+                margin-top: 0.26rem;
+                overflow-wrap: anywhere;
+            }
+
+            .tf-summary-mobile {
+                display: block;
+                margin-top: 0.62rem;
+            }
+
+            .tf-domain-pills .tf-category-pill {
+                display: none !important;
+            }
+
+            .tf-domain-pills:not(:has(.tf-model-pill)) {
+                display: none !important;
             }
 
             .tf-score-mobile {
@@ -1252,7 +1284,7 @@ def render_navbar() -> str:
         theme_col.toggle("Dark mode", key="desktop_theme_switch")
 
     with st.container(key="mobile_navbar"):
-        brand_col, menu_col, theme_col = st.columns([1, 0.2, 1], vertical_alignment="center")
+        brand_col, menu_col = st.columns([1, 0.16], vertical_alignment="center")
         brand_col.markdown(_brand_html(compact=True), unsafe_allow_html=True)
         with menu_col:
             with st.popover("☰", use_container_width=True):
@@ -1262,7 +1294,7 @@ def render_navbar() -> str:
                     key="mobile_main_nav",
                     label_visibility="collapsed",
                 )
-        theme_col.toggle("Dark mode", key="mobile_theme_switch", label_visibility="collapsed")
+                st.toggle("Dark mode", key="mobile_theme_switch")
 
     _sync_nav_from_widgets()
     _sync_theme_from_widgets()

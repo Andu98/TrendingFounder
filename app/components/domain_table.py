@@ -227,6 +227,8 @@ def render_domain_table(
                     f"<a class='tf-domain-link' href='{escape(site_url)}' target='_blank'>{escape(domain_name)}</a>"
                     f"<div class='tf-score-mobile'>{score_badge}</div>"
                     "</div>"
+                    f"<div class='tf-domain-url-mobile'>{escape(site_url)}</div>"
+                    f"<div class='tf-summary tf-summary-mobile' title='{escape(summary)}'>{escape(summary)}</div>"
                     "<div class='tf-domain-pills'>"
                     f"{_pill(category, 'tf-category-pill')}"
                     f"{model_pill}"
