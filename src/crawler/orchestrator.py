@@ -1,3 +1,4 @@
+import asyncio
 import os
 from collections.abc import Callable
 from datetime import date
@@ -22,7 +23,8 @@ logger = get_logger(__name__)
 
 RANKING_TYPES = [RankingType.TRENDING_RISE, RankingType.TRENDING_STEADY]
 
-STOP_FILE = Path(".crawl_stop")
+CONCURRENCY = int(os.environ.get("CRAWL_CONCURRENCY", "8"))
+
 
 
 class CrawlOrchestrator:
@@ -99,33 +101,34 @@ class CrawlOrchestrator:
         countries_total = len(countries)
         self._crawl_run_repo.update_progress(run_id, countries_total=countries_total)
 
-        for country in countries:
+        semaphore = asyncio.Semaphore(CONCURRENCY)
+        lock = asyncio.Lock()
+        stopped = False
+
+        # Counters shared across concurrent tasks
+        counters = {
+            "new_domains": new_domains,
+            "duplicate_domains": duplicate_domains,
+            "llm_processed": llm_processed,
+            "llm_skipped": llm_skipped,
+            "requests_total": requests_total,
+            "requests_failed": requests_failed,
+            "countries_completed": countries_completed,
+            "countries_failed": countries_failed,
+        }
+
+        async def _run_country(country: dict) -> None:
+            nonlocal stopped
             country_code = country["code"]
             country_name = country["name"]
 
-            if STOP_FILE.exists():
-                logger.info(f"Stop file detected. Pausing after {countries_completed} countries.")
-                STOP_FILE.unlink(missing_ok=True)
-                self._crawl_run_repo.update_progress(
-                    run_id=run_id,
-                    countries_completed=countries_completed,
-                    countries_failed=countries_failed,
-                    requests_total=requests_total,
-                    requests_failed=requests_failed,
-                    new_domains_count=new_domains,
-                    duplicate_domains_count=duplicate_domains,
-                    llm_processed_count=llm_processed,
-                    llm_skipped_count=llm_skipped,
-                )
-                run = self._crawl_run_repo.complete_run(run_id, status=CrawlRunStatus.PARTIAL)
-                logger.info(
-                    f"Crawl {run_id} paused: {countries_completed}/{countries_total} countries, "
-                    f"{new_domains} new, {duplicate_domains} dupes"
-                )
-                return run
-
             if country_code in done_countries:
-                continue
+                return
+
+            if STOP_FILE.exists():
+                async with lock:
+                    stopped = True
+                return
 
             self._country_status_repo.upsert_country_status(
                 crawl_run_id=run_id,
@@ -134,55 +137,83 @@ class CrawlOrchestrator:
                 status="running",
             )
 
-            try:
-                country_new, country_dup, country_llm, country_skip, country_req = await self._process_country(
-                    run_id=run_id,
-                    country_code=country_code,
-                    country_name=country_name,
-                    observed_date=today,
-                )
+            async with semaphore:
+                try:
+                    country_new, country_dup, country_llm, country_skip, country_req = await self._process_country(
+                        run_id=run_id,
+                        country_code=country_code,
+                        country_name=country_name,
+                        observed_date=today,
+                    )
 
-                new_domains += country_new
-                duplicate_domains += country_dup
-                llm_processed += country_llm
-                llm_skipped += country_skip
-                requests_total += country_req
-                countries_completed += 1
+                    async with lock:
+                        counters["new_domains"] += country_new
+                        counters["duplicate_domains"] += country_dup
+                        counters["llm_processed"] += country_llm
+                        counters["llm_skipped"] += country_skip
+                        counters["requests_total"] += country_req
+                        counters["countries_completed"] += 1
 
-                self._country_status_repo.upsert_country_status(
-                    crawl_run_id=run_id,
-                    country_code=country_code,
-                    country_name=country_name,
-                    status="completed",
-                    items_found=country_new + country_dup,
-                    new_domains=country_new,
-                    duplicate_domains=country_dup,
-                )
+                    self._country_status_repo.upsert_country_status(
+                        crawl_run_id=run_id,
+                        country_code=country_code,
+                        country_name=country_name,
+                        status="completed",
+                        items_found=country_new + country_dup,
+                        new_domains=country_new,
+                        duplicate_domains=country_dup,
+                    )
 
-            except Exception as exc:
-                logger.error(f"Failed to process {country_code}: {exc}")
-                countries_failed += 1
-                requests_failed += len(RANKING_TYPES)
+                except Exception as exc:
+                    logger.error(f"Failed to process {country_code}: {exc}")
+                    async with lock:
+                        counters["countries_failed"] += 1
+                        counters["requests_failed"] += len(RANKING_TYPES)
 
-                self._country_status_repo.upsert_country_status(
-                    crawl_run_id=run_id,
-                    country_code=country_code,
-                    country_name=country_name,
-                    status="failed",
-                    error_message=str(exc),
-                )
+                    self._country_status_repo.upsert_country_status(
+                        crawl_run_id=run_id,
+                        country_code=country_code,
+                        country_name=country_name,
+                        status="failed",
+                        error_message=str(exc),
+                    )
 
             self._crawl_run_repo.update_progress(
                 run_id=run_id,
-                countries_completed=countries_completed,
-                countries_failed=countries_failed,
-                requests_total=requests_total,
-                requests_failed=requests_failed,
-                new_domains_count=new_domains,
-                duplicate_domains_count=duplicate_domains,
-                llm_processed_count=llm_processed,
-                llm_skipped_count=llm_skipped,
+                countries_completed=counters["countries_completed"],
+                countries_failed=counters["countries_failed"],
+                requests_total=counters["requests_total"],
+                requests_failed=counters["requests_failed"],
+                new_domains_count=counters["new_domains"],
+                duplicate_domains_count=counters["duplicate_domains"],
+                llm_processed_count=counters["llm_processed"],
+                llm_skipped_count=counters["llm_skipped"],
             )
+
+        await asyncio.gather(*[_run_country(c) for c in countries])
+
+        if stopped:
+            STOP_FILE.unlink(missing_ok=True)
+            self._crawl_run_repo.update_progress(
+                run_id=run_id,
+                countries_completed=counters["countries_completed"],
+                countries_failed=counters["countries_failed"],
+                requests_total=counters["requests_total"],
+                requests_failed=counters["requests_failed"],
+                new_domains_count=counters["new_domains"],
+                duplicate_domains_count=counters["duplicate_domains"],
+                llm_processed_count=counters["llm_processed"],
+                llm_skipped_count=counters["llm_skipped"],
+            )
+            run = self._crawl_run_repo.complete_run(run_id, status=CrawlRunStatus.PARTIAL)
+            logger.info(
+                f"Crawl {run_id} paused: {counters['countries_completed']}/{countries_total} countries, "
+                f"{counters['new_domains']} new, {counters['duplicate_domains']} dupes"
+            )
+            return run
+
+        countries_failed = counters["countries_failed"]
+        countries_completed = counters["countries_completed"]
 
         if countries_failed > 0 and countries_completed > 0:
             final_status = CrawlRunStatus.PARTIAL
@@ -195,7 +226,7 @@ class CrawlOrchestrator:
         logger.info(
             f"Crawl {run_id} finished: {final_status} "
             f"({countries_completed}/{countries_total} countries, "
-            f"{new_domains} new, {duplicate_domains} dupes)"
+            f"{counters['new_domains']} new, {counters['duplicate_domains']} dupes)"
         )
         return run
 

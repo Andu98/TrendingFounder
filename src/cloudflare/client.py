@@ -3,7 +3,7 @@ from loguru import logger as loguru_logger
 from tenacity import (
     before_sleep_log,
     retry,
-    retry_if_exception_type,
+    retry_if_exception,
     stop_after_attempt,
     wait_exponential,
 )
@@ -23,7 +23,17 @@ class CloudflareAPIError(Exception):
         super().__init__(message)
 
 
-class CloudflareClient:
+def _is_retryable(exc: BaseException) -> bool:
+    if isinstance(exc, (httpx.ConnectError, httpx.TimeoutException)):
+        return True
+    if isinstance(exc, httpx.HTTPStatusError):
+        return True
+    if isinstance(exc, CloudflareAPIError):
+        return exc.status_code >= 500
+    return False
+
+
+
     BASE_URL = "https://api.cloudflare.com/client/v4"
 
     def __init__(self, api_token: str | None = None, timeout: float = 30.0):
@@ -55,9 +65,9 @@ class CloudflareClient:
             )
 
     @retry(
-        retry=retry_if_exception_type((httpx.HTTPStatusError, httpx.ConnectError, httpx.TimeoutException)),
-        stop=stop_after_attempt(4),
-        wait=wait_exponential(multiplier=1, min=2, max=30),
+        retry=retry_if_exception(_is_retryable),
+        stop=stop_after_attempt(5),
+        wait=wait_exponential(multiplier=2, min=4, max=60),
         before_sleep=before_sleep_log(loguru_logger, "WARNING"),
         reraise=True,
     )

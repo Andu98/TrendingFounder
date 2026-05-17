@@ -31,6 +31,26 @@ class LMStudioClient:
         self._base_url = (base_url or settings.lmstudio_base_url).rstrip("/")
         self._model = model or settings.lmstudio_model
         self._timeout = timeout
+        self._client: httpx.AsyncClient | None = None
+
+    def _get_client(self) -> httpx.AsyncClient:
+        if self._client is None or self._client.is_closed:
+            self._client = httpx.AsyncClient(
+                timeout=self._timeout,
+                headers={"Content-Type": "application/json"},
+            )
+        return self._client
+
+    async def close(self) -> None:
+        if self._client and not self._client.is_closed:
+            await self._client.aclose()
+            self._client = None
+
+    async def __aenter__(self):
+        return self
+
+    async def __aexit__(self, *exc):
+        await self.close()
 
     def _build_payload(self, prompt: str) -> dict:
         return {
@@ -83,14 +103,13 @@ class LMStudioClient:
         reraise=True,
     )
     async def _post(self, payload: dict) -> httpx.Response:
-        async with httpx.AsyncClient(timeout=self._timeout) as client:
-            response = await client.post(
-                f"{self._base_url}/chat/completions",
-                json=payload,
-                headers={"Content-Type": "application/json"},
-            )
-            response.raise_for_status()
-            return response
+        client = self._get_client()
+        response = await client.post(
+            f"{self._base_url}/chat/completions",
+            json=payload,
+        )
+        response.raise_for_status()
+        return response
 
     async def enrich(
         self,
@@ -104,6 +123,12 @@ class LMStudioClient:
         pct_rank_change: float | None = None,
         homepage_snippet: str | None = None,
     ) -> LLMEnrichmentResult:
+        if is_known_giant(domain):
+            return LLMEnrichmentResult.failed(
+                domain=domain,
+                error="Skipped: known giant domain.",
+            )
+
         prompt = build_enrichment_prompt(
             domain=domain,
             title=title,

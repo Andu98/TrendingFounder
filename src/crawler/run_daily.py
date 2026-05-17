@@ -80,6 +80,8 @@ async def main():
         sys.exit(1)
     finally:
         await cf_client.close()
+        if llm_client is not None:
+            await llm_client.close()
 
 
 if __name__ == "__main__":
