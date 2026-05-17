@@ -918,7 +918,14 @@ def inject_styles(theme_name: str) -> None:
             border-radius: 999px !important;
             font-size: 1.2rem !important;
             min-height: 2.55rem !important;
-            padding: 0.2rem 0.65rem !important;
+            padding: 0 0.85rem 0 0.6rem !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            justify-self: center !important;
+            align-self: center !important;
+            margin: 0 auto !important;
+            transform: translateY(6px) !important;
         }
 
         .st-key-mobile_navbar button[data-testid="stPopoverButton"] div[aria-hidden="true"],
@@ -1012,16 +1019,16 @@ def inject_styles(theme_name: str) -> None:
             }
 
             div[data-testid="stVerticalBlock"].st-key-top_navbar {
-                padding: 1.55rem 1rem !important;
+                padding: 0.3rem 1rem 1.4rem !important;
             }
 
-            .st-key-mobile_navbar [data-testid="stHorizontalBlock"] {
-                align-items: center !important;
-                display: grid !important;
-                grid-template-columns: minmax(0, 1fr) 3rem !important;
-                gap: 0.7rem !important;
-                width: 100% !important;
-            }
+        .st-key-mobile_navbar [data-testid="stHorizontalBlock"] {
+            align-items: center !important;
+            display: grid !important;
+            grid-template-columns: minmax(0, 1fr) 3rem !important;
+            gap: 0.7rem !important;
+            width: 100% !important;
+        }
 
             .st-key-mobile_navbar [data-testid="stColumn"] {
                 min-width: 0 !important;

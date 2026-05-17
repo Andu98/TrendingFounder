@@ -3,23 +3,23 @@
 ## Quick Start
 
 ```bash
-# Run daily crawl (all countries, 100 domains each)
-uv run python -m src.crawler.run_daily
-
-# Run with fewer domains (faster)
-uv run python -m src.crawler.run_daily --limit 50
-
-# Run without LLM enrichment
-uv run python -m src.crawler.run_daily --skip-llm
-
-# Run for a specific date
-uv run python -m src.crawler.run_daily --date 2026-05-15
-
 # Launch dashboard
 ./start trending
 
 # Launch dashboard on another port
 ./start trending --server.port 8502
+
+# Run daily crawl (all countries, 100 domains each)
+./start crawler
+
+# Run with fewer domains (faster)
+./start crawler --limit 50
+
+# Run without LLM enrichment
+./start crawler --skip-llm
+
+# Run for a specific date
+./start crawler --date 2026-05-15
 ```
 
 ## Database Setup
