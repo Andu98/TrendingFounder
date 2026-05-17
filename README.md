@@ -31,7 +31,7 @@ cp .env.example .env
 python -m src.crawler.run_daily
 
 # 6. Launch the Streamlit dashboard (Phase 7+)
-streamlit run app/streamlit_app.py
+./start trending
 ```
 
 ## Project Structure

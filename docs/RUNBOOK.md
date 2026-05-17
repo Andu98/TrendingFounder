@@ -3,23 +3,23 @@
 ## Quick Start
 
 ```bash
-# Activate virtual environment
-source .venv/bin/activate
-
 # Run daily crawl (all countries, 100 domains each)
-python -m src.crawler.run_daily
+uv run python -m src.crawler.run_daily
 
 # Run with fewer domains (faster)
-python -m src.crawler.run_daily --limit 50
+uv run python -m src.crawler.run_daily --limit 50
 
 # Run without LLM enrichment
-python -m src.crawler.run_daily --skip-llm
+uv run python -m src.crawler.run_daily --skip-llm
 
 # Run for a specific date
-python -m src.crawler.run_daily --date 2026-05-15
+uv run python -m src.crawler.run_daily --date 2026-05-15
 
 # Launch dashboard
-streamlit run app/streamlit_app.py
+./start trending
+
+# Launch dashboard on another port
+./start trending --server.port 8502
 ```
 
 ## Database Setup
@@ -41,7 +41,7 @@ To resume:
 
 ```bash
 # Just run the crawl again — it will detect the partial run and continue
-python -m src.crawler.run_daily
+uv run python -m src.crawler.run_daily
 ```
 
 The run status is saved as "partial" and all already-processed countries are skipped on resume.

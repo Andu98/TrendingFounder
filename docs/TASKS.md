@@ -86,8 +86,8 @@ Scop: proiectul pornește curat.
 - [x] **P7.03** — Reports tab with metric cards, crawl progress bar, and country-by-country status table
 - [x] **P7.04** — Dark/light theme switcher with centralized CSS variables
 - [x] **P7.05** — Metrics cards component (`app/components/metrics_cards.py`): render_metrics_cards, render_progress_bar
-- [x] **P7.06** — Filters component (`app/components/filters.py`): date range, search, status, category, sort, show reviewed
-- [x] **P7.07** — Domain table component (`app/components/domain_table.py`): card rows with clickable domain, score badge, details expander, status selectbox, comments popover
+- [x] **P7.06** — Filters component (`app/components/filters.py`): date range, status checkboxes, category, sort, show reviewed
+- [x] **P7.07** — Domain table component (`app/components/domain_table.py`): card rows with clickable domain, score badge, details expander, exclusive status checkboxes, comments popover
 - [x] **P7.08** — Comments UX: timeline-style comment list plus add-comment form inside row popovers
 - [x] **P7.09** — 3 tests for UI components
 - [x] **P7.10** — Legacy Streamlit pages retained but no longer used as the primary navigation experience

@@ -61,7 +61,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - App entry point (`app/streamlit_app.py`) with navigation links and welcome page
 - Today page (`app/pages/1_Today.py`), This Week page (`app/pages/2_This_Week.py`), Stats page (`app/pages/3_Stats.py`) with filters, metrics, and placeholder tables
 - Metrics cards component (`app/components/metrics_cards.py`): 4-column metric layout, progress bar
-- Filters component (`app/components/filters.py`): date range, search, status, category, sort, and show_reviewed controls
+- Filters component (`app/components/filters.py`): date range, status checkboxes, category, sort, and show_reviewed controls
 - Domain table component (`app/components/domain_table.py`): st.dataframe with LinkColumn, SelectboxColumn for status, column config
 - Comments dialog component (`app/components/comments_dialog.py`): expander with comment list, Europe/Bucharest timezone conversion, add comment form
 - 3 new tests for UI components
@@ -93,7 +93,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Bug fixes & improvements (session 2026-05-16)
 - **Streamlit dashboard centralized**: `app/streamlit_app.py` is now the primary UX with top navigation for Collected Data and Reports. Legacy `app/pages/*` files are retained but no longer drive the main navigation.
-- **Collected Data UI refreshed**: Added responsive domain cards, richer filters, clickable domain links, category/business-model pills, score badges, details expanders, inline status selectboxes, and comment popovers.
+- **Collected Data UI refreshed**: Added responsive domain cards, richer filters, clickable domain links, category/business-model pills, score badges, details expanders, inline exclusive status checkboxes, and comment popovers.
 - **Collected Data server-side pagination**: Added date range filtering and 10 / 25 / 50 / 100 row pagination backed by the new `get_domains_for_range(...)` Supabase RPC, so the dashboard only loads the current page of domains.
 - **Reports tab added**: Replaces the old Stats page in the main UX with metric cards, crawl progress, and country-by-country crawl status rows.
 - **Theme switcher added**: Top navbar includes light/dark mode with centralized Streamlit CSS variables and improved input/toggle/card contrast.
@@ -107,6 +107,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - **`ButtonColumn` removed**: Streamlit 1.57.0 doesn't have `ButtonColumn`; replaced with `TextColumn` in `domain_table.py`.
 - **LM Studio client retry**: Extracted `_post()` method with tenacity retry (4 attempts, exponential backoff 2-30s) for transient HTTP errors, matching Cloudflare client pattern. (`src/llm/lmstudio_client.py`)
 - **Stats page fixed**: Replaced broken local `load_stats()` (queried with `None` date) with `data_loader.load_stats()`. (`app/pages/3_Stats.py`)
-- **Domain table rewritten**: Replaced `st.data_editor` with manual per-row rendering using `st.columns`. Added inline `st.selectbox` for Status and `st.popover` for Comments per row. `load_comments()` added to `data_loader`. (`app/components/domain_table.py`, `app/data_loader.py`)
+- **Domain table rewritten**: Replaced `st.data_editor` with manual per-row rendering using `st.columns`. Added inline exclusive status checkboxes and `st.popover` for Comments per row. `load_comments()` added to `data_loader`. (`app/components/domain_table.py`, `app/data_loader.py`)
 - **`high_score_today` un-hardcoded**: Now queries `v_domains_today` for actual count instead of always showing 0. (`app/pages/1_Today.py`, `app/pages/3_Stats.py`)
 - **Docs updated**: README phase statuses corrected, PLAN.md structure tree synced with codebase, TASKS.md got consistent `PX.XX` numbering.

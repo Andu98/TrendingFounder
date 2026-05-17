@@ -453,6 +453,44 @@ def inject_styles(theme_name: str) -> None:
             border-bottom: 1px solid var(--tf-card-border) !important;
         }
 
+        div[data-testid="stExpander"]:has(.tf-filters-anchor) [data-testid="stHorizontalBlock"] {
+            align-items: end !important;
+        }
+
+        div[data-testid="stExpander"]:has(.tf-filters-anchor) label {
+            min-height: 1.35rem;
+        }
+
+        div[data-testid="stExpander"]:has(.tf-filters-anchor) [data-testid="stDateInput"] input,
+        div[data-testid="stExpander"]:has(.tf-filters-anchor) [data-testid="stTextInput"] input,
+        div[data-testid="stExpander"]:has(.tf-filters-anchor) [data-baseweb="select"] > div {
+            min-height: 2.75rem !important;
+        }
+
+        div[data-testid="stExpander"]:has(.tf-filters-anchor) .st-key-filter_show_reviewed {
+            padding-bottom: 0.42rem;
+        }
+
+        .tf-status-filter-label {
+            color: var(--tf-muted);
+            font-size: 0.78rem;
+            font-weight: 850;
+            letter-spacing: 0.04em;
+            margin: 0.9rem 0 0.3rem;
+            text-transform: uppercase;
+        }
+
+        .st-key-filter_status_pending label,
+        .st-key-filter_status_ok label,
+        .st-key-filter_status_exists label,
+        .st-key-filter_status_bad label {
+            color: var(--tf-text) !important;
+            font-size: 0.86rem !important;
+            font-weight: 750 !important;
+            gap: 0.45rem;
+            white-space: nowrap;
+        }
+
         [data-testid="stTextInput"] {
             min-height: 48px;
         }
@@ -819,6 +857,24 @@ def inject_styles(theme_name: str) -> None:
             padding: 0.36rem 0.65rem;
         }
 
+        .tf-row-status-grid {
+            display: none;
+        }
+
+        [data-testid="stHorizontalBlock"]:has(.tf-domain-link) .stCheckbox label {
+            align-items: center;
+            color: var(--tf-text) !important;
+            font-size: 0.78rem !important;
+            font-weight: 760 !important;
+            gap: 0.35rem;
+            min-height: 1.35rem;
+            white-space: nowrap;
+        }
+
+        [data-testid="stHorizontalBlock"]:has(.tf-domain-link) .stCheckbox {
+            min-height: 1.45rem;
+        }
+
         .tf-status-pending {
             background: var(--tf-status-pending-bg);
             border: 1px solid var(--tf-status-pending-border);
@@ -913,6 +969,11 @@ def inject_styles(theme_name: str) -> None:
             white-space: nowrap;
         }
 
+        .st-key-pagination_top_page_size,
+        .st-key-pagination_bottom_page_size {
+            margin-top: -1.35rem;
+        }
+
         button[kind="primary"] {
             background: var(--tf-accent) !important;
             border-color: var(--tf-accent) !important;
@@ -927,6 +988,11 @@ def inject_styles(theme_name: str) -> None:
 
             .st-key-mobile_navbar {
                 display: none !important;
+            }
+
+            .st-key-desktop_main_nav,
+            .st-key-desktop_theme_switch {
+                margin-top: 20px !important;
             }
 
             .st-key-top_navbar [data-testid="stColumn"]:has(.st-key-desktop_theme_switch) {
@@ -946,7 +1012,7 @@ def inject_styles(theme_name: str) -> None:
             }
 
             div[data-testid="stVerticalBlock"].st-key-top_navbar {
-                padding: 0.55rem 1rem !important;
+                padding: 1.55rem 1rem !important;
             }
 
             .st-key-mobile_navbar [data-testid="stHorizontalBlock"] {
@@ -1014,6 +1080,15 @@ def inject_styles(theme_name: str) -> None:
                 text-align: left;
             }
 
+            .st-key-pagination_top_page_size,
+            .st-key-pagination_bottom_page_size {
+                margin-top: 0;
+            }
+
+            div[data-testid="stExpander"]:has(.tf-filters-anchor) .st-key-filter_show_reviewed {
+                padding-bottom: 0;
+            }
+
             .tf-table-head-wrapper {
                 overflow-x: visible;
             }
@@ -1062,6 +1137,11 @@ def inject_styles(theme_name: str) -> None:
                 max-width: 100% !important;
                 min-width: 0 !important;
                 width: 100% !important;
+            }
+
+            [data-testid="stHorizontalBlock"]:has(.tf-domain-link) .stCheckbox label {
+                font-size: 0.82rem !important;
+                min-height: 1.5rem;
             }
 
             [data-testid="stHorizontalBlock"]:has(.tf-domain-link) > [data-testid="stColumn"] {
@@ -1134,11 +1214,7 @@ def inject_styles(theme_name: str) -> None:
                 margin-top: 0.62rem;
             }
 
-            .tf-domain-pills .tf-category-pill {
-                display: none !important;
-            }
-
-            .tf-domain-pills:not(:has(.tf-model-pill)) {
+            .tf-domain-pills {
                 display: none !important;
             }
 
@@ -1330,6 +1406,20 @@ def _session_option(key: str, options: list[str], default: str) -> str:
     return value if value in options else default
 
 
+def _status_filter_from_session() -> str:
+    status_values = {
+        status: bool(st.session_state.get(f"filter_status_{status}", True))
+        for status in STATUS_FILTER_OPTIONS
+        if status != "All Statuses"
+    }
+    selected = [status for status, checked in status_values.items() if checked]
+    if not selected:
+        return "__none__"
+    if len(selected) == len(status_values):
+        return "All Statuses"
+    return ",".join(selected)
+
+
 def _date_range_from_session() -> tuple[date, date]:
     value = st.session_state.get("filter_date_range")
     today = date.today()
@@ -1359,7 +1449,6 @@ def _filter_signature(filters: dict, page_size: int) -> tuple:
     return (
         filters["date_start"].isoformat(),
         filters["date_end"].isoformat(),
-        filters["search_query"].strip(),
         filters["status_filter"],
         filters["category_filter"],
         filters["show_reviewed"],
@@ -1388,8 +1477,8 @@ def current_filter_values() -> dict:
     """Read filter widget state before rendering widgets to avoid header reflow."""
     date_start, date_end = _date_range_from_session()
     return {
-        "search_query": str(st.session_state.get("filter_search", "")),
-        "status_filter": _session_option("filter_status", STATUS_FILTER_OPTIONS, STATUS_FILTER_OPTIONS[0]),
+        "search_query": "",
+        "status_filter": _status_filter_from_session(),
         "category_filter": _session_option("filter_category", CATEGORY_FILTER_OPTIONS, CATEGORY_FILTER_OPTIONS[0]),
         "show_reviewed": bool(st.session_state.get("filter_show_reviewed", True)),
         "sort_by": _session_option("filter_sort", SORT_OPTIONS, SORT_OPTIONS[0]),

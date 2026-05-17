@@ -29,6 +29,9 @@ dev = [
     "black>=26.3.0",
 ]
 
+[project.scripts]
+start = "src.cli:start"
+
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["src*"]

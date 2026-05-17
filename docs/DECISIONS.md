@@ -22,7 +22,7 @@ All database timestamps use `timestamptz` (UTC). Conversion to `Europe/Bucharest
 
 **Status:** Accepted
 
-`review_status` is a single enum column (`pending | ok | exists | bad`). UI may show 3 exclusive checkboxes, but they map to this single field on save.
+`review_status` is a single enum column (`pending | ok | exists | bad`). UI may show 4 exclusive checkboxes, but they map to this single field on save.
 
 ## ADR-005: Use Cloudflare Markdown docs as API source of truth
 

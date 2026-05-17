@@ -103,6 +103,7 @@ aggregated AS (
         dom.id,
         dom.normalized_domain,
         dom.display_url,
+        dom.first_seen_at,
         dom.first_seen_date,
         dom.llm_summary,
         dom.llm_category,
@@ -110,7 +111,31 @@ aggregated AS (
         dom.review_status,
         dom.initial_score,
         dom.latest_best_score,
-        MAX(obs.observation_score) AS best_score_today,
+        COALESCE(
+            MAX(obs.observation_score),
+            MAX(
+                CASE obs.ranking_type
+                    WHEN 'trending_rise' THEN 80
+                    WHEN 'trending_steady' THEN 65
+                    WHEN 'popular' THEN 45
+                    ELSE 20
+                END
+                + CASE
+                    WHEN obs.rank <= 10 THEN 25
+                    WHEN obs.rank <= 25 THEN 18
+                    WHEN obs.rank <= 50 THEN 12
+                    WHEN obs.rank <= 100 THEN 6
+                    ELSE 0
+                END
+                + CASE
+                    WHEN obs.pct_rank_change IS NULL THEN 0
+                    ELSE LEAST(GREATEST(obs.pct_rank_change, 0), 100) / 5
+                END
+            ),
+            dom.latest_best_score,
+            dom.initial_score,
+            0
+        ) AS best_score_today,
         COUNT(DISTINCT obs.country_code) AS countries_today,
         COUNT(DISTINCT obs.ranking_type) AS ranking_types_count,
         (ARRAY_AGG(DISTINCT obs.country_code ORDER BY obs.country_code)
@@ -127,8 +152,16 @@ aggregated AS (
     JOIN domains dom ON dom.id = obs.domain_id
     WHERE
         CASE
+            WHEN p.status_filter = '__none__'
+                THEN FALSE
             WHEN p.status_filter IS NOT NULL AND p.status_filter <> 'All Statuses'
-                THEN dom.review_status = p.status_filter
+                THEN dom.review_status = ANY(
+                    ARRAY(
+                        SELECT TRIM(status_value)
+                        FROM UNNEST(STRING_TO_ARRAY(p.status_filter, ',')) AS statuses(status_value)
+                        WHERE TRIM(status_value) IN ('pending', 'ok', 'exists', 'bad')
+                    )
+                )
             WHEN NOT p.show_reviewed
                 THEN dom.review_status = 'pending'
             ELSE TRUE
@@ -143,7 +176,7 @@ aggregated AS (
             OR dom.normalized_domain ILIKE '%' || p.search_query || '%'
             OR COALESCE(dom.display_url, '') ILIKE '%' || p.search_query || '%'
         )
-    GROUP BY dom.id, dom.normalized_domain, dom.display_url, dom.first_seen_date,
+    GROUP BY dom.id, dom.normalized_domain, dom.display_url, dom.first_seen_at, dom.first_seen_date,
         dom.llm_summary, dom.llm_category, dom.llm_business_model,
         dom.review_status, dom.initial_score, dom.latest_best_score
 ),
@@ -177,7 +210,7 @@ CROSS JOIN params p
 ORDER BY
     CASE WHEN p.sort_label IN ('Score High → Low', 'Score (desc)') THEN counted.best_score_today END DESC NULLS LAST,
     CASE WHEN p.sort_label IN ('Score Low → High', 'Score (asc)') THEN counted.best_score_today END ASC NULLS LAST,
-    CASE WHEN p.sort_label = 'Newest' THEN counted.last_seen_in_range END DESC NULLS LAST,
+    CASE WHEN p.sort_label = 'Newest' THEN counted.first_seen_at END DESC NULLS LAST,
     CASE WHEN p.sort_label IN ('Country Count', 'Country count') THEN counted.countries_today END DESC NULLS LAST,
     counted.best_score_today DESC NULLS LAST,
     counted.normalized_domain ASC

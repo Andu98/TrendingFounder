@@ -4,6 +4,8 @@ import streamlit as st
 
 from app.data_loader import CATEGORY_FILTER_OPTIONS, SORT_OPTIONS, STATUS_FILTER_OPTIONS
 
+STATUS_CHECKBOX_OPTIONS = STATUS_FILTER_OPTIONS[1:]
+
 
 def _normalize_date_range(value) -> tuple[date, date]:
     today = date.today()
@@ -18,6 +20,15 @@ def _normalize_date_range(value) -> tuple[date, date]:
     return today, today
 
 
+def _status_filter_from_values(values: dict[str, bool]) -> str:
+    selected = [status for status in STATUS_CHECKBOX_OPTIONS if values.get(status)]
+    if not selected:
+        return "__none__"
+    if len(selected) == len(STATUS_CHECKBOX_OPTIONS):
+        return "All Statuses"
+    return ",".join(selected)
+
+
 def render_filters(show_reviewed_default: bool = False, expanded: bool = True) -> dict:
     """Render the dashboard filter controls and return selected values.
 
@@ -26,56 +37,48 @@ def render_filters(show_reviewed_default: bool = False, expanded: bool = True) -
     """
     with st.expander("Filters", expanded=expanded):
         st.markdown('<span class="tf-filters-anchor"></span>', unsafe_allow_html=True)
-        top_cols = st.columns([1.15, 1.45, 0.8], gap="medium", vertical_alignment="center")
+        cols = st.columns([1.25, 1.1, 1, 0.86], gap="medium", vertical_alignment="bottom")
 
-        with top_cols[0]:
+        with cols[0]:
             date_range = st.date_input(
                 "Date range",
                 value=(date.today(), date.today()),
                 key="filter_date_range",
             )
 
-        with top_cols[1]:
-            search_query = st.text_input(
-                "Search",
-                placeholder="Search domains",
-                label_visibility="collapsed",
-                key="filter_search",
-            )
-
-        with top_cols[2]:
-            show_reviewed = st.toggle("Show reviewed", value=show_reviewed_default, key="filter_show_reviewed")
-
-        bottom_cols = st.columns([1, 1, 1], gap="medium", vertical_alignment="center")
-
-        with bottom_cols[0]:
-            status_filter = st.selectbox(
-                "Status",
-                STATUS_FILTER_OPTIONS,
-                label_visibility="collapsed",
-                key="filter_status",
-            )
-
-        with bottom_cols[1]:
+        with cols[1]:
             category_filter = st.selectbox(
                 "Category",
                 CATEGORY_FILTER_OPTIONS,
-                label_visibility="collapsed",
                 key="filter_category",
             )
 
-        with bottom_cols[2]:
+        with cols[2]:
             sort_by = st.selectbox(
                 "Sort",
                 SORT_OPTIONS,
-                label_visibility="collapsed",
                 key="filter_sort",
             )
 
+        with cols[3]:
+            show_reviewed = st.toggle("Show reviewed", value=show_reviewed_default, key="filter_show_reviewed")
+
+        st.markdown("<div class='tf-status-filter-label'>Status</div>", unsafe_allow_html=True)
+        status_cols = st.columns(4, gap="small", vertical_alignment="center")
+        status_values = {}
+        for index, status in enumerate(STATUS_CHECKBOX_OPTIONS):
+            with status_cols[index]:
+                status_values[status] = st.checkbox(
+                    status,
+                    value=True,
+                    key=f"filter_status_{status}",
+                )
+
     date_start, date_end = _normalize_date_range(date_range)
+    status_filter = _status_filter_from_values(status_values)
 
     return {
-        "search_query": search_query,
+        "search_query": "",
         "status_filter": status_filter,
         "category_filter": category_filter,
         "show_reviewed": show_reviewed,

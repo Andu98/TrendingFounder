@@ -1,8 +1,10 @@
 from datetime import date
+from pathlib import Path
 from unittest.mock import MagicMock
 
 import pandas as pd
 from app import data_loader, streamlit_app
+from app.components import filters
 
 
 def _mock_rpc_client(rows: list[dict]):
@@ -44,7 +46,7 @@ def test_load_collected_data_calls_range_rpc(monkeypatch):
         show_reviewed=True,
         sort_by="Newest",
         search_query="example",
-        status_filter="ok",
+        status_filter="ok,exists",
         category_filter="SaaS",
         date_start=date(2026, 5, 15),
         date_end=date(2026, 5, 16),
@@ -58,7 +60,7 @@ def test_load_collected_data_calls_range_rpc(monkeypatch):
         "start_date": "2026-05-15",
         "end_date": "2026-05-16",
         "show_reviewed": True,
-        "status_filter": "ok",
+        "status_filter": "ok,exists",
         "category_filter": "SaaS",
         "search_query": "example",
         "sort_by": "Newest",
@@ -119,3 +121,39 @@ def test_filter_signature_changes_for_range_and_page_size():
 
     assert streamlit_app._filter_signature(filters, 50) != same_day_signature
     assert streamlit_app._filter_signature(filters, 100) != streamlit_app._filter_signature(filters, 50)
+
+
+def test_status_filter_from_checkbox_values():
+    assert filters._status_filter_from_values(
+        {"pending": True, "ok": True, "exists": True, "bad": True}
+    ) == "All Statuses"
+    assert filters._status_filter_from_values(
+        {"pending": True, "ok": False, "exists": True, "bad": False}
+    ) == "pending,exists"
+    assert filters._status_filter_from_values(
+        {"pending": False, "ok": False, "exists": False, "bad": False}
+    ) == "__none__"
+
+
+def test_range_rpc_newest_sort_uses_domain_first_seen_timestamp():
+    sql = Path("supabase/schemas/002_views.sql").read_text()
+
+    assert "dom.first_seen_at" in sql
+    assert "p.sort_label = 'Newest' THEN counted.first_seen_at" in sql
+
+
+def test_range_rpc_accepts_multiple_status_filters():
+    sql = Path("supabase/schemas/002_views.sql").read_text()
+
+    assert "p.status_filter = '__none__'" in sql
+    assert "STRING_TO_ARRAY(p.status_filter, ',')" in sql
+    assert "TRIM(status_value) IN ('pending', 'ok', 'exists', 'bad')" in sql
+
+
+def test_range_rpc_score_sort_has_fallback_for_unscored_observations():
+    sql = Path("supabase/schemas/002_views.sql").read_text()
+
+    assert "COALESCE(\n            MAX(obs.observation_score)" in sql
+    assert "WHEN 'trending_rise' THEN 80" in sql
+    assert "WHEN obs.rank <= 10 THEN 25" in sql
+    assert "dom.latest_best_score" in sql

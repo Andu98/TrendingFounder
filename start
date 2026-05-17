@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+VENV_PYTHON="$ROOT_DIR/.venv/bin/python"
+
+if [[ "${1:-}" != "trending" ]]; then
+  echo "Usage:"
+  echo "  ./start trending [streamlit args]"
+  echo
+  echo "Examples:"
+  echo "  ./start trending"
+  echo "  ./start trending --server.port 8502"
+  exit 2
+fi
+
+shift
+
+if [[ -x "$VENV_PYTHON" ]]; then
+  exec "$VENV_PYTHON" -m streamlit run "$ROOT_DIR/app/streamlit_app.py" "$@"
+fi
+
+if command -v uv >/dev/null 2>&1; then
+  exec uv run streamlit run "$ROOT_DIR/app/streamlit_app.py" "$@"
+fi
+
+echo "Could not find .venv/bin/python or uv."
+echo "Run: uv sync"
+exit 1

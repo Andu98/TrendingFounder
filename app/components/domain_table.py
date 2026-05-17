@@ -105,13 +105,25 @@ def _score_badge(score: int) -> str:
     return f"<span class='tf-score tf-score-{variant}'>{score}</span>"
 
 
-def _status_index(status: str) -> int:
-    return STATUS_OPTIONS.index(status) if status in STATUS_OPTIONS else 0
-
-
 def _status_pill(status: str) -> str:
     status = status if status in STATUS_OPTIONS else "pending"
     return f"<span class='tf-status-pill tf-status-{status}'>{escape(status)}</span>"
+
+
+def _render_status_checkboxes(domain_id: str, status: str, on_status_change=None) -> None:
+    current_status = status if status in STATUS_OPTIONS else "pending"
+    st.markdown("<div class='tf-row-status-grid'>", unsafe_allow_html=True)
+    status_cols = st.columns(2, gap="small")
+    for index, option in enumerate(STATUS_OPTIONS):
+        with status_cols[index % 2]:
+            checked = st.checkbox(
+                option,
+                value=option == current_status,
+                key=f"status_{domain_id}_{option}",
+            )
+            if checked and option != current_status and on_status_change:
+                on_status_change(domain_id, option)
+    st.markdown("</div>", unsafe_allow_html=True)
 
 
 def _comment_html(comment: dict) -> str:
@@ -258,15 +270,8 @@ def render_domain_table(
                 "<div class='tf-mobile-field-label tf-mobile-widget-label'>Status</div>",
                 unsafe_allow_html=True,
             )
-            new_status = cols[4].selectbox(
-                "Status",
-                STATUS_OPTIONS,
-                index=_status_index(status),
-                key=f"status_{domain_id}",
-                label_visibility="collapsed",
-            )
-            if new_status != status and on_status_change:
-                on_status_change(domain_id, new_status)
+            with cols[4]:
+                _render_status_checkboxes(domain_id, status, on_status_change)
 
             with cols[5]:
                 st.markdown(
