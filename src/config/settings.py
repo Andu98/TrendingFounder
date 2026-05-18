@@ -36,7 +36,7 @@ class Settings(BaseSettings):
     )
 
     lmstudio_model: str = Field(
-        default="qwen/qwen2.5-vl-7b",
+        default="meta/llama-3.1-8b-instruct",
         description="Model name to use in LM Studio requests.",
     )
 

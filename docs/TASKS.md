@@ -7,6 +7,8 @@
 - [x] **A2026-05-19.04** — Add `./start-score` shortcut that starts the NVIDIA proxy before running the default opportunity scoring command.
 - [x] **A2026-05-19.05** — Make `./start crawler` run `./start-score` after successful crawls, with `--skip-score` for crawl-only runs.
 - [x] **A2026-05-19.06** — Clarify zero-domain scoring runs and make `--only-missing --force` retry only failed missing-score rows.
+- [x] **A2026-05-19.07** — Polish Streamlit dashboard UI: compact metrics, clearer empty state, notes action labels, global-giant pills, and structured opportunity details.
+- [x] **A2026-05-19.08** — Redesign closed laptop domain cards with compact direct status actions and a cleaner notes panel.
 
 - Implement async bulk DB client for domain deduplication and observation insertion.
 - Load existing domains into memory at crawl start.
@@ -108,6 +110,7 @@ Scop: proiectul pornește curat.
 - [x] **P7.10** — Legacy Streamlit pages retained but no longer used as the primary navigation experience
 - [x] **P7.11** — Dashboard visual polish: normal-scroll navbar, mobile burger menu, persistent theme state, consistent panel surfaces, wider content gutters, stacked mobile domain cards, and compact mobile table header
 - [x] **P7.12** — Server-side Collected Data pagination and date range filtering via Supabase RPC (`get_domains_for_range`)
+- [x] **P7.13** — Laptop domain card polish with direct status action buttons and redesigned notes popover
 
 ---
 

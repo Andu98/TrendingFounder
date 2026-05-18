@@ -184,7 +184,7 @@ Known giants list: google.com, youtube.com, facebook.com, amazon.com, microsoft.
 ## LLM Enrichment
 
 **Endpoint:** LM Studio on `http://localhost:1234/v1/chat/completions`
-**Model:** `qwen/qwen2.5-vl-7b`
+**Model:** `meta/llama-3.1-8b-instruct`
 **Response format:** `json_schema` with strict schema
 **Timeout:** 300s
 **Retry:** 4 attempts, exponential backoff 2-30s (on HTTP errors, connect errors, timeouts)
@@ -294,7 +294,7 @@ SUPABASE_URL=               # https://<project>.supabase.co
 SUPABASE_ANON_KEY=          # Publishable anon key
 SUPABASE_SERVICE_ROLE_KEY=  # Service role key (server-side)
 LMSTUDIO_BASE_URL=          # Default: http://localhost:1234/v1
-LMSTUDIO_MODEL=             # Default: qwen/qwen2.5-vl-7b
+LMSTUDIO_MODEL=             # Default: meta/llama-3.1-8b-instruct
 APP_TIMEZONE=               # Default: Europe/Bucharest
 LOG_LEVEL=                  # Default: INFO
 ```

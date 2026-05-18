@@ -116,7 +116,7 @@ tail -f logs/app.log
 
 1. Verify LM Studio is running on `http://localhost:1234`
 2. Check the model is loaded in LM Studio
-3. Test manually: `curl http://localhost:1234/v1/chat/completions -H "Content-Type: application/json" -d '{"model":"qwen/qwen2.5-vl-7b","messages":[{"role":"user","content":"hello"}]}'`
+3. Test manually: `curl http://localhost:1234/v1/chat/completions -H "Content-Type: application/json" -d '{"model":"meta/llama-3.1-8b-instruct","messages":[{"role":"user","content":"hello"}]}'`
 4. If LM Studio is unavailable, re-run with `--skip-llm`
 
 ### Cloudflare API rate limited (429)

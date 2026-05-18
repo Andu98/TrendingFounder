@@ -22,7 +22,7 @@ def test_settings_loads_from_env(valid_env_vars):
 
 def test_settings_defaults(valid_env_vars):
     s = Settings()
-    assert s.lmstudio_model == "qwen/qwen2.5-vl-7b"
+    assert s.lmstudio_model == "meta/llama-3.1-8b-instruct"
 
 
 def test_settings_missing_required(monkeypatch):

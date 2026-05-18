@@ -1,12 +1,16 @@
+from html import escape
+
 import streamlit as st
 
 
 def _metric_card(label: str, value: str | int, detail: str = "") -> str:
-    detail_html = f"<div class='tf-metric-detail'>{detail}</div>" if detail else ""
+    detail_html = f"<div class='tf-metric-detail'>{escape(detail)}</div>" if detail else ""
     return (
         "<div class='tf-metric-card'>"
-        f"<div class='tf-metric-label'>{label}</div>"
-        f"<div class='tf-metric-value'>{value}</div>"
+        "<div class='tf-metric-topline'>"
+        f"<div class='tf-metric-label'>{escape(label)}</div>"
+        f"<div class='tf-metric-value'>{escape(str(value))}</div>"
+        "</div>"
         f"{detail_html}"
         "</div>"
     )

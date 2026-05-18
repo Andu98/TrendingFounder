@@ -19,10 +19,12 @@ KNOWN_GLOBAL_GIANTS = frozenset({
 })
 
 STATUS_OPTIONS = ["pending", "ok", "exists", "bad"]
-
-
-def _is_global_giant(domain: str) -> bool:
-    return domain.lower() in KNOWN_GLOBAL_GIANTS
+STATUS_LABELS = {
+    "pending": "Pending",
+    "ok": "OK",
+    "exists": "Exists",
+    "bad": "Bad",
+}
 
 
 def _is_global_giant(domain: str) -> bool:
@@ -136,25 +138,32 @@ def _opportunity_score_badge(score: int) -> str:
     return f"<span class='tf-score tf-score-{variant} tf-opp-score'>{score}</span>"
 
 
+def _taxonomy_label(value: str) -> str:
+    if _is_blank(value) or value == "N/A":
+        return "N/A"
+    return value.replace("_", " ").title()
+
+
 def _status_pill(status: str) -> str:
     status = status if status in STATUS_OPTIONS else "pending"
     return f"<span class='tf-status-pill tf-status-{status}'>{escape(status)}</span>"
 
 
-def _render_status_checkboxes(domain_id: str, status: str, on_status_change=None) -> None:
+def _render_status_actions(domain_id: str, status: str, on_status_change=None) -> None:
     current_status = status if status in STATUS_OPTIONS else "pending"
-    st.markdown("<div class='tf-row-status-grid'>", unsafe_allow_html=True)
-    status_cols = st.columns(2, gap="small")
-    for index, option in enumerate(STATUS_OPTIONS):
-        with status_cols[index % 2]:
-            checked = st.checkbox(
-                option,
-                value=option == current_status,
-                key=f"status_{domain_id}_{option}",
-            )
-            if checked and option != current_status and on_status_change:
-                on_status_change(domain_id, option)
-    st.markdown("</div>", unsafe_allow_html=True)
+    with st.container(key=f"status_actions_{domain_id}"):
+        for row_options in (("pending", "ok"), ("exists", "bad")):
+            status_cols = st.columns(2, gap="small")
+            for col, option in zip(status_cols, row_options):
+                with col:
+                    clicked = st.button(
+                        STATUS_LABELS[option],
+                        key=f"status_{domain_id}_{option}",
+                        type="primary" if option == current_status else "secondary",
+                        use_container_width=True,
+                    )
+                    if clicked and option != current_status and on_status_change:
+                        on_status_change(domain_id, option)
 
 
 def _comment_html(comment: dict) -> str:
@@ -162,40 +171,81 @@ def _comment_html(comment: dict) -> str:
     message = escape(_text(comment.get("message")))
     created_at = escape(_format_timestamp(comment.get("created_at")))
     return (
-        "<div class='tf-comment'>"
-        "<div class='tf-comment-line'></div>"
-        "<div class='tf-comment-body'>"
-        f"<div><strong>{author}</strong><span>{created_at}</span></div>"
-        f"<p>{message}</p>"
+        "<div class='tf-note'>"
+        "<div class='tf-note-meta'>"
+        f"<strong>{author}</strong>"
+        f"<span>{created_at}</span>"
         "</div>"
+        f"<p>{message}</p>"
         "</div>"
     )
 
 
-def _render_comments(domain_id: str, comment_count: int, comments: list[dict], on_add_comment=None) -> None:
-    with st.popover(str(comment_count), use_container_width=True):
-        st.markdown("<div class='tf-popover-title'>Comments</div>", unsafe_allow_html=True)
+def _render_comments(
+    domain_id: str,
+    domain_name: str,
+    comment_count: int,
+    comments: list[dict],
+    on_add_comment=None,
+) -> None:
+    comment_count = max(comment_count, len(comments))
+    label = f"Notes {comment_count}" if comment_count else "Notes"
+    with st.popover(label, use_container_width=True):
+        st.markdown(
+            (
+                "<div class='tf-notes-panel'>"
+                "<div class='tf-notes-header'>"
+                "<div>"
+                "<div class='tf-notes-title'>Notes</div>"
+                f"<div class='tf-notes-subtitle'>{escape(domain_name)}</div>"
+                "</div>"
+                f"<span>{comment_count}</span>"
+                "</div>"
+                "</div>"
+            ),
+            unsafe_allow_html=True,
+        )
 
         if comments:
+            st.markdown("<div class='tf-notes-list'>", unsafe_allow_html=True)
             for comment in comments:
                 st.markdown(_comment_html(comment), unsafe_allow_html=True)
+            st.markdown("</div>", unsafe_allow_html=True)
         else:
-            st.caption("No comments yet.")
+            st.markdown(
+                """
+                <div class="tf-note-empty">
+                    Keep launch ideas, review rationale, or follow-up research here.
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
 
         st.divider()
-        author = st.text_input("Name", value="You", key=f"comment_author_{domain_id}")
-        message = st.text_area(
-            "New comment",
-            placeholder="Add a note for this domain...",
-            height=90,
-            key=f"comment_message_{domain_id}",
+        st.markdown("<div class='tf-note-composer'>", unsafe_allow_html=True)
+        st.markdown("<div class='tf-note-composer-title'>Add note</div>", unsafe_allow_html=True)
+        st.markdown("<div class='tf-note-composer-row'>", unsafe_allow_html=True)
+        author = st.text_input(
+            "Name",
+            value="You",
+            key=f"comment_author_{domain_id}",
+            label_visibility="collapsed",
         )
-        if st.button("Add comment", key=f"comment_add_{domain_id}", type="primary", use_container_width=True):
+        message = st.text_area(
+            "Note",
+            placeholder="Add a note...",
+            height=72,
+            key=f"comment_message_{domain_id}",
+            label_visibility="collapsed",
+        )
+        st.markdown("</div>", unsafe_allow_html=True)
+        if st.button("Save", key=f"comment_add_{domain_id}", type="primary", use_container_width=True):
             if not message.strip():
-                st.warning("Write a comment first.")
+                st.warning("Write a note first.")
                 return
             if on_add_comment:
                 on_add_comment(domain_id, author.strip() or "You", message.strip())
+        st.markdown("</div>", unsafe_allow_html=True)
 
 
 def _detail_value(label: str, value: str) -> str:
@@ -215,7 +265,17 @@ def render_domain_table(
 ):
     """Render responsive domain cards with inline status and comments actions."""
     if df is None or df.empty:
-        st.info("No domains found. Try adjusting filters or wait for the next crawl.")
+        st.markdown(
+            """
+            <div class="tf-empty-state">
+                <div class="tf-empty-state-title">No domains match this view</div>
+                <div class="tf-empty-state-text">
+                    Loosen the filters, include reviewed rows, or wait for the next crawl to add fresh observations.
+                </div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
         return
 
     st.markdown(
@@ -251,6 +311,7 @@ def render_domain_table(
         category = _text(row.get("Category"), "Other")
         business_model = _text(row.get("Business Model"), "unknown")
         model_pill = _business_model_pill(business_model)
+        global_giant_pill = _pill("Global giant", "tf-giant-pill") if _is_global_giant(domain_name) else ""
         score_badge = _score_badge(score)
         comment_count = _int(row.get("Comments"))
         countries = _int(row.get("Countries"))
@@ -261,7 +322,7 @@ def render_domain_table(
         ranking_types = _list(row.get("Ranking types"))
 
         with st.container(border=True):
-            cols = st.columns([2.0, 0.65, 3.1, 0.65, 1.8, 0.6], gap="medium", vertical_alignment="center")
+            cols = st.columns([2.0, 0.65, 3.1, 0.65, 1.7, 0.85], gap="medium", vertical_alignment="center")
 
             cols[0].markdown(
                 (
@@ -275,6 +336,7 @@ def render_domain_table(
                     "<div class='tf-domain-pills'>"
                     f"{_pill(category, 'tf-category-pill')}"
                     f"{model_pill}"
+                    f"{global_giant_pill}"
                     "</div>"
                     "</div>"
                 ),
@@ -302,14 +364,20 @@ def render_domain_table(
                 unsafe_allow_html=True,
             )
             with cols[4]:
-                _render_status_checkboxes(domain_id, status, on_status_change)
+                _render_status_actions(domain_id, status, on_status_change)
 
             with cols[5]:
                 st.markdown(
                     "<div class='tf-mobile-field-label tf-mobile-widget-label'>Comments</div>",
                     unsafe_allow_html=True,
                 )
-                _render_comments(domain_id, comment_count, comments_data.get(domain_id, []), on_add_comment)
+                _render_comments(
+                    domain_id,
+                    domain_name,
+                    comment_count,
+                    comments_data.get(domain_id, []),
+                    on_add_comment,
+                )
 
             st.markdown("<div class='tf-details-spacer'></div>", unsafe_allow_html=True)
             with st.expander("Details", expanded=False):
@@ -364,22 +432,42 @@ def render_domain_table(
 
                 if opp_type and opp_type != "N/A":
                     st.divider()
-                    st.markdown("<div class='tf-detail-title'>Romanian Market Opportunity</div>", unsafe_allow_html=True)
+                    st.markdown(
+                        "<div class='tf-detail-title'>Romanian Market Opportunity</div>",
+                        unsafe_allow_html=True,
+                    )
 
-                    opp_cols = st.columns([1, 1, 1, 1], gap="medium")
-                    opp_cols[0].markdown(f"**Opportunity Score:** {_opportunity_score_badge(opp_score)}", unsafe_allow_html=True)
-                    opp_cols[1].markdown(f"**Trend Score:** {trend_score}")
-                    opp_cols[2].markdown(f"**Category:** {_text(opp_category, 'N/A')}")
-                    opp_cols[3].markdown(f"**Type:** {_text(opp_type, 'N/A')}")
-
-                    if opp_summary:
-                        st.markdown(f"**Summary:** {opp_summary}")
-
-                    if opp_idea:
-                        st.markdown(f"**Romania Adaptation Idea:** {opp_idea}")
-
-                    if opp_confidence:
-                        st.markdown(f"**Confidence:** {opp_confidence}/100")
+                    opp_category_label = _taxonomy_label(opp_category)
+                    opp_type_label = _taxonomy_label(opp_type)
+                    opportunity_html = (
+                        "<div class='tf-opportunity-panel'>"
+                        "<div class='tf-opportunity-kpis'>"
+                        "<div class='tf-opportunity-kpi'>"
+                        "<span>Opportunity</span>"
+                        f"<strong>{_opportunity_score_badge(opp_score)}</strong>"
+                        "</div>"
+                        "<div class='tf-opportunity-kpi'>"
+                        "<span>Trend</span>"
+                        f"<strong>{trend_score}</strong>"
+                        "</div>"
+                        "<div class='tf-opportunity-kpi'>"
+                        "<span>Confidence</span>"
+                        f"<strong>{opp_confidence}/100</strong>"
+                        "</div>"
+                        "<div class='tf-opportunity-kpi'>"
+                        "<span>Type</span>"
+                        f"<strong>{escape(opp_type_label)}</strong>"
+                        "</div>"
+                        "</div>"
+                        "<div class='tf-opportunity-copy'>"
+                        f"<div><span>Category</span><strong>{escape(opp_category_label)}</strong></div>"
+                        f"<div><span>Summary</span><p>{escape(opp_summary or 'No summary available yet.')}</p></div>"
+                        "<div><span>Romania angle</span>"
+                        f"<p>{escape(opp_idea or 'No adaptation idea available yet.')}</p></div>"
+                        "</div>"
+                        "</div>"
+                    )
+                    st.markdown(opportunity_html, unsafe_allow_html=True)
 
                     if opp_breakdown and isinstance(opp_breakdown, dict):
                         with st.expander("Full JSON Breakdown"):

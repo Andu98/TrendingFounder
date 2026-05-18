@@ -104,8 +104,8 @@ THEMES = {
         "country": "#d4e4e8",
         "detail_strong": "#d7e7eb",
         "comment_text": "#cfe0e4",
-        "shadow": "0 12px 36px rgba(0, 0, 0, 0.18)",
-        "shadow_strong": "0 16px 44px rgba(0, 0, 0, 0.22)",
+        "shadow": "0 12px 36px rgba(2, 13, 17, 0.2)",
+        "shadow_strong": "0 16px 44px rgba(2, 13, 17, 0.24)",
     },
     "Light": {
         "bg": "#f5f9fb",
@@ -430,7 +430,7 @@ def inject_styles(theme_name: str) -> None:
         div[data-testid="stExpander"] {
             background: var(--tf-surface);
             border: 1px solid var(--tf-card-border);
-            border-radius: 14px;
+            border-radius: 8px;
             box-shadow: var(--tf-shadow-strong);
             overflow: hidden;
         }
@@ -506,6 +506,13 @@ def inject_styles(theme_name: str) -> None:
             outline: none !important;
         }
 
+        [data-testid="stTextInput"] input:focus,
+        [data-testid="stTextArea"] textarea:focus,
+        [data-baseweb="select"] > div:focus-within {
+            border-color: var(--tf-accent) !important;
+            box-shadow: 0 0 0 3px color-mix(in srgb, var(--tf-accent) 18%, transparent) !important;
+        }
+
         [data-testid="stTextInput"] input,
         [data-testid="stTextArea"] textarea {
             -webkit-text-fill-color: var(--tf-text) !important;
@@ -533,7 +540,7 @@ def inject_styles(theme_name: str) -> None:
         [data-testid="stVerticalBlockBorderWrapper"] {
             background: var(--tf-surface) !important;
             border: 1px solid var(--tf-card-border) !important;
-            border-radius: 14px !important;
+            border-radius: 8px !important;
             box-shadow: var(--tf-shadow);
         }
 
@@ -553,14 +560,14 @@ def inject_styles(theme_name: str) -> None:
             align-items: center;
             background: var(--tf-surface);
             border: 1px solid var(--tf-card-border);
-            border-radius: 12px;
+            border-radius: 8px;
             box-sizing: border-box !important;
             color: var(--tf-muted);
             display: grid !important;
             font-size: 0.75rem;
             font-weight: 850;
             gap: 1rem;
-            grid-template-columns: 2fr 0.65fr 3.1fr 0.65fr 1.8fr 0.6fr;
+            grid-template-columns: 2fr 0.65fr 3.1fr 0.65fr 1.7fr 0.85fr;
             letter-spacing: 0.04em;
             margin: 1.2rem 0 0.55rem;
             padding: 0.78rem 1rem;
@@ -588,19 +595,27 @@ def inject_styles(theme_name: str) -> None:
         ) {
             background: var(--tf-surface) !important;
             border: 1px solid var(--tf-card-border) !important;
-            border-radius: 12px !important;
+            border-radius: 8px !important;
             box-shadow: var(--tf-shadow) !important;
             margin-bottom: 0.85rem !important;
             overflow-x: auto !important;
             overflow-y: visible !important;
             padding: 1rem !important;
+            transition: border-color 180ms ease, transform 180ms ease;
+        }
+
+        [data-testid="stVerticalBlock"]:has(
+            > [data-testid="stLayoutWrapper"] > [data-testid="stHorizontalBlock"] .tf-domain-link
+        ):hover {
+            border-color: var(--tf-accent) !important;
+            transform: translateY(-1px);
         }
 
         [data-testid="stHorizontalBlock"]:has(.tf-domain-link) {
             align-items: center !important;
             display: grid !important;
             gap: 1rem !important;
-            grid-template-columns: 2fr 0.65fr 3.1fr 0.65fr 1.8fr 0.6fr !important;
+            grid-template-columns: 2fr 0.65fr 3.1fr 0.65fr 1.7fr 0.85fr !important;
             width: 100% !important;
         }
 
@@ -616,8 +631,10 @@ def inject_styles(theme_name: str) -> None:
             > [data-testid="stLayoutWrapper"] > [data-testid="stHorizontalBlock"] .tf-domain-link
         )
         div[data-testid="stExpander"] {
-            background: var(--tf-surface-2) !important;
-            border: 1px solid var(--tf-card-border) !important;
+            background: transparent !important;
+            border: 0 !important;
+            border-top: 1px solid var(--tf-border) !important;
+            border-radius: 0 !important;
             box-shadow: none !important;
         }
 
@@ -693,6 +710,12 @@ def inject_styles(theme_name: str) -> None:
             background: var(--tf-model-bg);
             border-color: var(--tf-model-border);
             color: var(--tf-model-text);
+        }
+
+        .tf-giant-pill {
+            background: var(--tf-status-bad-bg);
+            border-color: var(--tf-status-bad-border);
+            color: var(--tf-status-bad-text);
         }
 
         .tf-ranking-pill {
@@ -781,50 +804,246 @@ def inject_styles(theme_name: str) -> None:
             line-height: 1.4;
         }
 
-        .tf-popover-title {
+        .tf-empty-state {
+            background: var(--tf-surface);
+            border: 1px dashed var(--tf-card-border);
+            border-radius: 8px;
+            box-shadow: var(--tf-shadow);
+            margin: 1rem 0;
+            padding: 1.25rem;
+        }
+
+        .tf-empty-state-title {
+            color: var(--tf-text);
             font-size: 1rem;
             font-weight: 850;
-            margin-bottom: 0.7rem;
+            margin-bottom: 0.35rem;
         }
 
-        .tf-comment {
+        .tf-empty-state-text {
+            color: var(--tf-muted);
+            font-size: 0.9rem;
+            line-height: 1.45;
+            max-width: 65ch;
+        }
+
+        .tf-opportunity-panel {
+            background: var(--tf-surface-2);
+            border: 1px solid var(--tf-border);
+            border-radius: 8px;
+            display: grid;
+            gap: 0.9rem;
+            padding: 0.95rem;
+        }
+
+        .tf-opportunity-kpis {
             display: grid;
             gap: 0.65rem;
-            grid-template-columns: 2px 1fr;
-            margin-bottom: 0.85rem;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
         }
 
-        .tf-comment-line {
-            background: var(--tf-accent);
+        .tf-opportunity-kpi {
+            background: var(--tf-surface);
+            border: 1px solid var(--tf-border);
+            border-radius: 8px;
+            display: grid;
+            gap: 0.28rem;
+            min-width: 0;
+            padding: 0.72rem;
+        }
+
+        .tf-opportunity-kpi span,
+        .tf-opportunity-copy span {
+            color: var(--tf-muted);
+            font-size: 0.72rem;
+            font-weight: 850;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .tf-opportunity-kpi strong {
+            color: var(--tf-detail-strong);
+            font-size: 0.95rem;
+            font-weight: 800;
+            line-height: 1.25;
+            min-width: 0;
+        }
+
+        .tf-opportunity-copy {
+            display: grid;
+            gap: 0.7rem;
+        }
+
+        .tf-opportunity-copy div {
+            display: grid;
+            gap: 0.18rem;
+        }
+
+        .tf-opportunity-copy strong {
+            color: var(--tf-detail-strong);
+            font-size: 0.9rem;
+        }
+
+        .tf-opportunity-copy p {
+            color: var(--tf-summary);
+            font-size: 0.88rem;
+            line-height: 1.45;
+            margin: 0;
+        }
+
+        .tf-notes-panel {
+            display: grid;
+            gap: 0.6rem;
+        }
+
+        .tf-notes-header {
+            align-items: center;
+            border-bottom: 1px solid var(--tf-border);
+            display: flex;
+            gap: 0.75rem;
+            justify-content: space-between;
+            margin: 0 0 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+
+        .tf-notes-title {
+            color: var(--tf-text);
+            font-size: 0.88rem;
+            font-weight: 850;
+            line-height: 1.2;
+        }
+
+        .tf-notes-subtitle {
+            color: var(--tf-muted);
+            font-size: 0.72rem;
+            font-weight: 600;
+            line-height: 1.3;
+            margin-top: 0.08rem;
+            overflow-wrap: anywhere;
+            max-width: 220px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .tf-notes-header > span {
+            align-items: center;
+            background: var(--tf-pill-bg);
+            border: 1px solid var(--tf-pill-border);
             border-radius: 999px;
+            color: var(--tf-pill-text);
+            display: flex;
+            font-size: 0.68rem;
+            font-weight: 850;
+            height: 1.5rem;
+            justify-content: center;
+            min-width: 1.5rem;
+            padding: 0 0.4rem;
+            flex-shrink: 0;
         }
 
-        .tf-comment-body div {
+        .tf-notes-list {
+            display: grid;
+            gap: 0.45rem;
+            max-height: 14rem;
+            overflow-y: auto;
+            padding-right: 0.15rem;
+        }
+
+        .tf-notes-list::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .tf-notes-list::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .tf-notes-list::-webkit-scrollbar-thumb {
+            background: var(--tf-border);
+            border-radius: 4px;
+        }
+
+        .tf-note {
+            background: var(--tf-surface-2);
+            border: 1px solid var(--tf-border);
+            border-radius: 6px;
+            display: grid;
+            gap: 0.28rem;
+            padding: 0.5rem 0.6rem;
+        }
+
+        .tf-note-meta {
             align-items: baseline;
             display: flex;
-            gap: 0.55rem;
+            gap: 0.4rem;
+            justify-content: space-between;
         }
 
-        .tf-comment-body span {
+        .tf-note-meta strong {
+            color: var(--tf-detail-strong);
+            font-size: 0.76rem;
+            font-weight: 800;
+        }
+
+        .tf-note-meta span {
             color: var(--tf-muted);
-            font-size: 0.75rem;
+            font-size: 0.65rem;
+            white-space: nowrap;
         }
 
-        .tf-comment-body p {
+        .tf-note p {
             color: var(--tf-comment-text);
-            font-size: 0.86rem;
-            line-height: 1.45;
-            margin: 0.25rem 0 0;
+            font-size: 0.8rem;
+            line-height: 1.4;
+            margin: 0;
+            overflow-wrap: anywhere;
+        }
+
+        .tf-note-empty {
+            background: var(--tf-surface-2);
+            border: 1px dashed var(--tf-border);
+            border-radius: 6px;
+            color: var(--tf-muted);
+            font-size: 0.78rem;
+            line-height: 1.4;
+            padding: 0.6rem 0.7rem;
+        }
+
+        .tf-note-composer {
+            display: grid;
+            gap: 0.45rem;
+        }
+
+        .tf-note-composer-row {
+            display: grid;
+            gap: 0.4rem;
+            grid-template-columns: 1fr 2fr;
+        }
+
+        .tf-note-composer-title {
+            color: var(--tf-text);
+            font-size: 0.76rem;
+            font-weight: 800;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
         }
 
         .tf-metric-card {
             background: var(--tf-surface);
             border: 1px solid var(--tf-card-border);
-            border-radius: 14px;
+            border-radius: 8px;
             box-shadow: var(--tf-shadow);
             margin-bottom: 0.85rem;
-            min-height: 7.15rem;
+            min-height: 5.6rem;
             padding: 1rem 1.05rem;
+        }
+
+        .tf-metric-topline {
+            align-items: baseline;
+            display: flex;
+            gap: 0.75rem;
+            justify-content: space-between;
         }
 
         .tf-metric-label {
@@ -837,9 +1056,10 @@ def inject_styles(theme_name: str) -> None:
 
         .tf-metric-value {
             color: var(--tf-text);
-            font-size: 1.85rem;
+            font-size: 1.28rem;
             font-weight: 900;
-            margin-top: 0.5rem;
+            line-height: 1.1;
+            text-align: right;
         }
 
         .tf-metric-detail {
@@ -856,24 +1076,6 @@ def inject_styles(theme_name: str) -> None:
             justify-content: center;
             min-width: 5.5rem;
             padding: 0.36rem 0.65rem;
-        }
-
-        .tf-row-status-grid {
-            display: none;
-        }
-
-        [data-testid="stHorizontalBlock"]:has(.tf-domain-link) .stCheckbox label {
-            align-items: center;
-            color: var(--tf-text) !important;
-            font-size: 0.78rem !important;
-            font-weight: 760 !important;
-            gap: 0.35rem;
-            min-height: 1.35rem;
-            white-space: nowrap;
-        }
-
-        [data-testid="stHorizontalBlock"]:has(.tf-domain-link) .stCheckbox {
-            min-height: 1.45rem;
         }
 
         .tf-status-pending {
@@ -911,6 +1113,46 @@ def inject_styles(theme_name: str) -> None:
             font-weight: 750 !important;
         }
 
+        div[class*="st-key-status_actions_"] {
+            gap: 0.32rem !important;
+        }
+
+        div[class*="st-key-status_actions_"] button {
+            background: var(--tf-surface-2) !important;
+            border: 1px solid var(--tf-border) !important;
+            border-radius: 6px !important;
+            box-shadow: none !important;
+            color: var(--tf-muted) !important;
+            font-size: 0.72rem !important;
+            font-weight: 850 !important;
+            letter-spacing: 0.01em;
+            min-height: 2rem !important;
+            padding: 0 0.42rem !important;
+            transition: background 160ms ease, border-color 160ms ease, color 160ms ease;
+            white-space: nowrap !important;
+        }
+
+        div[class*="st-key-status_actions_"] button:hover {
+            background: var(--tf-pill-bg) !important;
+            border-color: var(--tf-card-border) !important;
+            color: var(--tf-text) !important;
+        }
+
+        div[class*="st-key-status_actions_"] button[kind="primary"] {
+            background: var(--tf-accent) !important;
+            border-color: var(--tf-accent) !important;
+            color: var(--tf-button-active-text) !important;
+        }
+
+        [data-testid="stHorizontalBlock"]:has(.tf-domain-link)
+        > [data-testid="stColumn"]:nth-child(6)
+        button[data-testid="stPopoverButton"] {
+            border-radius: 6px !important;
+            min-height: 2.25rem !important;
+            padding: 0 0.62rem !important;
+            white-space: nowrap !important;
+        }
+
         button[data-testid="stPopoverButton"] * {
             color: var(--tf-text) !important;
         }
@@ -937,7 +1179,7 @@ def inject_styles(theme_name: str) -> None:
         .tf-report-table-head {
             background: var(--tf-table-head);
             border: 1px solid var(--tf-card-border);
-            border-radius: 12px;
+            border-radius: 8px;
             color: var(--tf-muted);
             display: grid;
             font-size: 0.75rem;
@@ -1245,6 +1487,86 @@ def inject_styles(theme_name: str) -> None:
             .tf-metric-card {
                 min-height: 0;
             }
+
+            .tf-metric-topline {
+                align-items: flex-start;
+                gap: 0.45rem;
+            }
+
+            .tf-opportunity-kpis {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .tf-notes-panel {
+                gap: 0.5rem;
+            }
+
+            .tf-notes-header {
+                gap: 0.5rem;
+                margin-bottom: 0.4rem;
+                padding-bottom: 0.4rem;
+            }
+
+            .tf-notes-title {
+                font-size: 0.82rem;
+            }
+
+            .tf-notes-subtitle {
+                font-size: 0.68rem;
+                max-width: 160px;
+            }
+
+            .tf-notes-list {
+                max-height: 12rem;
+                gap: 0.35rem;
+            }
+
+            .tf-note {
+                padding: 0.42rem 0.5rem;
+                gap: 0.22rem;
+                border-radius: 6px;
+            }
+
+            .tf-note-meta strong {
+                font-size: 0.72rem;
+            }
+
+            .tf-note-meta span {
+                font-size: 0.62rem;
+            }
+
+            .tf-note p {
+                font-size: 0.76rem;
+                line-height: 1.38;
+            }
+
+            .tf-note-empty {
+                font-size: 0.74rem;
+                padding: 0.5rem 0.6rem;
+            }
+
+            .tf-note-composer-row {
+                grid-template-columns: 1fr;
+            }
+
+            .tf-note-composer-title {
+                font-size: 0.7rem;
+            }
+
+            div[data-testid="stPopover"] {
+                max-width: 92vw !important;
+                min-width: 0 !important;
+            }
+
+            div[data-testid="stPopover"] > div {
+                padding: 0.6rem 0.7rem !important;
+            }
+
+            div[data-testid="stPopover"] .tf-note-composer [data-testid="stTextInput"] input,
+            div[data-testid="stPopover"] .tf-note-composer [data-testid="stTextArea"] textarea {
+                font-size: 0.8rem !important;
+                padding: 0.4rem 0.5rem !important;
+            }
         }
         </style>
         """.replace("__THEME_VARS__", _theme_vars(theme_name)),
@@ -1500,7 +1822,11 @@ def current_filter_values() -> dict:
         "min_opportunity_score": int(st.session_state.get("filter_min_opp_score", 0)),
         "min_opportunity_confidence": int(st.session_state.get("filter_min_opp_confidence", 0)),
         "hide_global_giants": bool(st.session_state.get("filter_hide_giants", False)),
-        "opportunity_type_filter": _session_option("filter_opp_type", OPPORTUNITY_TYPE_OPTIONS, OPPORTUNITY_TYPE_OPTIONS[0]),
+        "opportunity_type_filter": _session_option(
+            "filter_opp_type",
+            OPPORTUNITY_TYPE_OPTIONS,
+            OPPORTUNITY_TYPE_OPTIONS[0],
+        ),
     }
 
 

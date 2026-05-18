@@ -79,12 +79,12 @@ case "$CMD" in
     ensure_nvidia_proxy
     if [[ -x "$VENV_PYTHON" ]]; then
       set +e
-      "$VENV_PYTHON" -m src.crawler.run_daily "${crawler_args[@]}"
+      "$VENV_PYTHON" -m src.crawler.run_daily ${crawler_args[@]+"${crawler_args[@]}"}
       crawl_status=$?
       set -e
     elif command -v uv >/dev/null 2>&1; then
       set +e
-      uv run python -m src.crawler.run_daily "${crawler_args[@]}"
+      uv run python -m src.crawler.run_daily ${crawler_args[@]+"${crawler_args[@]}"}
       crawl_status=$?
       set -e
     else
