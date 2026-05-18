@@ -126,6 +126,15 @@ class DomainRepository:
         result = self._client.table("domains").update(row).eq("id", domain_id).execute()
         return result.data[0] if result.data else {}
 
+    def update_opportunity_fields(
+        self,
+        domain_id: str,
+        opportunity_data: dict,
+    ) -> dict:
+        """Update opportunity scoring fields for a domain record."""
+        result = self._client.table("domains").update(opportunity_data).eq("id", domain_id).execute()
+        return result.data[0] if result.data else {}
+
 
 class ObservationRepository:
     """Repository for observation CRUD operations."""

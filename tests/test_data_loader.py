@@ -114,6 +114,10 @@ def test_filter_signature_changes_for_range_and_page_size():
         "category_filter": "All Categories",
         "show_reviewed": True,
         "sort_by": "Score High → Low",
+        "min_opportunity_score": 0,
+        "min_opportunity_confidence": 0,
+        "hide_global_giants": False,
+        "opportunity_type_filter": "All Types",
     }
 
     same_day_signature = streamlit_app._filter_signature(filters, 50)

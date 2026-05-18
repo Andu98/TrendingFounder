@@ -44,7 +44,6 @@ pillow==12.2.0
 platformdirs==4.9.6
 pluggy==1.6.0
 postgrest==2.30.0
-propcache==0.5.2
 protobuf==7.34.1
 pyarrow==24.0.0
 pycparser==3.0
@@ -56,14 +55,9 @@ Pygments==2.20.0
 pyiceberg==0.11.1
 PyJWT==2.12.1
 pyparsing==3.3.2
-pyroaring==1.1.0
-pytest==9.0.3
-python-dateutil==2.9.0.post0
-python-dotenv==1.2.2
-python-multipart==0.0.28
+pyparsing==3.3.2
 pytokens==0.4.1
-realtime==2.30.0
-referencing==0.37.0
+real-time==2.30.0
 requests==2.34.2
 requests-file==3.0.1
 rich==14.3.4
@@ -89,3 +83,4 @@ uvicorn==0.47.0
 websockets==15.0.1
 yarl==1.23.0
 zstandard==0.25.0
+beautifulsoup4==4.12.3

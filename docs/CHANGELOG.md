@@ -44,7 +44,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - 24 new tests: normalization edge cases (HTTPS, subdomains, international TLDs, invalid input), dedupe scenarios
 
 ### Phase 5: LLM enrichment
-- LM Studio OpenAI-compatible client (`src/llm/lmstudio_client.py`) using httpx with `response_format: json_object`, 60s timeout
+- LM Studio OpenAI-compatible client (`src/llm/lmstudio_client.py`) using httpx with `response_format: json_object`, 300s timeout
 - LLM response Pydantic schema (`src/llm/schemas.py`) with score validation (1-5), min-length summary, valid category/business model constraints
 - Enrichment prompt (`src/llm/prompts.py`) with strict JSON system prompt and dynamic field builder (title, meta description, categories, country, ranking, rank, pct change, homepage snippet)
 - Response parsing: strips markdown code blocks, validates JSON, validates Pydantic schema

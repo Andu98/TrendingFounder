@@ -1,0 +1,23 @@
+{
+  "mcpServers": {
+    "context-mode": {
+      "command": "context-mode",
+      "args": [],
+      "env": {
+        "CONTEXT_MODE_IDLE_TIMEOUT_MS": "900000"
+      }
+    },
+    "supabase": {
+      "httpUrl": "https://mcp.supabase.com/mcp?project_ref=fnuqhnzuobliapdwolaw&features=development%2Cfunctions%2Cstorage%2Cbranching%2Cdatabase%2Cdebugging%2Caccount%2Cdocs"
+    },
+    "chrome-devtools": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "chrome-devtools-mcp@latest",
+        "--isolated=true",
+        "--channel=stable"
+      ]
+    }
+  }
+}

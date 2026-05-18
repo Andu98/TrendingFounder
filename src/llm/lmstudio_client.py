@@ -26,7 +26,7 @@ class LMStudioClient:
         self,
         base_url: str | None = None,
         model: str | None = None,
-        timeout: float = 60.0,
+        timeout: float = 300.0,
     ):
         self._base_url = (base_url or settings.lmstudio_base_url).rstrip("/")
         self._model = model or settings.lmstudio_model
@@ -45,6 +45,35 @@ class LMStudioClient:
         if self._client and not self._client.is_closed:
             await self._client.aclose()
             self._client = None
+
+    async def call(self, prompt: str, temperature: float = 0.1) -> dict:
+        """Generic LLM call that returns parsed JSON response.
+
+        Args:
+            prompt: User prompt text
+            temperature: Sampling temperature (default 0.1)
+
+        Returns:
+            Parsed JSON dict from the LLM response
+        """
+        payload = {
+            "model": self._model,
+            "messages": [
+                {"role": "user", "content": prompt},
+            ],
+            "temperature": temperature,
+            "max_tokens": 1024,
+        }
+
+        response = await self._post(payload)
+        data = response.json()
+        content = data["choices"][0]["message"]["content"]
+
+        content = content.strip()
+        if content.startswith("```"):
+            content = content.split("\n", 1)[-1].rsplit("```", 1)[0].strip()
+
+        return json.loads(content)
 
     async def __aenter__(self):
         return self

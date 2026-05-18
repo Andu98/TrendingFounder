@@ -7,7 +7,26 @@ import streamlit as st
 
 from src.config.constants import COUNTRY_CODES
 
+KNOWN_GLOBAL_GIANTS = frozenset({
+    "amazon.com", "udemy.com", "box.com", "google.com", "youtube.com",
+    "facebook.com", "instagram.com", "netflix.com", "booking.com", "airbnb.com",
+    "microsoft.com", "apple.com", "temu.com", "aliexpress.com", "wikipedia.org",
+    "linkedin.com", "x.com", "twitter.com", "tiktok.com",
+    "github.com", "stackoverflow.com", "zoom.us", "slack.com", "whatsapp.com",
+    "reddit.com", "pinterest.com", "spotify.com", "twitch.tv", "discord.com",
+    "notion.so", "canva.com", "figma.com", "adobe.com", "salesforce.com",
+    "oracle.com", "ibm.com", "intel.com", "nvidia.com", "tesla.com",
+})
+
 STATUS_OPTIONS = ["pending", "ok", "exists", "bad"]
+
+
+def _is_global_giant(domain: str) -> bool:
+    return domain.lower() in KNOWN_GLOBAL_GIANTS
+
+
+def _is_global_giant(domain: str) -> bool:
+    return domain.lower() in KNOWN_GLOBAL_GIANTS
 
 
 def _is_blank(value) -> bool:
@@ -103,6 +122,18 @@ def _score_badge(score: int) -> str:
     else:
         variant = "low"
     return f"<span class='tf-score tf-score-{variant}'>{score}</span>"
+
+
+def _opportunity_score_badge(score: int) -> str:
+    if score >= 71:
+        variant = "high"
+    elif score >= 51:
+        variant = "medium"
+    elif score >= 21:
+        variant = "low"
+    else:
+        variant = "low"
+    return f"<span class='tf-score tf-score-{variant} tf-opp-score'>{score}</span>"
 
 
 def _status_pill(status: str) -> str:
@@ -320,3 +351,36 @@ def render_domain_table(
                         + "</div>"
                     )
                     st.markdown(details_html, unsafe_allow_html=True)
+
+                # Opportunity scoring section
+                opp_score = _int(row.get("Opportunity Score"))
+                opp_type = _text(row.get("Opportunity Type"), "")
+                opp_category = _text(row.get("Opportunity Category"), "")
+                opp_confidence = _int(row.get("Opportunity Confidence"))
+                opp_summary = _text(row.get("Opportunity Summary"), "")
+                opp_idea = _text(row.get("Opportunity Idea"), "")
+                trend_score = _int(row.get("Trend Score"))
+                opp_breakdown = row.get("Opportunity Breakdown")
+
+                if opp_type and opp_type != "N/A":
+                    st.divider()
+                    st.markdown("<div class='tf-detail-title'>Romanian Market Opportunity</div>", unsafe_allow_html=True)
+
+                    opp_cols = st.columns([1, 1, 1, 1], gap="medium")
+                    opp_cols[0].markdown(f"**Opportunity Score:** {_opportunity_score_badge(opp_score)}", unsafe_allow_html=True)
+                    opp_cols[1].markdown(f"**Trend Score:** {trend_score}")
+                    opp_cols[2].markdown(f"**Category:** {_text(opp_category, 'N/A')}")
+                    opp_cols[3].markdown(f"**Type:** {_text(opp_type, 'N/A')}")
+
+                    if opp_summary:
+                        st.markdown(f"**Summary:** {opp_summary}")
+
+                    if opp_idea:
+                        st.markdown(f"**Romania Adaptation Idea:** {opp_idea}")
+
+                    if opp_confidence:
+                        st.markdown(f"**Confidence:** {opp_confidence}/100")
+
+                    if opp_breakdown and isinstance(opp_breakdown, dict):
+                        with st.expander("Full JSON Breakdown"):
+                            st.json(opp_breakdown)

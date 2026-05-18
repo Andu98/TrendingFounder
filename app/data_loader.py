@@ -29,9 +29,44 @@ CATEGORY_FILTER_OPTIONS = [
 ]
 
 STATUS_FILTER_OPTIONS = ["All Statuses", "pending", "ok", "exists", "bad"]
-SORT_OPTIONS = ["Score High → Low", "Score Low → High", "Newest", "Country Count"]
+SORT_OPTIONS = ["Opportunity Score", "Score High → Low", "Score Low → High", "Newest", "Country Count"]
 DEFAULT_PAGE_SIZE = 50
 PAGE_SIZE_OPTIONS = [10, 25, 50, 100]
+
+OPPORTUNITY_TYPE_OPTIONS = [
+    "All Types",
+    "local_marketplace",
+    "b2b_saas",
+    "consumer_app",
+    "vertical_saas",
+    "content_platform",
+    "ecommerce_tool",
+    "education_tool",
+    "healthcare_tool",
+    "logistics_tool",
+    "other",
+]
+
+OPPORTUNITY_CATEGORY_OPTIONS = [
+    "All Categories",
+    "AI",
+    "SaaS",
+    "Ecommerce",
+    "Community",
+    "Entertainment",
+    "Finance",
+    "Education",
+    "Productivity",
+    "Developer Tools",
+    "Marketplace",
+    "Games",
+    "Social",
+    "Adult",
+    "Gambling",
+    "Piracy",
+    "Scam-risk",
+    "Other",
+]
 
 
 def _as_list(value) -> list:
@@ -181,6 +216,16 @@ def _format_today_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     df["Times observed"] = _numeric_series(df, "times_observed").round().astype(int)
     df["Initial score"] = _numeric_series(df, "initial_score").round().astype(int)
 
+    # Opportunity scoring fields
+    df["Opportunity Score"] = _numeric_series(df, "opportunity_score", 0).round().astype(int)
+    df["Trend Score"] = _numeric_series(df, "trend_score", 0).round().astype(int)
+    df["Opportunity Category"] = _series(df, "opportunity_category", "").fillna("").replace("", "N/A")
+    df["Opportunity Type"] = _series(df, "opportunity_type", "").fillna("").replace("", "N/A")
+    df["Opportunity Confidence"] = _numeric_series(df, "opportunity_confidence", 0).round().astype(int)
+    df["Opportunity Summary"] = _series(df, "opportunity_summary", "").fillna("")
+    df["Opportunity Idea"] = _series(df, "opportunity_idea", "").fillna("")
+    df["Opportunity Breakdown"] = _series(df, "opportunity_breakdown", None)
+
     columns = [
         "id",
         "Domain",
@@ -204,6 +249,14 @@ def _format_today_dataframe(df: pd.DataFrame) -> pd.DataFrame:
         "Last seen in range",
         "Times observed",
         "Initial score",
+        "Opportunity Score",
+        "Trend Score",
+        "Opportunity Category",
+        "Opportunity Type",
+        "Opportunity Confidence",
+        "Opportunity Summary",
+        "Opportunity Idea",
+        "Opportunity Breakdown",
     ]
     return df[[column for column in columns if column in df.columns]]
 
@@ -218,6 +271,10 @@ def load_collected_data(
     date_end: date | datetime | str | None = None,
     page: int = 1,
     page_size: int = DEFAULT_PAGE_SIZE,
+    min_opportunity_score: int = 0,
+    min_opportunity_confidence: int = 0,
+    opportunity_type_filter: str = "All Types",
+    hide_global_giants: bool = False,
 ) -> tuple[pd.DataFrame, int]:
     """Load filtered domain rows through the Supabase range RPC."""
     try:
@@ -240,6 +297,10 @@ def load_collected_data(
                     "sort_by": sort_by,
                     "page": page,
                     "page_size": page_size,
+                    "min_opportunity_score": min_opportunity_score,
+                    "min_opportunity_confidence": min_opportunity_confidence,
+                    "opportunity_type_filter": opportunity_type_filter,
+                    "hide_global_giants": hide_global_giants,
                 },
             )
             .execute()

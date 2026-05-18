@@ -66,7 +66,7 @@ Scop: proiectul pornește curat.
 
 ## Phase 5: LLM enrichment
 
-- [x] **P5.01** — LM Studio OpenAI-compatible client (`src/llm/lmstudio_client.py`) with httpx, JSON response format, 60s timeout
+- [x] **P5.01** — LM Studio OpenAI-compatible client (`src/llm/lmstudio_client.py`) with httpx, JSON response format, 300s timeout
 - [x] **P5.02** — LLM response Pydantic schema (`src/llm/schemas.py`) with validation (scores 1-5, min-length summary, valid categories/business models)
 - [x] **P5.03** — Enrichment prompt (`src/llm/prompts.py`) with strict JSON system prompt and dynamic field builder
 - [x] **P5.04** — Parse/validate LLM response: strips markdown code blocks, validates JSON, validates Pydantic schema

@@ -21,6 +21,7 @@ from app.components.metrics_cards import render_metrics_cards, render_progress_b
 from app.data_loader import (
     CATEGORY_FILTER_OPTIONS,
     DEFAULT_PAGE_SIZE,
+    OPPORTUNITY_TYPE_OPTIONS,
     PAGE_SIZE_OPTIONS,
     SORT_OPTIONS,
     STATUS_FILTER_OPTIONS,
@@ -1461,6 +1462,10 @@ def _filter_signature(filters: dict, page_size: int) -> tuple:
         filters["show_reviewed"],
         filters["sort_by"],
         page_size,
+        filters["min_opportunity_score"],
+        filters["min_opportunity_confidence"],
+        filters["hide_global_giants"],
+        filters["opportunity_type_filter"],
     )
 
 
@@ -1492,6 +1497,10 @@ def current_filter_values() -> dict:
         "min_score": 0,
         "date_start": date_start,
         "date_end": date_end,
+        "min_opportunity_score": int(st.session_state.get("filter_min_opp_score", 0)),
+        "min_opportunity_confidence": int(st.session_state.get("filter_min_opp_confidence", 0)),
+        "hide_global_giants": bool(st.session_state.get("filter_hide_giants", False)),
+        "opportunity_type_filter": _session_option("filter_opp_type", OPPORTUNITY_TYPE_OPTIONS, OPPORTUNITY_TYPE_OPTIONS[0]),
     }
 
 
@@ -1559,6 +1568,10 @@ def render_collected_data_page() -> None:
         date_end=filters["date_end"],
         page=page,
         page_size=page_size,
+        min_opportunity_score=filters["min_opportunity_score"],
+        min_opportunity_confidence=filters["min_opportunity_confidence"],
+        opportunity_type_filter=filters["opportunity_type_filter"],
+        hide_global_giants=filters["hide_global_giants"],
     )
     if df.empty and page > 1:
         st.session_state.collected_page = 1

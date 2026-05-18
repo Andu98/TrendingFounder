@@ -1,5 +1,5 @@
 from datetime import date
-from unittest.mock import AsyncMock, MagicMock
+from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
 
@@ -99,13 +99,23 @@ async def test_orchestrator_runs_with_mocked_repos():
         ]
     )
     mock_radar.get_top_domains = AsyncMock(
-        return_value=[
-            MagicMock(
-                domain="rising-app.com",
-                rank=1,
-                pct_rank_change=200.0,
-                categories=[],
-            )
+        side_effect=[
+            [
+                MagicMock(
+                    domain="rising-app.com",
+                    rank=1,
+                    pct_rank_change=200.0,
+                    categories=[],
+                )
+            ],
+            [
+                MagicMock(
+                    domain="steady-app.com",
+                    rank=1,
+                    pct_rank_change=5.0,
+                    categories=[],
+                )
+            ],
         ]
     )
 
@@ -139,10 +149,11 @@ async def test_orchestrator_runs_with_mocked_repos():
 
     orchestrator._radar = mock_radar
 
-    await orchestrator.run(
-        run_date=date.today(),
-        countries=[{"code": "US", "name": "United States"}],
-    )
+    with patch("src.crawler.orchestrator.load_existing_domains", AsyncMock(return_value={})):
+        await orchestrator.run(
+            run_date=date.today(),
+            countries=[{"code": "US", "name": "United States"}],
+        )
 
     # Two ranking types processed, domain is new each time (mock always returns None)
     assert mock_domain_repo.upsert_domain.call_count == 2

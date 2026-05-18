@@ -245,7 +245,28 @@ class CrawlOrchestrator:
             f"({countries_completed}/{countries_total} countries, "
             f"{counters['new_domains']} new, {counters['duplicate_domains']} dupes)"
         )
+
+        if counters["new_domains"] > 0 and final_status in (CrawlRunStatus.COMPLETED, CrawlRunStatus.PARTIAL):
+            await self._run_opportunity_scoring(counters["new_domains"])
+
         return run
+
+    async def _run_opportunity_scoring(self, new_domains_count: int) -> None:
+        """Score new domains with the opportunity LLM after crawl completes."""
+        try:
+            from src.opportunity.update_opportunity_scores import update_opportunity_scores
+
+            logger.info(f"Running opportunity scoring for {new_domains_count} new domains...")
+            scored = await update_opportunity_scores(
+                only_missing=True,
+                limit=new_domains_count,
+                dry_run=False,
+                fetch_homepage=True,
+                concurrency=3,
+            )
+            logger.info(f"Opportunity scoring complete: {scored} domains scored")
+        except Exception as e:
+            logger.error(f"Opportunity scoring failed after crawl: {e}")
 
     async def _process_country(
         self,

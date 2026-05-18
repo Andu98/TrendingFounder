@@ -19,15 +19,36 @@ def _print_usage() -> None:
 
 
 def start() -> int:
+    """Entry point for the project's command-line interface.
+
+    Supported sub-commands:
+    * ``trending`` – launches the Streamlit dashboard (original behaviour).
+    * ``update-opportunity-scores`` – recalculates opportunity scores for all
+      domains. Optional flags:
+        ``--only-missing`` ``--limit N`` ``--min-trend-score X`` ``--dry-run``
+        ``--force`` ``--fetch-homepage`` ``--concurrency N``
+    """
     args = sys.argv[1:]
-    if not args or args[0] != "trending":
+    if not args:
         _print_usage()
         return 2
 
-    root = _project_root()
-    streamlit_app = root / "app" / "streamlit_app.py"
-    command = [sys.executable, "-m", "streamlit", "run", str(streamlit_app), *args[1:]]
-    return subprocess.call(command, cwd=root)
+    sub_cmd = args[0]
+
+    if sub_cmd == "trending":
+        # Preserve original behaviour
+        root = _project_root()
+        streamlit_app = root / "app" / "streamlit_app.py"
+        command = [sys.executable, "-m", "streamlit", "run", str(streamlit_app), *args[1:]]
+        return subprocess.call(command, cwd=root)
+
+    if sub_cmd == "update-opportunity-scores":
+        from src.opportunity.update_opportunity_scores import cli as opportunity_cli
+        return opportunity_cli(argv=args[1:])
+
+    print(f"Unknown command: {sub_cmd}")
+    _print_usage()
+    return 2
 
 
 if __name__ == "__main__":

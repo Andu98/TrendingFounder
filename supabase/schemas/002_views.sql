@@ -14,6 +14,11 @@ SELECT
     dom.review_status,
     dom.initial_score,
     dom.latest_best_score,
+    dom.opportunity_score,
+    dom.opportunity_category,
+    dom.opportunity_type,
+    dom.opportunity_confidence,
+    dom.trend_score,
     MAX(obs.observation_score) AS best_score_today,
     COUNT(DISTINCT obs.country_code) AS countries_today,
     COUNT(DISTINCT obs.ranking_type) AS ranking_types_count,
@@ -25,7 +30,9 @@ JOIN domain_observations obs ON obs.domain_id = dom.id
 WHERE obs.observed_date = CURRENT_DATE
 GROUP BY dom.id, dom.normalized_domain, dom.display_url, dom.first_seen_date,
     dom.llm_summary, dom.llm_category, dom.llm_business_model,
-    dom.review_status, dom.initial_score, dom.latest_best_score;
+    dom.review_status, dom.initial_score, dom.latest_best_score,
+    dom.opportunity_score, dom.opportunity_category, dom.opportunity_type,
+    dom.opportunity_confidence, dom.trend_score;
 
 -- This week view: best score in last 7 days
 CREATE OR REPLACE VIEW v_domains_this_week AS
@@ -33,6 +40,8 @@ SELECT
     dom.id, dom.normalized_domain, dom.display_url, dom.first_seen_date,
     dom.llm_summary, dom.llm_category, dom.llm_business_model,
     dom.review_status, dom.initial_score, dom.latest_best_score,
+    dom.opportunity_score, dom.opportunity_category, dom.opportunity_type,
+    dom.opportunity_confidence, dom.trend_score,
     MAX(obs.observation_score) AS best_score_week,
     COUNT(DISTINCT obs.country_code) AS countries_this_week,
     COUNT(DISTINCT obs.ranking_type) AS ranking_types_count,
@@ -47,7 +56,9 @@ JOIN domain_observations obs ON obs.domain_id = dom.id
 WHERE obs.observed_date >= CURRENT_DATE - INTERVAL '7 days'
 GROUP BY dom.id, dom.normalized_domain, dom.display_url, dom.first_seen_date,
     dom.llm_summary, dom.llm_category, dom.llm_business_model,
-    dom.review_status, dom.initial_score, dom.latest_best_score;
+    dom.review_status, dom.initial_score, dom.latest_best_score,
+    dom.opportunity_score, dom.opportunity_category, dom.opportunity_type,
+    dom.opportunity_confidence, dom.trend_score;
 
 -- Date range RPC: filtered, aggregated, sorted, and paginated in the database
 CREATE OR REPLACE FUNCTION get_domains_for_range(
@@ -59,7 +70,11 @@ CREATE OR REPLACE FUNCTION get_domains_for_range(
     search_query TEXT DEFAULT '',
     sort_by TEXT DEFAULT 'Score High → Low',
     page INTEGER DEFAULT 1,
-    page_size INTEGER DEFAULT 50
+    page_size INTEGER DEFAULT 50,
+    min_opportunity_score INTEGER DEFAULT 0,
+    min_opportunity_confidence INTEGER DEFAULT 0,
+    opportunity_type_filter TEXT DEFAULT 'All Types',
+    hide_global_giants BOOLEAN DEFAULT FALSE
 )
 RETURNS TABLE (
     id UUID,
@@ -81,7 +96,12 @@ RETURNS TABLE (
     last_seen_in_range DATE,
     times_observed BIGINT,
     comment_count BIGINT,
-    total_count BIGINT
+    total_count BIGINT,
+    opportunity_score NUMERIC,
+    opportunity_category TEXT,
+    opportunity_type TEXT,
+    opportunity_confidence INTEGER,
+    trend_score NUMERIC
 )
 LANGUAGE sql
 STABLE
@@ -96,7 +116,11 @@ WITH params AS (
         NULLIF(TRIM($6), '') AS search_query,
         COALESCE(NULLIF(TRIM($7), ''), 'Score High → Low') AS sort_label,
         GREATEST(COALESCE($8, 1), 1) AS page_number,
-        GREATEST(COALESCE($9, 50), 1) AS rows_per_page
+        GREATEST(COALESCE($9, 50), 1) AS rows_per_page,
+        COALESCE($10, 0) AS min_opp_score,
+        COALESCE($11, 0) AS min_opp_confidence,
+        NULLIF(TRIM($12), '') AS opp_type_filter,
+        COALESCE($13, FALSE) AS hide_giants
 ),
 aggregated AS (
     SELECT
@@ -111,6 +135,11 @@ aggregated AS (
         dom.review_status,
         dom.initial_score,
         dom.latest_best_score,
+        dom.opportunity_score,
+        dom.opportunity_category,
+        dom.opportunity_type,
+        dom.opportunity_confidence,
+        dom.trend_score,
         COALESCE(
             MAX(obs.observation_score),
             MAX(
@@ -176,9 +205,37 @@ aggregated AS (
             OR dom.normalized_domain ILIKE '%' || p.search_query || '%'
             OR COALESCE(dom.display_url, '') ILIKE '%' || p.search_query || '%'
         )
+        AND (
+            p.min_opp_score = 0
+            OR COALESCE(dom.opportunity_score, 0) >= p.min_opp_score
+        )
+        AND (
+            p.min_opp_confidence = 0
+            OR COALESCE(dom.opportunity_confidence, 0) >= p.min_opp_confidence
+        )
+        AND (
+            p.opp_type_filter IS NULL
+            OR p.opp_type_filter = 'All Types'
+            OR COALESCE(dom.opportunity_type, '') = p.opp_type_filter
+        )
+        AND (
+            NOT p.hide_giants
+            OR LOWER(dom.normalized_domain) NOT IN (
+                'amazon.com', 'udemy.com', 'box.com', 'google.com', 'youtube.com',
+                'facebook.com', 'instagram.com', 'netflix.com', 'booking.com', 'airbnb.com',
+                'microsoft.com', 'apple.com', 'temu.com', 'aliexpress.com', 'wikipedia.org',
+                'linkedin.com', 'x.com', 'twitter.com', 'tiktok.com',
+                'github.com', 'stackoverflow.com', 'zoom.us', 'slack.com', 'whatsapp.com',
+                'reddit.com', 'pinterest.com', 'spotify.com', 'twitch.tv', 'discord.com',
+                'notion.so', 'canva.com', 'figma.com', 'adobe.com', 'salesforce.com',
+                'oracle.com', 'ibm.com', 'intel.com', 'nvidia.com', 'tesla.com'
+            )
+        )
     GROUP BY dom.id, dom.normalized_domain, dom.display_url, dom.first_seen_at, dom.first_seen_date,
         dom.llm_summary, dom.llm_category, dom.llm_business_model,
-        dom.review_status, dom.initial_score, dom.latest_best_score
+        dom.review_status, dom.initial_score, dom.latest_best_score,
+        dom.opportunity_score, dom.opportunity_category, dom.opportunity_type,
+        dom.opportunity_confidence, dom.trend_score
 ),
 counted AS (
     SELECT aggregated.*, COUNT(*) OVER() AS total_count
@@ -204,10 +261,16 @@ SELECT
     counted.last_seen_in_range,
     counted.times_observed,
     counted.comment_count,
-    counted.total_count
+    counted.total_count,
+    counted.opportunity_score,
+    counted.opportunity_category,
+    counted.opportunity_type,
+    counted.opportunity_confidence,
+    counted.trend_score
 FROM counted
 CROSS JOIN params p
 ORDER BY
+    CASE WHEN p.sort_label = 'Opportunity Score' THEN counted.opportunity_score END DESC NULLS LAST,
     CASE WHEN p.sort_label IN ('Score High → Low', 'Score (desc)') THEN counted.best_score_today END DESC NULLS LAST,
     CASE WHEN p.sort_label IN ('Score Low → High', 'Score (asc)') THEN counted.best_score_today END ASC NULLS LAST,
     CASE WHEN p.sort_label = 'Newest' THEN counted.first_seen_at END DESC NULLS LAST,

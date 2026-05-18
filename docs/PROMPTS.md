@@ -186,11 +186,15 @@ Known giants list: google.com, youtube.com, facebook.com, amazon.com, microsoft.
 **Endpoint:** LM Studio on `http://localhost:1234/v1/chat/completions`
 **Model:** `qwen/qwen2.5-vl-7b`
 **Response format:** `json_schema` with strict schema
-**Timeout:** 60s
+**Timeout:** 300s
 **Retry:** 4 attempts, exponential backoff 2-30s (on HTTP errors, connect errors, timeouts)
 
 **Input fields sent to LLM:**
 - domain, title, meta_description, Cloudflare categories, country_code, ranking_type, rank, pct_rank_change, homepage_snippet (up to 4KB)
+
+**Anti-Hallucination Policy:**
+- **Skip on failure:** If `--fetch-homepage` is enabled but the crawl fails, scoring is skipped entirely.
+- **Strict Logic:** Prompt explicitly forbids guessing when `homepage_snippet` is `None`. Confidence is forced to 1 and score to 0 if the domain is not recognized with 100% certainty.
 
 **LLM output (validated JSON):**
 
