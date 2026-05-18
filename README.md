@@ -58,6 +58,18 @@ TrendingFounder/
 
 ## Documentation
 
+### System Overview
+
+![System Overview](docs/diagrams/generated/system-overview.svg)
+
+### External Services
+
+![External Services](docs/diagrams/generated/external-services.svg)
+
+### Crawl Pipeline
+
+![Crawl Pipeline](docs/diagrams/generated/crawl-pipeline.svg)
+
 | File | Purpose |
 |---|---|
 | [docs/PLAN.md](docs/PLAN.md) | Full product plan, architecture, data model |

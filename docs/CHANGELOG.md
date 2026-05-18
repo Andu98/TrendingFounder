@@ -110,3 +110,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - **Domain table rewritten**: Replaced `st.data_editor` with manual per-row rendering using `st.columns`. Added inline exclusive status checkboxes and `st.popover` for Comments per row. `load_comments()` added to `data_loader`. (`app/components/domain_table.py`, `app/data_loader.py`)
 - **`high_score_today` un-hardcoded**: Now queries `v_domains_today` for actual count instead of always showing 0. (`app/pages/1_Today.py`, `app/pages/3_Stats.py`)
 - **Docs updated**: README phase statuses corrected, PLAN.md structure tree synced with codebase, TASKS.md got consistent `PX.XX` numbering.
+
+
+### Phase 9: Documentation and Diagrams
+- **D2 diagrams added**: Created system architecture diagrams using D2 (modern text-to-diagram language), including system-overview.d2, external-services.d2, and crawl-pipeline.d2 from existing architecture documentation.
+- **SVG rendering**: All diagrams are rendered to SVG format in docs/diagrams/generated/ for easy viewing and embedding.
+- **Documentation**: Added comprehensive README in docs/diagrams/ explaining D2 installation, diagram generation, and reference to original architecture docs.
+- **Task tracking**: Updated TASKS.md with new Phase 9 tracking all diagram-related activities.
+
+(End of file - total 116 lines)

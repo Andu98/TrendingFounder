@@ -1,0 +1,87 @@
+# Crawl Pipeline Diagram
+
+Create_CrawlRun: "Create CrawlRun"
+  style.fill: "#e5e7eb"
+  style.stroke: "#9ca3af"
+  style.stroke-width: 2
+
+Fetch_Countries: "Fetch Country List"
+  style.fill: "#e5e7eb"
+  style.stroke: "#9ca3af"
+  style.stroke-width: 2
+
+country_loop: "Iterate Countries"
+  style.fill: "#e5e7eb"
+  style.stroke: "#9ca3af"
+  style.stroke-width: 2
+
+ranking_loop: "Get Top Domains"
+  style.fill: "#e5e7eb"
+  style.stroke: "#9ca3af"
+  style.stroke-width: 2
+
+dedup_box: "Deduplication"
+  style.fill: "#e5e7eb"
+  style.stroke: "#9ca3af"
+  style.stroke-width: 2
+
+LLM_Enrich: "LLM Enrichment"
+  style.fill: "#e5e7eb"
+  style.stroke: "#9ca3af"
+  style.stroke-width: 2
+
+Scoring_Process: "Scoring"
+  style.fill: "#e5e7eb"
+  style.stroke: "#9ca3af"
+  style.stroke-width: 2
+
+Insert_Observation: "Insert Observation"
+  style.fill: "#e5e7eb"
+  style.stroke: "#9ca3af"
+  style.stroke-width: 2
+
+Skip_LLM: "Skip LLM"
+  style.fill: "#e5e7eb"
+  style.stroke: "#9ca3af"
+  style.stroke-width: 2
+
+Update_Counters: "Update Counters"
+  style.fill: "#e5e7eb"
+  style.stroke: "#9ca3af"
+  style.stroke-width: 2
+
+progress_box: "Update Progress"
+  style.fill: "#e5e7eb"
+  style.stroke: "#9ca3af"
+  style.stroke-width: 2
+
+pause_check: "Pause/Stop Check"
+  style.fill: "#e5e7eb"
+  style.stroke: "#9ca3af"
+  style.stroke-width: 2
+
+continue_arrow: "Continue"
+stop_arrow: "Stop"
+Persist_Stats: "Persist Stats"
+
+# Connections
+Create_CrawlRun -> Fetch_Countries
+Fetch_Countries -> country_loop
+country_loop -> ranking_loop
+ranking_loop -> dedup_box
+
+dedup_box -> LLM_Enrich: "new"
+
+dedup_box -> Skip_LLM: "duplicate"
+
+LLM_Enrich -> Scoring_Process
+Scoring_Process -> Insert_Observation
+LLM_Enrich -> progress_box
+Skip_LLM -> Update_Counters
+Update_Counters -> progress_box
+Insert_Observation -> progress_box
+progress_box -> pause_check
+pause_check -> continue_arrow: "continue"
+pause_check -> stop_arrow: "stop"
+continue_arrow -> country_loop
+stop_arrow -> Persist_Stats

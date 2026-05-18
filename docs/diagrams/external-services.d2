@@ -1,0 +1,45 @@
+# External Services Diagram
+
+Crawl_Orchestrator: "Crawl Orchestrator"
+  style.fill: "#e5e7eb"
+  style.stroke: "#9ca3af"
+  style.stroke-width: 2
+
+Cloudflare_Radar: "Cloudflare Radar API"
+  style.fill: "#e5e7eb"
+  style.stroke: "#9ca3af"
+  style.stroke-width: 2
+
+LMStudio: "LMStudio LLM Service"
+  style.fill: "#e5e7eb"
+  style.stroke: "#9ca3af"
+  style.stroke-width: 2
+
+Database: "Supabase DB"
+  style.fill: "#e5e7eb"
+  style.stroke: "#9ca3af"
+  style.stroke-width: 2
+
+# Endpoints
+geo_endpoint: "GET /radar/geolocations"
+ranking_endpoint: "GET /radar/ranking/top"
+
+enrich_service: "enrich(domain)"
+
+# Tables
+domains_table: "domains"
+observations_table: "domain_observations"
+crawl_runs_table: "crawl_runs"
+comments_table: "domain_comments"
+
+# Connections
+Crawl_Orchestrator -> Cloudflare_Radar: "fetches"
+Crawl_Orchestrator -> LMStudio: "enriches"
+Crawl_Orchestrator -> Database: "stores"
+Cloudflare_Radar -> geo_endpoint
+Cloudflare_Radar -> ranking_endpoint
+LMStudio -> enrich_service
+Database -> domains_table
+Database -> observations_table
+Database -> crawl_runs_table
+Database -> comments_table

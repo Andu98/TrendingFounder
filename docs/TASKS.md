@@ -107,3 +107,14 @@ Scop: proiectul pornește curat.
 - [x] **P8.07** — Partial failure support: crawl_run status = "partial" when some countries fail
 - [x] **P8.08** — RUNBOOK.md: daily operations, troubleshooting, DB maintenance, monitoring
 - [x] **P8.09** — 8 new tests: progress formatting, run resume logic, orchestrator end-to-end flow
+
+---
+
+## Phase 9: Documentation and Diagrams
+
+- [x] **P9.01** — Install D2 diagramming tool via Homebrew
+- [x] **P9.02** — Create system overview diagram (`docs/diagrams/system-overview.d2`) from existing architecture documentation
+- [x] **P9.03** — Create external services diagram (`docs/diagrams/external-services.d2`) from existing architecture documentation  
+- [x] **P9.04** — Create detailed crawl pipeline diagram (`docs/diagrams/crawl-pipeline.d2`) from existing architecture documentation
+- [x] **P9.05** — Render all D2 diagrams to SVG format (`docs/diagrams/generated/`)
+- [x] **P9.06** — Create diagrams README documenting the D2 setup and generation process

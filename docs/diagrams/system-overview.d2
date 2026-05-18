@@ -1,0 +1,41 @@
+# System Overview Diagram
+
+UI_Layer: "UI Layer"
+  style.fill: "#e5e7eb"
+  style.stroke: "#9ca3af"
+  style.stroke-width: 2
+
+Backend_Layer: "Backend Layer"
+  style.fill: "#e5e7eb"
+  style.stroke: "#9ca3af"
+  style.stroke-width: 2
+
+External_Services: "External Services"
+  style.fill: "#e5e7eb"
+  style.stroke: "#9ca3af"
+  style.stroke-width: 2
+
+Database: "Supabase DB"
+  style.fill: "#e5e7eb"
+  style.stroke: "#9ca3af"
+  style.stroke-width: 2
+
+# Components within Backend
+Crawl_Orchestrator: "Crawl Orchestrator"
+Cloudflare_Radar_API: "Cloudflare Radar API"
+LMStudio_Service: "LMStudio LLM Service"
+Deduplication: "Deduplication"
+Scoring: "Scoring"
+
+# Connections
+UI_Layer -> Database: "RPC calls"
+Backend_Layer -> UI_Layer
+Backend_Layer -> Database
+Backend_Layer -> External_Services
+Crawl_Orchestrator -> Cloudflare_Radar_API
+Crawl_Orchestrator -> LMStudio_Service
+Crawl_Orchestrator -> Database
+Crawl_Orchestrator -> Deduplication
+Crawl_Orchestrator -> Scoring
+External_Services -> Cloudflare_Radar_API
+External_Services -> LMStudio_Service
