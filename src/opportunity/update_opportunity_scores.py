@@ -393,7 +393,7 @@ async def update_opportunity_scores(
     base_query = domain_repo._client.table("domains").select("*").order("latest_best_score", desc=True)
 
     # Apply filters
-    if only_missing and not force:
+    if only_missing:
         base_query = base_query.is_("opportunity_score", None)
 
     if min_trend_score is not None:
@@ -419,6 +419,7 @@ async def update_opportunity_scores(
         offset += batch_size
 
     # Apply limit after pagination and filtering
+    fetched_candidates = len(domains)
     skipped_failed = 0
     if only_missing and not force:
         before_status_filter = len(domains)
@@ -430,8 +431,10 @@ async def update_opportunity_scores(
 
     logger.info(
         "Processing %s domains "
-        "(domain_concurrency=%s, llm_concurrency=%s, model=%s, dry_run=%s, fetch_homepage=%s, skipped_failed=%s)",
+        "(candidate_count=%s, domain_concurrency=%s, llm_concurrency=%s, model=%s, dry_run=%s, "
+        "fetch_homepage=%s, skipped_failed=%s)",
         len(domains),
+        fetched_candidates,
         domain_concurrency,
         llm_concurrency,
         scorer.model,
@@ -439,6 +442,12 @@ async def update_opportunity_scores(
         fetch_homepage,
         skipped_failed,
     )
+    if only_missing and not force and not domains and skipped_failed:
+        logger.warning(
+            "No domains processed because %s missing-score domain(s) are marked failed. "
+            "Run ./start-score --force to retry failed rows.",
+            skipped_failed,
+        )
 
     # Process domains with concurrency control
     semaphore = asyncio.Semaphore(domain_concurrency)
@@ -511,7 +520,11 @@ def cli(argv=None):
     parser.add_argument("--limit", type=int, help="Limit number of domains to process")
     parser.add_argument("--min-trend-score", type=float, help="Minimum trend score threshold")
     parser.add_argument("--dry-run", action="store_true", help="Print results without saving")
-    parser.add_argument("--force", action="store_true", help="Rescore even if already scored")
+    parser.add_argument(
+        "--force",
+        action="store_true",
+        help="Include previously failed missing-score rows; without --only-missing, rescore selected rows",
+    )
     parser.add_argument("--fetch-homepage", action="store_true", help="Enable homepage fetching with BeautifulSoup")
     parser.add_argument(
         "--concurrency",

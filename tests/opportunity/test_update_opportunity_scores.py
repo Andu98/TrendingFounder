@@ -1,7 +1,15 @@
+import logging
+from types import SimpleNamespace
+
 import pytest
 
+import src.opportunity.update_opportunity_scores as update_module
 from src.opportunity.schemas import OpportunityScoreResult
-from src.opportunity.update_opportunity_scores import _update_opportunity_fields, score_single_domain
+from src.opportunity.update_opportunity_scores import (
+    _update_opportunity_fields,
+    score_single_domain,
+    update_opportunity_scores,
+)
 
 
 def _valid_result(**overrides):
@@ -40,6 +48,64 @@ class FakeDomainRepo:
         return update
 
 
+class FakeQuery:
+    def __init__(self, rows):
+        self.rows = rows
+        self.filters = []
+
+    def select(self, *_args, **_kwargs):
+        return self
+
+    def order(self, *_args, **_kwargs):
+        return self
+
+    def is_(self, column, value):
+        self.filters.append(("is", column, value))
+        return self
+
+    def gte(self, column, value):
+        self.filters.append(("gte", column, value))
+        return self
+
+    def range(self, *_args, **_kwargs):
+        return self
+
+    def execute(self):
+        return SimpleNamespace(data=self.rows)
+
+
+class FakeClient:
+    def __init__(self, query):
+        self.query = query
+
+    def table(self, _table_name):
+        return self.query
+
+
+class FakeScorerForCommand:
+    model = "test-model"
+    validation_retries = 0
+    client = SimpleNamespace(retry_counts={})
+
+    def __init__(self, **_kwargs):
+        pass
+
+    async def close(self):
+        pass
+
+
+def _patch_command_dependencies(monkeypatch, tmp_path, query):
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setattr(update_module, "DomainRepository", lambda: SimpleNamespace(_client=FakeClient(query)))
+    monkeypatch.setattr(update_module, "ObservationRepository", lambda: object())
+    monkeypatch.setattr(
+        update_module,
+        "Settings",
+        lambda: SimpleNamespace(lmstudio_base_url="http://test", lmstudio_model="test-model"),
+    )
+    monkeypatch.setattr(update_module, "OpportunityScorer", FakeScorerForCommand)
+
+
 def test_update_opportunity_fields_falls_back_when_status_columns_are_missing():
     class Repo(FakeDomainRepo):
         def update_opportunity_fields(self, domain_id, update):
@@ -62,6 +128,34 @@ def test_update_opportunity_fields_falls_back_when_status_columns_are_missing():
 
     assert result == {"opportunity_score": 50}
     assert repo.updates[1][1] == {"opportunity_score": 50}
+
+
+@pytest.mark.asyncio
+async def test_only_missing_force_still_queries_missing_scores(monkeypatch, tmp_path):
+    query = FakeQuery([])
+    _patch_command_dependencies(monkeypatch, tmp_path, query)
+
+    processed = await update_opportunity_scores(only_missing=True, force=True)
+
+    assert processed == 0
+    assert ("is", "opportunity_score", None) in query.filters
+
+
+@pytest.mark.asyncio
+async def test_only_missing_logs_force_hint_when_all_missing_rows_failed(monkeypatch, tmp_path, caplog):
+    query = FakeQuery(
+        [
+            {"id": "domain-1", "normalized_domain": "example.com", "opportunity_score_status": "failed"},
+            {"id": "domain-2", "normalized_domain": "example.org", "opportunity_score_status": "failed"},
+        ]
+    )
+    _patch_command_dependencies(monkeypatch, tmp_path, query)
+    caplog.set_level(logging.WARNING)
+
+    processed = await update_opportunity_scores(only_missing=True, force=False)
+
+    assert processed == 0
+    assert "Run ./start-score --force to retry failed rows" in caplog.text
 
 
 @pytest.mark.asyncio

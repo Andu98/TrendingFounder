@@ -6,6 +6,7 @@
 - [x] **A2026-05-19.03** — Update README, runbook, architecture, prompt, and scoring design docs for the new opportunity scoring behavior.
 - [x] **A2026-05-19.04** — Add `./start-score` shortcut that starts the NVIDIA proxy before running the default opportunity scoring command.
 - [x] **A2026-05-19.05** — Make `./start crawler` run `./start-score` after successful crawls, with `--skip-score` for crawl-only runs.
+- [x] **A2026-05-19.06** — Clarify zero-domain scoring runs and make `--only-missing --force` retry only failed missing-score rows.
 
 - Implement async bulk DB client for domain deduplication and observation insertion.
 - Load existing domains into memory at crawl start.
