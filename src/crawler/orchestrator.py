@@ -14,12 +14,26 @@ from src.db.repositories import (
     DomainRepository,
     ObservationRepository,
 )
+from src.db.repositories import bulk_upsert_domains, bulk_insert_observations
 from src.domains.dedupe import dedupe_and_insert
 from src.domains.scoring import score_observation
 from src.llm.lmstudio_client import LMStudioClient
 from src.utils.logging import get_logger
+from src.db.async_client import post, get
 
 logger = get_logger(__name__)
+
+async def load_existing_domains() -> dict[str, str]:
+    """Load all existing domains from Supabase.
+
+    Returns a mapping ``normalized_domain -> id`` for quick in‑memory lookups.
+    """
+    # Use GET with select query parameters to fetch existing domains.
+    rows = await get('/rest/v1/domains', params={'select': 'id,normalized_domain'})
+    return {row['normalized_domain']: row['id'] for row in rows}
+
+# File used to signal graceful stop of crawling process
+STOP_FILE = Path('.crawl_stop')
 
 RANKING_TYPES = [RankingType.TRENDING_RISE, RankingType.TRENDING_STEADY]
 
@@ -64,6 +78,9 @@ class CrawlOrchestrator:
         """
         today = run_date or date.today()
         logger.info(f"Starting daily crawl for {today}")
+        # Load existing domains into an in‑memory cache for fast deduplication
+        existing_domains = await load_existing_domains()
+        self._existing_domains = existing_domains
 
         run = get_or_create_today_run(self._crawl_run_repo, self._country_status_repo)
         run_id = run["id"]
@@ -277,6 +294,7 @@ class CrawlOrchestrator:
                             "rank": entry.rank,
                             "pctRankChange": entry.pct_rank_change,
                         },
+                        existing_domains=self._existing_domains,
                     )
                 except ValueError as exc:
                     logger.warning(f"Skipping unparseable domain '{entry.domain}' for {country_code}: {exc}")

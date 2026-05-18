@@ -1,3 +1,8 @@
+"""High‑level service wrapper for Cloudflare Radar endpoints.
+
+Provides methods to fetch geolocation data and top‑ranking domains for a given location and ranking type.
+"""
+
 from src.cloudflare.client import CloudflareClient
 from src.cloudflare.schemas import (
     GeolocationsResponse,
@@ -11,6 +16,11 @@ logger = get_logger(__name__)
 
 
 class RadarService:
+    """Service wrapper for Cloudflare Radar API.
+
+    Uses :class:`~src.cloudflare.client.CloudflareClient` to perform async HTTP requests.
+    Provides high‑level methods ``get_geolocations`` and ``get_top_domains``.
+    """
     def __init__(self, client: CloudflareClient | None = None):
         self._client = client or CloudflareClient()
 

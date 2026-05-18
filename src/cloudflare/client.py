@@ -1,3 +1,8 @@
+"""Async client for Cloudflare API with retry and rate‑limit handling.
+
+Provides the CloudflareClient class for making authenticated async HTTP requests to the Cloudflare Radar service, with automatic retries, exponential back‑off, and rate‑limit handling.
+"""
+
 import httpx
 from loguru import logger as loguru_logger
 from tenacity import (
@@ -34,6 +39,12 @@ def _is_retryable(exc: BaseException) -> bool:
 
 
 
+class CloudflareClient:
+    """Async HTTP client for Cloudflare Radar API.
+
+    Handles authentication, request retries, exponential back‑off, and rate‑limit handling.
+    Provides ``request`` and ``get`` convenience methods.
+    """
     BASE_URL = "https://api.cloudflare.com/client/v4"
 
     def __init__(self, api_token: str | None = None, timeout: float = 30.0):

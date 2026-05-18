@@ -1,5 +1,12 @@
 # Tasks
 
+- Implement async bulk DB client for domain deduplication and observation insertion.
+- Load existing domains into memory at crawl start.
+- Replace per‑record DB lookups with in‑memory set checks and batch inserts.
+- Add async concurrency control for bulk operations.
+- Update CI to include async test support (`pytest-asyncio`).
+- Document the new deduplication cache and bulk writer in Architecture and Tasks docs.
+
 ## Phase 1: Foundation
 
 Scop: proiectul pornește curat.

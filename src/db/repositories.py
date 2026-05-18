@@ -1,3 +1,9 @@
+"""Repository layer for Supabase data access.
+
+Contains async bulk upsert helpers and repository classes for domains, observations,
+crawl runs, and related entities.
+"""
+
 from datetime import date, datetime
 
 from supabase import Client
@@ -6,8 +12,12 @@ from src.config.constants import CrawlRunStatus, ReviewStatus
 from src.db.supabase_client import get_supabase_client
 from src.db.async_client import post
 
+from src.utils.logging import get_logger
 
-async def bulk_upsert_domains(domains: list[dict]):
+logger = get_logger(__name__)
+
+
+async def bulk_upsert_domains(domains: list[dict]) -> None:
     """Bulk upsert domains in batches of 800 via Supabase REST endpoint.
 
     Args:
@@ -16,11 +26,10 @@ async def bulk_upsert_domains(domains: list[dict]):
     batch_size = 800
     for i in range(0, len(domains), batch_size):
         batch = domains[i:i + batch_size]
-        # The async post function returns parsed JSON; we ignore it here.
         await post('/rest/v1/domains', json=batch)
 
 
-async def bulk_insert_observations(observations: list[dict]):
+async def bulk_insert_observations(observations: list[dict]) -> None:
     """Bulk insert observations in batches of 800 via Supabase REST endpoint.
 
     Args:
@@ -31,12 +40,10 @@ async def bulk_insert_observations(observations: list[dict]):
         batch = observations[i:i + batch_size]
         await post('/rest/v1/observations', json=batch)
 
-from src.utils.logging import get_logger
-
-logger = get_logger(__name__)
-
 
 class DomainRepository:
+    """Repository for domain CRUD operations."""
+    """Repository for domain operations."""
     def __init__(self, client: Client | None = None):
         self._client = client or get_supabase_client()
 
@@ -51,6 +58,8 @@ class DomainRepository:
         first_ranking_type: str | None = None,
         initial_score: float | None = None,
     ) -> dict:
+        """Upsert a domain record, creating or updating as needed."""
+        """Upsert a domain record, creating or updating as needed."""
         now = datetime.now()
         row = {
             "normalized_domain": normalized_domain,
@@ -63,15 +72,20 @@ class DomainRepository:
             "initial_score": initial_score,
             "review_status": ReviewStatus.PENDING.value,
         }
-
-        result = self._client.table("domains").upsert(row, on_conflict="normalized_domain").execute()
-
+        result = (
+            self._client.table("domains")
+            .upsert(row, on_conflict="normalized_domain")
+            .execute()
+        )
         if result.data:
             logger.debug(f"Upserted domain: {normalized_domain}")
         return result.data[0] if result.data else {}
 
     def get_by_normalized_domain(self, normalized_domain: str) -> dict | None:
-        result = self._client.table("domains").select("*").eq("normalized_domain", normalized_domain).execute()
+        """Retrieve a domain record by its normalized value."""
+        result = (
+            self._client.table("domains").select("*").eq("normalized_domain", normalized_domain).execute()
+        )
         return result.data[0] if result.data else None
 
     def update_review_status(
@@ -80,13 +94,13 @@ class DomainRepository:
         status: ReviewStatus,
         reviewed_by: str | None = None,
     ) -> dict:
+        """Update the review status of a domain record."""
         row = {
             "review_status": status.value,
             "reviewed_at": datetime.now().isoformat(),
         }
         if reviewed_by:
             row["reviewed_by"] = reviewed_by
-
         result = self._client.table("domains").update(row).eq("id", domain_id).execute()
         return result.data[0] if result.data else {}
 
@@ -100,6 +114,7 @@ class DomainRepository:
         localization_angle: str,
         risk_notes: str,
     ) -> dict:
+        """Update LLM‑generated fields for a domain record."""
         row = {
             "llm_summary": summary,
             "llm_category": category,
@@ -108,12 +123,12 @@ class DomainRepository:
             "llm_localization_angle": localization_angle,
             "llm_risk_notes": risk_notes,
         }
-
         result = self._client.table("domains").update(row).eq("id", domain_id).execute()
         return result.data[0] if result.data else {}
 
 
 class ObservationRepository:
+    """Repository for observation CRUD operations."""
     def __init__(self, client: Client | None = None):
         self._client = client or get_supabase_client()
 
@@ -131,6 +146,7 @@ class ObservationRepository:
         observation_score: float | None = None,
         raw_payload: dict | None = None,
     ) -> dict:
+        """Insert a new observation record for a domain."""
         row = {
             "domain_id": domain_id,
             "crawl_run_id": crawl_run_id,
@@ -144,30 +160,29 @@ class ObservationRepository:
             "observation_score": observation_score,
             "raw_payload": raw_payload,
         }
-
         result = (
             self._client.table("domain_observations")
             .upsert(row, on_conflict="domain_id,observed_date,country_code,ranking_type")
             .execute()
         )
-
         if result.data:
             logger.debug(f"Inserted observation for {domain_id} in {country_code}/{ranking_type}")
         return result.data[0] if result.data else {}
 
 
 class CrawlRunRepository:
+    """Repository for crawl run tracking and progress updates."""
     def __init__(self, client: Client | None = None):
         self._client = client or get_supabase_client()
 
     def create_run(self, run_date: date | None = None) -> dict:
+        """Create a new crawl run entry for the given date (or today)."""
         today = run_date or date.today()
         row = {
             "run_date": today.isoformat(),
             "status": CrawlRunStatus.RUNNING.value,
             "started_at": datetime.now().isoformat(),
         }
-
         result = self._client.table("crawl_runs").insert(row).execute()
         run = result.data[0] if result.data else {}
         logger.info(f"Created crawl_run {run.get('id')} for {today}")
@@ -186,6 +201,7 @@ class CrawlRunRepository:
         llm_processed_count: int | None = None,
         llm_skipped_count: int | None = None,
     ) -> dict:
+        """Update progress metrics for a crawl run."""
         row = {
             k: v
             for k, v in {
@@ -201,10 +217,8 @@ class CrawlRunRepository:
             }.items()
             if v is not None
         }
-
         if not row:
             return {}
-
         result = self._client.table("crawl_runs").update(row).eq("id", run_id).execute()
         return result.data[0] if result.data else {}
 
@@ -214,30 +228,41 @@ class CrawlRunRepository:
         status: CrawlRunStatus = CrawlRunStatus.COMPLETED,
         error_message: str | None = None,
     ) -> dict:
+        """Mark a crawl run as completed, optionally with an error message."""
         row = {
             "status": status.value,
             "finished_at": datetime.now().isoformat(),
         }
         if error_message:
             row["error_message"] = error_message
-
         result = self._client.table("crawl_runs").update(row).eq("id", run_id).execute()
         return result.data[0] if result.data else {}
 
     def get_today_run(self) -> dict | None:
-        result = self._client.table("crawl_runs").select("*").eq("run_date", date.today().isoformat()).execute()
+        """Retrieve today's crawl run record, if it exists."""
+        result = (
+            self._client.table("crawl_runs")
+            .select("*")
+            .eq("run_date", date.today().isoformat())
+            .execute()
+        )
         return result.data[0] if result.data else None
 
     def get_run_by_id(self, run_id: str) -> dict | None:
-        result = self._client.table("crawl_runs").select("*").eq("id", run_id).execute()
+        """Fetch a crawl run by its unique identifier."""
+        result = (
+            self._client.table("crawl_runs").select("*").eq("id", run_id).execute()
+        )
         return result.data[0] if result.data else None
 
 
 class CrawlCountryStatusRepository:
+    """Repository for per‑country crawl status records."""
     def __init__(self, client: Client | None = None):
         self._client = client or get_supabase_client()
 
     def get_country_statuses_for_run(self, crawl_run_id: str) -> list[dict]:
+        """Retrieve all country status records for a specific crawl run."""
         result = (
             self._client.table("crawl_country_status")
             .select("country_code,country_name,status")
@@ -257,6 +282,7 @@ class CrawlCountryStatusRepository:
         duplicate_domains: int = 0,
         error_message: str | None = None,
     ) -> dict:
+        """Upsert a country status record for a crawl run."""
         row = {
             "crawl_run_id": crawl_run_id,
             "country_code": country_code,
@@ -268,28 +294,31 @@ class CrawlCountryStatusRepository:
         }
         if error_message:
             row["error_message"] = error_message
-
         result = (
-            self._client.table("crawl_country_status").upsert(row, on_conflict="crawl_run_id,country_code").execute()
+            self._client.table("crawl_country_status")
+            .upsert(row, on_conflict="crawl_run_id,country_code")
+            .execute()
         )
         return result.data[0] if result.data else {}
 
 
 class CommentRepository:
+    """Repository for domain comment CRUD operations."""
     def __init__(self, client: Client | None = None):
         self._client = client or get_supabase_client()
 
     def add_comment(self, domain_id: str, author_name: str, message: str) -> dict:
+        """Add a comment to a domain record."""
         row = {
             "domain_id": domain_id,
             "author_name": author_name,
             "message": message,
         }
-
         result = self._client.table("domain_comments").insert(row).execute()
         return result.data[0] if result.data else {}
 
     def get_comments(self, domain_id: str) -> list[dict]:
+        """Retrieve all comments for a given domain."""
         result = (
             self._client.table("domain_comments")
             .select("*")

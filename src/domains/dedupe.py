@@ -29,6 +29,7 @@ def dedupe_and_insert(
     categories: list | None = None,
     observation_score: float | None = None,
     raw_payload: dict | None = None,
+    existing_domains: dict[str, str] | None = None,
 ) -> DedupeResult:
     """Deduplicate a raw domain string and insert observation.
 
@@ -38,26 +39,39 @@ def dedupe_and_insert(
     """
     normalized = normalize_domain(raw_domain)
 
-    existing = domain_repo.get_by_normalized_domain(normalized)
-
-    if existing:
-        logger.debug(f"Domain {normalized} already exists (id={existing['id']}). Skipping LLM.")
-        domain_id = existing["id"]
+    # Check existence using provided cache or fallback DB lookup
+    if existing_domains is not None and normalized in existing_domains:
+        domain_id = existing_domains[normalized]
         is_new = False
+        logger.debug(f"Domain {normalized} already exists (id={domain_id}). Skipping LLM.")
     else:
-        display_url = build_display_url(normalized)
-        result = domain_repo.upsert_domain(
-            normalized_domain=normalized,
-            display_url=display_url,
-            first_seen_at=datetime.now(),
-            first_seen_date=observed_date,
-            first_country_code=country_code,
-            first_country_name=country_name,
-            first_ranking_type=ranking_type,
-        )
-        domain_id = result["id"]
-        is_new = True
-        logger.info(f"New domain discovered: {normalized}")
+        # Fallback to DB lookup if not in cache
+        existing = domain_repo.get_by_normalized_domain(normalized)
+        if existing:
+            domain_id = existing["id"]
+            is_new = False
+            logger.debug(f"Domain {normalized} already exists (id={domain_id}). Skipping LLM.")
+            # Populate cache if provided
+            if existing_domains is not None:
+                existing_domains[normalized] = domain_id
+        else:
+            display_url = build_display_url(normalized)
+            result = domain_repo.upsert_domain(
+                normalized_domain=normalized,
+                display_url=display_url,
+                first_seen_at=datetime.now(),
+                first_seen_date=observed_date,
+                first_country_code=country_code,
+                first_country_name=country_name,
+                first_ranking_type=ranking_type,
+            )
+            domain_id = result["id"]
+            is_new = True
+            logger.info(f"New domain discovered: {normalized}")
+            # Add to cache
+            if existing_domains is not None:
+                existing_domains[normalized] = domain_id
+
 
     observation_repo.insert_observation(
         domain_id=domain_id,
