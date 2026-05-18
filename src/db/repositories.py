@@ -4,6 +4,7 @@ from supabase import Client
 
 from src.config.constants import CrawlRunStatus, ReviewStatus
 from src.db.supabase_client import get_supabase_client
+from src.db.async_client import post
 from src.utils.logging import get_logger
 
 logger = get_logger(__name__)
