@@ -230,20 +230,20 @@ The actual implementation resides in `src/opportunity/update_opportunity_scores.
 
 ### CLI Arguments (argparse)
 
-- `--only-missing` → score only where `opportunity_score IS NULL`
+- `--only-missing` → score rows where `opportunity_score IS NULL`, excluding rows already marked `opportunity_score_status = 'failed'`
 - `--limit N` → max domains to process
 - `--min-trend-score N` → filter: `trend_score >= N`
 - `--dry-run` → print without saving; also skip homepage fetching
 - `--force` → re‑score even if already present
 - `--fetch-homepage` → enable homepage fetching with BeautifulSoup
 
-Optional: `--concurrency N` for parallel LLM calls (default: 5). Use async semaphore.
+Optional: `--concurrency N` for domain-side work and `--llm-concurrency N` for LM Studio calls. `--llm-concurrency` defaults to `1`.
 
 ### Command Steps
 
 1. **Build query** against `domains` table using filters:
    - Base: select all columns needed (list them).
-   - If `--only-missing`: add `WHERE opportunity_score IS NULL`
+   - If `--only-missing`: add `WHERE opportunity_score IS NULL`, then skip rows already marked `opportunity_score_status = 'failed'`
    - If `--force`: ignore existing scores
    - We cannot filter by `trend_score` directly in the query because it's computed from observations (unless we add a subquery/join). Simpler: fetch all candidate domains, then compute trend_score in Python and apply `--min-trend-score` client‑side.
    - Apply `--limit` after filters.
@@ -265,7 +265,7 @@ Optional: `--concurrency N` for parallel LLM calls (default: 5). Use async semap
      - `headings`: `<h1>` and `<h2>` texts (joined).
      - `first text block`: first `<p>` or div with meaningful text length > 20 chars.
    - Build a short excerpt: `f"Title: {title}\nDescription: {meta}\nHeadings: {headings}\nContent: {text_block}"`.
-   - **Strict Mode**: If crawl fails or returns no content, **skip LLM scoring** for this domain and record a `CrawlFailure` in the breakdown to prevent hallucinations.
+   - **Context-first mode**: If crawl fails or returns no content, log/count the miss and score with existing context. The prompt still tells the model to avoid guessing from the domain name alone.
 
 4. **Build prompt** with all collected data, using `build_opportunity_prompt`.
    - **Anti-Hallucination**: The prompt includes strict instructions to return a 0 score and confidence 1 if no excerpt is provided and the domain name is not recognized with 100% certainty.
@@ -438,7 +438,7 @@ We will extend `KNOWN_GIANTS` in `src/config/constants.py` or create a separate 
 | Category/type as JSON vs columns | Extract from JSONB vs separate columns | Separate columns | Simpler queries and UI dropdowns; better performance |
 | Homepage parser | BeautifulSoup vs regex only | BeautifulSoup | More reliable extraction; worth adding `bs4` dependency |
 | Command entry point | `./start` subcommand vs top‑level `main.py` | `main.py` (new) | Spec explicitly requires `python main.py update-opportunity-scores`; existing `./start` unchanged |
-| LLM call concurrency | Sequential vs async/semaphore | Async with semaphore (CONCURRENCY=5) | Faster for batch scores; matches crawler pattern |
+| LLM call concurrency | Domain concurrency vs model concurrency | Split controls: `--concurrency` and `--llm-concurrency` | Homepage/context work can run wider while local LM Studio calls default to 1 to avoid 429s |
 | Trend score source | `best_score_today` vs `best_score_week` | `best_score_today` (today's best) | Reflects current momentum; spec says "based on existing Cloudflare scoring" – today's score is the most direct |
 
 ---
@@ -449,7 +449,7 @@ We will extend `KNOWN_GIANTS` in `src/config/constants.py` or create a separate 
 |------|--------|------------|
 | LLM quality mis‑aligned with Romania market | Low‑quality scores | Iterate on prompt; include many examples in `Update_scoring.md`; allow prompt versioning (`llm_opportunity_prompt_version`) to roll forward/back |
 | Homepage fetching slows down command | Longer runtime | Make `--fetch-homepage` optional; default off; use concurrency limits |
-| API failures (LMStudio down) | Incomplete batch | Retry with backoff; continue on failure; log errors |
+| API failures (LMStudio down) | Incomplete batch | Retry transient failures only; continue on failure; store `opportunity_score_status` and `opportunity_score_error` |
 | Database load (many writes) | Performance hit | Batch updates? Not necessary for occasional runs; single UPDATE per domain is fine |
 | Global giant list incomplete | Some giants still get high scores | LLM should already penalize; cap adds safety; list can be updated later |
 

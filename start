@@ -4,6 +4,45 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 VENV_PYTHON="$ROOT_DIR/.venv/bin/python"
 
+load_env() {
+  if [[ -f "$ROOT_DIR/.env" ]]; then
+    set -a
+    # shellcheck disable=SC1091
+    source "$ROOT_DIR/.env"
+    set +a
+  fi
+}
+
+ensure_nvidia_proxy() {
+  local proxy_script="$ROOT_DIR/nvidia-proxy.js"
+  mkdir -p "$ROOT_DIR/logs"
+
+  if [[ ! -f "$proxy_script" ]]; then
+    echo "Warning: nvidia-proxy.js not found; skipping proxy start."
+    return 0
+  fi
+
+  load_env
+
+  if [[ -z "${NVIDIA_API_KEY:-}" ]]; then
+    echo "Warning: NVIDIA_API_KEY is not set; proxy may reject scoring requests."
+  fi
+
+  if ! pgrep -f "node .*nvidia-proxy.js" >/dev/null; then
+    nohup node "$proxy_script" >>"$ROOT_DIR/logs/nvidia-proxy.log" 2>&1 &
+  fi
+
+  if command -v nc >/dev/null 2>&1; then
+    for _ in {1..20}; do
+      if nc -z 127.0.0.1 1234 >/dev/null 2>&1; then
+        return 0
+      fi
+      sleep 0.25
+    done
+    echo "Warning: NVIDIA proxy did not become reachable on 127.0.0.1:1234."
+  fi
+}
+
 CMD="${1:-}"
 
 case "$CMD" in
@@ -21,22 +60,47 @@ case "$CMD" in
 
   crawler)
     shift
-    # Ensure NVIDIA proxy (project‑local) is running
-    if [ -d "$ROOT_DIR/nvidia-proxy" ] && [ -f "$ROOT_DIR/nvidia-proxy/index.js" ]; then
-      if ! pgrep -f "node index.js" >/dev/null; then
-        (cd "$ROOT_DIR/nvidia-proxy" && nohup node nvidia-proxy.js >/dev/null 2>&1 &)
-      fi
-    else
-      echo "Warning: nvidia‑proxy directory or index.js not found; skipping proxy start."
-    fi
+    run_score=1
+    crawler_args=()
+
+    while (($#)); do
+      case "$1" in
+        --skip-score)
+          run_score=0
+          shift
+          ;;
+        *)
+          crawler_args+=("$1")
+          shift
+          ;;
+      esac
+    done
+
+    ensure_nvidia_proxy
     if [[ -x "$VENV_PYTHON" ]]; then
-      exec "$VENV_PYTHON" -m src.crawler.run_daily "$@"
+      set +e
+      "$VENV_PYTHON" -m src.crawler.run_daily "${crawler_args[@]}"
+      crawl_status=$?
+      set -e
+    elif command -v uv >/dev/null 2>&1; then
+      set +e
+      uv run python -m src.crawler.run_daily "${crawler_args[@]}"
+      crawl_status=$?
+      set -e
+    else
+      echo "Could not find .venv/bin/python or uv. Run: uv sync"
+      exit 1
     fi
-    if command -v uv >/dev/null 2>&1; then
-      exec uv run python -m src.crawler.run_daily "$@"
+
+    if ((crawl_status != 0)); then
+      exit "$crawl_status"
     fi
-    echo "Could not find .venv/bin/python or uv. Run: uv sync"
-    exit 1
+
+    if ((run_score)); then
+      exec "$ROOT_DIR/start-score"
+    fi
+
+    exit 0
     ;;
 
   *)
@@ -50,7 +114,9 @@ case "$CMD" in
     echo "  ./start crawler"
     echo "  ./start crawler --limit 50"
     echo "  ./start crawler --skip-llm"
+    echo "  ./start crawler --skip-score"
     echo "  ./start crawler --date 2026-05-15"
+    echo "  ./start-score [scoring args]"
     exit 2
     ;;
 esac

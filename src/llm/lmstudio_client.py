@@ -1,16 +1,9 @@
+import asyncio
 import json
 from typing import Any
 
 import httpx
-from loguru import logger as loguru_logger
 from pydantic import ValidationError
-from tenacity import (
-    before_sleep_log,
-    retry,
-    retry_if_exception_type,
-    stop_after_attempt,
-    wait_exponential,
-)
 
 from src.config.settings import settings
 from src.domains.normalize import is_known_giant
@@ -19,6 +12,36 @@ from src.llm.schemas import LLMEnrichmentResult
 from src.utils.logging import get_logger
 
 logger = get_logger(__name__)
+
+MAX_LMSTUDIO_ATTEMPTS = 4
+
+
+def _is_retryable_lmstudio_error(exc: BaseException) -> bool:
+    if isinstance(exc, (httpx.ConnectError, httpx.TimeoutException)):
+        return True
+    if isinstance(exc, httpx.HTTPStatusError):
+        status_code = exc.response.status_code
+        return status_code == 429 or 500 <= status_code < 600
+    return False
+
+
+def _retry_after_seconds(exc: BaseException) -> float | None:
+    if not isinstance(exc, httpx.HTTPStatusError):
+        return None
+    retry_after = exc.response.headers.get("retry-after")
+    if not retry_after:
+        return None
+    try:
+        return max(0.0, min(float(retry_after), 60.0))
+    except ValueError:
+        return None
+
+
+def _strip_json_fence(content: str) -> str:
+    content = content.strip()
+    if content.startswith("```"):
+        content = content.split("\n", 1)[-1].rsplit("```", 1)[0].strip()
+    return content
 
 
 class LMStudioClient:
@@ -32,6 +55,7 @@ class LMStudioClient:
         self._model = model or settings.lmstudio_model
         self._timeout = timeout
         self._client: httpx.AsyncClient | None = None
+        self.retry_counts = {"rate_limited": 0, "transient": 0}
 
     def _get_client(self) -> httpx.AsyncClient:
         if self._client is None or self._client.is_closed:
@@ -69,11 +93,41 @@ class LMStudioClient:
         data = response.json()
         content = data["choices"][0]["message"]["content"]
 
-        content = content.strip()
-        if content.startswith("```"):
-            content = content.split("\n", 1)[-1].rsplit("```", 1)[0].strip()
+        return json.loads(_strip_json_fence(content))
 
-        return json.loads(content)
+    async def call_json_schema(
+        self,
+        prompt: str,
+        schema_name: str,
+        schema: dict[str, Any],
+        temperature: float = 0.1,
+        max_tokens: int = 1024,
+        system_prompt: str | None = None,
+    ) -> dict:
+        """Call LM Studio with a strict JSON schema response format."""
+        messages = []
+        if system_prompt:
+            messages.append({"role": "system", "content": system_prompt})
+        messages.append({"role": "user", "content": prompt})
+
+        payload = {
+            "model": self._model,
+            "messages": messages,
+            "temperature": temperature,
+            "max_tokens": max_tokens,
+            "response_format": {
+                "type": "json_schema",
+                "json_schema": {
+                    "name": schema_name,
+                    "schema": schema,
+                },
+            },
+        }
+
+        response = await self._post(payload)
+        data = response.json()
+        content = data["choices"][0]["message"]["content"]
+        return json.loads(_strip_json_fence(content))
 
     async def __aenter__(self):
         return self
@@ -124,21 +178,39 @@ class LMStudioClient:
             },
         }
 
-    @retry(
-        retry=retry_if_exception_type((httpx.HTTPStatusError, httpx.ConnectError, httpx.TimeoutException)),
-        stop=stop_after_attempt(4),
-        wait=wait_exponential(multiplier=1, min=2, max=30),
-        before_sleep=before_sleep_log(loguru_logger, "WARNING"),
-        reraise=True,
-    )
     async def _post(self, payload: dict) -> httpx.Response:
         client = self._get_client()
-        response = await client.post(
-            f"{self._base_url}/chat/completions",
-            json=payload,
-        )
-        response.raise_for_status()
-        return response
+        last_exc: BaseException | None = None
+
+        for attempt in range(1, MAX_LMSTUDIO_ATTEMPTS + 1):
+            try:
+                response = await client.post(
+                    f"{self._base_url}/chat/completions",
+                    json=payload,
+                )
+                response.raise_for_status()
+                return response
+            except (httpx.HTTPStatusError, httpx.ConnectError, httpx.TimeoutException) as exc:
+                last_exc = exc
+                if not _is_retryable_lmstudio_error(exc) or attempt == MAX_LMSTUDIO_ATTEMPTS:
+                    raise
+
+                wait_seconds = _retry_after_seconds(exc)
+                if wait_seconds is None:
+                    wait_seconds = min(30.0, max(2.0, 2 ** (attempt - 1)))
+
+                if isinstance(exc, httpx.HTTPStatusError) and exc.response.status_code == 429:
+                    self.retry_counts["rate_limited"] += 1
+                else:
+                    self.retry_counts["transient"] += 1
+
+                logger.warning(
+                    f"LM Studio transient failure on attempt {attempt}/{MAX_LMSTUDIO_ATTEMPTS}: "
+                    f"{exc}. Waiting {wait_seconds:.1f}s before retry."
+                )
+                await asyncio.sleep(wait_seconds)
+
+        raise last_exc or RuntimeError("LM Studio request failed")
 
     async def enrich(
         self,

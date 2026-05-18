@@ -66,6 +66,9 @@ async def test_enrich_returns_parsed_result(valid_llm_response):
 
 @pytest.mark.asyncio
 async def test_enrich_returns_failed_on_http_error():
+    async def no_sleep(_seconds):
+        return None
+
     async def handler(request):
         return _mock_response(500, {"error": "Internal server error"})
 
@@ -78,12 +81,59 @@ async def test_enrich_returns_failed_on_http_error():
 
     with pytest.MonkeyPatch.context() as mp:
         mp.setattr(httpx.AsyncClient, "post", mock_post)
+        mp.setattr("src.llm.lmstudio_client.asyncio.sleep", no_sleep)
         client = LMStudioClient(base_url="http://localhost:1234/v1", model="test-model")
         client._timeout = 5.0
         result = await client.enrich(domain="example.com")
 
     assert "HTTP error" in result.risk_notes
     assert result.novelty == 1
+
+
+@pytest.mark.asyncio
+async def test_post_does_not_retry_non_transient_http_error():
+    calls = 0
+
+    async def mock_post(self, url, **kwargs):
+        nonlocal calls
+        calls += 1
+        response = _mock_response(400, {"error": "bad request"})
+        response.raise_for_status()
+        return response
+
+    with pytest.MonkeyPatch.context() as mp:
+        mp.setattr(httpx.AsyncClient, "post", mock_post)
+        client = LMStudioClient(base_url="http://localhost:1234/v1", model="test-model")
+        with pytest.raises(httpx.HTTPStatusError):
+            await client._post({"model": "test-model", "messages": []})
+
+    assert calls == 1
+
+
+@pytest.mark.asyncio
+async def test_post_retries_rate_limit_then_succeeds():
+    calls = 0
+
+    async def mock_post(self, url, **kwargs):
+        nonlocal calls
+        calls += 1
+        if calls == 1:
+            return httpx.Response(
+                status_code=429,
+                headers={"retry-after": "0"},
+                content=b'{"error":"rate limited"}',
+                request=httpx.Request("POST", url),
+            )
+        return _mock_response(200, {"choices": [{"message": {"content": "{}"}}]})
+
+    with pytest.MonkeyPatch.context() as mp:
+        mp.setattr(httpx.AsyncClient, "post", mock_post)
+        client = LMStudioClient(base_url="http://localhost:1234/v1", model="test-model")
+        response = await client._post({"model": "test-model", "messages": []})
+
+    assert response.status_code == 200
+    assert calls == 2
+    assert client.retry_counts["rate_limited"] == 1
 
 
 @pytest.mark.asyncio

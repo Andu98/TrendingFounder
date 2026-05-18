@@ -155,3 +155,13 @@ Cloudflare Radar sometimes returns public suffixes (e.g., `ac.za`) or other non-
 The main dashboard is centralized in `app/streamlit_app.py` instead of relying on Streamlit's sidebar multipage navigation. The app uses a top navbar with two internal tabs: Collected Data and Reports.
 
 This keeps the first screen focused, avoids exposing legacy Today/This Week/Stats pages as the main UX, and allows shared theme styling, filters, domain cards, inline status updates, comments, and reports to live in one cohesive Streamlit experience.
+
+## ADR-025: Constrain opportunity scoring separately from domain work
+
+**Status:** Accepted
+
+Opportunity score updates split domain-level concurrency from LM Studio concurrency. `--concurrency` controls local work such as context loading and homepage fetches, while `--llm-concurrency` controls model calls and defaults to `1` to avoid local LM Studio 429s.
+
+Opportunity scoring uses `json_schema` response format with an explicit `OpportunityScoreResult` schema. Failed model calls are persisted with `opportunity_score_status = 'failed'` and `opportunity_score_error`, so `--only-missing` can avoid retrying permanent failures unless `--force` is used. Homepage fetch misses no longer skip scoring; they are logged and counted, then the domain is scored from existing observations and enrichment context.
+
+The Python crawler does not embed opportunity scoring. The `./start crawler` operational wrapper runs `./start-score` after a successful crawl, and `./start crawler --skip-score` keeps a crawl-only path. This preserves module separation while making the default operator flow crawl then score.

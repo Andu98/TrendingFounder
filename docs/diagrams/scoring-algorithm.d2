@@ -1,0 +1,154 @@
+# Opportunity Scoring Algorithm
+
+direction: right
+
+start_score: "./start-score"
+  shape: rectangle
+  style.fill: "#e0f2fe"
+  style.stroke: "#0284c7"
+  style.stroke-width: 2
+
+proxy: "Start NVIDIA Proxy\nlocalhost:1234/v1"
+  shape: rectangle
+  style.fill: "#dcfce7"
+  style.stroke: "#16a34a"
+  style.stroke-width: 2
+
+command: "update-opportunity-scores\n--fetch-homepage\n--only-missing\n--llm-concurrency 1"
+  shape: rectangle
+  style.fill: "#fef3c7"
+  style.stroke: "#d97706"
+  style.stroke-width: 2
+
+select_candidates: "Select Candidates\nSupabase domains\nopportunity_score IS NULL"
+  shape: rectangle
+  style.fill: "#f8fafc"
+  style.stroke: "#64748b"
+  style.stroke-width: 2
+
+skip_failed: "Skip Previously Failed\nstatus = failed\nunless --force"
+  shape: diamond
+  style.fill: "#fee2e2"
+  style.stroke: "#dc2626"
+  style.stroke-width: 2
+
+domain_loop: "Domain Work Queue\n--concurrency controls\nDB context + homepage"
+  shape: rectangle
+  style.fill: "#ede9fe"
+  style.stroke: "#7c3aed"
+  style.stroke-width: 2
+
+observations: "Load Observations\ncountries, ranking types,\nbest rank, pct change"
+  shape: rectangle
+  style.fill: "#f8fafc"
+  style.stroke: "#64748b"
+  style.stroke-width: 2
+
+trend_context: "Compute Context\ntrend_score = max\nobservation_score"
+  shape: rectangle
+  style.fill: "#f8fafc"
+  style.stroke: "#64748b"
+  style.stroke-width: 2
+
+homepage: "Fetch Homepage\n5s timeout\nBeautifulSoup excerpt"
+  shape: rectangle
+  style.fill: "#f8fafc"
+  style.stroke: "#64748b"
+  style.stroke-width: 2
+
+homepage_miss: "Homepage Missing\nblocked, empty, DNS,\ntimeout, 4xx"
+  shape: diamond
+  style.fill: "#fff7ed"
+  style.stroke: "#ea580c"
+  style.stroke-width: 2
+
+prompt: "Build Romania Prompt\ntrend + review status\nexisting LLM context\nhomepage excerpt if any"
+  shape: rectangle
+  style.fill: "#f8fafc"
+  style.stroke: "#64748b"
+  style.stroke-width: 2
+
+llm_gate: "LLM Semaphore\n--llm-concurrency\n(default 1)"
+  shape: rectangle
+  style.fill: "#dbeafe"
+  style.stroke: "#2563eb"
+  style.stroke-width: 2
+
+schema_call: "LM Studio JSON Schema\nOpportunityScoreResult\nadditionalProperties=false"
+  shape: rectangle
+  style.fill: "#dbeafe"
+  style.stroke: "#2563eb"
+  style.stroke-width: 2
+
+validate: "Pydantic Validation\nscores, confidence,\nrequired text fields"
+  shape: diamond
+  style.fill: "#e0e7ff"
+  style.stroke: "#4f46e5"
+  style.stroke-width: 2
+
+repair: "Repair Retry Once\nstrict JSON\nno null strings"
+  shape: rectangle
+  style.fill: "#fef9c3"
+  style.stroke: "#ca8a04"
+  style.stroke-width: 2
+
+normalize: "Normalize Output\nfallback text\nred flags list\nopportunity_type"
+  shape: rectangle
+  style.fill: "#f8fafc"
+  style.stroke: "#64748b"
+  style.stroke-width: 2
+
+guardrails: "Guardrails\nknown global giant\nscore cap <= 20"
+  shape: rectangle
+  style.fill: "#f8fafc"
+  style.stroke: "#64748b"
+  style.stroke-width: 2
+
+persist_scored: "Persist Scored Row\nopportunity_score\nbreakdown, summary, idea\nstatus = scored"
+  shape: rectangle
+  style.fill: "#dcfce7"
+  style.stroke: "#16a34a"
+  style.stroke-width: 2
+
+persist_failed: "Persist Failed Row\nbreakdown error\nstatus = failed\nerror message"
+  shape: rectangle
+  style.fill: "#fee2e2"
+  style.stroke: "#dc2626"
+  style.stroke-width: 2
+
+logs: "Run Logs + Stats\nprogress, homepage misses,\nvalidation retries,\n429 retries"
+  shape: rectangle
+  style.fill: "#f1f5f9"
+  style.stroke: "#475569"
+  style.stroke-width: 2
+
+dashboard: "Dashboard\nsort and filter by\nopportunity fields"
+  shape: rectangle
+  style.fill: "#ecfccb"
+  style.stroke: "#65a30d"
+  style.stroke-width: 2
+
+start_score -> proxy: "ensure"
+proxy -> command: "OpenAI-compatible API"
+command -> select_candidates
+select_candidates -> skip_failed
+skip_failed -> domain_loop: "candidate"
+skip_failed -> logs: "skipped_failed"
+domain_loop -> observations
+observations -> trend_context
+trend_context -> homepage
+homepage -> homepage_miss
+homepage_miss -> prompt: "score anyway"
+homepage -> prompt: "excerpt found"
+prompt -> llm_gate
+llm_gate -> schema_call
+schema_call -> validate
+validate -> normalize: "valid"
+validate -> repair: "invalid"
+repair -> schema_call: "retry once"
+validate -> persist_failed: "still invalid\nor HTTP failure"
+normalize -> guardrails
+guardrails -> persist_scored
+persist_scored -> logs
+persist_failed -> logs
+persist_scored -> dashboard

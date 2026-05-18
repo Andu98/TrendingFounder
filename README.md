@@ -70,9 +70,9 @@ TrendingFounder/
 
 ![Crawl Pipeline](docs/diagrams/generated/crawl-pipeline.svg)
 
-### Scoring Diagram
+### Opportunity Scoring Algorithm
 
-![Scoring Diagram](docs/diagrams/generated/scoring.svg)
+![Opportunity Scoring Algorithm](docs/diagrams/generated/scoring-algorithm.svg)
 
 | File | Purpose |
 |---|---|
@@ -92,14 +92,12 @@ TrendingFounder/
 Run the opportunity scoring command directly:
 
 ```bash
-.venv/bin/python -m src.opportunity.update_opportunity_scores update-opportunity-scores \
-    --fetch-homepage \
-    --only-missing \
-    --concurrency 3 \
-    --model 'meta/llama-3.1-8b-instruct'
+./start-score
 ```
 
-(Equivalent to `./start crawler` with those flags.)
+`./start-score` starts the local NVIDIA proxy, then runs `main.py update-opportunity-scores --fetch-homepage --only-missing --concurrency 3 --llm-concurrency 1 --model 'meta/llama-3.1-8b-instruct'`. Extra scoring args are appended, so `./start-score --force` retries failed rows.
+
+`./start crawler` runs the crawl first, then automatically runs `./start-score` if the crawl exits successfully. Use `./start crawler --skip-score` when you only want to crawl.
 
 ## MVP Phases
 

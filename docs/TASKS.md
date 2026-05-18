@@ -1,5 +1,12 @@
 # Tasks
 
+- [x] **A2026-05-18.01** — Analyze current app crawling and scoring flow; findings written to `docs/APP_ANALYSIS_2026-05-18.md`.
+- [x] **A2026-05-19.01** — Harden opportunity scoring: schema-constrained LM Studio responses, split domain/LLM concurrency, failure status persistence, homepage-miss scoring, and Supabase status migration.
+- [x] **A2026-05-19.02** — Remove broken post-crawl opportunity scoring hook so crawls complete cleanly and scoring stays an explicit command.
+- [x] **A2026-05-19.03** — Update README, runbook, architecture, prompt, and scoring design docs for the new opportunity scoring behavior.
+- [x] **A2026-05-19.04** — Add `./start-score` shortcut that starts the NVIDIA proxy before running the default opportunity scoring command.
+- [x] **A2026-05-19.05** — Make `./start crawler` run `./start-score` after successful crawls, with `--skip-score` for crawl-only runs.
+
 - Implement async bulk DB client for domain deduplication and observation insertion.
 - Load existing domains into memory at crawl start.
 - Replace per‑record DB lookups with in‑memory set checks and batch inserts.
@@ -125,3 +132,4 @@ Scop: proiectul pornește curat.
 - [x] **P9.04** — Create detailed crawl pipeline diagram (`docs/diagrams/crawl-pipeline.d2`) from existing architecture documentation
 - [x] **P9.05** — Render all D2 diagrams to SVG format (`docs/diagrams/generated/`)
 - [x] **P9.06** — Create diagrams README documenting the D2 setup and generation process
+- [x] **P9.07** — Create opportunity scoring algorithm diagram (`docs/diagrams/scoring-algorithm.d2`) and render SVG.

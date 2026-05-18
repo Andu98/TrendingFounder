@@ -20,6 +20,18 @@ The UI (Streamlit) requests domain data via a Supabase RPC call, which runs a st
 
 **Explanation:** The UI layer reads pre-computed data from Supabase. The crawler pulls raw data from Cloudflare, deduplicates domains, runs LLM enrichment when configured, scores observations, and writes the results back to Supabase.
 
+## Opportunity Scoring Command
+
+Romanian-market opportunity scoring is implemented as a separate command. The crawler discovers and stores trend observations; the scoring command evaluates existing domains with LM Studio and writes `opportunity_score`, `opportunity_breakdown`, summary/idea fields, model metadata, and score status. The `./start crawler` wrapper runs `./start-score` after a successful crawl, while `./start crawler --skip-score` keeps the crawl-only flow.
+
+Run scoring explicitly:
+
+```bash
+./start-score
+```
+
+The shortcut starts the local NVIDIA proxy, then runs `main.py update-opportunity-scores` with homepage fetching, `--only-missing`, domain concurrency `3`, LLM concurrency `1`, and model `meta/llama-3.1-8b-instruct`. The command uses LM Studio `json_schema` output with the `OpportunityScoreResult` schema. Failed attempts store `opportunity_score_status = 'failed'` plus `opportunity_score_error`, allowing `--only-missing` to skip permanent failures until `--force` is used.
+
 ## 3. Component / Module Diagram
 
 **Component / Module Overview**
@@ -120,4 +132,4 @@ When the orchestrator requests top‑ranking data from Cloudflare and receives a
 
 ---
 
-All diagrams are Mermaid-compatible and can be rendered independently by a Markdown documentation pipeline.
+All diagrams are maintained as D2 source files in `docs/diagrams/` and rendered to SVG in `docs/diagrams/generated/`.

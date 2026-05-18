@@ -193,7 +193,7 @@ Known giants list: google.com, youtube.com, facebook.com, amazon.com, microsoft.
 - domain, title, meta_description, Cloudflare categories, country_code, ranking_type, rank, pct_rank_change, homepage_snippet (up to 4KB)
 
 **Anti-Hallucination Policy:**
-- **Skip on failure:** If `--fetch-homepage` is enabled but the crawl fails, scoring is skipped entirely.
+- **Context-first scoring:** If `--fetch-homepage` is enabled but the homepage fetch fails, scoring still runs with existing observation/enrichment context.
 - **Strict Logic:** Prompt explicitly forbids guessing when `homepage_snippet` is `None`. Confidence is forced to 1 and score to 0 if the domain is not recognized with 100% certainty.
 
 **LLM output (validated JSON):**
@@ -308,6 +308,7 @@ python -m src.crawler.run_daily                    # Full crawl
 python -m src.crawler.run_daily --limit 50         # Limit domains per country
 python -m src.crawler.run_daily --date 2026-05-15  # Specific date
 python -m src.crawler.run_daily --skip-llm         # No LLM enrichment
+./start-score                                         # Start proxy and score missing domains
 ./start trending                                   # Launch dashboard via local .venv or uv
 ./start trending --server.port 8502                # Launch dashboard on another port
 ```

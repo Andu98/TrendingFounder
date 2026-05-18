@@ -158,9 +158,16 @@ def test_invalid_opportunity_type():
 
 def test_all_valid_opportunity_types():
     valid_types = [
-        "local_marketplace", "b2b_saas", "consumer_app", "vertical_saas",
-        "content_platform", "ecommerce_tool", "education_tool",
-        "healthcare_tool", "logistics_tool", "other",
+        "local_marketplace",
+        "b2b_saas",
+        "consumer_app",
+        "vertical_saas",
+        "content_platform",
+        "ecommerce_tool",
+        "education_tool",
+        "healthcare_tool",
+        "logistics_tool",
+        "other",
     ]
     for opp_type in valid_types:
         result = OpportunityScoreResult(
@@ -212,6 +219,45 @@ def test_opportunity_type_normalization():
             suggested_mvp="Test",
         )
         assert result.opportunity_type == "other"
+
+
+def test_required_text_fields_normalize_nulls():
+    result = OpportunityScoreResult(
+        opportunity_score=0,
+        confidence=1,
+        is_global_giant=True,
+        is_too_generic=True,
+        romania_market_fit=1,
+        local_gap=1,
+        buildability=1,
+        monetization_clarity=1,
+        novelty=1,
+        trend_relevance=1,
+        competition_saturation=5,
+        complexity=5,
+        regulatory_risk=1,
+        recommended_category=None,
+        opportunity_type=None,
+        one_sentence_summary=None,
+        romania_adaptation_idea=None,
+        why_it_scores_this_way=None,
+        red_flags=None,
+        suggested_mvp=None,
+    )
+
+    assert result.recommended_category == "Other"
+    assert result.opportunity_type == "other"
+    assert result.romania_adaptation_idea == "No specific Romania adaptation identified."
+    assert result.suggested_mvp == "No specific MVP suggested."
+    assert result.red_flags == []
+
+
+def test_llm_json_schema_requires_all_fields():
+    schema = OpportunityScoreResult.llm_json_schema()
+
+    assert schema["additionalProperties"] is False
+    assert "romania_adaptation_idea" in schema["required"]
+    assert schema["properties"]["opportunity_score"]["maximum"] == 100
 
 
 def test_empty_red_flags_allowed():

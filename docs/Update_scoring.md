@@ -72,6 +72,8 @@ python main.py update-opportunity-scores --limit 500
 python main.py update-opportunity-scores --min-trend-score 40
 python main.py update-opportunity-scores --dry-run
 python main.py update-opportunity-scores --force
+python main.py update-opportunity-scores --concurrency 3 --llm-concurrency 1
+./start-score
 ```
 
 Behavior:
@@ -81,6 +83,11 @@ Behavior:
 * `--min-trend-score`: only score domains above a trend threshold.
 * `--dry-run`: print results without saving.
 * `--force`: rescore even if already scored.
+* `--concurrency`: domain-side work concurrency for DB context and homepage fetches.
+* `--llm-concurrency`: LM Studio call concurrency. Defaults to `1` to avoid local 429s.
+* `./start-score`: project shortcut that starts the NVIDIA proxy and runs the default scoring command.
+* `./start crawler`: runs the crawler and then `./start-score` after a successful crawl.
+* `./start crawler --skip-score`: runs only the crawler.
 
 ---
 
@@ -491,7 +498,7 @@ Rules:
 * Do not crawl multiple pages.
 * Do not run this during the daily Cloudflare crawl.
 * Cache homepage excerpts if possible.
-* Ignore failures gracefully.
+* Ignore failures gracefully and continue scoring with existing context.
 
 Pass this to the LLM as:
 
@@ -657,6 +664,8 @@ If the LLM fails:
 * keep old score if available
 * log the error
 * continue with next domain
+* persist `opportunity_score_status = 'failed'`
+* persist a truncated `opportunity_score_error`
 
 Optional fallback:
 
@@ -673,6 +682,8 @@ Example:
 }
 ```
 
+`--only-missing` skips rows whose status is already `failed`; use `--force` when you intentionally want to retry those rows.
+
 ---
 
 # Tests
@@ -685,7 +696,7 @@ Add tests for:
 4. Global giants are capped at low opportunity scores.
 5. Failed LLM calls do not crash the batch.
 6. `--dry-run` does not write to Supabase.
-7. `--only-missing` skips already scored domains.
+7. `--only-missing` skips already scored domains and rows already marked as failed.
 8. `--force` rescores already scored domains.
 9. Existing domains in Supabase can be scored, not just new ones.
 10. UI can display opportunity score breakdown.
@@ -697,9 +708,9 @@ Add tests for:
 The task is complete when:
 
 1. `python main.py update-opportunity-scores` scores existing domains using an LLM.
-2. The daily Cloudflare crawl does not become slower because LLM opportunity scoring is separate.
+2. The Python crawl implementation remains separate from opportunity scoring; the `./start crawler` wrapper runs scoring afterward unless `--skip-score` is used.
 3. The LLM returns strict JSON.
-4. The system validates and stores the LLM scoring output.
+4. The system validates and stores the LLM scoring output using LM Studio `json_schema`.
 5. The app stores:
 
    * trend_score
@@ -708,6 +719,8 @@ The task is complete when:
    * summary
    * Romania adaptation idea
    * suggested MVP
+   * opportunity_score_status
+   * opportunity_score_error
    * model name
    * prompt version
 6. Amazon, Udemy, Box.com, Netflix, Booking, Google, etc. no longer rank as top opportunities.

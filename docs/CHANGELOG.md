@@ -77,6 +77,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - 8 new tests: progress formatting, run resume logic, orchestrator end-to-end flow with mocked dependencies
 
 ### Bug fixes & improvements
+- **Opportunity scoring hardening**: Scoring now uses LM Studio `json_schema` output, defaults LLM calls to single concurrency via `--llm-concurrency`, retries only transient LM Studio failures, normalizes null required text fields, scores even when homepage fetch misses, and persists `opportunity_score_status` / `opportunity_score_error` for failed attempts.
+- **`./start-score` shortcut**: Added a scoring launcher that starts the local NVIDIA proxy, waits for port `1234`, and runs the default opportunity scoring command. `run_scoring.sh` now delegates to it.
+- **Post-crawl scoring wrapper**: `./start crawler` now runs `./start-score` after successful crawls. Use `./start crawler --skip-score` to keep crawl-only behavior.
+- **Crawler completion fix**: Removed the broken post-crawl opportunity scoring hook that was nested after `return` and crashed completed crawls with `AttributeError`. Opportunity scoring remains an explicit follow-up command.
+- **Scoring docs synced**: README, RUNBOOK, Architecture, prompt docs, and opportunity scoring design notes now document the split concurrency model, explicit scoring command, homepage-miss policy, and failure-status columns.
 - **LM Studio `json_schema` fix**: Changed `response_format` from `{"type": "json_object"}` to `{"type": "json_schema", "json_schema": {...}}` — LM Studio requires OpenAI-compatible JSON schema format, not legacy `json_object`. Fixes 400 Bad Request on all LLM calls.
 - **Graceful stop mechanism**: Added `.crawl_stop` file-based stop signal. Create the file in the project root to pause the crawl gracefully after the current country finishes. The run status is set to "partial" and can be resumed by running the crawl again.
 - **Unparseable domain skip**: Cloudflare sometimes returns public suffixes as domains (e.g., `ac.za`). These now get skipped with a warning log instead of crashing the entire country. Argentina no longer fails.
@@ -114,6 +119,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Phase 9: Documentation and Diagrams
 - **D2 diagrams added**: Created system architecture diagrams using D2 (modern text-to-diagram language), including system-overview.d2, external-services.d2, and crawl-pipeline.d2 from existing architecture documentation.
+- **Opportunity scoring diagram added**: Added `docs/diagrams/scoring-algorithm.d2` and rendered `docs/diagrams/generated/scoring-algorithm.svg` for the scoring command flow.
 - **SVG rendering**: All diagrams are rendered to SVG format in docs/diagrams/generated/ for easy viewing and embedding.
 - **Documentation**: Added comprehensive README in docs/diagrams/ explaining D2 installation, diagram generation, and reference to original architecture docs.
 - **Task tracking**: Updated TASKS.md with new Phase 9 tracking all diagram-related activities.

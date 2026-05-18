@@ -8,20 +8,20 @@ from src.cloudflare.client import CloudflareClient
 from src.cloudflare.radar_service import RadarService
 from src.config.constants import CrawlRunStatus, RankingType
 from src.crawler.progress import get_or_create_today_run
+from src.db.async_client import get
 from src.db.repositories import (
     CrawlCountryStatusRepository,
     CrawlRunRepository,
     DomainRepository,
     ObservationRepository,
 )
-from src.db.repositories import bulk_upsert_domains, bulk_insert_observations
 from src.domains.dedupe import dedupe_and_insert
 from src.domains.scoring import score_observation
 from src.llm.lmstudio_client import LMStudioClient
 from src.utils.logging import get_logger
-from src.db.async_client import post, get
 
 logger = get_logger(__name__)
+
 
 async def load_existing_domains() -> dict[str, str]:
     """Load all existing domains from Supabase.
@@ -29,16 +29,16 @@ async def load_existing_domains() -> dict[str, str]:
     Returns a mapping ``normalized_domain -> id`` for quick in‑memory lookups.
     """
     # Use GET with select query parameters to fetch existing domains.
-    rows = await get('/rest/v1/domains', params={'select': 'id,normalized_domain'})
-    return {row['normalized_domain']: row['id'] for row in rows}
+    rows = await get("/rest/v1/domains", params={"select": "id,normalized_domain"})
+    return {row["normalized_domain"]: row["id"] for row in rows}
+
 
 # File used to signal graceful stop of crawling process
-STOP_FILE = Path('.crawl_stop')
+STOP_FILE = Path(".crawl_stop")
 
 RANKING_TYPES = [RankingType.TRENDING_RISE, RankingType.TRENDING_STEADY]
 
 CONCURRENCY = int(os.environ.get("CRAWL_CONCURRENCY", "8"))
-
 
 
 class CrawlOrchestrator:
@@ -91,7 +91,9 @@ class CrawlOrchestrator:
 
         if is_resume:
             existing_statuses = self._country_status_repo.get_country_statuses_for_run(run_id)
-            done_countries = {s["country_code"] for s in existing_statuses if s.get("status") in ("completed", "failed")}
+            done_countries = {
+                s["country_code"] for s in existing_statuses if s.get("status") in ("completed", "failed")
+            }
 
             new_domains = run.get("new_domains_count", 0)
             duplicate_domains = run.get("duplicate_domains_count", 0)
@@ -246,36 +248,7 @@ class CrawlOrchestrator:
             f"{counters['new_domains']} new, {counters['duplicate_domains']} dupes)"
         )
 
-        if counters["new_domains"] > 0 and final_status in (CrawlRunStatus.COMPLETED, CrawlRunStatus.PARTIAL):
-            await self._run_opportunity_scoring(counters["new_domains"])
-
         return run
-
-        async def _run_opportunity_scoring(self, new_domains_count: int) -> None:
-            """Score new domains with the opportunity LLM after crawl completes.
-
-            Uses the exact command the user expects:
-            .venv/bin/python main.py update-opportunity-scores \
-                --fetch-homepage \
-                --only-missing \
-                --concurrency 3 \
-                --model 'meta/llama-3.1-8b-instruct'
-            """
-            try:
-                from src.opportunity.update_opportunity_scores import update_opportunity_scores
-
-                logger.info(f"Running opportunity scoring for {new_domains_count} new domains with LLM model meta/llama-3.1-8b-instruct...")
-                scored = await update_opportunity_scores(
-                    only_missing=True,
-                    limit=new_domains_count,
-                    dry_run=False,
-                    fetch_homepage=True,
-                    concurrency=3,
-                    model='meta/llama-3.1-8b-instruct',
-                )
-                logger.info(f"Opportunity scoring complete: {scored} domains scored")
-            except Exception as e:
-                logger.error(f"Opportunity scoring failed after crawl: {e}")
 
     async def _process_country(
         self,
@@ -317,7 +290,8 @@ class CrawlOrchestrator:
                         rank=entry.rank,
                         pct_rank_change=entry.pct_rank_change,
                         categories=[
-                            {"id": c.id, "name": c.name, "superCategoryId": c.super_category_id} for c in entry.categories
+                            {"id": c.id, "name": c.name, "superCategoryId": c.super_category_id}
+                            for c in entry.categories
                         ],
                         raw_payload={
                             "domain": entry.domain,
@@ -336,10 +310,7 @@ class CrawlOrchestrator:
                     if self._llm:
                         llm_result = await self._llm.enrich(
                             domain=result.normalized_domain,
-                            categories=[
-                                {"id": c.id, "name": c.name}
-                                for c in entry.categories
-                            ],
+                            categories=[{"id": c.id, "name": c.name} for c in entry.categories],
                             country_code=country_code,
                             ranking_type=ranking_type.value,
                             rank=entry.rank,

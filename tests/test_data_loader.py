@@ -64,6 +64,10 @@ def test_load_collected_data_calls_range_rpc(monkeypatch):
         "category_filter": "SaaS",
         "search_query": "example",
         "sort_by": "Newest",
+        "min_opportunity_score": 0,
+        "min_opportunity_confidence": 0,
+        "opportunity_type_filter": "All Types",
+        "hide_global_giants": False,
         "page": 2,
         "page_size": 50,
     }
@@ -128,15 +132,16 @@ def test_filter_signature_changes_for_range_and_page_size():
 
 
 def test_status_filter_from_checkbox_values():
-    assert filters._status_filter_from_values(
-        {"pending": True, "ok": True, "exists": True, "bad": True}
-    ) == "All Statuses"
-    assert filters._status_filter_from_values(
-        {"pending": True, "ok": False, "exists": True, "bad": False}
-    ) == "pending,exists"
-    assert filters._status_filter_from_values(
-        {"pending": False, "ok": False, "exists": False, "bad": False}
-    ) == "__none__"
+    assert (
+        filters._status_filter_from_values({"pending": True, "ok": True, "exists": True, "bad": True}) == "All Statuses"
+    )
+    assert (
+        filters._status_filter_from_values({"pending": True, "ok": False, "exists": True, "bad": False})
+        == "pending,exists"
+    )
+    assert (
+        filters._status_filter_from_values({"pending": False, "ok": False, "exists": False, "bad": False}) == "__none__"
+    )
 
 
 def test_range_rpc_newest_sort_uses_domain_first_seen_timestamp():

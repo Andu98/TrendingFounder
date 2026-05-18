@@ -27,6 +27,7 @@ def start() -> int:
       domains. Optional flags:
         ``--only-missing`` ``--limit N`` ``--min-trend-score X`` ``--dry-run``
         ``--force`` ``--fetch-homepage`` ``--concurrency N``
+        ``--llm-concurrency N``
     """
     args = sys.argv[1:]
     if not args:

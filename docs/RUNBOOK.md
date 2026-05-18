@@ -20,13 +20,39 @@
 
 # Run for a specific date
 ./start crawler --date 2026-05-15
+
+# Run daily crawl without the automatic scoring step
+./start crawler --skip-score
+
+# Score unscored domains after a crawl
+./start-score
 ```
 
 ## Database Setup
 
 Before using the Collected Data date-range filter in a real Supabase environment, apply the SQL in `supabase/schemas/002_views.sql`. The dashboard depends on the `get_domains_for_range(...)` RPC for server-side filtering, aggregation, sorting, total counts, and pagination.
 
-The app does not apply this SQL automatically. Run it through the Supabase SQL editor or your normal migration process before testing the new range filter.
+Apply `supabase/schemas/004_opportunity_scores.sql` before running opportunity scoring. It adds the opportunity columns plus `opportunity_score_status` and `opportunity_score_error`, which let failed scoring attempts be recorded and skipped by `--only-missing` unless `--force` is used.
+
+The app does not apply these SQL files automatically. Run them through the Supabase SQL editor, Supabase MCP `apply_migration`, or your normal migration process before testing the dashboard or scoring command against a real project.
+
+## Opportunity Scoring Operations
+
+Opportunity scoring is implemented as a separate command and `./start crawler` invokes it after a successful crawl. This keeps the Python crawler independent from LM Studio availability while preserving the operational one-command flow. Use `./start crawler --skip-score` to crawl without scoring.
+
+```bash
+./start-score
+```
+
+Operational notes:
+
+- `--concurrency` controls domain-side work: DB context loading and optional homepage fetches.
+- `--llm-concurrency` controls concurrent LM Studio calls and defaults to `1`.
+- Homepage fetch failures are logged and counted, but scoring continues with existing context.
+- Failed scores persist `opportunity_score_status = 'failed'` and `opportunity_score_error`, so `--only-missing` avoids retrying permanent failures.
+- Use `--force` to retry failed or already-scored rows.
+- Extra args are appended to the default scoring command: `./start-score --force`, `./start-score --limit 50 --dry-run`.
+- Proxy logs are written to `logs/nvidia-proxy.log`.
 
 ## Pause & Resume Crawl
 
