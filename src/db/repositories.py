@@ -5,6 +5,32 @@ from supabase import Client
 from src.config.constants import CrawlRunStatus, ReviewStatus
 from src.db.supabase_client import get_supabase_client
 from src.db.async_client import post
+
+
+async def bulk_upsert_domains(domains: list[dict]):
+    """Bulk upsert domains in batches of 800 via Supabase REST endpoint.
+
+    Args:
+        domains: List of domain dicts to upsert.
+    """
+    batch_size = 800
+    for i in range(0, len(domains), batch_size):
+        batch = domains[i:i + batch_size]
+        # The async post function returns parsed JSON; we ignore it here.
+        await post('/rest/v1/domains', json=batch)
+
+
+async def bulk_insert_observations(observations: list[dict]):
+    """Bulk insert observations in batches of 800 via Supabase REST endpoint.
+
+    Args:
+        observations: List of observation dicts to insert.
+    """
+    batch_size = 800
+    for i in range(0, len(observations), batch_size):
+        batch = observations[i:i + batch_size]
+        await post('/rest/v1/observations', json=batch)
+
 from src.utils.logging import get_logger
 
 logger = get_logger(__name__)
