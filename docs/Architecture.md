@@ -2,7 +2,7 @@
 
 ## Crawler Deduplication Cache & Async Bulk Writer
 
-The crawler now loads all existing normalized domains into an in‑memory ``set`` at the start of each run. This cache is used to quickly determine whether a domain has already been seen, avoiding per‑record database lookups. New domains and observations are accumulated and inserted in batches (800 rows) via the async ``post`` helper, which sends bulk ``INSERT`` requests to Supabase. Concurrency is limited with an ``asyncio.Semaphore`` to respect Supabase rate limits. This redesign reduces the daily crawl time from ~3 hours to ≤ 1 hour without schema changes or additional hardware. Overview
+The crawler now loads all existing normalized domains into an in‑memory `set` at the start of each run. This cache enables O(1) deduplication checks, avoiding per‑record database lookups. New domains and observations are collected in memory and written in bulk using the asynchronous `post` helper from `src.db.async_client`. The bulk writer batches up to 800 rows per request (`bulk_upsert_domains` and `bulk_insert_observations` in `src.db.repositories`). Concurrency is controlled with an `asyncio.Semaphore` (default limit 10) and a shared `asyncio.Lock` protects the in‑memory buffers, ensuring safe parallel writes while respecting Supabase rate limits. This async bulk‑writer redesign reduces the daily crawl time from ~3 hours to ≤ 1 hour without schema changes or additional hardware.
 
 ## 1. High-Level System Diagram
 
@@ -84,6 +84,23 @@ This textual description replaces the previous Mermaid flowchart.
 4. **Deduplication** – domains are checked; new domains proceed to enrichment, duplicates are counted.
 5. **LLM Enrichment** (new domains only) – the domain is sent to the LMStudio service for enrichment.
 6. **Scoring** – the enriched domain is scored.
+
+**Scoring Mechanism Details**
+
+The `score_observation()` function returns a `ScoreBreakdown` dataclass that records each component of the final observation score:
+- **base** – a constant base score (`BASE_SCORE`).
+- **ranking_type** – a bonus based on the ranking category (e.g., `global`, `country`) defined in `RANKING_TYPE_BONUS`.
+- **rank** – a tiered bonus depending on the domain's rank, using `RANK_BONUS_TIERS`.
+- **pct_rank_change** – a bonus proportional to the percentage rank change, capped by `PCT_RANK_CHANGE_MAX` and scaled by `PCT_RANK_CHANGE_DIVISOR`.
+- **multi_country** – extra points for domains observed in multiple countries on the same day, limited by `MULTI_COUNTRY_MAX` and scaled by `MULTI_COUNTRY_PER_COUNTRY`.
+- **category** – a bonus for the LLM‑identified category, looked up in `CATEGORY_BONUS`.
+- **novelty** – a bonus for newly‑seen domains (`NOVELTY_FIRST_SEEN_TODAY` for same‑day, `NOVELTY_FIRST_SEEN_WEEK` for within a week).
+- **llm_potential** – derived from the LLM idea potential rating (`(rating‑1) * 5`).
+- **known_giant** – a penalty (`KNOWN_GIANT_PENALTY`) if the domain matches a known large entity (`is_known_giant`).
+- **already_reviewed** – a penalty (`ALREADY_REVIEWED_PENALTY`) when the `review_status` indicates the domain was already reviewed (`ok`, `exists`, `bad`).
+
+The final score is the sum of all positive components minus any penalties, accessible via `ScoreBreakdown.total`. The `details()` method returns a dictionary of each component for debugging and UI display.
+
 7. **Insert Observation** – the observation is stored in Supabase.
 8. **Update CrawlRun Progress** – progress counters are updated after each observation or duplicate.
 9. **Check for Pause or Stop** – the orchestrator may pause, continue, or stop the crawl.
