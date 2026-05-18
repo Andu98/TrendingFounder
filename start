@@ -21,6 +21,14 @@ case "$CMD" in
 
   crawler)
     shift
+    # Ensure NVIDIA proxy (project‑local) is running
+    if [ -d "$ROOT_DIR/nvidia-proxy" ] && [ -f "$ROOT_DIR/nvidia-proxy/index.js" ]; then
+      if ! pgrep -f "node index.js" >/dev/null; then
+        (cd "$ROOT_DIR/nvidia-proxy" && nohup node nvidia-proxy.js >/dev/null 2>&1 &)
+      fi
+    else
+      echo "Warning: nvidia‑proxy directory or index.js not found; skipping proxy start."
+    fi
     if [[ -x "$VENV_PYTHON" ]]; then
       exec "$VENV_PYTHON" -m src.crawler.run_daily "$@"
     fi

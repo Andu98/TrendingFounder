@@ -251,22 +251,31 @@ class CrawlOrchestrator:
 
         return run
 
-    async def _run_opportunity_scoring(self, new_domains_count: int) -> None:
-        """Score new domains with the opportunity LLM after crawl completes."""
-        try:
-            from src.opportunity.update_opportunity_scores import update_opportunity_scores
+        async def _run_opportunity_scoring(self, new_domains_count: int) -> None:
+            """Score new domains with the opportunity LLM after crawl completes.
 
-            logger.info(f"Running opportunity scoring for {new_domains_count} new domains...")
-            scored = await update_opportunity_scores(
-                only_missing=True,
-                limit=new_domains_count,
-                dry_run=False,
-                fetch_homepage=True,
-                concurrency=3,
-            )
-            logger.info(f"Opportunity scoring complete: {scored} domains scored")
-        except Exception as e:
-            logger.error(f"Opportunity scoring failed after crawl: {e}")
+            Uses the exact command the user expects:
+            .venv/bin/python main.py update-opportunity-scores \
+                --fetch-homepage \
+                --only-missing \
+                --concurrency 3 \
+                --model 'meta/llama-3.1-8b-instruct'
+            """
+            try:
+                from src.opportunity.update_opportunity_scores import update_opportunity_scores
+
+                logger.info(f"Running opportunity scoring for {new_domains_count} new domains with LLM model meta/llama-3.1-8b-instruct...")
+                scored = await update_opportunity_scores(
+                    only_missing=True,
+                    limit=new_domains_count,
+                    dry_run=False,
+                    fetch_homepage=True,
+                    concurrency=3,
+                    model='meta/llama-3.1-8b-instruct',
+                )
+                logger.info(f"Opportunity scoring complete: {scored} domains scored")
+            except Exception as e:
+                logger.error(f"Opportunity scoring failed after crawl: {e}")
 
     async def _process_country(
         self,

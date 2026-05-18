@@ -44,7 +44,12 @@ async def fetch_homepage_excerpt(url: str) -> Optional[str]:
         Extracted content or None if failed
     """
     try:
-        async with httpx.AsyncClient(timeout=5.0, follow_redirects=True) as client:
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
+            "Accept-Language": "en-US,en;q=0.9",
+        }
+        async with httpx.AsyncClient(timeout=5.0, follow_redirects=True, headers=headers) as client:
             response = await client.get(url)
             response.raise_for_status()
             
@@ -316,7 +321,8 @@ async def update_opportunity_scores(
     dry_run: bool = False,
     force: bool = False,
     fetch_homepage: bool = False,
-    concurrency: int = 5
+    concurrency: int = 5,
+    model: Optional[str] = None
 ) -> int:
     """
     Update opportunity scores for domains.
@@ -329,11 +335,16 @@ async def update_opportunity_scores(
         force: Force rescore even if already scored
         fetch_homepage: Whether to fetch homepage content
         concurrency: Concurrency level for LLM calls
+        model: Optional LLM model name
         
     Returns:
         Number of domains processed
     """
     # Initialize repositories
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s [%(levelname)s] %(name)s: %(message)s"
+    )
     domain_repo = DomainRepository()
     observation_repo = ObservationRepository()
     
@@ -341,29 +352,39 @@ async def update_opportunity_scores(
     settings = Settings()
     scorer = OpportunityScorer(
         base_url=settings.lmstudio_base_url,
-        model=settings.lmstudio_model,
+        model=model or settings.lmstudio_model,
         timeout=300.0
     )
     
-    # Build query for domains
-    query = domain_repo._client.table("domains").select("*").order("latest_best_score", desc=True)
+    # Build base query for domains (filters applied but without range)
+    base_query = domain_repo._client.table("domains").select("*").order("latest_best_score", desc=True)
     
     # Apply filters
     if only_missing and not force:
-        query = query.is_("opportunity_score", None)
+        base_query = base_query.is_("opportunity_score", None)
     
     if min_trend_score is not None:
-        query = query.gte("trend_score", min_trend_score)
+        base_query = base_query.gte("trend_score", min_trend_score)
     
-    # Execute query
-    try:
-        result = query.execute()
-        domains = result.data or []
-    except Exception as e:
-        logger.error(f"Failed to fetch domains: {e}")
-        return 0
+    # Paginate to bypass Supabase 1,000‑row limit
+    BATCH_SIZE = 1000
+    offset = 0
+    domains = []
+    while True:
+        try:
+            batch = base_query.range(offset, offset + BATCH_SIZE - 1).execute()
+            rows = batch.data or []
+        except Exception as e:
+            logger.error(f"Failed to fetch domain batch (offset {offset}): {e}")
+            return 0
+        if not rows:
+            break
+        domains.extend(rows)
+        if len(rows) < BATCH_SIZE:
+            break
+        offset += BATCH_SIZE
     
-    # Apply limit after filtering
+    # Apply limit after pagination and filtering
     if limit:
         domains = domains[:limit]
     
@@ -443,6 +464,12 @@ def cli(argv=None):
         help="Concurrency level for LLM calls (default: 5)"
     )
     
+    parser.add_argument(
+        "--model",
+        type=str,
+        help="LLM model name to use"
+    )
+    
     args = parser.parse_args(argv)
     
     try:
@@ -453,7 +480,8 @@ def cli(argv=None):
             dry_run=args.dry_run,
             force=args.force,
             fetch_homepage=args.fetch_homepage,
-            concurrency=args.concurrency
+            concurrency=args.concurrency,
+            model=args.model
         ))
         return 0
     except Exception as e:

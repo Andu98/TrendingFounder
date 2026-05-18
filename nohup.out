@@ -1,0 +1,20 @@
+usage: main.py [-h] [--only-missing] [--limit LIMIT]
+               [--min-trend-score MIN_TREND_SCORE] [--dry-run] [--force]
+               [--fetch-homepage] [--concurrency CONCURRENCY] [--model MODEL]
+main.py: error: argument --model: expected one argument
+usage: main.py [-h] [--only-missing] [--limit LIMIT]
+               [--min-trend-score MIN_TREND_SCORE] [--dry-run] [--force]
+               [--fetch-homepage] [--concurrency CONCURRENCY] [--model MODEL]
+main.py: error: argument --model: expected one argument
+usage: main.py [-h] [--only-missing] [--limit LIMIT]
+               [--min-trend-score MIN_TREND_SCORE] [--dry-run] [--force]
+               [--fetch-homepage] [--concurrency CONCURRENCY] [--model MODEL]
+main.py: error: argument --model: expected one argument
+usage: main.py [-h] [--only-missing] [--limit LIMIT]
+               [--min-trend-score MIN_TREND_SCORE] [--dry-run] [--force]
+               [--fetch-homepage] [--concurrency CONCURRENCY] [--model MODEL]
+main.py: error: argument --model: expected one argument
+usage: main.py [-h] [--only-missing] [--limit LIMIT]
+               [--min-trend-score MIN_TREND_SCORE] [--dry-run] [--force]
+               [--fetch-homepage] [--concurrency CONCURRENCY] [--model MODEL]
+main.py: error: argument --model: expected one argument

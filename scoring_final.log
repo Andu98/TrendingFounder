@@ -1,0 +1,1282 @@
+zsh: no such file or directory: meta/llama-3.1-8b-instruct
+2026-05-18 20:54:16,206 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?select=%2A&order=latest_best_score.desc&opportunity_score=is.null "HTTP/2 200 OK"
+2026-05-18 20:54:16,398 [INFO] src.opportunity.update_opportunity_scores: Processing 1000 domains
+2026-05-18 20:54:16,534 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.6ee6b7aa-856d-487b-8220-696ad598ff40 "HTTP/2 200 OK"
+2026-05-18 20:54:16,616 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.fd3d1e6b-293d-4d47-8513-bac333004db2 "HTTP/2 200 OK"
+2026-05-18 20:54:16,690 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.0343529f-641f-4352-93f0-e2d55ba12e7b "HTTP/2 200 OK"
+2026-05-18 20:54:16,866 [INFO] httpx: HTTP Request: GET https://collinsdictionary.com "HTTP/1.1 403 Forbidden"
+2026-05-18 20:54:16,867 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://collinsdictionary.com: Client error '403 Forbidden' for url 'https://collinsdictionary.com'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:54:16,867 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for collinsdictionary.com: Homepage crawl returned no content.
+2026-05-18 20:54:16,971 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.fd3d1e6b-293d-4d47-8513-bac333004db2 "HTTP/2 200 OK"
+2026-05-18 20:54:17,044 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.56286f67-cbe0-4242-8593-38a433c88edf "HTTP/2 200 OK"
+2026-05-18 20:54:17,052 [INFO] httpx: HTTP Request: GET https://zencare.co "HTTP/1.1 403 Forbidden"
+2026-05-18 20:54:17,052 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://zencare.co: Client error '403 Forbidden' for url 'https://zencare.co'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:54:17,053 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for zencare.co: Homepage crawl returned no content.
+2026-05-18 20:54:17,133 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.0343529f-641f-4352-93f0-e2d55ba12e7b "HTTP/2 200 OK"
+2026-05-18 20:54:17,206 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.b6042e92-0969-4d9f-b866-336316dbc93c "HTTP/2 200 OK"
+2026-05-18 20:54:17,241 [INFO] httpx: HTTP Request: GET https://webnovel.com "HTTP/1.1 403 Forbidden"
+2026-05-18 20:54:17,242 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://webnovel.com: Client error '403 Forbidden' for url 'https://webnovel.com'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:54:17,242 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for webnovel.com: Homepage crawl returned no content.
+2026-05-18 20:54:17,321 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.56286f67-cbe0-4242-8593-38a433c88edf "HTTP/2 200 OK"
+2026-05-18 20:54:17,395 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.2aea949f-5947-4f74-99e3-46667ede012a "HTTP/2 200 OK"
+2026-05-18 20:54:17,441 [INFO] httpx: HTTP Request: GET https://1xbet.kz "HTTP/1.1 200 OK"
+2026-05-18 20:54:17,444 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for 1xbet.kz: Homepage crawl returned no content.
+2026-05-18 20:54:17,522 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.6ee6b7aa-856d-487b-8220-696ad598ff40 "HTTP/2 200 OK"
+2026-05-18 20:54:17,592 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.c7e20228-9393-4df3-8709-9e404d44e539 "HTTP/2 200 OK"
+2026-05-18 20:54:17,708 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://gd.gov.cn: [Errno 8] nodename nor servname provided, or not known
+2026-05-18 20:54:17,708 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for gd.gov.cn: Homepage crawl returned no content.
+2026-05-18 20:54:17,821 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.2aea949f-5947-4f74-99e3-46667ede012a "HTTP/2 200 OK"
+2026-05-18 20:54:17,898 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.ebcbcdb0-ce10-40d1-9174-a2f9ecf1cc7c "HTTP/2 200 OK"
+2026-05-18 20:54:17,903 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://zju.edu.cn: [Errno 8] nodename nor servname provided, or not known
+2026-05-18 20:54:17,904 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for zju.edu.cn: Homepage crawl returned no content.
+2026-05-18 20:54:17,984 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.b6042e92-0969-4d9f-b866-336316dbc93c "HTTP/2 200 OK"
+2026-05-18 20:54:18,059 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.e2a99536-3771-48e9-8d77-972c806b40f0 "HTTP/2 200 OK"
+2026-05-18 20:54:18,091 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://togglevpn.org: [Errno 8] nodename nor servname provided, or not known
+2026-05-18 20:54:18,092 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for togglevpn.org: Homepage crawl returned no content.
+2026-05-18 20:54:18,166 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.e2a99536-3771-48e9-8d77-972c806b40f0 "HTTP/2 200 OK"
+2026-05-18 20:54:18,241 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.59a930c3-ce44-4938-834c-6b0614fa2a0f "HTTP/2 200 OK"
+2026-05-18 20:54:18,402 [INFO] httpx: HTTP Request: GET https://swarovski.com "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:54:18,499 [INFO] httpx: HTTP Request: GET https://sony.at "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:54:18,691 [INFO] httpx: HTTP Request: GET https://www.swarovski.com/ "HTTP/1.1 403 Forbidden"
+2026-05-18 20:54:18,693 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://swarovski.com: Client error '403 Forbidden' for url 'https://www.swarovski.com/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:54:18,693 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for swarovski.com: Homepage crawl returned no content.
+2026-05-18 20:54:18,773 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.ebcbcdb0-ce10-40d1-9174-a2f9ecf1cc7c "HTTP/2 200 OK"
+2026-05-18 20:54:18,846 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.427373b3-8d40-4015-930b-5ce54f8c6462 "HTTP/2 200 OK"
+2026-05-18 20:54:18,896 [INFO] httpx: HTTP Request: GET https://www.sony.at/ "HTTP/1.1 403 Forbidden"
+2026-05-18 20:54:18,897 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://sony.at: Client error '403 Forbidden' for url 'https://www.sony.at/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:54:18,897 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for sony.at: Homepage crawl returned no content.
+2026-05-18 20:54:18,972 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.c7e20228-9393-4df3-8709-9e404d44e539 "HTTP/2 200 OK"
+2026-05-18 20:54:19,053 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.5f2c40ea-bdd8-4ffc-b955-5cf80e7d2bf8 "HTTP/2 200 OK"
+2026-05-18 20:54:19,244 [INFO] httpx: HTTP Request: GET https://akamai.com "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:54:19,442 [INFO] httpx: HTTP Request: GET https://www.akamai.com/ "HTTP/1.1 403 Forbidden"
+2026-05-18 20:54:19,444 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://akamai.com: Client error '403 Forbidden' for url 'https://www.akamai.com/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:54:19,444 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for akamai.com: Homepage crawl returned no content.
+2026-05-18 20:54:19,525 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.5f2c40ea-bdd8-4ffc-b955-5cf80e7d2bf8 "HTTP/2 200 OK"
+2026-05-18 20:54:19,625 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.5a31ccac-dbde-476e-ab15-e2d1d4658ed6 "HTTP/2 200 OK"
+2026-05-18 20:54:19,909 [INFO] httpx: HTTP Request: GET https://chrono24.com.au "HTTP/1.1 403 Forbidden"
+2026-05-18 20:54:19,909 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://chrono24.com.au: Client error '403 Forbidden' for url 'https://chrono24.com.au'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:54:19,909 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for chrono24.com.au: Homepage crawl returned no content.
+2026-05-18 20:54:19,984 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.427373b3-8d40-4015-930b-5ce54f8c6462 "HTTP/2 200 OK"
+2026-05-18 20:54:20,068 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.04295d51-29b3-4d3e-a536-c1361ce3dcad "HTTP/2 200 OK"
+2026-05-18 20:54:20,859 [INFO] httpx: HTTP Request: GET https://gate.com "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:54:20,993 [INFO] httpx: HTTP Request: GET https://www.gate.com/ "HTTP/1.1 403 Forbidden"
+2026-05-18 20:54:20,995 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://gate.com: Client error '403 Forbidden' for url 'https://www.gate.com/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:54:20,995 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for gate.com: Homepage crawl returned no content.
+2026-05-18 20:54:21,083 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.5a31ccac-dbde-476e-ab15-e2d1d4658ed6 "HTTP/2 200 OK"
+2026-05-18 20:54:21,160 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.dc37e8cf-b601-441d-9cc1-b97e1145dfc3 "HTTP/2 200 OK"
+2026-05-18 20:54:21,211 [INFO] httpx: HTTP Request: GET https://toyhou.se "HTTP/1.1 403 Forbidden"
+2026-05-18 20:54:21,213 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://toyhou.se: Client error '403 Forbidden' for url 'https://toyhou.se'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:54:21,214 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for toyhou.se: Homepage crawl returned no content.
+2026-05-18 20:54:21,288 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.dc37e8cf-b601-441d-9cc1-b97e1145dfc3 "HTTP/2 200 OK"
+2026-05-18 20:54:21,363 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.569d6c14-7e9e-40f0-a13b-f5a07e59636f "HTTP/2 200 OK"
+2026-05-18 20:54:22,707 [INFO] httpx: HTTP Request: GET https://gmarket.co.kr "HTTP/1.1 308 Permanent Redirect"
+2026-05-18 20:54:22,817 [INFO] httpx: HTTP Request: GET https://www.gmarket.co.kr "HTTP/1.1 403 Forbidden"
+2026-05-18 20:54:22,819 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://gmarket.co.kr: Client error '403 Forbidden' for url 'https://www.gmarket.co.kr'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:54:22,820 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for gmarket.co.kr: Homepage crawl returned no content.
+2026-05-18 20:54:22,913 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.569d6c14-7e9e-40f0-a13b-f5a07e59636f "HTTP/2 200 OK"
+2026-05-18 20:54:22,990 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.69881927-dbbf-41c0-a196-ac4026b0c77a "HTTP/2 200 OK"
+2026-05-18 20:54:23,063 [INFO] httpx: HTTP Request: GET https://vestiairecollective.com "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:54:23,114 [INFO] httpx: HTTP Request: GET https://www.vestiairecollective.com/ "HTTP/1.1 403 Forbidden"
+2026-05-18 20:54:23,116 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://vestiairecollective.com: Client error '403 Forbidden' for url 'https://www.vestiairecollective.com/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:54:23,116 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for vestiairecollective.com: Homepage crawl returned no content.
+2026-05-18 20:54:23,214 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.69881927-dbbf-41c0-a196-ac4026b0c77a "HTTP/2 200 OK"
+2026-05-18 20:54:23,287 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.1ee67c28-dacb-43f1-a979-5f8a9a46d63c "HTTP/2 200 OK"
+2026-05-18 20:54:23,297 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://yealink.com: 
+2026-05-18 20:54:23,297 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for yealink.com: Homepage crawl returned no content.
+2026-05-18 20:54:23,378 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.59a930c3-ce44-4938-834c-6b0614fa2a0f "HTTP/2 200 OK"
+2026-05-18 20:54:23,448 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.533054e0-5d24-4e8c-830d-249c4ab70f0a "HTTP/2 200 OK"
+2026-05-18 20:54:23,630 [INFO] httpx: HTTP Request: GET https://melb.website "HTTP/1.1 403 Forbidden"
+2026-05-18 20:54:23,632 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://melb.website: Client error '403 Forbidden' for url 'https://melb.website'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:54:23,633 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for melb.website: Homepage crawl returned no content.
+2026-05-18 20:54:23,708 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.533054e0-5d24-4e8c-830d-249c4ab70f0a "HTTP/2 200 OK"
+2026-05-18 20:54:23,813 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.60a52acf-e2db-4ab9-9dbf-d23b65be62c5 "HTTP/2 200 OK"
+2026-05-18 20:54:23,908 [INFO] httpx: HTTP Request: GET https://chrome-stats.com "HTTP/1.1 403 Forbidden"
+2026-05-18 20:54:23,909 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://chrome-stats.com: Client error '403 Forbidden' for url 'https://chrome-stats.com'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:54:23,909 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for chrome-stats.com: Homepage crawl returned no content.
+2026-05-18 20:54:23,986 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.60a52acf-e2db-4ab9-9dbf-d23b65be62c5 "HTTP/2 200 OK"
+2026-05-18 20:54:24,071 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.18388e50-9151-4c64-913a-7ce317fd8069 "HTTP/2 200 OK"
+2026-05-18 20:54:24,143 [INFO] httpx: HTTP Request: GET https://encuentra24.com "HTTP/1.1 403 Forbidden"
+2026-05-18 20:54:24,144 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://encuentra24.com: Client error '403 Forbidden' for url 'https://encuentra24.com'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:54:24,145 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for encuentra24.com: Homepage crawl returned no content.
+2026-05-18 20:54:24,223 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.18388e50-9151-4c64-913a-7ce317fd8069 "HTTP/2 200 OK"
+2026-05-18 20:54:24,306 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.1f07650c-2f45-4c5d-875a-545d54119e25 "HTTP/2 200 OK"
+2026-05-18 20:54:24,382 [INFO] httpx: HTTP Request: GET https://whatsapp.com "HTTP/1.1 302 Found"
+2026-05-18 20:54:24,554 [INFO] httpx: HTTP Request: GET https://www.whatsapp.com/ "HTTP/1.1 400 Bad Request"
+2026-05-18 20:54:24,559 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://whatsapp.com: Client error '400 Bad Request' for url 'https://www.whatsapp.com/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400
+2026-05-18 20:54:24,560 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for whatsapp.com: Homepage crawl returned no content.
+2026-05-18 20:54:24,641 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.1f07650c-2f45-4c5d-875a-545d54119e25 "HTTP/2 200 OK"
+2026-05-18 20:54:24,714 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.dd0bbb8a-6e6b-421f-924d-48f28720c327 "HTTP/2 200 OK"
+2026-05-18 20:54:25,158 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://justdial.com: 
+2026-05-18 20:54:25,159 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for justdial.com: Homepage crawl returned no content.
+2026-05-18 20:54:25,241 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.04295d51-29b3-4d3e-a536-c1361ce3dcad "HTTP/2 200 OK"
+2026-05-18 20:54:25,320 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.ba723cff-583f-4049-bb24-1c412926f51d "HTTP/2 200 OK"
+2026-05-18 20:54:25,416 [INFO] httpx: HTTP Request: GET https://revolut.com "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:54:25,556 [INFO] httpx: HTTP Request: GET https://www.revolut.com/ "HTTP/1.1 403 Forbidden"
+2026-05-18 20:54:25,614 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://revolut.com: Client error '403 Forbidden' for url 'https://www.revolut.com/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:54:25,614 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for revolut.com: Homepage crawl returned no content.
+2026-05-18 20:54:25,702 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.ba723cff-583f-4049-bb24-1c412926f51d "HTTP/2 200 OK"
+2026-05-18 20:54:25,775 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.9eabc3f4-58ac-4770-ad72-5dfeaff804f2 "HTTP/2 200 OK"
+2026-05-18 20:54:25,781 [INFO] httpx: HTTP Request: GET https://intel.com "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:54:25,846 [INFO] httpx: HTTP Request: GET https://indeed.com "HTTP/1.1 403 Forbidden"
+2026-05-18 20:54:25,850 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://indeed.com: Client error '403 Forbidden' for url 'https://indeed.com'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:54:25,850 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for indeed.com: Homepage crawl returned no content.
+2026-05-18 20:54:25,940 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.9eabc3f4-58ac-4770-ad72-5dfeaff804f2 "HTTP/2 200 OK"
+2026-05-18 20:54:26,032 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.0104e0b7-ff7b-4a47-8e1b-09da73d3792f "HTTP/2 200 OK"
+2026-05-18 20:54:26,122 [INFO] httpx: HTTP Request: GET https://www.intel.com/ "HTTP/1.1 403 Forbidden"
+2026-05-18 20:54:26,123 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://intel.com: Client error '403 Forbidden' for url 'https://www.intel.com/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:54:26,123 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for intel.com: Homepage crawl returned no content.
+2026-05-18 20:54:26,200 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.dd0bbb8a-6e6b-421f-924d-48f28720c327 "HTTP/2 200 OK"
+2026-05-18 20:54:26,268 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.3f1fb9b8-7aa2-4f6f-abff-3dec9c721f5f "HTTP/2 200 OK"
+2026-05-18 20:54:26,308 [INFO] httpx: HTTP Request: GET https://asos.com "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:54:26,756 [INFO] httpx: HTTP Request: GET https://sigmaaldrich.com "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:54:28,299 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://coloros.com: 
+2026-05-18 20:54:28,299 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for coloros.com: Homepage crawl returned no content.
+2026-05-18 20:54:28,382 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.1ee67c28-dacb-43f1-a979-5f8a9a46d63c "HTTP/2 200 OK"
+2026-05-18 20:54:28,462 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.44089894-e089-4ab1-a086-c38364f208c0 "HTTP/2 200 OK"
+2026-05-18 20:54:28,511 [INFO] httpx: HTTP Request: GET https://vbet.bet.br "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:54:28,666 [INFO] httpx: HTTP Request: GET https://www.vbet.bet.br/pb "HTTP/1.1 403 Forbidden"
+2026-05-18 20:54:28,757 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://vbet.bet.br: Client error '403 Forbidden' for url 'https://www.vbet.bet.br/pb'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:54:28,757 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for vbet.bet.br: Homepage crawl returned no content.
+2026-05-18 20:54:28,837 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.44089894-e089-4ab1-a086-c38364f208c0 "HTTP/2 200 OK"
+2026-05-18 20:54:28,904 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.65b6420f-e7bf-453c-9acf-543c9dacecdc "HTTP/2 200 OK"
+2026-05-18 20:54:29,226 [INFO] httpx: HTTP Request: GET https://hermes.com "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:54:29,393 [INFO] httpx: HTTP Request: GET https://www.hermes.com/ "HTTP/1.1 403 Forbidden"
+2026-05-18 20:54:29,395 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://hermes.com: Client error '403 Forbidden' for url 'https://www.hermes.com/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:54:29,395 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for hermes.com: Homepage crawl returned no content.
+2026-05-18 20:54:29,477 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.65b6420f-e7bf-453c-9acf-543c9dacecdc "HTTP/2 200 OK"
+2026-05-18 20:54:29,559 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.87079ed8-2f4d-4600-9234-d5020df644e6 "HTTP/2 200 OK"
+2026-05-18 20:54:31,345 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://asos.com: 
+2026-05-18 20:54:31,347 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for asos.com: Homepage crawl returned no content.
+2026-05-18 20:54:31,431 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.0104e0b7-ff7b-4a47-8e1b-09da73d3792f "HTTP/2 200 OK"
+2026-05-18 20:54:31,502 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.3942a29a-bbfd-4e48-937a-063821d47e20 "HTTP/2 200 OK"
+2026-05-18 20:54:31,567 [INFO] httpx: HTTP Request: GET https://takealot.com "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:54:31,673 [INFO] httpx: HTTP Request: GET https://www.takealot.com/ "HTTP/1.1 403 Forbidden"
+2026-05-18 20:54:31,675 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://takealot.com: Client error '403 Forbidden' for url 'https://www.takealot.com/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:54:31,676 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for takealot.com: Homepage crawl returned no content.
+2026-05-18 20:54:31,753 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.3942a29a-bbfd-4e48-937a-063821d47e20 "HTTP/2 200 OK"
+2026-05-18 20:54:31,831 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.3fd74071-faf2-40c6-af8f-6dfc3e63df9b "HTTP/2 200 OK"
+2026-05-18 20:54:31,847 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://sigmaaldrich.com: 
+2026-05-18 20:54:31,847 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for sigmaaldrich.com: Homepage crawl returned no content.
+2026-05-18 20:54:31,925 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.3f1fb9b8-7aa2-4f6f-abff-3dec9c721f5f "HTTP/2 200 OK"
+2026-05-18 20:54:32,013 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.b1c98a35-0b98-469f-83f8-6d0f4e1cbe55 "HTTP/2 200 OK"
+2026-05-18 20:54:32,222 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://ethiopianairlines.com: [SSL: TLSV1_ALERT_INTERNAL_ERROR] tlsv1 alert internal error (_ssl.c:1081)
+2026-05-18 20:54:32,223 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for ethiopianairlines.com: Homepage crawl returned no content.
+2026-05-18 20:54:32,322 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.b1c98a35-0b98-469f-83f8-6d0f4e1cbe55 "HTTP/2 200 OK"
+2026-05-18 20:54:32,393 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.0c5f9ab1-7322-4c8e-a7f0-dc6417fbcc43 "HTTP/2 200 OK"
+2026-05-18 20:54:32,500 [INFO] httpx: HTTP Request: GET https://clickr.pro "HTTP/1.1 403 Forbidden"
+2026-05-18 20:54:32,501 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://clickr.pro: Client error '403 Forbidden' for url 'https://clickr.pro'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:54:32,501 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for clickr.pro: Homepage crawl returned no content.
+2026-05-18 20:54:32,579 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.0c5f9ab1-7322-4c8e-a7f0-dc6417fbcc43 "HTTP/2 200 OK"
+2026-05-18 20:54:32,649 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.9651ad5c-1f76-4ffc-beaa-0c1ff5c67183 "HTTP/2 200 OK"
+2026-05-18 20:54:32,657 [INFO] httpx: HTTP Request: GET https://acs.org "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:54:32,979 [INFO] httpx: HTTP Request: GET https://www.acs.org/ "HTTP/1.1 200 OK"
+2026-05-18 20:54:32,982 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for acs.org: Homepage crawl returned no content.
+2026-05-18 20:54:33,057 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.3fd74071-faf2-40c6-af8f-6dfc3e63df9b "HTTP/2 200 OK"
+2026-05-18 20:54:33,130 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.c4cec905-bbd2-452f-9b50-d257f3f28d4b "HTTP/2 200 OK"
+2026-05-18 20:54:33,417 [INFO] httpx: HTTP Request: GET https://iihf.com "HTTP/1.1 403 Forbidden"
+2026-05-18 20:54:33,418 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://iihf.com: Client error '403 Forbidden' for url 'https://iihf.com'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:54:33,418 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for iihf.com: Homepage crawl returned no content.
+2026-05-18 20:54:33,551 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.c4cec905-bbd2-452f-9b50-d257f3f28d4b "HTTP/2 200 OK"
+2026-05-18 20:54:33,633 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.ce2cd52b-a903-42c1-8da9-8f6784ffd15b "HTTP/2 200 OK"
+2026-05-18 20:54:33,873 [INFO] httpx: HTTP Request: GET https://canon-europe.com "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:54:34,000 [INFO] httpx: HTTP Request: GET https://www.canon-europe.com/ "HTTP/1.1 403 Forbidden"
+2026-05-18 20:54:34,002 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://canon-europe.com: Client error '403 Forbidden' for url 'https://www.canon-europe.com/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:54:34,002 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for canon-europe.com: Homepage crawl returned no content.
+2026-05-18 20:54:34,080 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.ce2cd52b-a903-42c1-8da9-8f6784ffd15b "HTTP/2 200 OK"
+2026-05-18 20:54:34,165 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.3ed985a7-c23d-4593-9031-738718612529 "HTTP/2 200 OK"
+2026-05-18 20:54:34,571 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://10010.com: 
+2026-05-18 20:54:34,571 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for 10010.com: Homepage crawl returned no content.
+2026-05-18 20:54:34,650 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.87079ed8-2f4d-4600-9234-d5020df644e6 "HTTP/2 200 OK"
+2026-05-18 20:54:34,717 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.ebe02524-e855-4cfd-8096-d425bc6ceb37 "HTTP/2 200 OK"
+2026-05-18 20:54:34,727 [INFO] httpx: HTTP Request: GET https://paramount.com "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:54:35,051 [INFO] httpx: HTTP Request: GET https://www.paramount.com/ "HTTP/1.1 403 Forbidden"
+2026-05-18 20:54:35,053 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://paramount.com: Client error '403 Forbidden' for url 'https://www.paramount.com/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:54:35,053 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for paramount.com: Homepage crawl returned no content.
+2026-05-18 20:54:35,130 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.3ed985a7-c23d-4593-9031-738718612529 "HTTP/2 200 OK"
+2026-05-18 20:54:35,205 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.0197d22f-0d5c-4cf9-a7a0-04a3de10a738 "HTTP/2 200 OK"
+2026-05-18 20:54:35,461 [INFO] httpx: HTTP Request: GET https://cnps.ci "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:54:36,315 [INFO] httpx: HTTP Request: GET https://www.cnps.ci/ "HTTP/1.1 200 OK"
+2026-05-18 20:54:37,940 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://refpa37630.com: 
+2026-05-18 20:54:37,941 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for refpa37630.com: Homepage crawl returned no content.
+2026-05-18 20:54:38,025 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.9651ad5c-1f76-4ffc-beaa-0c1ff5c67183 "HTTP/2 200 OK"
+2026-05-18 20:54:38,118 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.461e7b75-56e9-485e-bbbb-109c1944eb49 "HTTP/2 200 OK"
+2026-05-18 20:54:38,693 [INFO] httpx: HTTP Request: GET https://sony.dk "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:54:38,828 [INFO] httpx: HTTP Request: GET https://www.sony.dk/ "HTTP/1.1 403 Forbidden"
+2026-05-18 20:54:38,829 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://sony.dk: Client error '403 Forbidden' for url 'https://www.sony.dk/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:54:38,829 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for sony.dk: Homepage crawl returned no content.
+2026-05-18 20:54:38,903 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.461e7b75-56e9-485e-bbbb-109c1944eb49 "HTTP/2 200 OK"
+2026-05-18 20:54:38,979 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.e753b6ec-be0c-4b9f-9d53-27251bf26daa "HTTP/2 200 OK"
+2026-05-18 20:54:39,221 [INFO] httpx: HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-18 20:54:39,334 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.0197d22f-0d5c-4cf9-a7a0-04a3de10a738 "HTTP/2 200 OK"
+2026-05-18 20:54:39,449 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.fab55abf-e57d-4a5b-a6c5-3545009ca01d "HTTP/2 200 OK"
+2026-05-18 20:54:39,510 [INFO] httpx: HTTP Request: GET https://miwifi.com "HTTP/1.1 403 Forbidden"
+2026-05-18 20:54:39,511 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://miwifi.com: Client error '403 Forbidden' for url 'https://miwifi.com'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:54:39,511 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for miwifi.com: Homepage crawl returned no content.
+2026-05-18 20:54:39,591 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.e753b6ec-be0c-4b9f-9d53-27251bf26daa "HTTP/2 200 OK"
+2026-05-18 20:54:39,664 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.ec200735-a909-4a3f-9e77-b32ce591f738 "HTTP/2 200 OK"
+2026-05-18 20:54:39,673 [INFO] httpx: HTTP Request: GET https://magnite.com "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:54:39,729 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://calzedonia.com: 
+2026-05-18 20:54:39,730 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for calzedonia.com: Homepage crawl returned no content.
+2026-05-18 20:54:39,806 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.ebe02524-e855-4cfd-8096-d425bc6ceb37 "HTTP/2 200 OK"
+2026-05-18 20:54:39,876 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.d3ad7225-19a0-417d-b726-448e831438a9 "HTTP/2 200 OK"
+2026-05-18 20:54:39,890 [INFO] httpx: HTTP Request: GET https://www.magnite.com/ "HTTP/1.1 403 Forbidden"
+2026-05-18 20:54:39,891 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://magnite.com: Client error '403 Forbidden' for url 'https://www.magnite.com/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:54:39,891 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for magnite.com: Homepage crawl returned no content.
+2026-05-18 20:54:40,424 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.fab55abf-e57d-4a5b-a6c5-3545009ca01d "HTTP/2 200 OK"
+2026-05-18 20:54:40,515 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.b6109220-3e42-4050-ba04-05c8e74171f7 "HTTP/2 200 OK"
+2026-05-18 20:54:40,549 [INFO] httpx: HTTP Request: GET https://betpawa.cm "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:54:40,692 [INFO] httpx: HTTP Request: GET https://www.betpawa.cm/ "HTTP/1.1 200 OK"
+2026-05-18 20:54:40,725 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for betpawa.cm: Homepage crawl returned no content.
+2026-05-18 20:54:40,818 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.ec200735-a909-4a3f-9e77-b32ce591f738 "HTTP/2 200 OK"
+2026-05-18 20:54:40,890 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.32b82ac8-3915-4e66-850d-83135fb48ec6 "HTTP/2 200 OK"
+2026-05-18 20:54:41,504 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://uniqlo.cn: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1081)
+2026-05-18 20:54:41,506 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for uniqlo.cn: Homepage crawl returned no content.
+2026-05-18 20:54:41,583 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.b6109220-3e42-4050-ba04-05c8e74171f7 "HTTP/2 200 OK"
+2026-05-18 20:54:41,656 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.61428d5f-38cb-4cda-8ae3-bf1176c71fc6 "HTTP/2 200 OK"
+2026-05-18 20:54:41,675 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://icfes.gov.co: [Errno 8] nodename nor servname provided, or not known
+2026-05-18 20:54:41,675 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for icfes.gov.co: Homepage crawl returned no content.
+2026-05-18 20:54:41,751 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.61428d5f-38cb-4cda-8ae3-bf1176c71fc6 "HTTP/2 200 OK"
+2026-05-18 20:54:41,818 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.d93d8fde-8dcc-4490-98a4-ded7a7e4ad02 "HTTP/2 200 OK"
+2026-05-18 20:54:42,217 [INFO] httpx: HTTP Request: GET https://zhixue.com "HTTP/1.1 405 Not Allowed"
+2026-05-18 20:54:42,219 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://zhixue.com: Client error '405 Not Allowed' for url 'https://zhixue.com'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/405
+2026-05-18 20:54:42,219 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for zhixue.com: Homepage crawl returned no content.
+2026-05-18 20:54:42,320 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.32b82ac8-3915-4e66-850d-83135fb48ec6 "HTTP/2 200 OK"
+2026-05-18 20:54:42,395 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.413ea301-d258-43e3-9604-8ef665ca6424 "HTTP/2 200 OK"
+2026-05-18 20:54:42,461 [INFO] httpx: HTTP Request: GET https://s8ey.com "HTTP/1.1 200 OK"
+2026-05-18 20:54:42,463 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for s8ey.com: Homepage crawl returned no content.
+2026-05-18 20:54:42,545 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.d93d8fde-8dcc-4490-98a4-ded7a7e4ad02 "HTTP/2 200 OK"
+2026-05-18 20:54:42,622 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.53be0284-3c57-46f5-9fab-2e65d4d1f203 "HTTP/2 200 OK"
+2026-05-18 20:54:42,687 [INFO] httpx: HTTP Request: GET https://nexusmods.com "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:54:42,755 [INFO] httpx: HTTP Request: GET https://www.nexusmods.com/ "HTTP/1.1 403 Forbidden"
+2026-05-18 20:54:42,756 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://nexusmods.com: Client error '403 Forbidden' for url 'https://www.nexusmods.com/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:54:42,756 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for nexusmods.com: Homepage crawl returned no content.
+2026-05-18 20:54:42,834 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.53be0284-3c57-46f5-9fab-2e65d4d1f203 "HTTP/2 200 OK"
+2026-05-18 20:54:42,920 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.c49a3a74-14e7-465b-a80e-c1e09aa4199d "HTTP/2 200 OK"
+2026-05-18 20:54:44,891 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://feriachilenadellibro.cl: 
+2026-05-18 20:54:44,892 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for feriachilenadellibro.cl: Homepage crawl returned no content.
+2026-05-18 20:54:44,968 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.d3ad7225-19a0-417d-b726-448e831438a9 "HTTP/2 200 OK"
+2026-05-18 20:54:45,040 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.bb4cd69c-e8be-4413-91c5-387f487fd4c5 "HTTP/2 200 OK"
+2026-05-18 20:54:45,201 [INFO] httpx: HTTP Request: GET https://timeanddate.com "HTTP/1.1 403 Forbidden"
+2026-05-18 20:54:45,202 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://timeanddate.com: Client error '403 Forbidden' for url 'https://timeanddate.com'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:54:45,202 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for timeanddate.com: Homepage crawl returned no content.
+2026-05-18 20:54:45,275 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.bb4cd69c-e8be-4413-91c5-387f487fd4c5 "HTTP/2 200 OK"
+2026-05-18 20:54:45,347 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.da7a073c-a387-462c-b2f6-fd980e06b001 "HTTP/2 200 OK"
+2026-05-18 20:54:46,191 [INFO] httpx: HTTP Request: GET https://keellssuper.com "HTTP/1.1 200 OK"
+2026-05-18 20:54:46,196 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for keellssuper.com: Homepage crawl returned no content.
+2026-05-18 20:54:46,281 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.da7a073c-a387-462c-b2f6-fd980e06b001 "HTTP/2 200 OK"
+2026-05-18 20:54:46,351 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.c2f33ec7-ef2c-4030-9837-63ae231cf92d "HTTP/2 200 OK"
+2026-05-18 20:54:46,781 [INFO] httpx: HTTP Request: GET https://si.edu "HTTP/1.0 301 Moved Permanently"
+2026-05-18 20:54:46,904 [INFO] httpx: HTTP Request: GET https://www.si.edu/ "HTTP/1.1 403 Forbidden"
+2026-05-18 20:54:46,908 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://si.edu: Client error '403 Forbidden' for url 'https://www.si.edu/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:54:46,908 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for si.edu: Homepage crawl returned no content.
+2026-05-18 20:54:46,996 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.c2f33ec7-ef2c-4030-9837-63ae231cf92d "HTTP/2 200 OK"
+2026-05-18 20:54:47,112 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.6858044c-2e6c-4dcf-b26e-d73219352dab "HTTP/2 200 OK"
+2026-05-18 20:54:47,307 [INFO] httpx: HTTP Request: GET https://pulsz.com "HTTP/1.1 308 Permanent Redirect"
+2026-05-18 20:54:47,390 [INFO] httpx: HTTP Request: GET https://www.pulsz.com/ "HTTP/1.1 403 Forbidden"
+2026-05-18 20:54:47,392 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://pulsz.com: Client error '403 Forbidden' for url 'https://www.pulsz.com/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:54:47,392 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for pulsz.com: Homepage crawl returned no content.
+2026-05-18 20:54:47,474 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.6858044c-2e6c-4dcf-b26e-d73219352dab "HTTP/2 200 OK"
+2026-05-18 20:54:47,545 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.2a76ae63-26eb-4560-b1aa-df0c3ef58091 "HTTP/2 200 OK"
+2026-05-18 20:54:47,648 [INFO] httpx: HTTP Request: GET https://dufy.cz "HTTP/1.1 403 Forbidden"
+2026-05-18 20:54:47,649 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://dufy.cz: Client error '403 Forbidden' for url 'https://dufy.cz'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:54:47,649 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for dufy.cz: Homepage crawl returned no content.
+2026-05-18 20:54:47,723 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.2a76ae63-26eb-4560-b1aa-df0c3ef58091 "HTTP/2 200 OK"
+2026-05-18 20:54:47,811 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.0b47650d-233e-4f0e-a6aa-f197b6f34314 "HTTP/2 200 OK"
+2026-05-18 20:54:47,821 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://mult-fan.tv: 
+2026-05-18 20:54:47,822 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for mult-fan.tv: Homepage crawl returned no content.
+2026-05-18 20:54:47,900 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.413ea301-d258-43e3-9604-8ef665ca6424 "HTTP/2 200 OK"
+2026-05-18 20:54:47,972 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.360c46e3-3d96-4092-a071-bc2095a77a74 "HTTP/2 200 OK"
+2026-05-18 20:54:48,024 [INFO] httpx: HTTP Request: GET https://megabetplus.com.cy "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:54:48,404 [INFO] httpx: HTTP Request: GET https://www.megabetplus.com.cy/ "HTTP/1.1 200 OK"
+2026-05-18 20:54:48,407 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for megabetplus.com.cy: Homepage crawl returned no content.
+2026-05-18 20:54:48,483 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.0b47650d-233e-4f0e-a6aa-f197b6f34314 "HTTP/2 200 OK"
+2026-05-18 20:54:48,558 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.652b2793-730e-4b72-96ed-8a9e2beca128 "HTTP/2 200 OK"
+2026-05-18 20:54:48,700 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://latte.la: 
+2026-05-18 20:54:48,701 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for latte.la: Homepage crawl returned no content.
+2026-05-18 20:54:48,780 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.c49a3a74-14e7-465b-a80e-c1e09aa4199d "HTTP/2 200 OK"
+2026-05-18 20:54:48,858 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.c9b75351-89ba-4cae-9c06-4b0a623b229e "HTTP/2 200 OK"
+2026-05-18 20:54:48,872 [INFO] httpx: HTTP Request: GET https://cettire.com "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:54:49,016 [INFO] httpx: HTTP Request: GET https://euro.com.pl "HTTP/1.1 302 Found"
+2026-05-18 20:54:49,185 [INFO] httpx: HTTP Request: GET https://stories.com "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:54:49,217 [INFO] httpx: HTTP Request: GET https://www.cettire.com/ "HTTP/1.1 302 Found"
+2026-05-18 20:54:49,324 [INFO] httpx: HTTP Request: GET https://www.euro.com.pl/ "HTTP/1.1 403 Forbidden"
+2026-05-18 20:54:49,326 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://euro.com.pl: Client error '403 Forbidden' for url 'https://www.euro.com.pl/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:54:49,326 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for euro.com.pl: Homepage crawl returned no content.
+2026-05-18 20:54:49,407 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.652b2793-730e-4b72-96ed-8a9e2beca128 "HTTP/2 200 OK"
+2026-05-18 20:54:49,490 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.5fe741d1-7c96-44cf-a0f0-6e44ba6f35c3 "HTTP/2 200 OK"
+2026-05-18 20:54:49,589 [INFO] httpx: HTTP Request: GET https://www.stories.com/?orgtld=stories.com "HTTP/1.1 403 Forbidden"
+2026-05-18 20:54:49,591 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://stories.com: Client error '403 Forbidden' for url 'https://www.stories.com/?orgtld=stories.com'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:54:49,591 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for stories.com: Homepage crawl returned no content.
+2026-05-18 20:54:49,668 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.c9b75351-89ba-4cae-9c06-4b0a623b229e "HTTP/2 200 OK"
+2026-05-18 20:54:49,736 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.0d9be914-de87-455a-9e06-7efb44a0142d "HTTP/2 200 OK"
+2026-05-18 20:54:49,765 [INFO] httpx: HTTP Request: GET https://sportshoop.la "HTTP/1.1 403 Forbidden"
+2026-05-18 20:54:49,766 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://sportshoop.la: Client error '403 Forbidden' for url 'https://sportshoop.la'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:54:49,766 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for sportshoop.la: Homepage crawl returned no content.
+2026-05-18 20:54:49,842 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.5fe741d1-7c96-44cf-a0f0-6e44ba6f35c3 "HTTP/2 200 OK"
+2026-05-18 20:54:49,923 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.4f4e88cd-eba5-459b-b54a-c7bd0ae5e681 "HTTP/2 200 OK"
+2026-05-18 20:54:49,928 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://ourdreamersai.com: [Errno 8] nodename nor servname provided, or not known
+2026-05-18 20:54:49,929 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for ourdreamersai.com: Homepage crawl returned no content.
+2026-05-18 20:54:50,012 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.0d9be914-de87-455a-9e06-7efb44a0142d "HTTP/2 200 OK"
+2026-05-18 20:54:50,081 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.5898ed3a-13c8-49c7-a486-ead03e0c89e1 "HTTP/2 200 OK"
+2026-05-18 20:54:50,197 [INFO] httpx: HTTP Request: GET https://zoneoffer.dk "HTTP/1.1 403 Forbidden"
+2026-05-18 20:54:50,199 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://zoneoffer.dk: Client error '403 Forbidden' for url 'https://zoneoffer.dk'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:54:50,199 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for zoneoffer.dk: Homepage crawl returned no content.
+2026-05-18 20:54:50,277 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.5898ed3a-13c8-49c7-a486-ead03e0c89e1 "HTTP/2 200 OK"
+2026-05-18 20:54:50,360 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.d9533cf4-0f6f-4800-ac27-37aeae9be0d7 "HTTP/2 200 OK"
+2026-05-18 20:54:50,368 [INFO] httpx: HTTP Request: GET https://www.cettire.com/ro "HTTP/1.1 200 OK"
+2026-05-18 20:54:50,413 [INFO] httpx: HTTP Request: GET https://callrail.com "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:54:50,452 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for cettire.com: Homepage crawl returned no content.
+2026-05-18 20:54:50,529 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.360c46e3-3d96-4092-a071-bc2095a77a74 "HTTP/2 200 OK"
+2026-05-18 20:54:50,609 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.63dd7f32-a6f4-4fb5-ad1f-dc7cce46238b "HTTP/2 200 OK"
+2026-05-18 20:54:50,689 [INFO] httpx: HTTP Request: GET https://vsco.co "HTTP/1.1 403 Forbidden"
+2026-05-18 20:54:50,690 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://vsco.co: Client error '403 Forbidden' for url 'https://vsco.co'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:54:50,690 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for vsco.co: Homepage crawl returned no content.
+2026-05-18 20:54:50,767 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.63dd7f32-a6f4-4fb5-ad1f-dc7cce46238b "HTTP/2 200 OK"
+2026-05-18 20:54:50,839 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.61e9a4da-82f0-49e3-b65f-fd4bdaaa5e0b "HTTP/2 200 OK"
+2026-05-18 20:54:50,907 [INFO] httpx: HTTP Request: GET https://www.callrail.com/ "HTTP/1.1 200 OK"
+2026-05-18 20:54:50,914 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for callrail.com: Homepage crawl returned no content.
+2026-05-18 20:54:50,994 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.4f4e88cd-eba5-459b-b54a-c7bd0ae5e681 "HTTP/2 200 OK"
+2026-05-18 20:54:51,064 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.2c606e77-981a-4258-9701-0e249968a694 "HTTP/2 200 OK"
+2026-05-18 20:54:51,075 [INFO] httpx: HTTP Request: GET https://opensooq.com "HTTP/1.1 302 Found"
+2026-05-18 20:54:51,336 [INFO] httpx: HTTP Request: GET https://intersport.fr "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:54:51,345 [INFO] httpx: HTTP Request: GET https://www.opensooq.com/ar?ref=change_country_ "HTTP/1.1 403 Forbidden"
+2026-05-18 20:54:51,347 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://opensooq.com: Client error '403 Forbidden' for url 'https://www.opensooq.com/ar?ref=change_country_'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:54:51,347 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for opensooq.com: Homepage crawl returned no content.
+2026-05-18 20:54:51,442 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.d9533cf4-0f6f-4800-ac27-37aeae9be0d7 "HTTP/2 200 OK"
+2026-05-18 20:54:51,516 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.9c41c2e5-1a59-4039-b920-4f9b38442330 "HTTP/2 200 OK"
+2026-05-18 20:54:51,614 [INFO] httpx: HTTP Request: GET https://cabidigitallibrary.org "HTTP/1.1 403 Forbidden"
+2026-05-18 20:54:51,615 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://cabidigitallibrary.org: Client error '403 Forbidden' for url 'https://cabidigitallibrary.org'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:54:51,615 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for cabidigitallibrary.org: Homepage crawl returned no content.
+2026-05-18 20:54:51,723 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.9c41c2e5-1a59-4039-b920-4f9b38442330 "HTTP/2 200 OK"
+2026-05-18 20:54:51,795 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.9f36fb50-2a8e-4f83-9643-b6cf1c43117f "HTTP/2 200 OK"
+2026-05-18 20:54:51,904 [INFO] httpx: HTTP Request: GET https://www.intersport.fr/ "HTTP/1.1 403 Forbidden"
+2026-05-18 20:54:51,905 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://intersport.fr: Client error '403 Forbidden' for url 'https://www.intersport.fr/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:54:51,905 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for intersport.fr: Homepage crawl returned no content.
+2026-05-18 20:54:52,000 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.2c606e77-981a-4258-9701-0e249968a694 "HTTP/2 200 OK"
+2026-05-18 20:54:52,070 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.6d08a278-1e5a-4190-b141-dc7106cc8613 "HTTP/2 200 OK"
+2026-05-18 20:54:52,076 [INFO] httpx: HTTP Request: GET https://fnac.es "HTTP/1.1 302 Moved Temporarily"
+2026-05-18 20:54:52,202 [INFO] httpx: HTTP Request: GET https://stockmann.ee "HTTP/1.1 403 Forbidden"
+2026-05-18 20:54:52,204 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://stockmann.ee: Client error '403 Forbidden' for url 'https://stockmann.ee'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:54:52,204 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for stockmann.ee: Homepage crawl returned no content.
+2026-05-18 20:54:52,293 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.6d08a278-1e5a-4190-b141-dc7106cc8613 "HTTP/2 200 OK"
+2026-05-18 20:54:52,364 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.2d50cfe7-4c98-4dc6-91dd-d42ffc33a998 "HTTP/2 200 OK"
+2026-05-18 20:54:52,423 [INFO] httpx: HTTP Request: GET https://jysk.ee "HTTP/1.1 403 Forbidden"
+2026-05-18 20:54:52,424 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://jysk.ee: Client error '403 Forbidden' for url 'https://jysk.ee'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:54:52,424 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for jysk.ee: Homepage crawl returned no content.
+2026-05-18 20:54:52,502 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.2d50cfe7-4c98-4dc6-91dd-d42ffc33a998 "HTTP/2 200 OK"
+2026-05-18 20:54:52,573 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.b8c4e676-9343-4980-b77c-96835474a9fb "HTTP/2 200 OK"
+2026-05-18 20:54:52,581 [INFO] httpx: HTTP Request: GET https://queue.fnacdarty.com/?c=fnacdarty&e=esprdfnaccom&ver=javascript-4.4.3&cver=281&man=ES%20PRD%20FNAC.COM&cid=es-ES&l=ESPRD-FNAC.COM%20Black-Friday&enqueuetoken=eyJ0eXAiOiJRVDEiLCJlbmMiOiJBRVMyNTYiLCJpc3MiOjE3NzkxMjY4OTIwMjUsImV4cCI6MTc3OTEyNzEzMjAyNSwidGkiOiJiYmM2NjU4ZC0yNTNhLTRhYmQtODlkMy04MjBjZmJiYWFiNTciLCJjIjoiZm5hY2RhcnR5IiwiZSI6ImVzcHJkZm5hY2NvbSIsImlwIjoiNS4xMi4yMDguMTQ0In0.qzjwaB9vSUSEYzvbqzhXxg.Og91kJ7mn2nXHzBcr4GJwz8uQVegpgJJMWoQBaixbnU&t=https%3A%2F%2Ffnac.es%2F&kupver=akamai-4.4.3 "HTTP/1.1 302 Found"
+2026-05-18 20:55:21,641 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?select=%2A&order=latest_best_score.desc&opportunity_score=is.null "HTTP/2 200 OK"
+2026-05-18 20:55:21,831 [INFO] src.opportunity.update_opportunity_scores: Processing 1000 domains
+2026-05-18 20:55:21,945 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.0343529f-641f-4352-93f0-e2d55ba12e7b "HTTP/2 200 OK"
+2026-05-18 20:55:22,032 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.b6042e92-0969-4d9f-b866-336316dbc93c "HTTP/2 200 OK"
+2026-05-18 20:55:22,119 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.c7e20228-9393-4df3-8709-9e404d44e539 "HTTP/2 200 OK"
+2026-05-18 20:55:22,135 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://zju.edu.cn: [Errno 8] nodename nor servname provided, or not known
+2026-05-18 20:55:22,135 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for zju.edu.cn: Homepage crawl returned no content.
+2026-05-18 20:55:22,214 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.b6042e92-0969-4d9f-b866-336316dbc93c "HTTP/2 200 OK"
+2026-05-18 20:55:22,315 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.59a930c3-ce44-4938-834c-6b0614fa2a0f "HTTP/2 200 OK"
+2026-05-18 20:55:22,358 [INFO] httpx: HTTP Request: GET https://zencare.co "HTTP/1.1 403 Forbidden"
+2026-05-18 20:55:22,360 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://zencare.co: Client error '403 Forbidden' for url 'https://zencare.co'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:55:22,360 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for zencare.co: Homepage crawl returned no content.
+2026-05-18 20:55:22,452 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.0343529f-641f-4352-93f0-e2d55ba12e7b "HTTP/2 200 OK"
+2026-05-18 20:55:22,530 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.04295d51-29b3-4d3e-a536-c1361ce3dcad "HTTP/2 200 OK"
+2026-05-18 20:55:22,929 [INFO] httpx: HTTP Request: GET https://sony.at "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:55:23,019 [INFO] httpx: HTTP Request: GET https://www.sony.at/ "HTTP/1.1 403 Forbidden"
+2026-05-18 20:55:23,021 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://sony.at: Client error '403 Forbidden' for url 'https://www.sony.at/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:55:23,021 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for sony.at: Homepage crawl returned no content.
+2026-05-18 20:55:23,102 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.c7e20228-9393-4df3-8709-9e404d44e539 "HTTP/2 200 OK"
+2026-05-18 20:55:23,179 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.69881927-dbbf-41c0-a196-ac4026b0c77a "HTTP/2 200 OK"
+2026-05-18 20:55:23,227 [INFO] httpx: HTTP Request: GET https://vestiairecollective.com "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:55:23,263 [INFO] httpx: HTTP Request: GET https://www.vestiairecollective.com/ "HTTP/1.1 403 Forbidden"
+2026-05-18 20:55:23,265 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://vestiairecollective.com: Client error '403 Forbidden' for url 'https://www.vestiairecollective.com/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:55:23,265 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for vestiairecollective.com: Homepage crawl returned no content.
+2026-05-18 20:55:23,343 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.69881927-dbbf-41c0-a196-ac4026b0c77a "HTTP/2 200 OK"
+2026-05-18 20:55:23,428 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.dd0bbb8a-6e6b-421f-924d-48f28720c327 "HTTP/2 200 OK"
+2026-05-18 20:55:24,007 [INFO] httpx: HTTP Request: GET https://intel.com "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:55:24,112 [INFO] httpx: HTTP Request: GET https://www.intel.com/ "HTTP/1.1 403 Forbidden"
+2026-05-18 20:55:24,113 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://intel.com: Client error '403 Forbidden' for url 'https://www.intel.com/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:55:24,113 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for intel.com: Homepage crawl returned no content.
+2026-05-18 20:55:24,191 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.dd0bbb8a-6e6b-421f-924d-48f28720c327 "HTTP/2 200 OK"
+2026-05-18 20:55:24,268 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.9eabc3f4-58ac-4770-ad72-5dfeaff804f2 "HTTP/2 200 OK"
+2026-05-18 20:55:24,338 [INFO] httpx: HTTP Request: GET https://indeed.com "HTTP/1.1 403 Forbidden"
+2026-05-18 20:55:24,341 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://indeed.com: Client error '403 Forbidden' for url 'https://indeed.com'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:55:24,342 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for indeed.com: Homepage crawl returned no content.
+2026-05-18 20:55:24,424 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.9eabc3f4-58ac-4770-ad72-5dfeaff804f2 "HTTP/2 200 OK"
+2026-05-18 20:55:24,501 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.dc37e8cf-b601-441d-9cc1-b97e1145dfc3 "HTTP/2 200 OK"
+2026-05-18 20:55:24,551 [INFO] httpx: HTTP Request: GET https://toyhou.se "HTTP/1.1 403 Forbidden"
+2026-05-18 20:55:24,552 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://toyhou.se: Client error '403 Forbidden' for url 'https://toyhou.se'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:55:24,552 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for toyhou.se: Homepage crawl returned no content.
+2026-05-18 20:55:24,632 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.dc37e8cf-b601-441d-9cc1-b97e1145dfc3 "HTTP/2 200 OK"
+2026-05-18 20:55:24,719 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.3f1fb9b8-7aa2-4f6f-abff-3dec9c721f5f "HTTP/2 200 OK"
+2026-05-18 20:55:25,189 [INFO] httpx: HTTP Request: GET https://sigmaaldrich.com "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:55:27,327 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://yealink.com: 
+2026-05-18 20:55:27,329 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for yealink.com: Homepage crawl returned no content.
+2026-05-18 20:55:27,417 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.59a930c3-ce44-4938-834c-6b0614fa2a0f "HTTP/2 200 OK"
+2026-05-18 20:55:27,514 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.65b6420f-e7bf-453c-9acf-543c9dacecdc "HTTP/2 200 OK"
+2026-05-18 20:55:27,610 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://justdial.com: 
+2026-05-18 20:55:27,611 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for justdial.com: Homepage crawl returned no content.
+2026-05-18 20:55:27,690 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.04295d51-29b3-4d3e-a536-c1361ce3dcad "HTTP/2 200 OK"
+2026-05-18 20:55:27,792 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.569d6c14-7e9e-40f0-a13b-f5a07e59636f "HTTP/2 200 OK"
+2026-05-18 20:55:27,860 [INFO] httpx: HTTP Request: GET https://hermes.com "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:55:27,956 [INFO] httpx: HTTP Request: GET https://www.hermes.com/ "HTTP/1.1 403 Forbidden"
+2026-05-18 20:55:27,958 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://hermes.com: Client error '403 Forbidden' for url 'https://www.hermes.com/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:55:27,958 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for hermes.com: Homepage crawl returned no content.
+2026-05-18 20:55:28,036 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.65b6420f-e7bf-453c-9acf-543c9dacecdc "HTTP/2 200 OK"
+2026-05-18 20:55:28,110 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.b1c98a35-0b98-469f-83f8-6d0f4e1cbe55 "HTTP/2 200 OK"
+2026-05-18 20:55:28,245 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://ethiopianairlines.com: [SSL: TLSV1_ALERT_INTERNAL_ERROR] tlsv1 alert internal error (_ssl.c:1081)
+2026-05-18 20:55:28,247 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for ethiopianairlines.com: Homepage crawl returned no content.
+2026-05-18 20:55:28,336 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.b1c98a35-0b98-469f-83f8-6d0f4e1cbe55 "HTTP/2 200 OK"
+2026-05-18 20:55:28,410 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.3fd74071-faf2-40c6-af8f-6dfc3e63df9b "HTTP/2 200 OK"
+2026-05-18 20:55:28,853 [INFO] httpx: HTTP Request: GET https://acs.org "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:55:29,082 [INFO] httpx: HTTP Request: GET https://gmarket.co.kr "HTTP/1.1 308 Permanent Redirect"
+2026-05-18 20:55:29,088 [INFO] httpx: HTTP Request: GET https://www.acs.org/ "HTTP/1.1 200 OK"
+2026-05-18 20:55:29,090 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for acs.org: Homepage crawl returned no content.
+2026-05-18 20:55:29,168 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.3fd74071-faf2-40c6-af8f-6dfc3e63df9b "HTTP/2 200 OK"
+2026-05-18 20:55:29,255 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.9651ad5c-1f76-4ffc-beaa-0c1ff5c67183 "HTTP/2 200 OK"
+2026-05-18 20:55:29,315 [INFO] httpx: HTTP Request: GET https://www.gmarket.co.kr "HTTP/1.1 403 Forbidden"
+2026-05-18 20:55:29,327 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://gmarket.co.kr: Client error '403 Forbidden' for url 'https://www.gmarket.co.kr'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:55:29,328 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for gmarket.co.kr: Homepage crawl returned no content.
+2026-05-18 20:55:29,425 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.569d6c14-7e9e-40f0-a13b-f5a07e59636f "HTTP/2 200 OK"
+2026-05-18 20:55:29,513 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.c4cec905-bbd2-452f-9b50-d257f3f28d4b "HTTP/2 200 OK"
+2026-05-18 20:55:29,604 [INFO] httpx: HTTP Request: GET https://iihf.com "HTTP/1.1 403 Forbidden"
+2026-05-18 20:55:29,605 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://iihf.com: Client error '403 Forbidden' for url 'https://iihf.com'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:55:29,605 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for iihf.com: Homepage crawl returned no content.
+2026-05-18 20:55:29,681 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.c4cec905-bbd2-452f-9b50-d257f3f28d4b "HTTP/2 200 OK"
+2026-05-18 20:55:29,757 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.ce2cd52b-a903-42c1-8da9-8f6784ffd15b "HTTP/2 200 OK"
+2026-05-18 20:55:29,850 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://refpa37630.com: 
+2026-05-18 20:55:29,852 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for refpa37630.com: Homepage crawl returned no content.
+2026-05-18 20:55:29,932 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.9651ad5c-1f76-4ffc-beaa-0c1ff5c67183 "HTTP/2 200 OK"
+2026-05-18 20:55:30,009 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.3ed985a7-c23d-4593-9031-738718612529 "HTTP/2 200 OK"
+2026-05-18 20:55:30,111 [INFO] httpx: HTTP Request: GET https://canon-europe.com "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:55:30,215 [INFO] httpx: HTTP Request: GET https://www.canon-europe.com/ "HTTP/1.1 403 Forbidden"
+2026-05-18 20:55:30,216 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://canon-europe.com: Client error '403 Forbidden' for url 'https://www.canon-europe.com/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:55:30,216 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for canon-europe.com: Homepage crawl returned no content.
+2026-05-18 20:55:30,293 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.ce2cd52b-a903-42c1-8da9-8f6784ffd15b "HTTP/2 200 OK"
+2026-05-18 20:55:30,371 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.ebe02524-e855-4cfd-8096-d425bc6ceb37 "HTTP/2 200 OK"
+2026-05-18 20:55:30,382 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://sigmaaldrich.com: 
+2026-05-18 20:55:30,382 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for sigmaaldrich.com: Homepage crawl returned no content.
+2026-05-18 20:55:30,456 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.3f1fb9b8-7aa2-4f6f-abff-3dec9c721f5f "HTTP/2 200 OK"
+2026-05-18 20:55:30,535 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.533054e0-5d24-4e8c-830d-249c4ab70f0a "HTTP/2 200 OK"
+2026-05-18 20:55:30,612 [INFO] httpx: HTTP Request: GET https://melb.website "HTTP/1.1 403 Forbidden"
+2026-05-18 20:55:30,614 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://melb.website: Client error '403 Forbidden' for url 'https://melb.website'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:55:30,614 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for melb.website: Homepage crawl returned no content.
+2026-05-18 20:55:30,692 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.533054e0-5d24-4e8c-830d-249c4ab70f0a "HTTP/2 200 OK"
+2026-05-18 20:55:30,801 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.ec200735-a909-4a3f-9e77-b32ce591f738 "HTTP/2 200 OK"
+2026-05-18 20:55:30,816 [INFO] httpx: HTTP Request: GET https://paramount.com "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:55:30,853 [INFO] httpx: HTTP Request: GET https://betpawa.cm "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:55:30,919 [INFO] httpx: HTTP Request: GET https://www.paramount.com/ "HTTP/1.1 403 Forbidden"
+2026-05-18 20:55:30,921 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://paramount.com: Client error '403 Forbidden' for url 'https://www.paramount.com/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:55:30,921 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for paramount.com: Homepage crawl returned no content.
+2026-05-18 20:55:31,001 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.3ed985a7-c23d-4593-9031-738718612529 "HTTP/2 200 OK"
+2026-05-18 20:55:31,084 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.b6109220-3e42-4050-ba04-05c8e74171f7 "HTTP/2 200 OK"
+2026-05-18 20:55:31,096 [INFO] httpx: HTTP Request: GET https://www.betpawa.cm/ "HTTP/1.1 200 OK"
+2026-05-18 20:55:31,098 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for betpawa.cm: Homepage crawl returned no content.
+2026-05-18 20:55:31,176 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.ec200735-a909-4a3f-9e77-b32ce591f738 "HTTP/2 200 OK"
+2026-05-18 20:55:31,254 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.d3ad7225-19a0-417d-b726-448e831438a9 "HTTP/2 200 OK"
+2026-05-18 20:55:31,580 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://uniqlo.cn: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate in certificate chain (_ssl.c:1081)
+2026-05-18 20:55:31,582 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for uniqlo.cn: Homepage crawl returned no content.
+2026-05-18 20:55:31,661 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.b6109220-3e42-4050-ba04-05c8e74171f7 "HTTP/2 200 OK"
+2026-05-18 20:55:31,740 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.e753b6ec-be0c-4b9f-9d53-27251bf26daa "HTTP/2 200 OK"
+2026-05-18 20:55:31,968 [INFO] httpx: HTTP Request: GET https://miwifi.com "HTTP/1.1 403 Forbidden"
+2026-05-18 20:55:31,970 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://miwifi.com: Client error '403 Forbidden' for url 'https://miwifi.com'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:55:31,970 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for miwifi.com: Homepage crawl returned no content.
+2026-05-18 20:55:32,051 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.e753b6ec-be0c-4b9f-9d53-27251bf26daa "HTTP/2 200 OK"
+2026-05-18 20:55:32,129 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.fab55abf-e57d-4a5b-a6c5-3545009ca01d "HTTP/2 200 OK"
+2026-05-18 20:55:32,326 [INFO] httpx: HTTP Request: GET https://magnite.com "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:55:32,377 [INFO] httpx: HTTP Request: GET https://www.magnite.com/ "HTTP/1.1 403 Forbidden"
+2026-05-18 20:55:32,379 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://magnite.com: Client error '403 Forbidden' for url 'https://www.magnite.com/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:55:32,380 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for magnite.com: Homepage crawl returned no content.
+2026-05-18 20:55:32,466 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.fab55abf-e57d-4a5b-a6c5-3545009ca01d "HTTP/2 200 OK"
+2026-05-18 20:55:32,550 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.d93d8fde-8dcc-4490-98a4-ded7a7e4ad02 "HTTP/2 200 OK"
+2026-05-18 20:55:32,696 [INFO] httpx: HTTP Request: GET https://s8ey.com "HTTP/1.1 200 OK"
+2026-05-18 20:55:32,698 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for s8ey.com: Homepage crawl returned no content.
+2026-05-18 20:55:32,777 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.d93d8fde-8dcc-4490-98a4-ded7a7e4ad02 "HTTP/2 200 OK"
+2026-05-18 20:55:32,852 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.413ea301-d258-43e3-9604-8ef665ca6424 "HTTP/2 200 OK"
+2026-05-18 20:55:35,385 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://calzedonia.com: 
+2026-05-18 20:55:35,387 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for calzedonia.com: Homepage crawl returned no content.
+2026-05-18 20:55:35,471 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.ebe02524-e855-4cfd-8096-d425bc6ceb37 "HTTP/2 200 OK"
+2026-05-18 20:55:35,550 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.61428d5f-38cb-4cda-8ae3-bf1176c71fc6 "HTTP/2 200 OK"
+2026-05-18 20:55:35,564 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://icfes.gov.co: [Errno 8] nodename nor servname provided, or not known
+2026-05-18 20:55:35,565 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for icfes.gov.co: Homepage crawl returned no content.
+2026-05-18 20:55:35,648 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.61428d5f-38cb-4cda-8ae3-bf1176c71fc6 "HTTP/2 200 OK"
+2026-05-18 20:55:35,723 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.32b82ac8-3915-4e66-850d-83135fb48ec6 "HTTP/2 200 OK"
+2026-05-18 20:55:36,267 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://feriachilenadellibro.cl: 
+2026-05-18 20:55:36,269 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for feriachilenadellibro.cl: Homepage crawl returned no content.
+2026-05-18 20:55:36,350 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.d3ad7225-19a0-417d-b726-448e831438a9 "HTTP/2 200 OK"
+2026-05-18 20:55:36,435 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.c49a3a74-14e7-465b-a80e-c1e09aa4199d "HTTP/2 200 OK"
+2026-05-18 20:55:37,176 [INFO] httpx: HTTP Request: GET https://zhixue.com "HTTP/1.1 405 Not Allowed"
+2026-05-18 20:55:37,177 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://zhixue.com: Client error '405 Not Allowed' for url 'https://zhixue.com'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/405
+2026-05-18 20:55:37,177 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for zhixue.com: Homepage crawl returned no content.
+2026-05-18 20:55:37,253 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.32b82ac8-3915-4e66-850d-83135fb48ec6 "HTTP/2 200 OK"
+2026-05-18 20:55:37,335 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.bb4cd69c-e8be-4413-91c5-387f487fd4c5 "HTTP/2 200 OK"
+2026-05-18 20:55:37,428 [INFO] httpx: HTTP Request: GET https://timeanddate.com "HTTP/1.1 403 Forbidden"
+2026-05-18 20:55:37,429 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://timeanddate.com: Client error '403 Forbidden' for url 'https://timeanddate.com'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:55:37,429 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for timeanddate.com: Homepage crawl returned no content.
+2026-05-18 20:55:37,530 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.bb4cd69c-e8be-4413-91c5-387f487fd4c5 "HTTP/2 200 OK"
+2026-05-18 20:55:37,613 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.da7a073c-a387-462c-b2f6-fd980e06b001 "HTTP/2 200 OK"
+2026-05-18 20:55:37,854 [INFO] httpx: HTTP Request: GET https://keellssuper.com "HTTP/1.1 200 OK"
+2026-05-18 20:55:37,856 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for keellssuper.com: Homepage crawl returned no content.
+2026-05-18 20:55:37,934 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.da7a073c-a387-462c-b2f6-fd980e06b001 "HTTP/2 200 OK"
+2026-05-18 20:55:38,007 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.6858044c-2e6c-4dcf-b26e-d73219352dab "HTTP/2 200 OK"
+2026-05-18 20:55:38,013 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://mult-fan.tv: 
+2026-05-18 20:55:38,013 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for mult-fan.tv: Homepage crawl returned no content.
+2026-05-18 20:55:38,115 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.413ea301-d258-43e3-9604-8ef665ca6424 "HTTP/2 200 OK"
+2026-05-18 20:55:38,196 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.2a76ae63-26eb-4560-b1aa-df0c3ef58091 "HTTP/2 200 OK"
+2026-05-18 20:55:38,242 [INFO] httpx: HTTP Request: GET https://dufy.cz "HTTP/1.1 403 Forbidden"
+2026-05-18 20:55:38,243 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://dufy.cz: Client error '403 Forbidden' for url 'https://dufy.cz'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:55:38,243 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for dufy.cz: Homepage crawl returned no content.
+2026-05-18 20:55:38,320 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.2a76ae63-26eb-4560-b1aa-df0c3ef58091 "HTTP/2 200 OK"
+2026-05-18 20:55:38,415 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.0b47650d-233e-4f0e-a6aa-f197b6f34314 "HTTP/2 200 OK"
+2026-05-18 20:55:38,480 [INFO] httpx: HTTP Request: GET https://megabetplus.com.cy "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:55:38,486 [INFO] httpx: HTTP Request: GET https://pulsz.com "HTTP/1.1 308 Permanent Redirect"
+2026-05-18 20:55:38,529 [INFO] httpx: HTTP Request: GET https://www.pulsz.com/ "HTTP/1.1 403 Forbidden"
+2026-05-18 20:55:38,531 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://pulsz.com: Client error '403 Forbidden' for url 'https://www.pulsz.com/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:55:38,531 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for pulsz.com: Homepage crawl returned no content.
+2026-05-18 20:55:38,609 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.6858044c-2e6c-4dcf-b26e-d73219352dab "HTTP/2 200 OK"
+2026-05-18 20:55:38,718 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.c2f33ec7-ef2c-4030-9837-63ae231cf92d "HTTP/2 200 OK"
+2026-05-18 20:55:38,820 [INFO] httpx: HTTP Request: GET https://www.megabetplus.com.cy/ "HTTP/1.1 200 OK"
+2026-05-18 20:55:38,824 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for megabetplus.com.cy: Homepage crawl returned no content.
+2026-05-18 20:55:38,902 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.0b47650d-233e-4f0e-a6aa-f197b6f34314 "HTTP/2 200 OK"
+2026-05-18 20:55:38,982 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.c9b75351-89ba-4cae-9c06-4b0a623b229e "HTTP/2 200 OK"
+2026-05-18 20:55:39,237 [INFO] httpx: HTTP Request: GET https://stories.com "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:55:39,259 [INFO] httpx: HTTP Request: GET https://si.edu "HTTP/1.0 301 Moved Permanently"
+2026-05-18 20:55:39,357 [INFO] httpx: HTTP Request: GET https://www.si.edu/ "HTTP/1.1 403 Forbidden"
+2026-05-18 20:55:39,360 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://si.edu: Client error '403 Forbidden' for url 'https://www.si.edu/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:55:39,360 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for si.edu: Homepage crawl returned no content.
+2026-05-18 20:55:39,439 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.c2f33ec7-ef2c-4030-9837-63ae231cf92d "HTTP/2 200 OK"
+2026-05-18 20:55:39,515 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.5fe741d1-7c96-44cf-a0f0-6e44ba6f35c3 "HTTP/2 200 OK"
+2026-05-18 20:55:39,520 [INFO] httpx: HTTP Request: GET https://www.stories.com/?orgtld=stories.com "HTTP/1.1 403 Forbidden"
+2026-05-18 20:55:39,521 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://stories.com: Client error '403 Forbidden' for url 'https://www.stories.com/?orgtld=stories.com'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:55:39,521 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for stories.com: Homepage crawl returned no content.
+2026-05-18 20:55:39,618 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.c9b75351-89ba-4cae-9c06-4b0a623b229e "HTTP/2 200 OK"
+2026-05-18 20:55:39,702 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.360c46e3-3d96-4092-a071-bc2095a77a74 "HTTP/2 200 OK"
+2026-05-18 20:55:39,744 [INFO] httpx: HTTP Request: GET https://sportshoop.la "HTTP/1.1 403 Forbidden"
+2026-05-18 20:55:39,745 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://sportshoop.la: Client error '403 Forbidden' for url 'https://sportshoop.la'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:55:39,745 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for sportshoop.la: Homepage crawl returned no content.
+2026-05-18 20:55:39,825 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.5fe741d1-7c96-44cf-a0f0-6e44ba6f35c3 "HTTP/2 200 OK"
+2026-05-18 20:55:39,917 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.652b2793-730e-4b72-96ed-8a9e2beca128 "HTTP/2 200 OK"
+2026-05-18 20:55:40,140 [INFO] httpx: HTTP Request: GET https://euro.com.pl "HTTP/1.1 302 Found"
+2026-05-18 20:55:40,273 [INFO] httpx: HTTP Request: GET https://www.euro.com.pl/ "HTTP/1.1 403 Forbidden"
+2026-05-18 20:55:40,276 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://euro.com.pl: Client error '403 Forbidden' for url 'https://www.euro.com.pl/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:55:40,276 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for euro.com.pl: Homepage crawl returned no content.
+2026-05-18 20:55:40,354 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.652b2793-730e-4b72-96ed-8a9e2beca128 "HTTP/2 200 OK"
+2026-05-18 20:55:40,433 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.0d9be914-de87-455a-9e06-7efb44a0142d "HTTP/2 200 OK"
+2026-05-18 20:55:40,443 [INFO] httpx: HTTP Request: GET https://cettire.com "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:55:40,445 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://ourdreamersai.com: [Errno 8] nodename nor servname provided, or not known
+2026-05-18 20:55:40,445 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for ourdreamersai.com: Homepage crawl returned no content.
+2026-05-18 20:55:40,526 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.0d9be914-de87-455a-9e06-7efb44a0142d "HTTP/2 200 OK"
+2026-05-18 20:55:40,620 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.4f4e88cd-eba5-459b-b54a-c7bd0ae5e681 "HTTP/2 200 OK"
+2026-05-18 20:55:40,768 [INFO] httpx: HTTP Request: GET https://callrail.com "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:55:40,914 [INFO] httpx: HTTP Request: GET https://www.callrail.com/ "HTTP/1.1 200 OK"
+2026-05-18 20:55:40,916 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for callrail.com: Homepage crawl returned no content.
+2026-05-18 20:55:41,001 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.4f4e88cd-eba5-459b-b54a-c7bd0ae5e681 "HTTP/2 200 OK"
+2026-05-18 20:55:41,083 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.5898ed3a-13c8-49c7-a486-ead03e0c89e1 "HTTP/2 200 OK"
+2026-05-18 20:55:41,132 [INFO] httpx: HTTP Request: GET https://zoneoffer.dk "HTTP/1.1 403 Forbidden"
+2026-05-18 20:55:41,133 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://zoneoffer.dk: Client error '403 Forbidden' for url 'https://zoneoffer.dk'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:55:41,133 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for zoneoffer.dk: Homepage crawl returned no content.
+2026-05-18 20:55:41,210 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.5898ed3a-13c8-49c7-a486-ead03e0c89e1 "HTTP/2 200 OK"
+2026-05-18 20:55:41,283 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.d9533cf4-0f6f-4800-ac27-37aeae9be0d7 "HTTP/2 200 OK"
+2026-05-18 20:55:41,289 [INFO] httpx: HTTP Request: GET https://www.cettire.com/ "HTTP/1.1 302 Found"
+2026-05-18 20:55:41,719 [INFO] httpx: HTTP Request: GET https://opensooq.com "HTTP/1.1 302 Found"
+2026-05-18 20:55:41,997 [INFO] httpx: HTTP Request: GET https://www.opensooq.com/ar?ref=change_country_ "HTTP/1.1 403 Forbidden"
+2026-05-18 20:55:41,999 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://opensooq.com: Client error '403 Forbidden' for url 'https://www.opensooq.com/ar?ref=change_country_'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:55:41,999 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for opensooq.com: Homepage crawl returned no content.
+2026-05-18 20:55:42,080 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.d9533cf4-0f6f-4800-ac27-37aeae9be0d7 "HTTP/2 200 OK"
+2026-05-18 20:55:42,160 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.2c606e77-981a-4258-9701-0e249968a694 "HTTP/2 200 OK"
+2026-05-18 20:55:42,177 [INFO] httpx: HTTP Request: GET https://www.cettire.com/ro "HTTP/1.1 200 OK"
+2026-05-18 20:55:42,223 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for cettire.com: Homepage crawl returned no content.
+2026-05-18 20:55:42,314 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.360c46e3-3d96-4092-a071-bc2095a77a74 "HTTP/2 200 OK"
+2026-05-18 20:55:42,393 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.61e9a4da-82f0-49e3-b65f-fd4bdaaa5e0b "HTTP/2 200 OK"
+2026-05-18 20:55:42,398 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://latte.la: 
+2026-05-18 20:55:42,398 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for latte.la: Homepage crawl returned no content.
+2026-05-18 20:55:42,476 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.c49a3a74-14e7-465b-a80e-c1e09aa4199d "HTTP/2 200 OK"
+2026-05-18 20:55:42,550 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.9f36fb50-2a8e-4f83-9643-b6cf1c43117f "HTTP/2 200 OK"
+2026-05-18 20:55:42,717 [INFO] httpx: HTTP Request: GET https://intersport.fr "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:55:42,921 [INFO] httpx: HTTP Request: GET https://fnac.es "HTTP/1.1 302 Moved Temporarily"
+2026-05-18 20:55:42,975 [INFO] httpx: HTTP Request: GET https://www.intersport.fr/ "HTTP/1.1 403 Forbidden"
+2026-05-18 20:55:42,976 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://intersport.fr: Client error '403 Forbidden' for url 'https://www.intersport.fr/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:55:42,976 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for intersport.fr: Homepage crawl returned no content.
+2026-05-18 20:55:43,060 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.2c606e77-981a-4258-9701-0e249968a694 "HTTP/2 200 OK"
+2026-05-18 20:55:43,140 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.63dd7f32-a6f4-4fb5-ad1f-dc7cce46238b "HTTP/2 200 OK"
+2026-05-18 20:55:43,179 [INFO] httpx: HTTP Request: GET https://vsco.co "HTTP/1.1 403 Forbidden"
+2026-05-18 20:55:43,180 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://vsco.co: Client error '403 Forbidden' for url 'https://vsco.co'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:55:43,180 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for vsco.co: Homepage crawl returned no content.
+2026-05-18 20:55:43,256 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.63dd7f32-a6f4-4fb5-ad1f-dc7cce46238b "HTTP/2 200 OK"
+2026-05-18 20:55:43,329 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.9c41c2e5-1a59-4039-b920-4f9b38442330 "HTTP/2 200 OK"
+2026-05-18 20:55:43,370 [INFO] httpx: HTTP Request: GET https://cabidigitallibrary.org "HTTP/1.1 403 Forbidden"
+2026-05-18 20:55:43,371 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://cabidigitallibrary.org: Client error '403 Forbidden' for url 'https://cabidigitallibrary.org'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:55:43,371 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for cabidigitallibrary.org: Homepage crawl returned no content.
+2026-05-18 20:55:43,449 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.9c41c2e5-1a59-4039-b920-4f9b38442330 "HTTP/2 200 OK"
+2026-05-18 20:55:43,526 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.2d50cfe7-4c98-4dc6-91dd-d42ffc33a998 "HTTP/2 200 OK"
+2026-05-18 20:55:43,540 [INFO] httpx: HTTP Request: GET https://queue.fnacdarty.com/?c=fnacdarty&e=esprdfnaccom&ver=javascript-4.4.3&cver=281&man=ES%20PRD%20FNAC.COM&cid=es-ES&l=ESPRD-FNAC.COM%20Black-Friday&enqueuetoken=eyJ0eXAiOiJRVDEiLCJlbmMiOiJBRVMyNTYiLCJpc3MiOjE3NzkxMjY5NDI4NDIsImV4cCI6MTc3OTEyNzE4Mjg0MiwidGkiOiIzOTg0MDZmZS00ZDI2LTQyNWYtODZkNC1kMDQwNTFkYTEzYzciLCJjIjoiZm5hY2RhcnR5IiwiZSI6ImVzcHJkZm5hY2NvbSIsImlwIjoiNS4xMi4yMDguMTQ0In0.TAt5wc0jDYM8KeNJtRvdEQ.yYhQa0zVIdSQW4t_b3NRkJHkbkM8-5LUkAOh2IPZz7Q&t=https%3A%2F%2Ffnac.es%2F&kupver=akamai-4.4.3 "HTTP/1.1 302 Found"
+2026-05-18 20:55:43,574 [INFO] httpx: HTTP Request: GET https://jysk.ee "HTTP/1.1 403 Forbidden"
+2026-05-18 20:55:43,575 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://jysk.ee: Client error '403 Forbidden' for url 'https://jysk.ee'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:55:43,575 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for jysk.ee: Homepage crawl returned no content.
+2026-05-18 20:55:43,652 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.2d50cfe7-4c98-4dc6-91dd-d42ffc33a998 "HTTP/2 200 OK"
+2026-05-18 20:55:43,733 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.6d08a278-1e5a-4190-b141-dc7106cc8613 "HTTP/2 200 OK"
+2026-05-18 20:55:43,743 [INFO] httpx: HTTP Request: GET https://fnac.es/?queueittoken=e_esprdfnaccom~ts_1779127123~ce_true~rt_safetynet~h_0aa68dffb15e37fb734f3dd28ac97ec1281da692dc05d4c7287eaeb7eb9a72b3 "HTTP/1.1 302 Moved Temporarily"
+2026-05-18 20:55:43,809 [INFO] httpx: HTTP Request: GET https://stockmann.ee "HTTP/1.1 403 Forbidden"
+2026-05-18 20:55:43,811 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://stockmann.ee: Client error '403 Forbidden' for url 'https://stockmann.ee'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:55:43,811 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for stockmann.ee: Homepage crawl returned no content.
+2026-05-18 20:55:43,907 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.6d08a278-1e5a-4190-b141-dc7106cc8613 "HTTP/2 200 OK"
+2026-05-18 20:55:43,984 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.b8c4e676-9343-4980-b77c-96835474a9fb "HTTP/2 200 OK"
+2026-05-18 20:55:43,994 [INFO] httpx: HTTP Request: GET https://fnac.es/ "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:55:44,167 [INFO] httpx: HTTP Request: GET https://rarbg.to "HTTP/1.1 200 OK"
+2026-05-18 20:55:44,169 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for rarbg.to: Homepage crawl returned no content.
+2026-05-18 20:55:44,253 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.b8c4e676-9343-4980-b77c-96835474a9fb "HTTP/2 200 OK"
+2026-05-18 20:55:44,329 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.97a6480b-0106-4a42-9b6a-99bc76a0ec0c "HTTP/2 200 OK"
+2026-05-18 20:55:44,343 [INFO] httpx: HTTP Request: GET https://www.fnac.es/ "HTTP/1.1 403 Forbidden"
+2026-05-18 20:55:44,345 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://fnac.es: Client error '403 Forbidden' for url 'https://www.fnac.es/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:55:44,345 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for fnac.es: Homepage crawl returned no content.
+2026-05-18 20:55:44,432 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.9f36fb50-2a8e-4f83-9643-b6cf1c43117f "HTTP/2 200 OK"
+2026-05-18 20:55:44,517 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.2c9353c1-1f60-4bb6-8c96-b8917e7d760a "HTTP/2 200 OK"
+2026-05-18 20:55:44,562 [INFO] httpx: HTTP Request: GET https://coursehero.com "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:55:44,609 [INFO] httpx: HTTP Request: GET https://www.coursehero.com/ "HTTP/1.1 403 Forbidden"
+2026-05-18 20:55:44,616 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://coursehero.com: Client error '403 Forbidden' for url 'https://www.coursehero.com/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:55:44,617 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for coursehero.com: Homepage crawl returned no content.
+2026-05-18 20:55:44,718 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.97a6480b-0106-4a42-9b6a-99bc76a0ec0c "HTTP/2 200 OK"
+2026-05-18 20:55:44,800 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.17dd0624-b22d-4903-8be7-0d569dc5ab78 "HTTP/2 200 OK"
+2026-05-18 20:55:44,823 [INFO] httpx: HTTP Request: GET https://ludwig.guru "HTTP/1.1 403 Forbidden"
+2026-05-18 20:55:44,824 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://ludwig.guru: Client error '403 Forbidden' for url 'https://ludwig.guru'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:55:44,824 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for ludwig.guru: Homepage crawl returned no content.
+2026-05-18 20:55:44,902 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.2c9353c1-1f60-4bb6-8c96-b8917e7d760a "HTTP/2 200 OK"
+2026-05-18 20:55:44,979 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.46730d52-9758-4be8-8c1c-a81b5e1c926b "HTTP/2 200 OK"
+2026-05-18 20:55:45,251 [INFO] httpx: HTTP Request: GET https://trustpilot.com "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:55:45,296 [INFO] httpx: HTTP Request: GET https://www.trustpilot.com/ "HTTP/1.1 403 Forbidden"
+2026-05-18 20:55:45,298 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://trustpilot.com: Client error '403 Forbidden' for url 'https://www.trustpilot.com/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:55:45,299 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for trustpilot.com: Homepage crawl returned no content.
+2026-05-18 20:55:45,380 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.46730d52-9758-4be8-8c1c-a81b5e1c926b "HTTP/2 200 OK"
+2026-05-18 20:55:45,456 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.2dd74eb1-777d-48df-aa8e-d2c7902a8a85 "HTTP/2 200 OK"
+2026-05-18 20:55:45,686 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://specsavers.com: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1081)
+2026-05-18 20:55:45,687 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for specsavers.com: Homepage crawl returned no content.
+2026-05-18 20:55:45,778 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.2dd74eb1-777d-48df-aa8e-d2c7902a8a85 "HTTP/2 200 OK"
+2026-05-18 20:55:45,855 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.338aa576-62cc-45fa-9fe2-a9495706ee3c "HTTP/2 200 OK"
+2026-05-18 20:55:46,001 [INFO] httpx: HTTP Request: GET https://yliopistonapteekki.fi "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:55:46,260 [INFO] httpx: HTTP Request: GET https://www.yliopistonapteekki.fi/ "HTTP/1.1 403 Forbidden"
+2026-05-18 20:55:46,284 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://yliopistonapteekki.fi: Client error '403 Forbidden' for url 'https://www.yliopistonapteekki.fi/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:55:46,284 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for yliopistonapteekki.fi: Homepage crawl returned no content.
+2026-05-18 20:55:46,362 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.338aa576-62cc-45fa-9fe2-a9495706ee3c "HTTP/2 200 OK"
+2026-05-18 20:55:46,440 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.fe3b994e-f754-40be-a528-731347860471 "HTTP/2 200 OK"
+2026-05-18 20:55:46,633 [INFO] httpx: HTTP Request: GET https://very.co.uk "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:55:46,709 [INFO] httpx: HTTP Request: GET https://nate.com "HTTP/1.1 200 OK"
+2026-05-18 20:55:46,710 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for nate.com: Homepage crawl returned no content.
+2026-05-18 20:55:46,791 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.17dd0624-b22d-4903-8be7-0d569dc5ab78 "HTTP/2 200 OK"
+2026-05-18 20:55:46,871 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.bfa4bf52-2c41-4150-88d3-032338b779eb "HTTP/2 200 OK"
+2026-05-18 20:55:46,989 [INFO] httpx: HTTP Request: GET https://www.very.co.uk/ "HTTP/1.1 403 Forbidden"
+2026-05-18 20:55:46,991 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://very.co.uk: Client error '403 Forbidden' for url 'https://www.very.co.uk/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:55:46,991 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for very.co.uk: Homepage crawl returned no content.
+2026-05-18 20:55:47,074 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.fe3b994e-f754-40be-a528-731347860471 "HTTP/2 200 OK"
+2026-05-18 20:55:47,149 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.d90c4c6f-3b38-4df2-843c-6eccd7bafe87 "HTTP/2 200 OK"
+2026-05-18 20:55:47,332 [INFO] httpx: HTTP Request: GET https://granions.fr "HTTP/1.1 405 Not Allowed"
+2026-05-18 20:55:47,333 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://granions.fr: Client error '405 Not Allowed' for url 'https://granions.fr'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/405
+2026-05-18 20:55:47,333 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for granions.fr: Homepage crawl returned no content.
+2026-05-18 20:55:47,410 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.d90c4c6f-3b38-4df2-843c-6eccd7bafe87 "HTTP/2 200 OK"
+2026-05-18 20:55:47,486 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.742a5658-d0c9-4424-9239-ad274a626d98 "HTTP/2 200 OK"
+2026-05-18 20:55:47,492 [INFO] httpx: HTTP Request: GET https://unrealengine.com "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:55:47,586 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://net-a-porter.com: 
+2026-05-18 20:55:47,588 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for net-a-porter.com: Homepage crawl returned no content.
+2026-05-18 20:55:47,665 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.61e9a4da-82f0-49e3-b65f-fd4bdaaa5e0b "HTTP/2 200 OK"
+2026-05-18 20:55:47,745 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.1fbcfaf4-9a69-46e4-8af6-9baa1c826193 "HTTP/2 200 OK"
+2026-05-18 20:55:47,774 [INFO] httpx: HTTP Request: GET https://www.unrealengine.com/ "HTTP/1.1 403 Forbidden"
+2026-05-18 20:55:47,775 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://unrealengine.com: Client error '403 Forbidden' for url 'https://www.unrealengine.com/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:55:47,775 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for unrealengine.com: Homepage crawl returned no content.
+2026-05-18 20:55:47,852 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.bfa4bf52-2c41-4150-88d3-032338b779eb "HTTP/2 200 OK"
+2026-05-18 20:55:47,942 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.5b4286a6-d8ce-44d5-855f-edd72757656e "HTTP/2 200 OK"
+2026-05-18 20:55:47,993 [INFO] httpx: HTTP Request: GET https://bulgari.com "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:55:48,046 [INFO] httpx: HTTP Request: GET https://manomano.co.uk "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:55:48,124 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://dreamteamfc.com: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'dreamteamfc.com'. (_ssl.c:1081)
+2026-05-18 20:55:48,125 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for dreamteamfc.com: Homepage crawl returned no content.
+2026-05-18 20:55:48,213 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.5b4286a6-d8ce-44d5-855f-edd72757656e "HTTP/2 200 OK"
+2026-05-18 20:55:48,214 [INFO] httpx: HTTP Request: GET https://www.manomano.co.uk/ "HTTP/1.1 403 Forbidden"
+2026-05-18 20:55:48,302 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.37bacac2-1e9e-453d-9102-89575af7e236 "HTTP/2 200 OK"
+2026-05-18 20:55:48,316 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://manomano.co.uk: Client error '403 Forbidden' for url 'https://www.manomano.co.uk/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:55:48,316 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for manomano.co.uk: Homepage crawl returned no content.
+2026-05-18 20:55:48,402 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.1fbcfaf4-9a69-46e4-8af6-9baa1c826193 "HTTP/2 200 OK"
+2026-05-18 20:55:48,479 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.acf311ea-1935-441e-9f8e-57be6df28ac5 "HTTP/2 200 OK"
+2026-05-18 20:55:49,267 [INFO] httpx: HTTP Request: GET https://realtor.com "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:55:49,545 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://opusbroadband.com: [Errno 8] nodename nor servname provided, or not known
+2026-05-18 20:55:49,546 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for opusbroadband.com: Homepage crawl returned no content.
+2026-05-18 20:55:49,631 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.acf311ea-1935-441e-9f8e-57be6df28ac5 "HTTP/2 200 OK"
+2026-05-18 20:55:49,743 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.d44c49f6-c907-43d9-ac28-ffad8a000fb0 "HTTP/2 200 OK"
+2026-05-18 20:55:49,753 [INFO] httpx: HTTP Request: GET https://www.realtor.com/ "HTTP/1.1 429 Too Many Requests"
+2026-05-18 20:55:49,754 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://realtor.com: Client error '429 Too Many Requests' for url 'https://www.realtor.com/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429
+2026-05-18 20:55:49,754 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for realtor.com: Homepage crawl returned no content.
+2026-05-18 20:55:49,828 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.37bacac2-1e9e-453d-9102-89575af7e236 "HTTP/2 200 OK"
+2026-05-18 20:55:49,909 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.521aa515-da78-4bfe-b929-da0f1d066cc0 "HTTP/2 200 OK"
+2026-05-18 20:55:49,987 [INFO] httpx: HTTP Request: GET https://carpetshoponline.co.uk "HTTP/1.1 403 Forbidden"
+2026-05-18 20:55:49,988 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://carpetshoponline.co.uk: Client error '403 Forbidden' for url 'https://carpetshoponline.co.uk'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:55:49,989 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for carpetshoponline.co.uk: Homepage crawl returned no content.
+2026-05-18 20:55:50,072 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.d44c49f6-c907-43d9-ac28-ffad8a000fb0 "HTTP/2 200 OK"
+2026-05-18 20:55:50,158 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.93f68b3c-3fe5-4ec4-82c5-4af4ae1691b0 "HTTP/2 200 OK"
+2026-05-18 20:55:50,184 [INFO] httpx: HTTP Request: GET https://uk-podcasts.co.uk "HTTP/1.1 403 Forbidden"
+2026-05-18 20:55:50,185 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://uk-podcasts.co.uk: Client error '403 Forbidden' for url 'https://uk-podcasts.co.uk'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:55:50,185 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for uk-podcasts.co.uk: Homepage crawl returned no content.
+2026-05-18 20:55:50,263 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.521aa515-da78-4bfe-b929-da0f1d066cc0 "HTTP/2 200 OK"
+2026-05-18 20:55:50,363 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.4e8a3f38-66bf-465e-80fe-c35ba9627e6f "HTTP/2 200 OK"
+2026-05-18 20:55:50,369 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://eagllwin.com: [Errno 8] nodename nor servname provided, or not known
+2026-05-18 20:55:50,369 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for eagllwin.com: Homepage crawl returned no content.
+2026-05-18 20:55:50,450 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.93f68b3c-3fe5-4ec4-82c5-4af4ae1691b0 "HTTP/2 200 OK"
+2026-05-18 20:55:50,529 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.a2f48cdb-b4f0-4fbf-b705-25ec2715e15f "HTTP/2 200 OK"
+2026-05-18 20:55:50,825 [INFO] httpx: HTTP Request: GET https://macys.com "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:55:50,899 [INFO] httpx: HTTP Request: GET https://ngenix.net "HTTP/1.1 503 Service Temporarily Unavailable"
+2026-05-18 20:55:50,900 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://ngenix.net: Server error '503 Service Temporarily Unavailable' for url 'https://ngenix.net'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/503
+2026-05-18 20:55:50,900 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for ngenix.net: Homepage crawl returned no content.
+2026-05-18 20:55:50,978 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.a2f48cdb-b4f0-4fbf-b705-25ec2715e15f "HTTP/2 200 OK"
+2026-05-18 20:55:51,063 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.7b8a75b3-c380-4e40-adcd-d710eb675683 "HTTP/2 200 OK"
+2026-05-18 20:55:51,747 [INFO] httpx: HTTP Request: GET https://www.macys.com/ "HTTP/1.1 403 Forbidden"
+2026-05-18 20:55:51,749 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://macys.com: Client error '403 Forbidden' for url 'https://www.macys.com/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:55:51,749 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for macys.com: Homepage crawl returned no content.
+2026-05-18 20:55:51,850 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.4e8a3f38-66bf-465e-80fe-c35ba9627e6f "HTTP/2 200 OK"
+2026-05-18 20:55:51,928 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.ff5c28f1-af3d-43c9-b18e-a5bf985d2026 "HTTP/2 200 OK"
+2026-05-18 20:55:52,028 [INFO] httpx: HTTP Request: GET https://bm.ge "HTTP/1.1 403 Forbidden"
+2026-05-18 20:55:52,030 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://bm.ge: Client error '403 Forbidden' for url 'https://bm.ge'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:55:52,031 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for bm.ge: Homepage crawl returned no content.
+2026-05-18 20:55:52,109 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.ff5c28f1-af3d-43c9-b18e-a5bf985d2026 "HTTP/2 200 OK"
+2026-05-18 20:55:52,191 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.a81a1c8d-dc74-4349-878e-64b0182cca86 "HTTP/2 200 OK"
+2026-05-18 20:55:52,786 [INFO] httpx: HTTP Request: GET https://harman.com "HTTP/1.0 301 Moved Permanently"
+2026-05-18 20:55:52,917 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://harman.com: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1081)
+2026-05-18 20:55:52,917 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for harman.com: Homepage crawl returned no content.
+2026-05-18 20:55:52,994 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.a81a1c8d-dc74-4349-878e-64b0182cca86 "HTTP/2 200 OK"
+2026-05-18 20:55:53,069 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.bca0ae06-0d82-45e8-a870-39735de67383 "HTTP/2 200 OK"
+2026-05-18 20:55:53,174 [INFO] httpx: HTTP Request: GET https://vidbox.cc "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:55:53,352 [INFO] httpx: HTTP Request: GET https://vidbox.dev/ "HTTP/1.1 403 Forbidden"
+2026-05-18 20:55:53,354 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://bulgari.com: 
+2026-05-18 20:55:53,354 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for bulgari.com: Homepage crawl returned no content.
+2026-05-18 20:55:53,436 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.742a5658-d0c9-4424-9239-ad274a626d98 "HTTP/2 200 OK"
+2026-05-18 20:55:53,437 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://vidbox.cc: Client error '403 Forbidden' for url 'https://vidbox.dev/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:55:53,437 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for vidbox.cc: Homepage crawl returned no content.
+2026-05-18 20:55:53,515 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.bca0ae06-0d82-45e8-a870-39735de67383 "HTTP/2 200 OK"
+2026-05-18 20:55:53,662 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.00da3c72-1362-450e-95c8-6df74a084805 "HTTP/2 200 OK"
+2026-05-18 20:55:53,780 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.aad37f43-9c34-45db-bfa0-ac107105385a "HTTP/2 200 OK"
+2026-05-18 20:55:53,940 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://uniview.com: [Errno 8] nodename nor servname provided, or not known
+2026-05-18 20:55:53,950 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for uniview.com: Homepage crawl returned no content.
+2026-05-18 20:55:54,034 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.00da3c72-1362-450e-95c8-6df74a084805 "HTTP/2 200 OK"
+2026-05-18 20:55:54,138 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.7ad49558-9f50-4e89-acb5-81ba5377fd1f "HTTP/2 200 OK"
+2026-05-18 20:55:54,369 [INFO] httpx: HTTP Request: GET https://alchemer.com "HTTP/1.1 403 Forbidden"
+2026-05-18 20:55:54,369 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://alchemer.com: Client error '403 Forbidden' for url 'https://alchemer.com'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:55:54,369 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for alchemer.com: Homepage crawl returned no content.
+2026-05-18 20:55:54,443 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.aad37f43-9c34-45db-bfa0-ac107105385a "HTTP/2 200 OK"
+2026-05-18 20:55:54,547 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.65bf962b-f8a6-48ad-8497-4f0796729023 "HTTP/2 200 OK"
+2026-05-18 20:55:54,657 [INFO] httpx: HTTP Request: GET https://jbmspecialist.gr "HTTP/1.1 403 Forbidden"
+2026-05-18 20:55:54,659 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://jbmspecialist.gr: Client error '403 Forbidden' for url 'https://jbmspecialist.gr'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:55:54,659 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for jbmspecialist.gr: Homepage crawl returned no content.
+2026-05-18 20:55:54,737 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.65bf962b-f8a6-48ad-8497-4f0796729023 "HTTP/2 200 OK"
+2026-05-18 20:55:54,823 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.a2805a7f-c5fd-4dcf-9cf7-e2e8c78aeb00 "HTTP/2 200 OK"
+2026-05-18 20:55:54,834 [INFO] httpx: HTTP Request: GET https://dhl.com "HTTP/1.0 301 Moved Permanently"
+2026-05-18 20:55:54,929 [INFO] httpx: HTTP Request: GET https://eshops.gr "HTTP/1.1 403 Forbidden"
+2026-05-18 20:55:54,930 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://eshops.gr: Client error '403 Forbidden' for url 'https://eshops.gr'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:55:54,930 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for eshops.gr: Homepage crawl returned no content.
+2026-05-18 20:55:55,008 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.a2805a7f-c5fd-4dcf-9cf7-e2e8c78aeb00 "HTTP/2 200 OK"
+2026-05-18 20:55:55,089 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.3cdcb2ee-d3c6-4508-82fa-160fe2dcf39d "HTTP/2 200 OK"
+2026-05-18 20:55:55,105 [INFO] httpx: HTTP Request: GET http://www.dhl.com/ "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:55:55,199 [INFO] httpx: HTTP Request: GET https://siontisathletics.gr "HTTP/1.1 403 Forbidden"
+2026-05-18 20:55:55,200 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://siontisathletics.gr: Client error '403 Forbidden' for url 'https://siontisathletics.gr'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:55:55,200 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for siontisathletics.gr: Homepage crawl returned no content.
+2026-05-18 20:55:55,287 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.3cdcb2ee-d3c6-4508-82fa-160fe2dcf39d "HTTP/2 200 OK"
+2026-05-18 20:55:55,366 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.7926e61a-2dcc-473a-b4db-afa3d9bab0a3 "HTTP/2 200 OK"
+2026-05-18 20:55:55,438 [INFO] httpx: HTTP Request: GET https://bab.la "HTTP/1.1 403 Forbidden"
+2026-05-18 20:55:55,440 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://bab.la: Client error '403 Forbidden' for url 'https://bab.la'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:55:55,440 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for bab.la: Homepage crawl returned no content.
+2026-05-18 20:55:55,518 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.7926e61a-2dcc-473a-b4db-afa3d9bab0a3 "HTTP/2 200 OK"
+2026-05-18 20:55:55,601 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.34dacf65-4d65-48c6-939f-3b8f8bfa1873 "HTTP/2 200 OK"
+2026-05-18 20:55:56,072 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://fanfiction.net: 
+2026-05-18 20:55:56,074 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for fanfiction.net: Homepage crawl returned no content.
+2026-05-18 20:55:56,165 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.7b8a75b3-c380-4e40-adcd-d710eb675683 "HTTP/2 200 OK"
+2026-05-18 20:55:56,258 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.7080bd60-666e-4681-aff0-40e09ceca11b "HTTP/2 200 OK"
+2026-05-18 20:55:56,470 [INFO] httpx: HTTP Request: GET https://geloto.net "HTTP/1.1 200 OK"
+2026-05-18 20:55:56,475 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for geloto.net: Homepage crawl returned no content.
+2026-05-18 20:55:56,555 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.7080bd60-666e-4681-aff0-40e09ceca11b "HTTP/2 200 OK"
+2026-05-18 20:55:56,635 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.8bedfed7-62e8-45a0-8228-cb8e915cf2e2 "HTTP/2 200 OK"
+2026-05-18 20:55:56,751 [INFO] httpx: HTTP Request: GET https://eepf.gr "HTTP/1.1 403 Forbidden"
+2026-05-18 20:55:56,754 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://eepf.gr: Client error '403 Forbidden' for url 'https://eepf.gr'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:55:56,754 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for eepf.gr: Homepage crawl returned no content.
+2026-05-18 20:55:56,834 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.8bedfed7-62e8-45a0-8228-cb8e915cf2e2 "HTTP/2 200 OK"
+2026-05-18 20:55:56,912 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.1ced968d-3865-41b7-8028-2395ab8d3719 "HTTP/2 200 OK"
+2026-05-18 20:55:57,018 [INFO] httpx: HTTP Request: GET https://camarasdeseguridad.com.gt "HTTP/1.1 403 Forbidden"
+2026-05-18 20:55:57,020 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://camarasdeseguridad.com.gt: Client error '403 Forbidden' for url 'https://camarasdeseguridad.com.gt'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:55:57,020 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for camarasdeseguridad.com.gt: Homepage crawl returned no content.
+2026-05-18 20:55:57,107 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.1ced968d-3865-41b7-8028-2395ab8d3719 "HTTP/2 200 OK"
+2026-05-18 20:55:57,209 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.b3c72371-2b2d-4cab-8c83-d11864eb9c3b "HTTP/2 200 OK"
+2026-05-18 20:55:57,980 [INFO] httpx: HTTP Request: GET https://tigo.com.gt "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:55:58,238 [INFO] httpx: HTTP Request: GET https://www.tigo.com.gt/ "HTTP/1.1 403 Forbidden"
+2026-05-18 20:55:58,240 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://tigo.com.gt: Client error '403 Forbidden' for url 'https://www.tigo.com.gt/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:55:58,241 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for tigo.com.gt: Homepage crawl returned no content.
+2026-05-18 20:55:58,320 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.b3c72371-2b2d-4cab-8c83-d11864eb9c3b "HTTP/2 200 OK"
+2026-05-18 20:55:58,409 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.d58bdb2e-e62c-4695-b209-75ce08b627d8 "HTTP/2 200 OK"
+2026-05-18 20:55:58,615 [INFO] httpx: HTTP Request: GET https://mitecno.gt "HTTP/1.1 403 Forbidden"
+2026-05-18 20:55:58,617 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://mitecno.gt: Client error '403 Forbidden' for url 'https://mitecno.gt'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:55:58,617 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for mitecno.gt: Homepage crawl returned no content.
+2026-05-18 20:55:58,717 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.d58bdb2e-e62c-4695-b209-75ce08b627d8 "HTTP/2 200 OK"
+2026-05-18 20:55:58,802 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.46fa955f-5b13-49ba-b082-dc50729b0166 "HTTP/2 200 OK"
+2026-05-18 20:55:59,370 [INFO] httpx: HTTP Request: GET https://pandora.com "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:56:00,177 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://dhl.com: 
+2026-05-18 20:56:00,177 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for dhl.com: Homepage crawl returned no content.
+2026-05-18 20:56:00,264 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.7ad49558-9f50-4e89-acb5-81ba5377fd1f "HTTP/2 200 OK"
+2026-05-18 20:56:00,344 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.ae1926f5-2466-42f8-9062-0da1ecea1984 "HTTP/2 200 OK"
+2026-05-18 20:56:00,501 [INFO] httpx: HTTP Request: GET https://psaltou.gr "HTTP/1.1 403 Forbidden"
+2026-05-18 20:56:00,502 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://psaltou.gr: Client error '403 Forbidden' for url 'https://psaltou.gr'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:56:00,502 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for psaltou.gr: Homepage crawl returned no content.
+2026-05-18 20:56:00,581 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.ae1926f5-2466-42f8-9062-0da1ecea1984 "HTTP/2 200 OK"
+2026-05-18 20:56:00,660 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.a3362983-0716-4aa1-add7-e6219568d590 "HTTP/2 200 OK"
+2026-05-18 20:56:00,670 [INFO] httpx: HTTP Request: GET https://www.pandora.com "HTTP/1.1 302 Found"
+2026-05-18 20:56:00,670 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://growatt.com: 
+2026-05-18 20:56:00,671 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for growatt.com: Homepage crawl returned no content.
+2026-05-18 20:56:00,746 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.34dacf65-4d65-48c6-939f-3b8f8bfa1873 "HTTP/2 200 OK"
+2026-05-18 20:56:00,824 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.24cb9585-a153-462d-95cf-d4ab3ad6450c "HTTP/2 200 OK"
+2026-05-18 20:56:00,861 [INFO] httpx: HTTP Request: GET https://medium.com "HTTP/1.1 403 Forbidden"
+2026-05-18 20:56:00,861 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://medium.com: Client error '403 Forbidden' for url 'https://medium.com'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:56:00,861 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for medium.com: Homepage crawl returned no content.
+2026-05-18 20:56:00,944 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.a3362983-0716-4aa1-add7-e6219568d590 "HTTP/2 200 OK"
+2026-05-18 20:56:01,029 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.3b04ee52-a5fe-4dc1-b0d4-2695b821342f "HTTP/2 200 OK"
+2026-05-18 20:56:01,047 [INFO] httpx: HTTP Request: GET https://www.pandora.com/restricted "HTTP/1.1 200 OK"
+2026-05-18 20:56:01,128 [INFO] httpx: HTTP Request: GET https://hitun.io "HTTP/1.1 403 Forbidden"
+2026-05-18 20:56:01,129 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://hitun.io: Client error '403 Forbidden' for url 'https://hitun.io'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:56:01,129 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for hitun.io: Homepage crawl returned no content.
+2026-05-18 20:56:01,209 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.3b04ee52-a5fe-4dc1-b0d4-2695b821342f "HTTP/2 200 OK"
+2026-05-18 20:56:01,287 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.5733ab06-9a2b-44ce-9c3a-ee33f6957185 "HTTP/2 200 OK"
+2026-05-18 20:56:01,465 [INFO] httpx: HTTP Request: GET https://flavouredjuicycontent.com "HTTP/1.1 302 Found"
+2026-05-18 20:56:01,470 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://flavouredjuicycontent.com: [Errno 8] nodename nor servname provided, or not known
+2026-05-18 20:56:01,471 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for flavouredjuicycontent.com: Homepage crawl returned no content.
+2026-05-18 20:56:01,560 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.5733ab06-9a2b-44ce-9c3a-ee33f6957185 "HTTP/2 200 OK"
+2026-05-18 20:56:01,645 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.073fcdb7-b092-4722-a616-2bd1b55e9c94 "HTTP/2 200 OK"
+2026-05-18 20:56:01,738 [INFO] httpx: HTTP Request: GET https://airtm.com "HTTP/1.1 302 Found"
+2026-05-18 20:56:01,816 [INFO] httpx: HTTP Request: GET https://www.airtm.com "HTTP/1.1 403 Forbidden"
+2026-05-18 20:56:01,818 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://airtm.com: Client error '403 Forbidden' for url 'https://www.airtm.com'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:56:01,818 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for airtm.com: Homepage crawl returned no content.
+2026-05-18 20:56:01,895 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.073fcdb7-b092-4722-a616-2bd1b55e9c94 "HTTP/2 200 OK"
+2026-05-18 20:56:01,973 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.cb04bfea-34b3-43f9-a6da-753ce160f9f9 "HTTP/2 200 OK"
+2026-05-18 20:56:02,077 [INFO] httpx: HTTP Request: GET https://upwork.com "HTTP/1.1 403 Forbidden"
+2026-05-18 20:56:02,093 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://upwork.com: Client error '403 Forbidden' for url 'https://upwork.com'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:56:02,093 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for upwork.com: Homepage crawl returned no content.
+2026-05-18 20:56:02,180 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.cb04bfea-34b3-43f9-a6da-753ce160f9f9 "HTTP/2 200 OK"
+2026-05-18 20:56:02,258 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.6575a449-8cdd-4114-9da6-43c613556da9 "HTTP/2 200 OK"
+2026-05-18 20:56:02,267 [INFO] httpx: HTTP Request: GET https://viettel.vn "HTTP/1.1 200 OK"
+2026-05-18 20:56:02,268 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for viettel.vn: Homepage crawl returned no content.
+2026-05-18 20:56:02,347 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.24cb9585-a153-462d-95cf-d4ab3ad6450c "HTTP/2 200 OK"
+2026-05-18 20:56:02,431 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.030cab41-8e23-4dc9-a1a3-5f0bbf485f86 "HTTP/2 200 OK"
+2026-05-18 20:56:02,489 [INFO] httpx: HTTP Request: GET https://lira.hu "HTTP/1.1 403 Forbidden"
+2026-05-18 20:56:02,491 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://lira.hu: Client error '403 Forbidden' for url 'https://lira.hu'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:56:02,491 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for lira.hu: Homepage crawl returned no content.
+2026-05-18 20:56:02,572 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.6575a449-8cdd-4114-9da6-43c613556da9 "HTTP/2 200 OK"
+2026-05-18 20:56:02,653 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.3345db0c-2338-4450-b5e4-d0a9c878135a "HTTP/2 200 OK"
+2026-05-18 20:56:02,661 [INFO] httpx: HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-18 20:56:02,662 [WARNING] src.opportunity.scorer: Validation error on attempt 1: 2 validation errors for OpportunityScoreResult
+romania_adaptation_idea
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.13/v/string_type
+suggested_mvp
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.13/v/string_type
+2026-05-18 20:56:02,719 [INFO] httpx: HTTP Request: GET https://manuall.hu "HTTP/1.1 403 Forbidden"
+2026-05-18 20:56:02,722 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://manuall.hu: Client error '403 Forbidden' for url 'https://manuall.hu'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:56:02,722 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for manuall.hu: Homepage crawl returned no content.
+2026-05-18 20:56:02,798 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.3345db0c-2338-4450-b5e4-d0a9c878135a "HTTP/2 200 OK"
+2026-05-18 20:56:02,879 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.d320fb65-ea18-4b4f-a99e-ba64184ac5aa "HTTP/2 200 OK"
+2026-05-18 20:56:02,948 [INFO] httpx: HTTP Request: GET https://traktorpool.hu "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:56:03,033 [INFO] httpx: HTTP Request: GET https://loc.gov "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:56:03,110 [INFO] httpx: HTTP Request: GET https://www.loc.gov/ "HTTP/1.1 403 Forbidden"
+2026-05-18 20:56:03,112 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://loc.gov: Client error '403 Forbidden' for url 'https://www.loc.gov/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:56:03,112 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for loc.gov: Homepage crawl returned no content.
+2026-05-18 20:56:03,274 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.d320fb65-ea18-4b4f-a99e-ba64184ac5aa "HTTP/2 200 OK"
+2026-05-18 20:56:03,377 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.cd2e4ed8-cf93-4efd-a5fb-95ccf65f4c3d "HTTP/2 200 OK"
+2026-05-18 20:56:03,469 [INFO] httpx: HTTP Request: GET https://www.traktorpool.hu/ "HTTP/1.1 403 Forbidden"
+2026-05-18 20:56:03,471 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://traktorpool.hu: Client error '403 Forbidden' for url 'https://www.traktorpool.hu/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:56:03,471 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for traktorpool.hu: Homepage crawl returned no content.
+2026-05-18 20:56:03,575 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.030cab41-8e23-4dc9-a1a3-5f0bbf485f86 "HTTP/2 200 OK"
+2026-05-18 20:56:03,654 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.5d88baec-88b6-4d13-9e4b-db5ecbf6560a "HTTP/2 200 OK"
+2026-05-18 20:56:03,700 [INFO] httpx: HTTP Request: GET https://firmania.hu "HTTP/1.1 403 Forbidden"
+2026-05-18 20:56:03,701 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://firmania.hu: Client error '403 Forbidden' for url 'https://firmania.hu'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:56:03,701 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for firmania.hu: Homepage crawl returned no content.
+2026-05-18 20:56:03,777 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.cd2e4ed8-cf93-4efd-a5fb-95ccf65f4c3d "HTTP/2 200 OK"
+2026-05-18 20:56:03,865 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.29e20c35-8b9b-4411-8e00-a83e9c36d6df "HTTP/2 200 OK"
+2026-05-18 20:56:03,968 [INFO] httpx: HTTP Request: GET https://aulanews.id "HTTP/1.1 403 Forbidden"
+2026-05-18 20:56:03,969 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://aulanews.id: Client error '403 Forbidden' for url 'https://aulanews.id'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:56:03,969 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for aulanews.id: Homepage crawl returned no content.
+2026-05-18 20:56:04,046 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.29e20c35-8b9b-4411-8e00-a83e9c36d6df "HTTP/2 200 OK"
+2026-05-18 20:56:04,133 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.d2ed8dec-b703-4364-a62e-b7334df30d33 "HTTP/2 200 OK"
+2026-05-18 20:56:04,149 [INFO] httpx: HTTP Request: GET https://corevibe-network.com "HTTP/1.1 403 Forbidden"
+2026-05-18 20:56:04,150 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://corevibe-network.com: Client error '403 Forbidden' for url 'https://corevibe-network.com'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:56:04,150 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for corevibe-network.com: Homepage crawl returned no content.
+2026-05-18 20:56:04,227 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.5d88baec-88b6-4d13-9e4b-db5ecbf6560a "HTTP/2 200 OK"
+2026-05-18 20:56:04,305 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.7ea55004-73f5-4ada-b397-3c014e25c80f "HTTP/2 200 OK"
+2026-05-18 20:56:04,324 [INFO] httpx: HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-18 20:56:04,325 [WARNING] src.opportunity.scorer: Validation error on attempt 2: 2 validation errors for OpportunityScoreResult
+romania_adaptation_idea
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.13/v/string_type
+suggested_mvp
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.13/v/string_type
+2026-05-18 20:56:04,380 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://ps3838.com: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1081)
+2026-05-18 20:56:04,381 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for ps3838.com: Homepage crawl returned no content.
+2026-05-18 20:56:04,459 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.7ea55004-73f5-4ada-b397-3c014e25c80f "HTTP/2 200 OK"
+2026-05-18 20:56:04,538 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.fa8a7078-5b56-4d24-a41f-4531225ca43d "HTTP/2 200 OK"
+2026-05-18 20:56:04,568 [INFO] httpx: HTTP Request: GET https://merahputih.com "HTTP/1.1 403 Forbidden"
+2026-05-18 20:56:04,570 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://merahputih.com: Client error '403 Forbidden' for url 'https://merahputih.com'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:56:04,570 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for merahputih.com: Homepage crawl returned no content.
+2026-05-18 20:56:04,651 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.d2ed8dec-b703-4364-a62e-b7334df30d33 "HTTP/2 200 OK"
+2026-05-18 20:56:04,730 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.d5a21cf2-e6f7-4c1d-9e72-920cdb786514 "HTTP/2 200 OK"
+2026-05-18 20:56:04,786 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://manutd.com: All connection attempts failed
+2026-05-18 20:56:04,787 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for manutd.com: Homepage crawl returned no content.
+2026-05-18 20:56:04,867 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.fa8a7078-5b56-4d24-a41f-4531225ca43d "HTTP/2 200 OK"
+2026-05-18 20:56:04,941 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.3ca914b9-b2a7-46d1-b5e3-d56b925c63f5 "HTTP/2 200 OK"
+2026-05-18 20:56:04,990 [INFO] httpx: HTTP Request: GET https://auto-doc.ie "HTTP/1.1 403 Forbidden"
+2026-05-18 20:56:04,992 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://auto-doc.ie: Client error '403 Forbidden' for url 'https://auto-doc.ie'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:56:04,992 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for auto-doc.ie: Homepage crawl returned no content.
+2026-05-18 20:56:05,069 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.d5a21cf2-e6f7-4c1d-9e72-920cdb786514 "HTTP/2 200 OK"
+2026-05-18 20:56:05,147 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.e5753814-9338-4e7a-9c4c-10c2f39491b7 "HTTP/2 200 OK"
+2026-05-18 20:56:05,195 [INFO] httpx: HTTP Request: GET https://mckinneycompetitions.com "HTTP/1.1 403 Forbidden"
+2026-05-18 20:56:05,197 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://mckinneycompetitions.com: Client error '403 Forbidden' for url 'https://mckinneycompetitions.com'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:56:05,197 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for mckinneycompetitions.com: Homepage crawl returned no content.
+2026-05-18 20:56:05,278 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.3ca914b9-b2a7-46d1-b5e3-d56b925c63f5 "HTTP/2 200 OK"
+2026-05-18 20:56:05,359 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.f07fed74-a429-4d23-8dea-fc2fd664ead2 "HTTP/2 200 OK"
+2026-05-18 20:56:05,818 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://hinet.net: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1081)
+2026-05-18 20:56:05,820 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for hinet.net: Homepage crawl returned no content.
+2026-05-18 20:56:05,915 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.e5753814-9338-4e7a-9c4c-10c2f39491b7 "HTTP/2 200 OK"
+2026-05-18 20:56:05,993 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.70e620a1-117d-438c-80d1-e904958b02e7 "HTTP/2 200 OK"
+2026-05-18 20:56:06,003 [INFO] httpx: HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-18 20:56:06,003 [WARNING] src.opportunity.scorer: Validation error on attempt 3: 2 validation errors for OpportunityScoreResult
+romania_adaptation_idea
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.13/v/string_type
+suggested_mvp
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.13/v/string_type
+2026-05-18 20:56:06,014 [INFO] httpx: HTTP Request: GET https://chewy.com "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:56:06,818 [INFO] httpx: HTTP Request: GET https://www.chewy.com/ "HTTP/1.1 429 Too Many Requests"
+2026-05-18 20:56:06,820 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://chewy.com: Client error '429 Too Many Requests' for url 'https://www.chewy.com/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429
+2026-05-18 20:56:06,820 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for chewy.com: Homepage crawl returned no content.
+2026-05-18 20:56:06,899 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.f07fed74-a429-4d23-8dea-fc2fd664ead2 "HTTP/2 200 OK"
+2026-05-18 20:56:06,976 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.c2cf2ccc-490a-4ccd-9456-4ba760ed4756 "HTTP/2 200 OK"
+2026-05-18 20:56:07,180 [INFO] httpx: HTTP Request: GET https://tesco.com "HTTP/1.1 403 Forbidden"
+2026-05-18 20:56:07,180 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://tesco.com: Client error '403 Forbidden' for url 'https://tesco.com'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:56:07,180 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for tesco.com: Homepage crawl returned no content.
+2026-05-18 20:56:07,262 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.c2cf2ccc-490a-4ccd-9456-4ba760ed4756 "HTTP/2 200 OK"
+2026-05-18 20:56:07,346 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.04ddf328-80dd-499b-8fb8-a5f5f345223f "HTTP/2 200 OK"
+2026-05-18 20:56:07,360 [INFO] httpx: HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-05-18 20:56:07,360 [WARNING] src.opportunity.scorer: Validation error on attempt 4: 2 validation errors for OpportunityScoreResult
+romania_adaptation_idea
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.13/v/string_type
+suggested_mvp
+  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]
+    For further information visit https://errors.pydantic.dev/2.13/v/string_type
+2026-05-18 20:56:07,360 [WARNING] src.opportunity.scorer: LLM call failed on attempt 4: Failed to validate LLM response after 4 attempts: {'opportunity_score': 0, 'confidence': 1, 'is_global_giant': True, 'is_too_generic': True, 'romania_market_fit': 1, 'local_gap': 1, 'buildability': 1, 'monetization_clarity': 1, 'novelty': 1, 'trend_relevance': 1, 'competition_saturation': 1, 'complexity': 1, 'regulatory_risk': 1, 'recommended_category': 'entertainment', 'opportunity_type': 'consumer_app', 'one_sentence_summary': 'Pandora is an audio streaming service that provides personalized music recommendations.', 'romania_adaptation_idea': None, 'why_it_scores_this_way': 'Pandora is a global giant and a generic entertainment platform.', 'red_flags': ['global giant', 'generic platform'], 'suggested_mvp': None}
+2026-05-18 20:56:07,360 [ERROR] src.opportunity.update_opportunity_scores: Failed to score domain pandora.com: Failed to validate LLM response after 4 attempts: {'opportunity_score': 0, 'confidence': 1, 'is_global_giant': True, 'is_too_generic': True, 'romania_market_fit': 1, 'local_gap': 1, 'buildability': 1, 'monetization_clarity': 1, 'novelty': 1, 'trend_relevance': 1, 'competition_saturation': 1, 'complexity': 1, 'regulatory_risk': 1, 'recommended_category': 'entertainment', 'opportunity_type': 'consumer_app', 'one_sentence_summary': 'Pandora is an audio streaming service that provides personalized music recommendations.', 'romania_adaptation_idea': None, 'why_it_scores_this_way': 'Pandora is a global giant and a generic entertainment platform.', 'red_flags': ['global giant', 'generic platform'], 'suggested_mvp': None}
+2026-05-18 20:56:07,440 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.46fa955f-5b13-49ba-b082-dc50729b0166 "HTTP/2 200 OK"
+2026-05-18 20:56:07,518 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.6802fd04-d280-47e1-abcd-35960be10513 "HTTP/2 200 OK"
+2026-05-18 20:56:08,167 [INFO] httpx: HTTP Request: GET https://kanoon.ir "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:56:11,004 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://dreame.tech: 
+2026-05-18 20:56:11,005 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for dreame.tech: Homepage crawl returned no content.
+2026-05-18 20:56:11,093 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.70e620a1-117d-438c-80d1-e904958b02e7 "HTTP/2 200 OK"
+2026-05-18 20:56:11,182 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.3bdc66d4-7ce0-4840-b176-05e5c907dbc9 "HTTP/2 200 OK"
+2026-05-18 20:56:12,082 [INFO] httpx: HTTP Request: GET https://mbbank.com.vn "HTTP/1.1 200 OK"
+2026-05-18 20:56:12,084 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for mbbank.com.vn: Homepage crawl returned no content.
+2026-05-18 20:56:12,170 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.3bdc66d4-7ce0-4840-b176-05e5c907dbc9 "HTTP/2 200 OK"
+2026-05-18 20:56:12,249 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.e4e9ceed-c03f-4c85-9c81-a333180fa79b "HTTP/2 200 OK"
+2026-05-18 20:56:12,532 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://isarclinic.com: 
+2026-05-18 20:56:12,534 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for isarclinic.com: Homepage crawl returned no content.
+2026-05-18 20:56:12,616 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.6802fd04-d280-47e1-abcd-35960be10513 "HTTP/2 200 OK"
+2026-05-18 20:56:12,695 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.0d257f85-9953-4f65-922a-13da573f9ee8 "HTTP/2 200 OK"
+2026-05-18 20:56:13,824 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://kanoon.ir: 
+2026-05-18 20:56:13,825 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for kanoon.ir: Homepage crawl returned no content.
+2026-05-18 20:56:13,902 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.04ddf328-80dd-499b-8fb8-a5f5f345223f "HTTP/2 200 OK"
+2026-05-18 20:56:13,985 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.fe769b78-250a-4a83-9e06-7a69cdef65aa "HTTP/2 200 OK"
+2026-05-18 20:56:17,266 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://aparatsport.ir: 
+2026-05-18 20:56:17,267 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for aparatsport.ir: Homepage crawl returned no content.
+2026-05-18 20:56:17,353 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.e4e9ceed-c03f-4c85-9c81-a333180fa79b "HTTP/2 200 OK"
+2026-05-18 20:56:17,432 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.02d411bf-f084-4492-9e27-8af430f603e4 "HTTP/2 200 OK"
+2026-05-18 20:56:17,868 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://digify.shop: 
+2026-05-18 20:56:17,870 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for digify.shop: Homepage crawl returned no content.
+2026-05-18 20:56:17,950 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.0d257f85-9953-4f65-922a-13da573f9ee8 "HTTP/2 200 OK"
+2026-05-18 20:56:18,026 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.b3d50d33-14ac-4804-bd72-b13770a2ca0f "HTTP/2 200 OK"
+2026-05-18 20:56:18,033 [INFO] httpx: HTTP Request: GET https://disney.com "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:56:18,129 [INFO] httpx: HTTP Request: GET https://www.disney.com/ "HTTP/1.1 403 Forbidden"
+2026-05-18 20:56:18,130 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://disney.com: Client error '403 Forbidden' for url 'https://www.disney.com/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:56:18,130 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for disney.com: Homepage crawl returned no content.
+2026-05-18 20:56:18,208 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.02d411bf-f084-4492-9e27-8af430f603e4 "HTTP/2 200 OK"
+2026-05-18 20:56:18,286 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.6ec29acc-aa95-480b-8bf5-f6704517eb21 "HTTP/2 200 OK"
+2026-05-18 20:56:18,350 [INFO] httpx: HTTP Request: GET https://logmein.com "HTTP/1.1 308 Permanent Redirect"
+2026-05-18 20:56:18,368 [INFO] httpx: HTTP Request: GET https://euautopezzi.it "HTTP/1.1 403 Forbidden"
+2026-05-18 20:56:18,369 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://euautopezzi.it: Client error '403 Forbidden' for url 'https://euautopezzi.it'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:56:18,369 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for euautopezzi.it: Homepage crawl returned no content.
+2026-05-18 20:56:18,456 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.6ec29acc-aa95-480b-8bf5-f6704517eb21 "HTTP/2 200 OK"
+2026-05-18 20:56:18,534 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.78ad028e-51b5-4a8c-8473-7980d7563a0b "HTTP/2 200 OK"
+2026-05-18 20:56:18,673 [INFO] httpx: HTTP Request: GET https://www.logmein.com/ "HTTP/1.1 403 Forbidden"
+2026-05-18 20:56:18,675 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://logmein.com: Client error '403 Forbidden' for url 'https://www.logmein.com/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:56:18,675 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for logmein.com: Homepage crawl returned no content.
+2026-05-18 20:56:18,758 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.b3d50d33-14ac-4804-bd72-b13770a2ca0f "HTTP/2 200 OK"
+2026-05-18 20:56:18,841 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.4876ae4d-6c37-4220-a995-f49ccd0a08ca "HTTP/2 200 OK"
+2026-05-18 20:56:18,988 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://campedel.it: 
+2026-05-18 20:56:18,991 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for campedel.it: Homepage crawl returned no content.
+2026-05-18 20:56:19,068 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.4876ae4d-6c37-4220-a995-f49ccd0a08ca "HTTP/2 200 OK"
+2026-05-18 20:56:19,145 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.a94f776e-d45b-489f-9b80-96d5f9e6212d "HTTP/2 200 OK"
+2026-05-18 20:56:19,156 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://amootsoft.com: 
+2026-05-18 20:56:19,157 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for amootsoft.com: Homepage crawl returned no content.
+2026-05-18 20:56:19,236 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.fe769b78-250a-4a83-9e06-7a69cdef65aa "HTTP/2 200 OK"
+2026-05-18 20:56:19,329 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.a3e33766-a244-4663-b67f-1a8a3cd2e5c1 "HTTP/2 200 OK"
+2026-05-18 20:56:19,467 [INFO] httpx: HTTP Request: GET https://sosovalue.com "HTTP/1.1 403 Forbidden"
+2026-05-18 20:56:19,469 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://sosovalue.com: Client error '403 Forbidden' for url 'https://sosovalue.com'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:56:19,469 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for sosovalue.com: Homepage crawl returned no content.
+2026-05-18 20:56:19,549 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.a3e33766-a244-4663-b67f-1a8a3cd2e5c1 "HTTP/2 200 OK"
+2026-05-18 20:56:19,625 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.7a37a7ba-2c34-486f-b826-75fab8e68e07 "HTTP/2 200 OK"
+2026-05-18 20:56:19,634 [INFO] httpx: HTTP Request: GET https://lavoro.it "HTTP/1.1 302 Found"
+2026-05-18 20:56:19,708 [INFO] httpx: HTTP Request: GET https://www.lavoro.it/ "HTTP/1.1 403 Forbidden"
+2026-05-18 20:56:19,710 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://lavoro.it: Client error '403 Forbidden' for url 'https://www.lavoro.it/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:56:19,710 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for lavoro.it: Homepage crawl returned no content.
+2026-05-18 20:56:19,788 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.a94f776e-d45b-489f-9b80-96d5f9e6212d "HTTP/2 200 OK"
+2026-05-18 20:56:19,868 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.c5415a22-a412-4ff5-be63-4b760a828d70 "HTTP/2 200 OK"
+2026-05-18 20:56:19,945 [INFO] httpx: HTTP Request: GET https://movoto.com "HTTP/1.1 403 Forbidden"
+2026-05-18 20:56:19,945 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://movoto.com: Client error '403 Forbidden' for url 'https://movoto.com'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:56:19,945 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for movoto.com: Homepage crawl returned no content.
+2026-05-18 20:56:20,024 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.c5415a22-a412-4ff5-be63-4b760a828d70 "HTTP/2 200 OK"
+2026-05-18 20:56:20,097 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.48322d3c-e337-4f23-9614-bb8e5aaba07c "HTTP/2 200 OK"
+2026-05-18 20:56:20,123 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://ladbrokes.com: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1081)
+2026-05-18 20:56:20,124 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for ladbrokes.com: Homepage crawl returned no content.
+2026-05-18 20:56:20,224 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.48322d3c-e337-4f23-9614-bb8e5aaba07c "HTTP/2 200 OK"
+2026-05-18 20:56:20,307 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.c0f068b3-0113-41c2-b1cc-93dcf4275f4e "HTTP/2 200 OK"
+2026-05-18 20:56:20,319 [INFO] httpx: HTTP Request: GET https://unice.com "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:56:20,384 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://skygate.co.jp: [Errno 8] nodename nor servname provided, or not known
+2026-05-18 20:56:20,385 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for skygate.co.jp: Homepage crawl returned no content.
+2026-05-18 20:56:20,463 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.c0f068b3-0113-41c2-b1cc-93dcf4275f4e "HTTP/2 200 OK"
+2026-05-18 20:56:20,542 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.21a65a56-1c63-4212-bf5f-de195c1f49af "HTTP/2 200 OK"
+2026-05-18 20:56:20,640 [INFO] httpx: HTTP Request: GET https://m.unice.com/ "HTTP/1.1 403 Forbidden"
+2026-05-18 20:56:20,642 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://unice.com: Client error '403 Forbidden' for url 'https://m.unice.com/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:56:20,642 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for unice.com: Homepage crawl returned no content.
+2026-05-18 20:56:20,735 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.7a37a7ba-2c34-486f-b826-75fab8e68e07 "HTTP/2 200 OK"
+2026-05-18 20:56:20,834 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.6f54f021-7574-4ba3-9e17-5ab090f931a9 "HTTP/2 200 OK"
+2026-05-18 20:56:20,863 [INFO] httpx: HTTP Request: GET https://brandear.jp "HTTP/1.1 403 Forbidden"
+2026-05-18 20:56:20,863 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://brandear.jp: Client error '403 Forbidden' for url 'https://brandear.jp'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:56:20,863 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for brandear.jp: Homepage crawl returned no content.
+2026-05-18 20:56:20,941 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.21a65a56-1c63-4212-bf5f-de195c1f49af "HTTP/2 200 OK"
+2026-05-18 20:56:21,015 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.a0438717-d1c0-4a03-a3a3-e9293316bbe1 "HTTP/2 200 OK"
+2026-05-18 20:56:21,464 [INFO] httpx: HTTP Request: GET https://mathworks.com "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:56:21,538 [INFO] httpx: HTTP Request: GET https://www.mathworks.com/ "HTTP/1.1 403 Forbidden"
+2026-05-18 20:56:21,539 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://mathworks.com: Client error '403 Forbidden' for url 'https://www.mathworks.com/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:56:21,539 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for mathworks.com: Homepage crawl returned no content.
+2026-05-18 20:56:21,617 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.a0438717-d1c0-4a03-a3a3-e9293316bbe1 "HTTP/2 200 OK"
+2026-05-18 20:56:21,700 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.e2a0eafa-020d-4a41-9648-61038723b036 "HTTP/2 200 OK"
+2026-05-18 20:56:22,044 [INFO] httpx: HTTP Request: GET https://bvoffice1.com "HTTP/1.1 404 Not Found"
+2026-05-18 20:56:22,045 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://bvoffice1.com: Client error '404 Not Found' for url 'https://bvoffice1.com'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+2026-05-18 20:56:22,045 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for bvoffice1.com: Homepage crawl returned no content.
+2026-05-18 20:56:22,120 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.e2a0eafa-020d-4a41-9648-61038723b036 "HTTP/2 200 OK"
+2026-05-18 20:56:22,195 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.9d495cfd-e5a6-48f7-af53-2c743593f818 "HTTP/2 200 OK"
+2026-05-18 20:56:22,289 [INFO] httpx: HTTP Request: GET https://jora.com "HTTP/1.1 403 Forbidden"
+2026-05-18 20:56:22,290 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://jora.com: Client error '403 Forbidden' for url 'https://jora.com'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:56:22,290 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for jora.com: Homepage crawl returned no content.
+2026-05-18 20:56:22,367 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.9d495cfd-e5a6-48f7-af53-2c743593f818 "HTTP/2 200 OK"
+2026-05-18 20:56:22,445 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.14e6eeae-20ec-4d10-8f43-672dfe672729 "HTTP/2 200 OK"
+2026-05-18 20:56:22,858 [INFO] httpx: HTTP Request: GET https://copart.com "HTTP/1.1 200 OK"
+2026-05-18 20:56:22,861 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for copart.com: Homepage crawl returned no content.
+2026-05-18 20:56:22,937 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.14e6eeae-20ec-4d10-8f43-672dfe672729 "HTTP/2 200 OK"
+2026-05-18 20:56:23,014 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.b6b4d8ac-d9d7-4d90-a4f0-559c3e4982a3 "HTTP/2 200 OK"
+2026-05-18 20:56:23,332 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://house.gov: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'house.gov'. (_ssl.c:1081)
+2026-05-18 20:56:23,334 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for house.gov: Homepage crawl returned no content.
+2026-05-18 20:56:23,412 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.b6b4d8ac-d9d7-4d90-a4f0-559c3e4982a3 "HTTP/2 200 OK"
+2026-05-18 20:56:23,494 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.b6733cca-6594-4492-b5c4-1f208788885d "HTTP/2 200 OK"
+2026-05-18 20:56:23,541 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://desigual.com: 
+2026-05-18 20:56:23,542 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for desigual.com: Homepage crawl returned no content.
+2026-05-18 20:56:23,627 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.78ad028e-51b5-4a8c-8473-7980d7563a0b "HTTP/2 200 OK"
+2026-05-18 20:56:23,703 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.c745016a-1534-459d-8cc9-bc93de6a6edf "HTTP/2 200 OK"
+2026-05-18 20:56:25,470 [INFO] httpx: HTTP Request: GET https://e-himart.co.kr "HTTP/1.1 403 Forbidden"
+2026-05-18 20:56:25,472 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://e-himart.co.kr: Client error '403 Forbidden' for url 'https://e-himart.co.kr'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:56:25,472 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for e-himart.co.kr: Homepage crawl returned no content.
+2026-05-18 20:56:25,553 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.c745016a-1534-459d-8cc9-bc93de6a6edf "HTTP/2 200 OK"
+2026-05-18 20:56:25,624 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.01648224-95d2-43e2-8cea-d04a15569c30 "HTTP/2 200 OK"
+2026-05-18 20:56:25,842 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://daimaru-matsuzakaya.jp: 
+2026-05-18 20:56:25,844 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for daimaru-matsuzakaya.jp: Homepage crawl returned no content.
+2026-05-18 20:56:25,926 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.6f54f021-7574-4ba3-9e17-5ab090f931a9 "HTTP/2 200 OK"
+2026-05-18 20:56:26,007 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.096af536-ba09-452e-abd4-9597a5195252 "HTTP/2 200 OK"
+2026-05-18 20:56:26,075 [INFO] httpx: HTTP Request: GET https://monash.edu "HTTP/1.1 403 Forbidden"
+2026-05-18 20:56:26,077 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://monash.edu: Client error '403 Forbidden' for url 'https://monash.edu'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:56:26,077 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for monash.edu: Homepage crawl returned no content.
+2026-05-18 20:56:26,188 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.096af536-ba09-452e-abd4-9597a5195252 "HTTP/2 200 OK"
+2026-05-18 20:56:26,268 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.b8f2d1eb-41e4-4583-83e4-0008394a43cb "HTTP/2 200 OK"
+2026-05-18 20:56:28,568 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://telangana.gov.in: 
+2026-05-18 20:56:28,570 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for telangana.gov.in: Homepage crawl returned no content.
+2026-05-18 20:56:28,651 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.b6733cca-6594-4492-b5c4-1f208788885d "HTTP/2 200 OK"
+2026-05-18 20:56:28,728 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.25c64d7e-6a4c-4389-9971-a24e4ec0d23e "HTTP/2 200 OK"
+2026-05-18 20:56:28,741 [INFO] httpx: HTTP Request: GET https://worldscientific.com "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:56:28,783 [INFO] httpx: HTTP Request: GET https://cimri.com "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:56:28,825 [INFO] httpx: HTTP Request: GET https://www.worldscientific.com/ "HTTP/1.1 403 Forbidden"
+2026-05-18 20:56:28,825 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://worldscientific.com: Client error '403 Forbidden' for url 'https://www.worldscientific.com/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:56:28,825 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for worldscientific.com: Homepage crawl returned no content.
+2026-05-18 20:56:28,923 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.b8f2d1eb-41e4-4583-83e4-0008394a43cb "HTTP/2 200 OK"
+2026-05-18 20:56:28,997 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.16372960-9f43-4113-b1a3-4e46e312ff43 "HTTP/2 200 OK"
+2026-05-18 20:56:29,011 [INFO] httpx: HTTP Request: GET https://www.cimri.com/ "HTTP/1.1 403 Forbidden"
+2026-05-18 20:56:29,012 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://cimri.com: Client error '403 Forbidden' for url 'https://www.cimri.com/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:56:29,012 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for cimri.com: Homepage crawl returned no content.
+2026-05-18 20:56:29,090 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.25c64d7e-6a4c-4389-9971-a24e4ec0d23e "HTTP/2 200 OK"
+2026-05-18 20:56:29,165 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.3798518e-4061-4a83-8dba-e3e92f89013c "HTTP/2 200 OK"
+2026-05-18 20:56:29,330 [INFO] httpx: HTTP Request: GET https://expedia.com "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:56:29,525 [INFO] httpx: HTTP Request: GET https://www.expedia.com/ "HTTP/1.1 429 Too Many Requests"
+2026-05-18 20:56:29,550 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://expedia.com: Client error '429 Too Many Requests' for url 'https://www.expedia.com/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429
+2026-05-18 20:56:29,550 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for expedia.com: Homepage crawl returned no content.
+2026-05-18 20:56:29,632 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.3798518e-4061-4a83-8dba-e3e92f89013c "HTTP/2 200 OK"
+2026-05-18 20:56:29,707 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.1d33c910-d7ef-41d3-9c21-fa2c5785a62b "HTTP/2 200 OK"
+2026-05-18 20:56:29,971 [INFO] httpx: HTTP Request: GET https://maisonsdumonde.com "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:56:30,145 [INFO] httpx: HTTP Request: GET https://www.maisonsdumonde.com/ "HTTP/1.1 403 Forbidden"
+2026-05-18 20:56:30,146 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://maisonsdumonde.com: Client error '403 Forbidden' for url 'https://www.maisonsdumonde.com/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:56:30,146 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for maisonsdumonde.com: Homepage crawl returned no content.
+2026-05-18 20:56:30,230 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.1d33c910-d7ef-41d3-9c21-fa2c5785a62b "HTTP/2 200 OK"
+2026-05-18 20:56:30,308 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.334cd384-9949-4b4b-8e47-d2a63ac5902f "HTTP/2 200 OK"
+2026-05-18 20:56:30,319 [INFO] httpx: HTTP Request: GET https://poemlove.co.kr "HTTP/1.1 403 Forbidden"
+2026-05-18 20:56:30,320 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://poemlove.co.kr: Client error '403 Forbidden' for url 'https://poemlove.co.kr'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:56:30,320 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for poemlove.co.kr: Homepage crawl returned no content.
+2026-05-18 20:56:30,396 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.16372960-9f43-4113-b1a3-4e46e312ff43 "HTTP/2 200 OK"
+2026-05-18 20:56:30,477 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.81dcff9a-e749-47aa-b72d-ecc7744a628d "HTTP/2 200 OK"
+2026-05-18 20:56:30,668 [INFO] httpx: HTTP Request: GET https://mawbima.lk "HTTP/1.1 403 Forbidden"
+2026-05-18 20:56:30,670 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://mawbima.lk: Client error '403 Forbidden' for url 'https://mawbima.lk'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:56:30,670 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for mawbima.lk: Homepage crawl returned no content.
+2026-05-18 20:56:30,753 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.81dcff9a-e749-47aa-b72d-ecc7744a628d "HTTP/2 200 OK"
+2026-05-18 20:56:30,831 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.520f88d6-772b-42a1-a71d-7090175d965f "HTTP/2 200 OK"
+2026-05-18 20:56:30,836 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://catch.co.kr: 
+2026-05-18 20:56:30,837 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for catch.co.kr: Homepage crawl returned no content.
+2026-05-18 20:56:30,913 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.01648224-95d2-43e2-8cea-d04a15569c30 "HTTP/2 200 OK"
+2026-05-18 20:56:31,033 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.0e12058a-edca-43e7-841e-6c30a530e324 "HTTP/2 200 OK"
+2026-05-18 20:56:31,043 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://ruijienetworks.com: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: certificate has expired (_ssl.c:1081)
+2026-05-18 20:56:31,043 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for ruijienetworks.com: Homepage crawl returned no content.
+2026-05-18 20:56:31,124 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.334cd384-9949-4b4b-8e47-d2a63ac5902f "HTTP/2 200 OK"
+2026-05-18 20:56:31,200 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.de8c6158-4d24-4d46-992b-497eb96b8d05 "HTTP/2 200 OK"
+2026-05-18 20:56:31,424 [INFO] httpx: HTTP Request: GET https://bol.com "HTTP/1.1 301 Moved Permanently"
+2026-05-18 20:56:31,692 [INFO] httpx: HTTP Request: GET https://www.bol.com/ "HTTP/1.1 403 Forbidden"
+2026-05-18 20:56:31,693 [WARNING] src.opportunity.update_opportunity_scores: Failed to fetch homepage for https://bol.com: Client error '403 Forbidden' for url 'https://www.bol.com/'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+2026-05-18 20:56:31,693 [WARNING] src.opportunity.update_opportunity_scores: Skipping LLM scoring for bol.com: Homepage crawl returned no content.
+2026-05-18 20:56:31,775 [INFO] httpx: HTTP Request: PATCH https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domains?id=eq.de8c6158-4d24-4d46-992b-497eb96b8d05 "HTTP/2 200 OK"
+2026-05-18 20:56:31,853 [INFO] httpx: HTTP Request: GET https://fnuqhnzuobliapdwolaw.supabase.co/rest/v1/domain_observations?select=%2A&domain_id=eq.c96a8e01-dd16-42bb-b616-abc8f09abaef "HTTP/2 200 OK"
+2026-05-18 20:56:32,039 [INFO] httpx: HTTP Request: GET https://bestbuy.com "HTTP/1.1 301 Moved Permanently"

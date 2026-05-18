@@ -70,6 +70,10 @@ TrendingFounder/
 
 ![Crawl Pipeline](docs/diagrams/generated/crawl-pipeline.svg)
 
+### Scoring Diagram
+
+![Scoring Diagram](docs/diagrams/generated/scoring.svg)
+
 | File | Purpose |
 |---|---|
 | [docs/PLAN.md](docs/PLAN.md) | Full product plan, architecture, data model |
@@ -80,6 +84,22 @@ TrendingFounder/
 | [docs/CHANGELOG.md](docs/CHANGELOG.md) | Release history |
 | [docs/RUNBOOK.md](docs/RUNBOOK.md) | Operational runbook |
 | [docs/PROMPTS.md](docs/PROMPTS.md) | Full project spec for AI tools (schema, scoring, flow) |
+
+## MVP Phases
+
+### CLI usage
+
+Run the opportunity scoring command directly:
+
+```bash
+.venv/bin/python -m src.opportunity.update_opportunity_scores update-opportunity-scores \
+    --fetch-homepage \
+    --only-missing \
+    --concurrency 3 \
+    --model 'meta/llama-3.1-8b-instruct'
+```
+
+(Equivalent to `./start crawler` with those flags.)
 
 ## MVP Phases
 
