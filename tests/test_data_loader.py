@@ -131,6 +131,38 @@ def test_filter_signature_changes_for_range_and_page_size():
     assert streamlit_app._filter_signature(filters, 100) != streamlit_app._filter_signature(filters, 50)
 
 
+def test_pending_review_status_updates_hide_reviewed_rows_until_refetch():
+    df = pd.DataFrame(
+        {
+            "id": ["domain-1", "domain-2"],
+            "Status": ["pending", "pending"],
+            "Domain": ["one.test", "two.test"],
+        }
+    )
+
+    visible_df = streamlit_app._apply_pending_review_status_updates(
+        df,
+        {"domain-1": "exists"},
+        show_reviewed=False,
+    )
+
+    assert visible_df["id"].tolist() == ["domain-2"]
+
+
+def test_confirmed_review_status_updates_are_pruned():
+    df = pd.DataFrame(
+        {
+            "id": ["domain-1", "domain-2"],
+            "Status": ["exists", "pending"],
+        }
+    )
+    pending_updates = {"domain-1": "exists", "domain-2": "ok"}
+
+    streamlit_app._prune_confirmed_review_status_updates(df, pending_updates)
+
+    assert pending_updates == {"domain-2": "ok"}
+
+
 def test_status_filter_from_checkbox_values():
     assert (
         filters._status_filter_from_values({"pending": True, "ok": True, "exists": True, "bad": True}) == "All Statuses"

@@ -12,6 +12,7 @@
 - [x] **A2026-05-19.09** — Fix Streamlit production deprecations and add short dashboard read caching to reduce rerun blocking.
 - [x] **A2026-05-19.10** — Add GitHub opencode repository discovery: schema, crawler, CLI wrapper, dashboard tab, review actions, and tests.
 - [x] **A2026-05-19.11** — Make `./start-git-crawl` visible and faster with flushed progress output plus bulk GitHub repository and observation writes.
+- [x] **A2026-05-20.01** — Make Collected Data status actions hide reviewed rows optimistically while Supabase writes finish in the background.
 
 - Implement async bulk DB client for domain deduplication and observation insertion.
 - Load existing domains into memory at crawl start.

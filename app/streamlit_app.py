@@ -2,6 +2,7 @@
 
 import base64
 import sys
+from concurrent.futures import ThreadPoolExecutor
 from datetime import date
 from html import escape
 from math import ceil, isnan
@@ -49,6 +50,7 @@ from src.integrations.github_actions import (
 NAV_ITEMS = ["Collected Data", "GitHub Opencode", "Reports"]
 THEME_QUERY_PARAM = "theme"
 THEME_STORAGE_KEY = "tf_theme"
+_STATUS_UPDATE_EXECUTOR = ThreadPoolExecutor(max_workers=2, thread_name_prefix="domain-status-update")
 
 THEMES = {
     "Dark": {
@@ -1747,10 +1749,15 @@ def render_page_header(title: str, subtitle: str) -> None:
 
 
 def on_status_change(domain_id: str, new_status: str) -> None:
+    st.session_state.setdefault("_pending_domain_status_updates", {})[domain_id] = new_status
+    _STATUS_UPDATE_EXECUTOR.submit(_persist_domain_status_change, domain_id, new_status)
+    st.rerun()
+
+
+def _persist_domain_status_change(domain_id: str, new_status: str) -> None:
     repo = DomainRepository()
     repo.update_review_status(domain_id, ReviewStatus(new_status))
     clear_dashboard_caches()
-    st.rerun()
 
 
 def on_add_comment(domain_id: str, author: str, message: str) -> None:
@@ -1818,6 +1825,33 @@ def _filter_signature(filters: dict, page_size: int) -> tuple:
         filters["hide_global_giants"],
         filters["opportunity_type_filter"],
     )
+
+
+def _apply_pending_review_status_updates(df, pending_updates: dict, show_reviewed: bool):
+    if df is None or df.empty or not pending_updates or "id" not in df.columns:
+        return df
+
+    df = df.copy()
+    row_ids = df["id"].astype(str)
+    pending_by_id = {str(domain_id): status for domain_id, status in pending_updates.items()}
+    if "Status" in df.columns:
+        df.loc[row_ids.isin(pending_by_id), "Status"] = row_ids.map(pending_by_id)
+    if show_reviewed:
+        return df
+    return df[df["Status"].fillna("pending") == "pending"]
+
+
+def _prune_confirmed_review_status_updates(df, pending_updates: dict) -> None:
+    if df is None or df.empty or not pending_updates or "id" not in df.columns or "Status" not in df.columns:
+        return
+
+    confirmed = {
+        str(row["id"])
+        for _, row in df.iterrows()
+        if pending_updates.get(str(row["id"])) == row["Status"]
+    }
+    for domain_id in confirmed:
+        pending_updates.pop(domain_id, None)
 
 
 def _sync_collected_pagination(filters: dict) -> tuple[int, int]:
@@ -1931,6 +1965,13 @@ def render_collected_data_page() -> None:
     if df.empty and page > 1:
         st.session_state.collected_page = 1
         st.rerun()
+    pending_status_updates = st.session_state.get("_pending_domain_status_updates", {})
+    _prune_confirmed_review_status_updates(df, pending_status_updates)
+    df = _apply_pending_review_status_updates(
+        df,
+        pending_status_updates,
+        filters["show_reviewed"],
+    )
 
     render_page_header(
         "Collected Data",
