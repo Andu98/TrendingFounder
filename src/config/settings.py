@@ -16,17 +16,17 @@ class Settings(BaseSettings):
     )
 
     supabase_url: str = Field(
-        ...,
+        default="",
         description="Supabase project URL.",
     )
 
     supabase_anon_key: str = Field(
-        ...,
+        default="",
         description="Supabase anon (publishable) key.",
     )
 
     supabase_service_role_key: str = Field(
-        ...,
+        default="",
         description="Supabase service role key (server-side only).",
     )
 

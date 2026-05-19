@@ -8,7 +8,47 @@ from pathlib import Path
 from typing import Any
 
 import httpx
-from bs4 import BeautifulSoup
+try:
+    from bs4 import BeautifulSoup
+except ImportError:  # pragma: no cover
+    import re
+    class _SimpleTag:
+        def __init__(self, text: str):
+            self._text = text
+        def get_text(self) -> str:
+            return self._text.strip()
+        def get(self, attr: str, default: str = "") -> str:
+            return default
+    class BeautifulSoup:  # type: ignore
+        def __init__(self, html: str, parser: str = "html.parser"):
+            self._html = html
+        def find(self, name: str, attrs: dict | None = None):
+            if name == "title":
+                m = re.search(r"<title>(.*?)</title>", self._html, re.IGNORECASE | re.DOTALL)
+                return _SimpleTag(m.group(1)) if m else None
+            if name == "meta" and attrs and attrs.get("name") == "description":
+                tag_match = re.search(r'<meta[^>]*name=["\']description["\'][^>]*>', self._html, re.IGNORECASE | re.DOTALL)
+                if tag_match:
+                    content_match = re.search(r'content=["\']([^"\']+)["\']', tag_match.group(0), re.IGNORECASE)
+                    if content_match:
+                        class _MetaTag:
+                            def __init__(self, content):
+                                self._content = content
+                            def get(self, attr, default=None):
+                                return self._content if attr == "content" else default
+                            def get_text(self):
+                                return ""
+                        return _MetaTag(content_match.group(1))
+                return None
+            return None
+        def find_all(self, names):
+            results = []
+            for name in names:
+                pattern = rf"<{name}[^>]*>(.*?)</{name}>"
+                for m in re.finditer(pattern, self._html, re.IGNORECASE | re.DOTALL):
+                    results.append(_SimpleTag(m.group(1)))
+            return results
+
 
 from src.config.settings import Settings
 from src.db.repositories import DomainRepository, ObservationRepository
@@ -93,6 +133,10 @@ async def fetch_homepage_excerpt(url: str) -> str | None:
         Extracted content or None if failed
     """
     try:
+        # If BeautifulSoup is unavailable, skip extraction and return None
+        if BeautifulSoup is None:
+            logger.warning("BeautifulSoup not available; cannot extract homepage excerpt.")
+            return None
         headers = {
             "User-Agent": (
                 "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "

@@ -523,6 +523,9 @@ def load_github_crawl_stats() -> dict:
     try:
         client = get_supabase_client()
         repos = client.table("github_repositories").select("id,is_baseline,first_seen_at").execute().data or []
+        # Total snapshots (crawl runs)
+        snapshot_resp = client.table("github_repo_crawl_runs").select("*", count="exact").execute()
+        snapshot_count = getattr(snapshot_resp, 'count', 0) or 0
         latest_run_response = (
             client.table("github_repo_crawl_runs")
             .select("*")
@@ -539,6 +542,7 @@ def load_github_crawl_stats() -> dict:
 
         return {
             "total_tracked": len(repos),
+            "snapshot_count": snapshot_count,
             "new_today": sum(1 for row in discovered_rows if first_seen_date(row) == today),
             "new_this_week": sum(
                 1 for row in discovered_rows if (seen := first_seen_date(row)) and week_start <= seen <= today

@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+usage() {
+  cat <<'EOF'
+Usage:
+  ./crawl [--skip-domain] [--skip-github]
+
+Runs the full daily pipeline:
+  1. ./start crawler        (domain crawl + opportunity scoring)
+  2. ./start-git-crawl      (GitHub opencode topic snapshot)
+
+Flags:
+  --skip-domain    Skip the ./start crawler step.
+  --skip-github    Skip the ./start-git-crawl step.
+  -h, --help       Show this help.
+EOF
+}
+
+run_domain=1
+run_github=1
+
+for arg in "$@"; do
+  case "$arg" in
+    --skip-domain) run_domain=0 ;;
+    --skip-github) run_github=0 ;;
+    -h|--help) usage; exit 0 ;;
+    *)
+      echo "Unknown argument: $arg" >&2
+      usage >&2
+      exit 2
+      ;;
+  esac
+done
+
+if ((run_domain)); then
+  echo "=== ./start crawler ==="
+  "$ROOT_DIR/start" crawler
+fi
+
+if ((run_github)); then
+  echo "=== ./start-git-crawl ==="
+  "$ROOT_DIR/start-git-crawl"
+fi
+
+echo "=== crawl complete ==="

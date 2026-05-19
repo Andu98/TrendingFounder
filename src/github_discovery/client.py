@@ -10,7 +10,7 @@ from src.github_discovery.schemas import GitHubRepoSnapshot
 GITHUB_SEARCH_REPOSITORIES_URL = "https://api.github.com/search/repositories"
 GITHUB_TOPIC_SOURCE_URL = "https://github.com/topics/opencode?o=desc&s=stars"
 DEFAULT_TOPIC = "opencode"
-DEFAULT_TARGET_LIMIT = 500
+DEFAULT_TARGET_LIMIT = 1000
 GITHUB_PER_PAGE = 100
 
 
@@ -48,7 +48,7 @@ class GitHubSearchClient:
     ) -> list[GitHubRepoSnapshot]:
         repos: list[GitHubRepoSnapshot] = []
         max_pages = (target_limit + GITHUB_PER_PAGE - 1) // GITHUB_PER_PAGE
-        max_pages = min(max_pages, 5)
+        max_pages = min(max_pages, 10)
 
         close_client = self._http_client is None
         client = self._http_client or httpx.Client(timeout=self._timeout)
