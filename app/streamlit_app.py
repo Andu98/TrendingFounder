@@ -1041,23 +1041,32 @@ def inject_styles(theme_name: str) -> None:
             border-radius: 8px;
             box-shadow: var(--tf-shadow);
             margin-bottom: 0.85rem;
-            min-height: 5.6rem;
+            min-height: 7.2rem;
+            height: 7.2rem;
             padding: 1rem 1.05rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden;
         }
 
         .tf-metric-topline {
-            align-items: baseline;
+            align-items: flex-start;
             display: flex;
-            gap: 0.75rem;
-            justify-content: space-between;
+            flex-direction: column;
+            gap: 0.3rem;
         }
 
         .tf-metric-label {
             color: var(--tf-muted);
-            font-size: 0.78rem;
+            font-size: 0.72rem;
             font-weight: 850;
             letter-spacing: 0.04em;
             text-transform: uppercase;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
         }
 
         .tf-metric-value {
@@ -1065,13 +1074,20 @@ def inject_styles(theme_name: str) -> None:
             font-size: 1.28rem;
             font-weight: 900;
             line-height: 1.1;
-            text-align: right;
+            text-align: left;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
         }
 
         .tf-metric-detail {
             color: var(--tf-muted);
-            font-size: 0.82rem;
+            font-size: 0.78rem;
             margin-top: 0.2rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .tf-status-pill {
@@ -1936,7 +1952,7 @@ def _render_github_stats(stats: dict) -> None:
     cards = [
         ("New Today", stats.get("new_today", 0), "First seen today"),
         ("Tracked Repos", stats.get("total_tracked", 0), "Total repos"),
-        ("All GitHub topic snapshots", stats.get("snapshot_count", 0), "Snapshot runs"),
+        ("Snapshots", stats.get("snapshot_count", 0), "Total runs"),
         ("New This Week", stats.get("new_this_week", 0), "First seen in 7 days"),
         ("Latest Status", latest_run.get("status", "N/A"), "GitHub topic crawl"),
         (
