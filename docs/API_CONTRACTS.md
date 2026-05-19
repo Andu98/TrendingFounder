@@ -84,3 +84,60 @@ Returns list of geolocations (continents, countries, admin regions).
 - Global: 1200 requests / 5 minutes per user/account token
 - Per IP: 200 requests / second
 - HTTP 429 returned when exceeded; respect `Ratelimit` and `retry-after` headers.
+
+## GitHub Search API
+
+### GET /search/repositories
+
+Returns repositories matching the `topic:opencode` query, sorted by stars descending.
+
+**Base URL:** `https://api.github.com`
+
+**Query Parameters:**
+
+| Parameter | Required | Description |
+|---|---|---|
+| `q` | Yes | Search query. This app uses `topic:opencode`. |
+| `sort` | No | Sort field. This app uses `stars`. |
+| `order` | No | Sort direction. This app uses `desc`. |
+| `per_page` | No | Page size. This app uses `100`. |
+| `page` | No | Page number. This app fetches pages `1` through `5`. |
+
+**Headers:**
+
+| Header | Required | Description |
+|---|---|---|
+| `Accept` | Yes | `application/vnd.github+json` |
+| `Authorization` | No | `Bearer <GITHUB_TOKEN>` when `GITHUB_TOKEN` is configured |
+
+**Response Shape:**
+
+```json
+{
+  "total_count": 123,
+  "incomplete_results": false,
+  "items": [
+    {
+      "id": 123456,
+      "full_name": "owner/repo",
+      "owner": {"login": "owner"},
+      "name": "repo",
+      "html_url": "https://github.com/owner/repo",
+      "description": "Repository description",
+      "language": "Python",
+      "stargazers_count": 1000,
+      "forks_count": 100,
+      "open_issues_count": 10,
+      "pushed_at": "2026-05-18T10:00:00Z",
+      "updated_at": "2026-05-18T11:00:00Z",
+      "created_at": "2026-05-17T09:00:00Z"
+    }
+  ]
+}
+```
+
+**Notes:**
+- This feature fetches at most 500 repositories: 5 pages × 100 results.
+- First run is baseline-only: rows are stored with `is_baseline = true` and `is_new = false`.
+- Later runs compare `github_repo_id` against existing rows and mark only previously unseen repositories as new.
+- HTTP 403/429 with exhausted rate limit marks the GitHub crawl run as failed with the error stored in `github_repo_crawl_runs.error`.

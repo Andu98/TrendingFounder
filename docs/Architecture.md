@@ -32,6 +32,14 @@ Run scoring explicitly:
 
 The shortcut starts the local NVIDIA proxy, then runs `main.py update-opportunity-scores` with homepage fetching, `--only-missing`, domain concurrency `3`, LLM concurrency `1`, and model `meta/llama-3.1-8b-instruct`. The command uses LM Studio `json_schema` output with the `OpportunityScoreResult` schema. Failed attempts store `opportunity_score_status = 'failed'` plus `opportunity_score_error`, allowing `--only-missing` to skip permanent failures until `--force` is used.
 
+## GitHub Opencode Discovery
+
+GitHub repository discovery is separate from the Cloudflare domain crawler. The `./start-git-crawl` shortcut loads `.env`, then runs `main.py crawl-github-opencode`, which fetches up to 500 repositories from the GitHub Search API using `topic:opencode`, `sort=stars`, and `order=desc`. The CLI prints flushed progress steps because first-run baseline persistence can otherwise look idle from the terminal.
+
+The first run stores the fetched repositories as a baseline in `github_repositories` with `is_baseline = true` and `is_new = false`. Later runs compare incoming `github_repo_id` values against existing rows. Existing repositories get refreshed counts and an observation row; unseen repositories are inserted with `is_baseline = false`, `is_new = true`, and `review_status = 'pending'`. Repository snapshots and observations are persisted in batches to avoid hundreds of single-row Supabase writes per run.
+
+The Streamlit `GitHub Opencode` tab reads only `is_baseline = false` and `is_new = true` rows. Users can filter by language, review status, stars, first-seen range, and text search, then edit GitHub-specific review statuses, notes, or mark rows as seen. No LLM enrichment or opportunity scoring runs for this feature.
+
 ## 3. Component / Module Diagram
 
 **Component / Module Overview**

@@ -29,6 +29,14 @@ class CrawlCountryStatus(StrEnum):
     FAILED = "failed"
 
 
+class GitHubRepoReviewStatus(StrEnum):
+    PENDING = "pending"
+    INTERESTING = "interesting"
+    IGNORED = "ignored"
+    BUILT = "built"
+    NOT_RELEVANT = "not_relevant"
+
+
 KNOWN_GIANTS: frozenset[str] = frozenset(
     {
         "google.com",

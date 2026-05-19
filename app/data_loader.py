@@ -1,10 +1,10 @@
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 
 import pandas as pd
 import streamlit as st
 
-from src.config.constants import COUNTRY_CODES
-from src.db.repositories import CrawlRunRepository
+from src.config.constants import COUNTRY_CODES, GitHubRepoReviewStatus
+from src.db.repositories import CrawlRunRepository, GitHubRepositoryRepository
 from src.db.supabase_client import get_supabase_client
 
 CATEGORY_FILTER_OPTIONS = [
@@ -69,6 +69,8 @@ OPPORTUNITY_CATEGORY_OPTIONS = [
 ]
 
 DASHBOARD_CACHE_TTL_SECONDS = 30
+GITHUB_LANGUAGE_ALL = "All Languages"
+GITHUB_STATUS_FILTER_OPTIONS = ["All Statuses", *[status.value for status in GitHubRepoReviewStatus]]
 
 
 def _as_list(value) -> list:
@@ -147,6 +149,19 @@ def _date_iso(value: date | datetime | str | None, default: date | None = None) 
     if isinstance(value, date):
         return value.isoformat()
     return str(value)
+
+
+def _parse_date(value) -> date | None:
+    if value is None:
+        return None
+    if isinstance(value, datetime):
+        return value.date()
+    if isinstance(value, date):
+        return value
+    try:
+        return datetime.fromisoformat(str(value).replace("Z", "+00:00")).date()
+    except ValueError:
+        return None
 
 
 def _display_url(row: pd.Series) -> str:
@@ -417,6 +432,156 @@ def load_country_progress() -> pd.DataFrame:
     return pd.DataFrame()
 
 
+@st.cache_data(ttl=DASHBOARD_CACHE_TTL_SECONDS, show_spinner=False)
+def load_github_language_options() -> list[str]:
+    """Load language filters for newly discovered GitHub repositories."""
+    try:
+        client = get_supabase_client()
+        response = (
+            client.table("github_repositories")
+            .select("language")
+            .eq("is_baseline", False)
+            .eq("is_new", True)
+            .execute()
+        )
+        languages = sorted({row.get("language") for row in response.data or [] if row.get("language")})
+        return [GITHUB_LANGUAGE_ALL, *languages]
+    except Exception:
+        return [GITHUB_LANGUAGE_ALL]
+
+
+@st.cache_data(ttl=DASHBOARD_CACHE_TTL_SECONDS, show_spinner=False)
+def load_new_github_repositories(
+    language_filter: str = GITHUB_LANGUAGE_ALL,
+    review_status_filter: str = "All Statuses",
+    min_stars: int = 0,
+    first_seen_start: date | datetime | str | None = None,
+    first_seen_end: date | datetime | str | None = None,
+    search_query: str = "",
+) -> pd.DataFrame:
+    """Load newly discovered GitHub repositories, excluding baseline rows."""
+    try:
+        client = get_supabase_client()
+        response = (
+            client.table("github_repositories")
+            .select(
+                "id,full_name,html_url,description,language,stargazers_count,forks_count,"
+                "open_issues_count,created_at,pushed_at,first_seen_at,review_status,notes"
+            )
+            .eq("is_baseline", False)
+            .eq("is_new", True)
+            .order("first_seen_at", desc=True)
+            .limit(1000)
+            .execute()
+        )
+        df = pd.DataFrame(response.data or [])
+        if df.empty:
+            return df
+
+        if language_filter and language_filter != GITHUB_LANGUAGE_ALL:
+            df = df[df["language"].fillna("") == language_filter]
+
+        if review_status_filter and review_status_filter != "All Statuses":
+            df = df[df["review_status"].fillna("pending") == review_status_filter]
+
+        if min_stars:
+            df = df[pd.to_numeric(df["stargazers_count"], errors="coerce").fillna(0) >= int(min_stars)]
+
+        start_date = _parse_date(first_seen_start)
+        end_date = _parse_date(first_seen_end)
+        if start_date or end_date:
+            first_seen_dates = pd.to_datetime(df["first_seen_at"], errors="coerce", utc=True).dt.date
+            if start_date:
+                df = df[first_seen_dates >= start_date]
+                first_seen_dates = first_seen_dates.loc[df.index]
+            if end_date:
+                df = df[first_seen_dates <= end_date]
+
+        query = search_query.strip().lower()
+        if query:
+            haystack = (
+                df["full_name"].fillna("").str.lower()
+                + " "
+                + df["description"].fillna("").str.lower()
+            )
+            df = df[haystack.str.contains(query, regex=False)]
+
+        df = df.copy()
+        df["language"] = df["language"].fillna("Unknown")
+        df["description"] = df["description"].fillna("")
+        df["notes"] = df["notes"].fillna("")
+        df["mark_seen"] = False
+        return df
+    except Exception as e:
+        st.error(f"Failed to load GitHub repositories: {e}")
+        return pd.DataFrame()
+
+
+@st.cache_data(ttl=DASHBOARD_CACHE_TTL_SECONDS, show_spinner=False)
+def load_github_crawl_stats() -> dict:
+    """Load summary counts for the GitHub opencode dashboard."""
+    try:
+        client = get_supabase_client()
+        repos = client.table("github_repositories").select("id,is_baseline,first_seen_at").execute().data or []
+        latest_run_response = (
+            client.table("github_repo_crawl_runs")
+            .select("*")
+            .order("started_at", desc=True)
+            .limit(1)
+            .execute()
+        )
+        today = date.today()
+        week_start = today - timedelta(days=6)
+        discovered_rows = [row for row in repos if not row.get("is_baseline")]
+
+        def first_seen_date(row: dict) -> date | None:
+            return _parse_date(row.get("first_seen_at"))
+
+        return {
+            "total_tracked": len(repos),
+            "new_today": sum(1 for row in discovered_rows if first_seen_date(row) == today),
+            "new_this_week": sum(
+                1 for row in discovered_rows if (seen := first_seen_date(row)) and week_start <= seen <= today
+            ),
+            "latest_run": (latest_run_response.data or [{}])[0],
+        }
+    except Exception:
+        return {
+            "total_tracked": 0,
+            "new_today": 0,
+            "new_this_week": 0,
+            "latest_run": {},
+        }
+
+
+def clear_github_caches() -> None:
+    """Clear GitHub dashboard read caches after a GitHub repository write."""
+    for loader in (
+        load_github_language_options,
+        load_new_github_repositories,
+        load_github_crawl_stats,
+    ):
+        loader.clear()
+
+
+def update_github_repo_review_status(repository_id: str, status: str) -> None:
+    repo = GitHubRepositoryRepository()
+    repo.update_review_status(repository_id, GitHubRepoReviewStatus(status))
+    clear_github_caches()
+
+
+def update_github_repo_notes(repository_id: str, notes: str) -> None:
+    repo = GitHubRepositoryRepository()
+    repo.update_notes(repository_id, notes)
+    clear_github_caches()
+
+
+def mark_github_repo_seen(repository_id: str) -> None:
+    repo = GitHubRepositoryRepository()
+    repo.mark_seen(repository_id)
+    clear_github_caches()
+
+
 def clear_dashboard_caches() -> None:
     """Clear cached dashboard reads after a write."""
     for loader in (
@@ -428,3 +593,4 @@ def clear_dashboard_caches() -> None:
         load_country_progress,
     ):
         loader.clear()
+    clear_github_caches()

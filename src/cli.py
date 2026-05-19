@@ -12,6 +12,7 @@ def _project_root() -> Path:
 def _print_usage() -> None:
     print("Usage:")
     print("  start trending [streamlit args]")
+    print("  start crawl-github-opencode [options]")
     print()
     print("Examples:")
     print("  start trending")
@@ -23,6 +24,7 @@ def start() -> int:
 
     Supported sub-commands:
     * ``trending`` – launches the Streamlit dashboard (original behaviour).
+    * ``crawl-github-opencode`` – fetches the GitHub opencode topic snapshot.
     * ``update-opportunity-scores`` – recalculates opportunity scores for all
       domains. Optional flags:
         ``--only-missing`` ``--limit N`` ``--min-trend-score X`` ``--dry-run``
@@ -46,6 +48,10 @@ def start() -> int:
     if sub_cmd == "update-opportunity-scores":
         from src.opportunity.update_opportunity_scores import cli as opportunity_cli
         return opportunity_cli(argv=args[1:])
+
+    if sub_cmd == "crawl-github-opencode":
+        from src.github_discovery.run_opencode import cli as github_cli
+        return github_cli(argv=args[1:])
 
     print(f"Unknown command: {sub_cmd}")
     _print_usage()

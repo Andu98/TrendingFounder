@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+VENV_PYTHON="$ROOT_DIR/.venv/bin/python"
+
+usage() {
+  cat <<'EOF'
+Usage:
+  ./start-git-crawl [crawl-github-opencode args]
+
+Fetches the current top GitHub repositories for topic:opencode by stars.
+The first run stores the snapshot as baseline. Later runs surface only newly seen repos.
+
+Extra args are passed to:
+  python main.py crawl-github-opencode
+
+Examples:
+  ./start-git-crawl
+  ./start-git-crawl --limit 100
+EOF
+}
+
+load_env() {
+  if [[ -f "$ROOT_DIR/.env" ]]; then
+    set -a
+    # shellcheck disable=SC1091
+    source "$ROOT_DIR/.env"
+    set +a
+  fi
+}
+
+if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
+  usage
+  exit 0
+fi
+
+load_env
+
+if [[ -x "$VENV_PYTHON" ]]; then
+  exec "$VENV_PYTHON" "$ROOT_DIR/main.py" crawl-github-opencode "$@"
+fi
+
+if command -v uv >/dev/null 2>&1; then
+  exec uv run python "$ROOT_DIR/main.py" crawl-github-opencode "$@"
+fi
+
+echo "Could not find .venv/bin/python or uv. Run: uv sync" >&2
+exit 1

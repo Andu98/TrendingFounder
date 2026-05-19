@@ -40,6 +40,11 @@ class Settings(BaseSettings):
         description="Model name to use in LM Studio requests.",
     )
 
+    github_token: str | None = Field(
+        default=None,
+        description="Optional GitHub token for authenticated repository search API requests.",
+    )
+
     app_timezone: str = Field(
         default="Europe/Bucharest",
         description="Timezone for UI display conversions.",

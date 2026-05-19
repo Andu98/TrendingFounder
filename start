@@ -117,6 +117,7 @@ case "$CMD" in
     echo "  ./start crawler --skip-score"
     echo "  ./start crawler --date 2026-05-15"
     echo "  ./start-score [scoring args]"
+    echo "  ./start-git-crawl [GitHub crawl args]"
     exit 2
     ;;
 esac

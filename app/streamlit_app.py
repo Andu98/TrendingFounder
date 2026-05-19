@@ -28,14 +28,20 @@ from app.data_loader import (
     load_collected_data,
     load_comments,
     load_country_progress,
+    load_github_crawl_stats,
+    load_github_language_options,
     load_high_score_count,
+    load_new_github_repositories,
     load_reviewed_count,
     load_stats,
+    mark_github_repo_seen,
+    update_github_repo_notes,
+    update_github_repo_review_status,
 )
-from src.config.constants import COUNTRY_CODES, ReviewStatus
+from src.config.constants import COUNTRY_CODES, GitHubRepoReviewStatus, ReviewStatus
 from src.db.repositories import CommentRepository, DomainRepository
 
-NAV_ITEMS = ["Collected Data", "Reports"]
+NAV_ITEMS = ["Collected Data", "GitHub Opencode", "Reports"]
 THEME_QUERY_PARAM = "theme"
 THEME_STORAGE_KEY = "tf_theme"
 
@@ -1921,6 +1927,173 @@ def render_collected_data_page() -> None:
     render_pagination_controls(total_count, page, page_size, "pagination_bottom", show_page_size=True)
 
 
+def _github_review_status_options() -> list[str]:
+    return [status.value for status in GitHubRepoReviewStatus]
+
+
+def _render_github_stats(stats: dict) -> None:
+    latest_run = stats.get("latest_run") or {}
+    cards = [
+        ("Tracked Repos", stats.get("total_tracked", 0), "All GitHub topic snapshots"),
+        ("New Today", stats.get("new_today", 0), "First seen today"),
+        ("New This Week", stats.get("new_this_week", 0), "First seen in 7 days"),
+        ("Latest Status", latest_run.get("status", "N/A"), "GitHub topic crawl"),
+        (
+            "Latest Fetch",
+            f"{latest_run.get('fetched_count', 0)} / {latest_run.get('new_count', 0)}",
+            "Fetched / new",
+        ),
+    ]
+
+    cols = st.columns(len(cards), gap="medium")
+    for col, (label, value, detail) in zip(cols, cards):
+        col.markdown(
+            (
+                "<div class='tf-metric-card'>"
+                "<div class='tf-metric-topline'>"
+                f"<div class='tf-metric-label'>{escape(str(label))}</div>"
+                f"<div class='tf-metric-value'>{escape(str(value))}</div>"
+                "</div>"
+                f"<div class='tf-metric-detail'>{escape(str(detail))}</div>"
+                "</div>"
+            ),
+            unsafe_allow_html=True,
+        )
+
+
+def _github_filter_values() -> dict:
+    languages = load_github_language_options()
+    with st.container(border=True):
+        cols = st.columns([1.1, 1.1, 0.8, 1, 1, 1.4], gap="medium")
+        language = cols[0].selectbox("Language", languages, key="github_language_filter")
+        status = cols[1].selectbox(
+            "Review status",
+            ["All Statuses", *_github_review_status_options()],
+            key="github_status_filter",
+        )
+        min_stars = cols[2].number_input("Min stars", min_value=0, step=100, key="github_min_stars")
+        first_seen_start = cols[3].date_input("First seen from", value=None, key="github_first_seen_start")
+        first_seen_end = cols[4].date_input("First seen to", value=None, key="github_first_seen_end")
+        search_query = cols[5].text_input("Search", placeholder="repo or description", key="github_search")
+
+    return {
+        "language_filter": language,
+        "review_status_filter": status,
+        "min_stars": int(min_stars),
+        "first_seen_start": first_seen_start,
+        "first_seen_end": first_seen_end,
+        "search_query": search_query,
+    }
+
+
+def _apply_github_table_edits(original_df, edited_df) -> int:
+    updates = 0
+    review_options = set(_github_review_status_options())
+
+    for repo_id, row in edited_df.iterrows():
+        original = original_df.loc[repo_id]
+        if bool(row.get("mark_seen")):
+            mark_github_repo_seen(str(repo_id))
+            updates += 1
+            continue
+
+        status = str(row.get("review_status") or "pending")
+        if status in review_options and status != str(original.get("review_status")):
+            update_github_repo_review_status(str(repo_id), status)
+            updates += 1
+
+        notes = str(row.get("notes") or "")
+        if notes != str(original.get("notes") or ""):
+            update_github_repo_notes(str(repo_id), notes)
+            updates += 1
+
+    return updates
+
+
+def render_github_opencode_page() -> None:
+    stats = load_github_crawl_stats()
+    render_page_header("GitHub Opencode", "New repositories entering the top topic snapshot by stars")
+    _render_github_stats(stats)
+
+    filters = _github_filter_values()
+    df = load_new_github_repositories(**filters)
+
+    st.markdown("<div class='tf-section-title'>New repositories</div>", unsafe_allow_html=True)
+    if df.empty:
+        st.markdown(
+            """
+            <div class="tf-empty-state">
+                <div class="tf-empty-state-title">No new GitHub repositories in this view</div>
+                <div class="tf-empty-state-text">
+                    The first crawl is baseline-only. Later crawls show repositories that were not seen before.
+                </div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+        return
+
+    columns = [
+        "full_name",
+        "html_url",
+        "description",
+        "language",
+        "stargazers_count",
+        "forks_count",
+        "open_issues_count",
+        "created_at",
+        "pushed_at",
+        "first_seen_at",
+        "review_status",
+        "notes",
+        "mark_seen",
+    ]
+    editor_df = df.set_index("id")[[column for column in columns if column in df.columns]]
+    edited_df = st.data_editor(
+        editor_df,
+        width="stretch",
+        hide_index=True,
+        disabled=[
+            "full_name",
+            "html_url",
+            "description",
+            "language",
+            "stargazers_count",
+            "forks_count",
+            "open_issues_count",
+            "created_at",
+            "pushed_at",
+            "first_seen_at",
+        ],
+        column_config={
+            "full_name": st.column_config.TextColumn("Repository", width="medium"),
+            "html_url": st.column_config.LinkColumn("URL", display_text="Open", width="small"),
+            "description": st.column_config.TextColumn("Description", width="large"),
+            "language": st.column_config.TextColumn("Language", width="small"),
+            "stargazers_count": st.column_config.NumberColumn("Stars", format="%d", width="small"),
+            "forks_count": st.column_config.NumberColumn("Forks", format="%d", width="small"),
+            "open_issues_count": st.column_config.NumberColumn("Issues", format="%d", width="small"),
+            "created_at": st.column_config.TextColumn("Created", width="medium"),
+            "pushed_at": st.column_config.TextColumn("Pushed", width="medium"),
+            "first_seen_at": st.column_config.TextColumn("First seen", width="medium"),
+            "review_status": st.column_config.SelectboxColumn(
+                "Status",
+                options=_github_review_status_options(),
+                required=True,
+                width="small",
+            ),
+            "notes": st.column_config.TextColumn("Notes", width="medium"),
+            "mark_seen": st.column_config.CheckboxColumn("Seen", help="Mark as seen and ignore", width="small"),
+        },
+        key="github_opencode_editor",
+    )
+
+    updates = _apply_github_table_edits(editor_df, edited_df)
+    if updates:
+        st.toast(f"Updated {updates} GitHub repo row{'s' if updates != 1 else ''}.")
+        st.rerun()
+
+
 def _status_pill(status: str) -> str:
     normalized = (status or "pending").lower()
     return f"<span class='tf-status-pill tf-status-{escape(normalized)}'>{escape(normalized)}</span>"
@@ -2074,6 +2247,8 @@ def render() -> None:
     with st.container(key="page_content"):
         if active_tab == "Reports":
             render_reports_page()
+        elif active_tab == "GitHub Opencode":
+            render_github_opencode_page()
         else:
             render_collected_data_page()
 

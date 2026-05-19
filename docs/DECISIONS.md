@@ -165,3 +165,15 @@ Opportunity score updates split domain-level concurrency from LM Studio concurre
 Opportunity scoring uses `json_schema` response format with an explicit `OpportunityScoreResult` schema. Failed model calls are persisted with `opportunity_score_status = 'failed'` and `opportunity_score_error`, so `--only-missing` can avoid retrying permanent failures unless `--force` is used. Homepage fetch misses no longer skip scoring; they are logged and counted, then the domain is scored from existing observations and enrichment context.
 
 The Python crawler does not embed opportunity scoring. The `./start crawler` operational wrapper runs `./start-score` after a successful crawl, and `./start crawler --skip-score` keeps a crawl-only path. This preserves module separation while making the default operator flow crawl then score.
+
+## ADR-026: Keep GitHub opencode discovery separate from domain discovery
+
+**Status:** Accepted
+
+GitHub repository discovery is implemented as a separate pipeline from the Cloudflare domain crawler. It uses the GitHub Search API for `topic:opencode`, stores results in `github_*` tables, and exposes a dedicated `./start-git-crawl` command plus a GitHub Opencode dashboard tab.
+
+The first run is treated as a baseline snapshot of the current top repositories by stars. Baseline rows are stored for future comparison but are not shown as new discoveries. Later runs compare `github_repo_id` values against existing rows and mark only previously unseen repositories with `is_new = true`.
+
+Repository snapshots and observations are persisted in batches, and the CLI emits flushed progress messages. This keeps the first-run baseline from appearing stalled while avoiding hundreds of sequential Supabase requests.
+
+This separation avoids mixing repository discovery with domain observations, prevents accidental LLM/scoring calls for GitHub data, and keeps review statuses domain-specific versus GitHub-specific.

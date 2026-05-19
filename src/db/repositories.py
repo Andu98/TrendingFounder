@@ -4,14 +4,14 @@ Contains async bulk upsert helpers and repository classes for domains, observati
 crawl runs, and related entities.
 """
 
-from datetime import date, datetime
+from datetime import UTC, date, datetime
 
 from supabase import Client
 
-from src.config.constants import CrawlRunStatus, ReviewStatus
-from src.db.supabase_client import get_supabase_client
+from src.config.constants import CrawlRunStatus, GitHubRepoReviewStatus, ReviewStatus
 from src.db.async_client import post
-
+from src.db.supabase_client import get_supabase_client
+from src.github_discovery.schemas import GitHubRepoSnapshot
 from src.utils.logging import get_logger
 
 logger = get_logger(__name__)
@@ -336,3 +336,211 @@ class CommentRepository:
             .execute()
         )
         return result.data or []
+
+
+class GitHubRepositoryRepository:
+    """Repository for GitHub opencode repository discovery tables."""
+
+    def __init__(self, client: Client | None = None):
+        self._client = client or get_supabase_client()
+
+    def create_crawl_run(
+        self,
+        source_url: str,
+        topic: str = "opencode",
+        target_limit: int = 500,
+    ) -> dict:
+        row = {
+            "status": "running",
+            "source_url": source_url,
+            "topic": topic,
+            "target_limit": target_limit,
+            "started_at": datetime.now(UTC).isoformat(),
+        }
+        result = self._client.table("github_repo_crawl_runs").insert(row).execute()
+        return result.data[0] if result.data else {}
+
+    def complete_crawl_run(
+        self,
+        run_id: str,
+        fetched_count: int,
+        new_count: int,
+        baseline_count: int,
+    ) -> dict:
+        row = {
+            "status": "completed",
+            "finished_at": datetime.now(UTC).isoformat(),
+            "fetched_count": fetched_count,
+            "new_count": new_count,
+            "baseline_count": baseline_count,
+        }
+        result = self._client.table("github_repo_crawl_runs").update(row).eq("id", run_id).execute()
+        return result.data[0] if result.data else {}
+
+    def fail_crawl_run(self, run_id: str, error: str) -> dict:
+        row = {
+            "status": "failed",
+            "finished_at": datetime.now(UTC).isoformat(),
+            "error": error[:4000],
+        }
+        result = self._client.table("github_repo_crawl_runs").update(row).eq("id", run_id).execute()
+        return result.data[0] if result.data else {}
+
+    def get_existing_repo_ids(self) -> set[int]:
+        repo_ids: set[int] = set()
+        page_size = 1000
+        offset = 0
+
+        while True:
+            result = (
+                self._client.table("github_repositories")
+                .select("github_repo_id")
+                .range(offset, offset + page_size - 1)
+                .execute()
+            )
+            rows = result.data or []
+            repo_ids.update(int(row["github_repo_id"]) for row in rows if row.get("github_repo_id") is not None)
+            if len(rows) < page_size:
+                break
+            offset += page_size
+
+        return repo_ids
+
+    def insert_repository(
+        self,
+        repo: GitHubRepoSnapshot,
+        run_id: str,
+        is_baseline: bool,
+        is_new: bool,
+    ) -> dict:
+        now = datetime.now(UTC).isoformat()
+        row = {
+            **repo.repository_row(),
+            "first_seen_at": now,
+            "last_seen_at": now,
+            "first_seen_run_id": run_id,
+            "is_baseline": is_baseline,
+            "is_new": is_new,
+            "review_status": GitHubRepoReviewStatus.PENDING.value,
+        }
+        result = self._client.table("github_repositories").insert(row).execute()
+        return result.data[0] if result.data else {}
+
+    def insert_repositories(
+        self,
+        repos: list[GitHubRepoSnapshot],
+        run_id: str,
+        is_baseline: bool,
+        is_new: bool,
+    ) -> list[dict]:
+        if not repos:
+            return []
+
+        now = datetime.now(UTC).isoformat()
+        rows = [
+            {
+                **repo.repository_row(),
+                "first_seen_at": now,
+                "last_seen_at": now,
+                "first_seen_run_id": run_id,
+                "is_baseline": is_baseline,
+                "is_new": is_new,
+                "review_status": GitHubRepoReviewStatus.PENDING.value,
+            }
+            for repo in repos
+        ]
+        result = self._client.table("github_repositories").insert(rows).execute()
+        return result.data or []
+
+    def update_repository(self, repo: GitHubRepoSnapshot) -> dict:
+        row = {
+            **repo.repository_row(),
+            "last_seen_at": datetime.now(UTC).isoformat(),
+        }
+        result = (
+            self._client.table("github_repositories")
+            .update(row)
+            .eq("github_repo_id", repo.github_repo_id)
+            .execute()
+        )
+        return result.data[0] if result.data else {}
+
+    def update_repositories(self, repos: list[GitHubRepoSnapshot]) -> list[dict]:
+        if not repos:
+            return []
+
+        now = datetime.now(UTC).isoformat()
+        rows = [
+            {
+                **repo.repository_row(),
+                "last_seen_at": now,
+            }
+            for repo in repos
+        ]
+        result = self._client.table("github_repositories").upsert(rows, on_conflict="github_repo_id").execute()
+        return result.data or []
+
+    def get_repository_identity_map(self, github_repo_ids: list[int]) -> dict[int, str]:
+        if not github_repo_ids:
+            return {}
+
+        result = (
+            self._client.table("github_repositories")
+            .select("id,github_repo_id")
+            .in_("github_repo_id", github_repo_ids)
+            .execute()
+        )
+        rows = result.data or []
+        return {
+            int(row["github_repo_id"]): str(row["id"])
+            for row in rows
+            if row.get("github_repo_id") is not None and row.get("id")
+        }
+
+    def insert_observation(
+        self,
+        run_id: str,
+        repository_id: str,
+        rank: int,
+        repo: GitHubRepoSnapshot,
+    ) -> dict:
+        row = {
+            "run_id": run_id,
+            "repository_id": repository_id,
+            "rank": rank,
+            "stars": repo.stargazers_count,
+            "forks": repo.forks_count,
+            "open_issues": repo.open_issues_count,
+        }
+        result = self._client.table("github_repo_observations").insert(row).execute()
+        return result.data[0] if result.data else {}
+
+    def insert_observations(self, rows: list[dict]) -> list[dict]:
+        if not rows:
+            return []
+
+        result = self._client.table("github_repo_observations").insert(rows).execute()
+        return result.data or []
+
+    def update_review_status(
+        self,
+        repository_id: str,
+        status: GitHubRepoReviewStatus,
+    ) -> dict:
+        row = {"review_status": status.value}
+        if status == GitHubRepoReviewStatus.IGNORED:
+            row["is_new"] = False
+        result = self._client.table("github_repositories").update(row).eq("id", repository_id).execute()
+        return result.data[0] if result.data else {}
+
+    def update_notes(self, repository_id: str, notes: str) -> dict:
+        result = self._client.table("github_repositories").update({"notes": notes}).eq("id", repository_id).execute()
+        return result.data[0] if result.data else {}
+
+    def mark_seen(self, repository_id: str) -> dict:
+        row = {
+            "is_new": False,
+            "review_status": GitHubRepoReviewStatus.IGNORED.value,
+        }
+        result = self._client.table("github_repositories").update(row).eq("id", repository_id).execute()
+        return result.data[0] if result.data else {}

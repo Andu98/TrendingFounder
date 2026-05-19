@@ -20,9 +20,11 @@ def test_settings_loads_from_env(valid_env_vars):
     assert s.log_level == "INFO"
 
 
-def test_settings_defaults(valid_env_vars):
-    s = Settings()
+def test_settings_defaults(valid_env_vars, monkeypatch):
+    monkeypatch.delenv("GITHUB_TOKEN", raising=False)
+    s = Settings(_env_file=None)
     assert s.lmstudio_model == "meta/llama-3.1-8b-instruct"
+    assert s.github_token is None
 
 
 def test_settings_missing_required(monkeypatch):
