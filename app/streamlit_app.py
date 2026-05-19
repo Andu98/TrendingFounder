@@ -1933,18 +1933,18 @@ def _github_review_status_options() -> list[str]:
 
 def _render_github_stats(stats: dict) -> None:
     latest_run = stats.get("latest_run") or {}
-        cards = [
-            ("New Today", stats.get("new_today", 0), "First seen today"),
-            ("Tracked Repos", stats.get("total_tracked", 0), "Total repos"),
-            ("All GitHub topic snapshots", stats.get("snapshot_count", 0), "Snapshot runs"),
-            ("New This Week", stats.get("new_this_week", 0), "First seen in 7 days"),
-            ("Latest Status", latest_run.get("status", "N/A"), "GitHub topic crawl"),
-            (
-                "Latest Fetch",
-                f"{latest_run.get('fetched_count', 0)} / {latest_run.get('new_count', 0)}",
-                "Fetched / new",
-            ),
-        ]
+    cards = [
+        ("New Today", stats.get("new_today", 0), "First seen today"),
+        ("Tracked Repos", stats.get("total_tracked", 0), "Total repos"),
+        ("All GitHub topic snapshots", stats.get("snapshot_count", 0), "Snapshot runs"),
+        ("New This Week", stats.get("new_this_week", 0), "First seen in 7 days"),
+        ("Latest Status", latest_run.get("status", "N/A"), "GitHub topic crawl"),
+        (
+            "Latest Fetch",
+            f"{latest_run.get('fetched_count', 0)} / {latest_run.get('new_count', 0)}",
+            "Fetched / new",
+        ),
+    ]
 
     cols = st.columns(len(cards), gap="medium")
     for col, (label, value, detail) in zip(cols, cards):
