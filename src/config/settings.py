@@ -31,13 +31,18 @@ class Settings(BaseSettings):
     )
 
     lmstudio_base_url: str = Field(
-        default="http://localhost:1234/v1",
-        description="LM Studio OpenAI-compatible base URL.",
+        default="https://integrate.api.nvidia.com/v1",
+        description="OpenAI-compatible LLM base URL (e.g. NVIDIA NIM or LM Studio).",
     )
 
     lmstudio_model: str = Field(
         default="meta/llama-3.1-8b-instruct",
-        description="Model name to use in LM Studio requests.",
+        description="Model name to use in LLM requests.",
+    )
+
+    nvidia_api_key: str | None = Field(
+        default=None,
+        description="Bearer token for the LLM endpoint. Required when calling NVIDIA NIM directly.",
     )
 
     github_token: str | None = Field(

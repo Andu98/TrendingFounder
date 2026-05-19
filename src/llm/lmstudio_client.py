@@ -50,18 +50,23 @@ class LMStudioClient:
         base_url: str | None = None,
         model: str | None = None,
         timeout: float = 300.0,
+        api_key: str | None = None,
     ):
         self._base_url = (base_url or settings.lmstudio_base_url).rstrip("/")
         self._model = model or settings.lmstudio_model
         self._timeout = timeout
+        self._api_key = api_key if api_key is not None else getattr(settings, "nvidia_api_key", None)
         self._client: httpx.AsyncClient | None = None
         self.retry_counts = {"rate_limited": 0, "transient": 0}
 
     def _get_client(self) -> httpx.AsyncClient:
         if self._client is None or self._client.is_closed:
+            headers = {"Content-Type": "application/json"}
+            if self._api_key:
+                headers["Authorization"] = f"Bearer {self._api_key}"
             self._client = httpx.AsyncClient(
                 timeout=self._timeout,
-                headers={"Content-Type": "application/json"},
+                headers=headers,
             )
         return self._client
 

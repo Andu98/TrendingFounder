@@ -7,6 +7,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [Unreleased]
 
 ### Added
+- `.github/workflows/crawl.yml` — `workflow_dispatch` workflow that installs deps with uv and runs `./start crawler` + `./start-git-crawl`, with `skip_domain`, `skip_github`, `skip_score` inputs. Uploads `logs/` as an artifact.
+- `src/integrations/github_actions.py` — helper to trigger and list runs of the workflow via the GitHub REST API. Reads `GH_REPO`, `GH_DISPATCH_TOKEN`, `GH_WORKFLOW_FILE`, `GH_WORKFLOW_REF` from env or `st.secrets`.
+- Streamlit "Run Crawl" panel on the Reports page with a dispatch form and the last 5 runs.
+- `.streamlit/secrets.toml.example` documenting the GH_* secrets.
+
+### Changed
+- Removed the local `nvidia-proxy.js` Node shim. `LMStudioClient` now sends `Authorization: Bearer $NVIDIA_API_KEY` directly to the OpenAI-compatible endpoint configured in `LMSTUDIO_BASE_URL` (default now `https://integrate.api.nvidia.com/v1`). `./start`, `./start-score`, and `./crawl` no longer launch a Node process.
+
+### Added
 - Project skeleton with src/ package structure
 - Settings loader via pydantic-settings
 - Constants for ranking types, review status, scoring weights

@@ -10,7 +10,8 @@ usage() {
 Usage:
   ./start-score [update-opportunity-scores args]
 
-Starts the local NVIDIA proxy on http://127.0.0.1:1234/v1, then runs:
+Calls NVIDIA NIM (or whichever endpoint LMSTUDIO_BASE_URL points at)
+and runs:
   .venv/bin/python main.py update-opportunity-scores \
     --fetch-homepage \
     --only-missing \
@@ -34,48 +35,16 @@ load_env() {
   fi
 }
 
-ensure_nvidia_proxy() {
-  local proxy_script="$ROOT_DIR/nvidia-proxy.js"
-  mkdir -p "$ROOT_DIR/logs"
-
-  if [[ ! -f "$proxy_script" ]]; then
-    echo "Error: nvidia-proxy.js not found." >&2
-    exit 1
-  fi
-
-  load_env
-
-  if [[ -z "${NVIDIA_API_KEY:-}" ]]; then
-    echo "Warning: NVIDIA_API_KEY is not set; proxy may reject scoring requests." >&2
-  fi
-
-  if pgrep -f "node .*nvidia-proxy.js" >/dev/null; then
-    echo "NVIDIA proxy already running."
-  else
-    echo "Starting NVIDIA proxy..."
-    nohup node "$proxy_script" >>"$ROOT_DIR/logs/nvidia-proxy.log" 2>&1 &
-  fi
-
-  if command -v nc >/dev/null 2>&1; then
-    for _ in {1..20}; do
-      if nc -z 127.0.0.1 1234 >/dev/null 2>&1; then
-        echo "NVIDIA proxy ready on http://127.0.0.1:1234/v1"
-        return 0
-      fi
-      sleep 0.25
-    done
-    echo "Error: NVIDIA proxy did not become reachable on 127.0.0.1:1234." >&2
-    echo "Check logs/nvidia-proxy.log." >&2
-    exit 1
-  fi
-}
-
 if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
   usage
   exit 0
 fi
 
-ensure_nvidia_proxy
+load_env
+
+if [[ -z "${NVIDIA_API_KEY:-}" ]]; then
+  echo "Warning: NVIDIA_API_KEY is not set; LLM requests may be rejected." >&2
+fi
 
 if [[ -x "$VENV_PYTHON" ]]; then
   exec "$VENV_PYTHON" "$ROOT_DIR/main.py" update-opportunity-scores \

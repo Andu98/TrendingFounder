@@ -15,7 +15,7 @@ def test_settings_loads_from_env(valid_env_vars):
     s = Settings()
     assert s.cloudflare_api_token == "test-token"
     assert s.supabase_url == "https://test.supabase.co"
-    assert s.lmstudio_base_url == "http://localhost:1234/v1"
+    assert s.lmstudio_base_url == "https://integrate.api.nvidia.com/v1"
     assert s.app_timezone == "Europe/Bucharest"
     assert s.log_level == "INFO"
 

@@ -38,7 +38,7 @@ The app does not apply these SQL files automatically. Run them through the Supab
 
 ## Opportunity Scoring Operations
 
-Opportunity scoring is implemented as a separate command and `./start crawler` invokes it after a successful crawl. This keeps the Python crawler independent from LM Studio availability while preserving the operational one-command flow. Use `./start crawler --skip-score` to crawl without scoring.
+Opportunity scoring is implemented as a separate command and `./start crawler` invokes it after a successful crawl. This keeps the Python crawler independent from the LLM endpoint's availability while preserving the operational one-command flow. Use `./start crawler --skip-score` to crawl without scoring.
 
 ```bash
 ./start-score
@@ -47,12 +47,12 @@ Opportunity scoring is implemented as a separate command and `./start crawler` i
 Operational notes:
 
 - `--concurrency` controls domain-side work: DB context loading and optional homepage fetches.
-- `--llm-concurrency` controls concurrent LM Studio calls and defaults to `1`.
+- `--llm-concurrency` controls concurrent LLM calls and defaults to `1`.
 - Homepage fetch failures are logged and counted, but scoring continues with existing context.
 - Failed scores persist `opportunity_score_status = 'failed'` and `opportunity_score_error`, so `--only-missing` avoids retrying permanent failures.
 - Use `--force` to retry failed or already-scored rows.
 - Extra args are appended to the default scoring command: `./start-score --force`, `./start-score --limit 50 --dry-run`.
-- Proxy logs are written to `logs/nvidia-proxy.log`.
+- The LLM endpoint is read from `LMSTUDIO_BASE_URL` + `NVIDIA_API_KEY` in `.env` (default: NVIDIA NIM at `https://integrate.api.nvidia.com/v1`).
 
 ## Pause & Resume Crawl
 
@@ -104,7 +104,7 @@ The run status is saved as "partial" and all already-processed countries are ski
 # Check logs
 tail -f logs/app.log
 
-# If LM Studio is not running, restart it
+# If the LLM endpoint is unreachable, verify LMSTUDIO_BASE_URL and NVIDIA_API_KEY
 # If Cloudflare API is rate-limited, wait 5 minutes
 
 # To force-reset a stuck run, use Supabase SQL console:
@@ -114,10 +114,16 @@ tail -f logs/app.log
 
 ### LLM enrichment failing
 
-1. Verify LM Studio is running on `http://localhost:1234`
-2. Check the model is loaded in LM Studio
-3. Test manually: `curl http://localhost:1234/v1/chat/completions -H "Content-Type: application/json" -d '{"model":"meta/llama-3.1-8b-instruct","messages":[{"role":"user","content":"hello"}]}'`
-4. If LM Studio is unavailable, re-run with `--skip-llm`
+1. Verify `LMSTUDIO_BASE_URL` and `NVIDIA_API_KEY` in `.env` (default points at NVIDIA NIM)
+2. Confirm the model name in `LMSTUDIO_MODEL` is available on that endpoint
+3. Test manually:
+   ```bash
+   curl -H "Authorization: Bearer $NVIDIA_API_KEY" \
+        -H "Content-Type: application/json" \
+        -d '{"model":"meta/llama-3.1-8b-instruct","messages":[{"role":"user","content":"hello"}]}' \
+        "$LMSTUDIO_BASE_URL/chat/completions"
+   ```
+4. If the LLM endpoint is unavailable, re-run with `--skip-llm`
 
 ### Cloudflare API rate limited (429)
 

@@ -40,6 +40,11 @@ from app.data_loader import (
 )
 from src.config.constants import COUNTRY_CODES, GitHubRepoReviewStatus, ReviewStatus
 from src.db.repositories import CommentRepository, DomainRepository
+from src.integrations.github_actions import (
+    GitHubActionsError,
+    list_recent_runs,
+    trigger_workflow,
+)
 
 NAV_ITEMS = ["Collected Data", "GitHub Opencode", "Reports"]
 THEME_QUERY_PARAM = "theme"
@@ -2184,10 +2189,77 @@ def render_country_status_table(country_df) -> None:
             cols[5].markdown(f"<span class='tf-muted'>{escape(error_message or 'None')}</span>", unsafe_allow_html=True)
 
 
+def _format_run_time(value: str | None) -> str:
+    if not value:
+        return "—"
+    try:
+        from datetime import datetime
+        return datetime.fromisoformat(value.replace("Z", "+00:00")).strftime("%Y-%m-%d %H:%M UTC")
+    except Exception:
+        return value
+
+
+def _run_status_label(run: dict) -> str:
+    status = (run.get("status") or "").lower()
+    conclusion = (run.get("conclusion") or "").lower()
+    if status == "completed":
+        return conclusion or "completed"
+    return status or "unknown"
+
+
+def render_run_crawl_panel() -> None:
+    st.markdown("<div class='tf-section-title'>Run Crawl</div>", unsafe_allow_html=True)
+    with st.container(border=True):
+        col_form, col_runs = st.columns([1, 1.4], gap="large")
+
+        with col_form:
+            with st.form("run_crawl_form", clear_on_submit=False):
+                skip_domain = st.checkbox("Skip domain crawler", value=False)
+                skip_github = st.checkbox("Skip GitHub opencode crawl", value=False)
+                skip_score = st.checkbox(
+                    "Skip opportunity scoring",
+                    value=False,
+                    help="Only affects the domain crawl step.",
+                )
+                submitted = st.form_submit_button("▶ Trigger crawl workflow", type="primary")
+            if submitted:
+                try:
+                    trigger_workflow(
+                        skip_domain=skip_domain,
+                        skip_github=skip_github,
+                        skip_score=skip_score,
+                    )
+                    st.success("Workflow dispatched. Refresh in a few seconds to see the new run.")
+                except GitHubActionsError as exc:
+                    st.error(str(exc))
+
+        with col_runs:
+            st.markdown("**Recent runs**")
+            try:
+                runs = list_recent_runs(limit=5)
+            except GitHubActionsError as exc:
+                st.info(str(exc))
+                return
+
+            if not runs:
+                st.caption("No runs yet.")
+                return
+
+            for run in runs:
+                label = _run_status_label(run)
+                started = _format_run_time(run.get("run_started_at") or run.get("created_at"))
+                url = run.get("html_url") or "#"
+                st.markdown(
+                    f"- [{label}]({url}) · {escape(run.get('event') or '')} · {escape(started)}"
+                )
+
+
 def render_reports_page() -> None:
     stats = load_stats()
     country_df = load_country_progress()
     render_page_header("Reports", "Crawl metrics, enrichment progress, and country-by-country status")
+
+    render_run_crawl_panel()
 
     render_metrics_cards(
         {

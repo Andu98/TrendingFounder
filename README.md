@@ -7,7 +7,7 @@ Discover trending domains globally via Cloudflare Radar, deduplicate them, enric
 - Python >= 3.14
 - [uv](https://docs.astral.sh/uv/) or pip
 - Supabase account (free tier is enough for MVP)
-- [LM Studio](https://lmstudio.ai/) running locally (for LLM enrichment)
+- An OpenAI-compatible LLM endpoint for enrichment (default: NVIDIA NIM via `LMSTUDIO_BASE_URL=https://integrate.api.nvidia.com/v1` + `NVIDIA_API_KEY`). LM Studio or any other OpenAI-compatible server works too.
 - Cloudflare API token with Radar read access
 
 ## Quick Start
@@ -25,7 +25,7 @@ pip install -e ".[dev]"
 # 3. Copy env template and fill in your values
 cp .env.example .env
 
-# 4. Start LM Studio locally (for LLM enrichment phase)
+# 4. Make sure LMSTUDIO_BASE_URL + NVIDIA_API_KEY (or a local LM Studio URL) are set in .env
 
 # 5. Run the daily crawl (Phase 2+)
 python -m src.crawler.run_daily
@@ -47,7 +47,7 @@ TrendingFounder/
     config/             # Settings and constants
     cloudflare/         # Cloudflare Radar API client and schemas
     domains/            # Normalization, deduplication, scoring
-    llm/                # LM Studio client, prompts, schemas
+    llm/                # OpenAI-compatible LLM client, prompts, schemas
     db/                 # Supabase client, repositories, queries
     crawler/            # Daily crawl orchestration and progress tracking
     utils/              # Logging helpers
@@ -95,7 +95,7 @@ Run the opportunity scoring command directly:
 ./start-score
 ```
 
-`./start-score` starts the local NVIDIA proxy, then runs `main.py update-opportunity-scores --fetch-homepage --only-missing --concurrency 3 --llm-concurrency 1 --model 'meta/llama-3.1-8b-instruct'`. Extra scoring args are appended, so `./start-score --force` retries failed rows.
+`./start-score` runs `main.py update-opportunity-scores --fetch-homepage --only-missing --concurrency 3 --llm-concurrency 1 --model 'meta/llama-3.1-8b-instruct'` against the LLM endpoint configured in `.env` (`LMSTUDIO_BASE_URL` + `NVIDIA_API_KEY`). Extra scoring args are appended, so `./start-score --force` retries failed rows.
 
 `./start crawler` runs the crawl first, then automatically runs `./start-score` if the crawl exits successfully. Use `./start crawler --skip-score` when you only want to crawl.
 

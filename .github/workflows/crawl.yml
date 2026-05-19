@@ -1,0 +1,72 @@
+name: Crawl
+
+on:
+  workflow_dispatch:
+    inputs:
+      skip_domain:
+        description: "Skip the domain crawler (./start crawler)"
+        type: boolean
+        default: false
+      skip_github:
+        description: "Skip the GitHub opencode crawl (./start-git-crawl)"
+        type: boolean
+        default: false
+      skip_score:
+        description: "Skip opportunity scoring after the domain crawl"
+        type: boolean
+        default: false
+
+concurrency:
+  group: crawl
+  cancel-in-progress: false
+
+jobs:
+  crawl:
+    name: Run crawl pipeline
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+      LMSTUDIO_BASE_URL: https://integrate.api.nvidia.com/v1
+      LMSTUDIO_MODEL: meta/llama-3.1-8b-instruct
+      NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
+      GITHUB_TOKEN: ${{ secrets.CRAWL_GITHUB_TOKEN || github.token }}
+      APP_TIMEZONE: Europe/Bucharest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
+
+      - name: Install Python 3.14
+        run: uv python install 3.14
+
+      - name: Sync Python dependencies
+        run: uv sync --frozen
+
+      - name: Domain crawl + scoring
+        if: ${{ !inputs.skip_domain }}
+        run: |
+          if [[ "${{ inputs.skip_score }}" == "true" ]]; then
+            ./start crawler --skip-score
+          else
+            ./start crawler
+          fi
+
+      - name: GitHub opencode crawl
+        if: ${{ !inputs.skip_github }}
+        run: ./start-git-crawl
+
+      - name: Upload logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: crawl-logs-${{ github.run_id }}
+          path: logs/
+          if-no-files-found: ignore
+          retention-days: 14
