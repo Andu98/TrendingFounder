@@ -8,7 +8,6 @@ from math import ceil, isnan
 from pathlib import Path
 
 import streamlit as st
-import streamlit.components.v1 as components
 
 # Add project root to sys.path so we can import from src/
 project_root = Path(__file__).resolve().parent.parent
@@ -25,6 +24,7 @@ from app.data_loader import (
     PAGE_SIZE_OPTIONS,
     SORT_OPTIONS,
     STATUS_FILTER_OPTIONS,
+    clear_dashboard_caches,
     load_collected_data,
     load_comments,
     load_country_progress,
@@ -1693,7 +1693,7 @@ def render_navbar() -> str:
         brand_col, menu_col = st.columns([1, 0.16], vertical_alignment="center")
         brand_col.markdown(_brand_html(compact=True), unsafe_allow_html=True)
         with menu_col:
-            with st.popover("☰", use_container_width=True):
+            with st.popover("☰", width="stretch"):
                 st.pills(
                     "Navigation",
                     NAV_ITEMS,
@@ -1722,12 +1722,14 @@ def render_page_header(title: str, subtitle: str) -> None:
 def on_status_change(domain_id: str, new_status: str) -> None:
     repo = DomainRepository()
     repo.update_review_status(domain_id, ReviewStatus(new_status))
+    clear_dashboard_caches()
     st.rerun()
 
 
 def on_add_comment(domain_id: str, author: str, message: str) -> None:
     repo = CommentRepository()
     repo.add_comment(domain_id, author, message)
+    clear_dashboard_caches()
     st.rerun()
 
 
@@ -1849,7 +1851,7 @@ def render_pagination_controls(
     page = min(max(1, page), total_pages)
 
     prev_col, info_col, next_col, size_col = st.columns([0.8, 1.4, 0.8, 1.0], vertical_alignment="center")
-    if prev_col.button("Previous", key=f"{key_prefix}_prev", disabled=page <= 1, use_container_width=True):
+    if prev_col.button("Previous", key=f"{key_prefix}_prev", disabled=page <= 1, width="stretch"):
         st.session_state.collected_page = max(1, page - 1)
         st.rerun()
 
@@ -1858,7 +1860,7 @@ def render_pagination_controls(
         unsafe_allow_html=True,
     )
 
-    if next_col.button("Next", key=f"{key_prefix}_next", disabled=page >= total_pages, use_container_width=True):
+    if next_col.button("Next", key=f"{key_prefix}_next", disabled=page >= total_pages, width="stretch"):
         st.session_state.collected_page = min(total_pages, page + 1)
         st.rerun()
 
@@ -2021,7 +2023,7 @@ def render_reports_page() -> None:
 
 def _sync_theme_preference(theme_name: str) -> None:
     theme_name = "Light" if theme_name == "Light" else "Dark"
-    components.html(
+    st.html(
         f"""
         <script>
         (function() {{
@@ -2049,7 +2051,7 @@ def _sync_theme_preference(theme_name: str) -> None:
         }})();
         </script>
         """,
-        height=0,
+        unsafe_allow_javascript=True,
     )
 
 

@@ -160,7 +160,7 @@ def _render_status_actions(domain_id: str, status: str, on_status_change=None) -
                         STATUS_LABELS[option],
                         key=f"status_{domain_id}_{option}",
                         type="primary" if option == current_status else "secondary",
-                        use_container_width=True,
+                        width="stretch",
                     )
                     if clicked and option != current_status and on_status_change:
                         on_status_change(domain_id, option)
@@ -190,7 +190,7 @@ def _render_comments(
 ) -> None:
     comment_count = max(comment_count, len(comments))
     label = f"Notes {comment_count}" if comment_count else "Notes"
-    with st.popover(label, use_container_width=True):
+    with st.popover(label, width="stretch"):
         st.markdown(
             (
                 "<div class='tf-notes-panel'>"
@@ -239,7 +239,7 @@ def _render_comments(
             label_visibility="collapsed",
         )
         st.markdown("</div>", unsafe_allow_html=True)
-        if st.button("Save", key=f"comment_add_{domain_id}", type="primary", use_container_width=True):
+        if st.button("Save", key=f"comment_add_{domain_id}", type="primary", width="stretch"):
             if not message.strip():
                 st.warning("Write a note first.")
                 return

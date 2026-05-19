@@ -9,6 +9,7 @@
 - [x] **A2026-05-19.06** — Clarify zero-domain scoring runs and make `--only-missing --force` retry only failed missing-score rows.
 - [x] **A2026-05-19.07** — Polish Streamlit dashboard UI: compact metrics, clearer empty state, notes action labels, global-giant pills, and structured opportunity details.
 - [x] **A2026-05-19.08** — Redesign closed laptop domain cards with compact direct status actions and a cleaner notes panel.
+- [x] **A2026-05-19.09** — Fix Streamlit production deprecations and add short dashboard read caching to reduce rerun blocking.
 
 - Implement async bulk DB client for domain deduplication and observation insertion.
 - Load existing domains into memory at crawl start.

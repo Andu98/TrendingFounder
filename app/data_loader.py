@@ -68,6 +68,8 @@ OPPORTUNITY_CATEGORY_OPTIONS = [
     "Other",
 ]
 
+DASHBOARD_CACHE_TTL_SECONDS = 30
+
 
 def _as_list(value) -> list:
     if isinstance(value, list):
@@ -261,6 +263,7 @@ def _format_today_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     return df[[column for column in columns if column in df.columns]]
 
 
+@st.cache_data(ttl=DASHBOARD_CACHE_TTL_SECONDS, show_spinner=False)
 def load_collected_data(
     show_reviewed: bool = False,
     sort_by: str = "Score High → Low",
@@ -344,6 +347,7 @@ def load_today_data(
     return df
 
 
+@st.cache_data(ttl=DASHBOARD_CACHE_TTL_SECONDS, show_spinner=False)
 def load_stats() -> dict:
     """Load crawl stats."""
     try:
@@ -356,6 +360,7 @@ def load_stats() -> dict:
         return {}
 
 
+@st.cache_data(ttl=DASHBOARD_CACHE_TTL_SECONDS, show_spinner=False)
 def load_comments(domain_ids: list[str]) -> dict[str, list[dict]]:
     """Load comments for a list of domain IDs. Returns dict of domain_id -> [comments]."""
     try:
@@ -377,6 +382,7 @@ def load_comments(domain_ids: list[str]) -> dict[str, list[dict]]:
         return {}
 
 
+@st.cache_data(ttl=DASHBOARD_CACHE_TTL_SECONDS, show_spinner=False)
 def load_high_score_count(min_score: int = 80) -> int:
     """Count domains with best_score_today >= min_score."""
     try:
@@ -387,6 +393,7 @@ def load_high_score_count(min_score: int = 80) -> int:
         return 0
 
 
+@st.cache_data(ttl=DASHBOARD_CACHE_TTL_SECONDS, show_spinner=False)
 def load_reviewed_count() -> int:
     """Count today's domains that have been reviewed."""
     try:
@@ -397,6 +404,7 @@ def load_reviewed_count() -> int:
         return 0
 
 
+@st.cache_data(ttl=DASHBOARD_CACHE_TTL_SECONDS, show_spinner=False)
 def load_country_progress() -> pd.DataFrame:
     """Load country-level crawl progress for today's run."""
     try:
@@ -407,3 +415,16 @@ def load_country_progress() -> pd.DataFrame:
     except Exception:
         pass
     return pd.DataFrame()
+
+
+def clear_dashboard_caches() -> None:
+    """Clear cached dashboard reads after a write."""
+    for loader in (
+        load_collected_data,
+        load_stats,
+        load_comments,
+        load_high_score_count,
+        load_reviewed_count,
+        load_country_progress,
+    ):
+        loader.clear()

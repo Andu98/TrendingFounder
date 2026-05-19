@@ -1,3 +1,5 @@
+# ruff: noqa: E402
+
 import sys
 from pathlib import Path
 
@@ -84,4 +86,4 @@ else:
     country_df = country_df.rename(columns=display_cols)
     country_df = country_df[list(display_cols.values())]
 
-    st.dataframe(country_df, use_container_width=True, hide_index=True)
+    st.dataframe(country_df, width="stretch", hide_index=True)

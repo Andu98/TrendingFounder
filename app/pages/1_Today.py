@@ -1,3 +1,5 @@
+# ruff: noqa: E402
+
 import sys
 from pathlib import Path
 
@@ -10,9 +12,9 @@ if str(project_root) not in sys.path:
 from app.components.domain_table import render_domain_table
 from app.components.filters import render_filters
 from app.components.metrics_cards import render_metrics_cards
-from app.data_loader import load_comments, load_high_score_count, load_stats, load_today_data
-from src.db.repositories import CommentRepository, DomainRepository
+from app.data_loader import clear_dashboard_caches, load_comments, load_high_score_count, load_stats, load_today_data
 from src.config.constants import ReviewStatus
+from src.db.repositories import CommentRepository, DomainRepository
 
 st.set_page_config(page_title="Today", page_icon="📅", layout="wide")
 
@@ -49,12 +51,14 @@ def on_status_change(domain_id: str, new_status: str):
     repo = DomainRepository()
     review_status = ReviewStatus(new_status)
     repo.update_review_status(domain_id, review_status)
+    clear_dashboard_caches()
     st.rerun()
 
 
 def on_add_comment(domain_id: str, author: str, message: str):
     repo = CommentRepository()
     repo.add_comment(domain_id, author, message)
+    clear_dashboard_caches()
     st.rerun()
 
 
