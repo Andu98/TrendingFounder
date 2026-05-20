@@ -40,7 +40,6 @@ def test_load_collected_data_calls_range_rpc(monkeypatch):
     ]
     client = _mock_rpc_client(rows)
     monkeypatch.setattr(data_loader, "get_supabase_client", lambda: client)
-    monkeypatch.setattr(data_loader, "_enrich_domain_details", lambda df: df)
 
     df, total_count = data_loader.load_collected_data(
         show_reviewed=True,
@@ -178,6 +177,43 @@ def test_persist_domain_status_change_clears_dashboard_caches(monkeypatch):
 
     repo.update_review_status.assert_called_once_with("domain-1", streamlit_app.ReviewStatus("exists"))
     clear_dashboard_caches.assert_called_once_with()
+
+
+def test_collected_data_render_prefers_snapshot_for_one_optimistic_refresh(monkeypatch):
+    filters = {
+        "search_query": "",
+        "status_filter": "All Statuses",
+        "category_filter": "All Categories",
+        "show_reviewed": False,
+        "sort_by": "Score High → Low",
+        "date_start": date(2026, 5, 1),
+        "date_end": date(2026, 5, 31),
+        "min_opportunity_score": 0,
+        "min_opportunity_confidence": 0,
+        "hide_global_giants": False,
+        "opportunity_type_filter": "All Types",
+    }
+    page = 1
+    page_size = 50
+    snapshot_df = pd.DataFrame({"id": ["domain-1"], "Status": ["pending"]})
+    signature = streamlit_app._filter_signature(filters, page_size) + (page,)
+
+    monkeypatch.setattr(
+        streamlit_app.st,
+        "session_state",
+        {
+            "_collected_data_snapshot": {"signature": signature, "df": snapshot_df, "total_count": 1},
+            "_collected_optimistic_refresh": True,
+        },
+    )
+    load_collected_data = MagicMock(side_effect=AssertionError("load_collected_data should not run"))
+    monkeypatch.setattr(streamlit_app, "load_collected_data", load_collected_data)
+
+    df, total_count = streamlit_app._load_collected_data_for_render(filters, page, page_size)
+
+    assert total_count == 1
+    assert df.equals(snapshot_df)
+    load_collected_data.assert_not_called()
 
 
 def test_confirmed_review_status_updates_are_pruned():

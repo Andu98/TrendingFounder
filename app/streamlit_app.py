@@ -1871,6 +1871,33 @@ def _sync_collected_pagination(filters: dict) -> tuple[int, int]:
     return page, page_size
 
 
+def _load_collected_data_for_render(filters: dict, page: int, page_size: int):
+    signature = _filter_signature(filters, page_size) + (page,)
+    optimistic_refresh = bool(st.session_state.get("_collected_optimistic_refresh", False))
+    snapshot = st.session_state.get("_collected_data_snapshot")
+    if optimistic_refresh and isinstance(snapshot, dict) and snapshot.get("signature") == signature:
+        st.session_state["_collected_optimistic_refresh"] = False
+        return snapshot["df"], snapshot["total_count"]
+
+    df, total_count = load_collected_data(
+        show_reviewed=filters["show_reviewed"],
+        sort_by=filters["sort_by"],
+        search_query=filters["search_query"],
+        status_filter=filters["status_filter"],
+        category_filter=filters["category_filter"],
+        date_start=filters["date_start"],
+        date_end=filters["date_end"],
+        page=page,
+        page_size=page_size,
+        min_opportunity_score=filters["min_opportunity_score"],
+        min_opportunity_confidence=filters["min_opportunity_confidence"],
+        opportunity_type_filter=filters["opportunity_type_filter"],
+        hide_global_giants=filters["hide_global_giants"],
+    )
+    st.session_state["_collected_data_snapshot"] = {"signature": signature, "df": df, "total_count": total_count}
+    return df, total_count
+
+
 def current_filter_values() -> dict:
     """Read filter widget state before rendering widgets to avoid header reflow."""
     date_start, date_end = _date_range_from_session()
@@ -1948,21 +1975,7 @@ def render_collected_data_page() -> None:
     filters = current_filter_values()
     page, page_size = _sync_collected_pagination(filters)
 
-    df, total_count = load_collected_data(
-        show_reviewed=filters["show_reviewed"],
-        sort_by=filters["sort_by"],
-        search_query=filters["search_query"],
-        status_filter=filters["status_filter"],
-        category_filter=filters["category_filter"],
-        date_start=filters["date_start"],
-        date_end=filters["date_end"],
-        page=page,
-        page_size=page_size,
-        min_opportunity_score=filters["min_opportunity_score"],
-        min_opportunity_confidence=filters["min_opportunity_confidence"],
-        opportunity_type_filter=filters["opportunity_type_filter"],
-        hide_global_giants=filters["hide_global_giants"],
-    )
+    df, total_count = _load_collected_data_for_render(filters, page, page_size)
     if df.empty and page > 1:
         st.session_state.collected_page = 1
         st.rerun()
@@ -1973,6 +1986,8 @@ def render_collected_data_page() -> None:
         pending_status_updates,
         filters["show_reviewed"],
     )
+    if pending_status_updates and not filters["show_reviewed"]:
+        st.session_state["_collected_optimistic_refresh"] = True
 
     render_page_header(
         "Collected Data",
