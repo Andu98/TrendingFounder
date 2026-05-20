@@ -30,7 +30,7 @@ CATEGORY_FILTER_OPTIONS = [
 
 STATUS_FILTER_OPTIONS = ["All Statuses", "pending", "ok", "exists", "bad"]
 SORT_OPTIONS = ["Opportunity Score", "Score High → Low", "Score Low → High", "Newest", "Country Count"]
-DEFAULT_PAGE_SIZE = 50
+DEFAULT_PAGE_SIZE = 25
 PAGE_SIZE_OPTIONS = [10, 25, 50, 100]
 
 OPPORTUNITY_TYPE_OPTIONS = [

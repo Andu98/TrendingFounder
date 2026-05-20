@@ -1828,6 +1828,10 @@ def _filter_signature(filters: dict, page_size: int) -> tuple:
     )
 
 
+def _render_signature(filters: dict, page: int, page_size: int) -> tuple:
+    return _filter_signature(filters, page_size) + (page,)
+
+
 def _apply_pending_review_status_updates(df, pending_updates: dict, show_reviewed: bool):
     if df is None or df.empty or not pending_updates or "id" not in df.columns:
         return df
@@ -1872,12 +1876,12 @@ def _sync_collected_pagination(filters: dict) -> tuple[int, int]:
 
 
 def _load_collected_data_for_render(filters: dict, page: int, page_size: int):
-    signature = _filter_signature(filters, page_size) + (page,)
+    signature = _render_signature(filters, page, page_size)
     optimistic_refresh = bool(st.session_state.get("_collected_optimistic_refresh", False))
     snapshot = st.session_state.get("_collected_data_snapshot")
     if optimistic_refresh and isinstance(snapshot, dict) and snapshot.get("signature") == signature:
         st.session_state["_collected_optimistic_refresh"] = False
-        return snapshot["df"], snapshot["total_count"]
+        return snapshot["df"], snapshot["total_count"], True
 
     df, total_count = load_collected_data(
         show_reviewed=filters["show_reviewed"],
@@ -1895,7 +1899,20 @@ def _load_collected_data_for_render(filters: dict, page: int, page_size: int):
         hide_global_giants=filters["hide_global_giants"],
     )
     st.session_state["_collected_data_snapshot"] = {"signature": signature, "df": df, "total_count": total_count}
-    return df, total_count
+    return df, total_count, False
+
+
+def _load_comments_for_render(df, signature: tuple, use_snapshot: bool):
+    snapshot = st.session_state.get("_collected_comments_snapshot")
+    if use_snapshot and isinstance(snapshot, dict) and snapshot.get("signature") == signature:
+        return snapshot["comments_data"]
+
+    comments_data = load_comments(df["id"].tolist()) if df is not None and not df.empty and "id" in df.columns else {}
+    st.session_state["_collected_comments_snapshot"] = {
+        "signature": signature,
+        "comments_data": comments_data,
+    }
+    return comments_data
 
 
 def current_filter_values() -> dict:
@@ -1975,7 +1992,8 @@ def render_collected_data_page() -> None:
     filters = current_filter_values()
     page, page_size = _sync_collected_pagination(filters)
 
-    df, total_count = _load_collected_data_for_render(filters, page, page_size)
+    render_signature = _render_signature(filters, page, page_size)
+    df, total_count, used_data_snapshot = _load_collected_data_for_render(filters, page, page_size)
     if df.empty and page > 1:
         st.session_state.collected_page = 1
         st.rerun()
@@ -1993,7 +2011,7 @@ def render_collected_data_page() -> None:
     )
     render_filters(show_reviewed_default=filters["show_reviewed"], expanded=False)
 
-    comments_data = load_comments(df["id"].tolist()) if not df.empty and "id" in df.columns else {}
+    comments_data = _load_comments_for_render(df, render_signature, used_data_snapshot)
     render_domain_table(
         df,
         on_status_change=on_status_change,

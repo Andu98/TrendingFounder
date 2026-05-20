@@ -18,6 +18,7 @@
 - [x] **A2026-05-20.04** — Keep Collected Data status changes optimistic in-session, set the snapshot flag at click time, reuse the current snapshot for the first rerun, and clear dashboard caches after the async Supabase write completes.
 - [x] **A2026-05-20.05** — Remove stale test monkeypatches and verify the collected-data rerender path with the new snapshot helper.
 - [x] **A2026-05-20.06** — Move Collected Data status actions onto Streamlit pre-render callbacks so production reruns can apply optimistic hiding before the full data load path.
+- [x] **A2026-05-20.07** — Default Collected Data to 25 rows per page and reuse the comments snapshot during the one optimistic rerender after status changes.
 
 - Implement async bulk DB client for domain deduplication and observation insertion.
 - Load existing domains into memory at crawl start.

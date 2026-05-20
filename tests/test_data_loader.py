@@ -30,6 +30,17 @@ class _FakeStatusActionStreamlit:
         return False
 
 
+class _FakeSessionState(dict):
+    def __getattr__(self, key):
+        try:
+            return self[key]
+        except KeyError as exc:
+            raise AttributeError(key) from exc
+
+    def __setattr__(self, key, value):
+        self[key] = value
+
+
 def _mock_rpc_client(rows: list[dict]):
     response = MagicMock()
     response.data = rows
@@ -171,6 +182,15 @@ def test_pending_review_status_updates_hide_reviewed_rows_until_refetch():
     assert visible_df["id"].tolist() == ["domain-2"]
 
 
+def test_collected_data_default_page_size_is_25(monkeypatch):
+    monkeypatch.setattr(streamlit_app.st, "session_state", _FakeSessionState())
+
+    page_size = streamlit_app._session_page_size()
+
+    assert page_size == 25
+    assert streamlit_app.st.session_state["collected_page_size"] == 25
+
+
 def test_status_actions_register_pre_render_callbacks(monkeypatch):
     fake_st = _FakeStatusActionStreamlit()
     on_status_change = MagicMock()
@@ -251,11 +271,55 @@ def test_collected_data_render_prefers_snapshot_for_one_optimistic_refresh(monke
     load_collected_data = MagicMock(side_effect=AssertionError("load_collected_data should not run"))
     monkeypatch.setattr(streamlit_app, "load_collected_data", load_collected_data)
 
-    df, total_count = streamlit_app._load_collected_data_for_render(filters, page, page_size)
+    df, total_count, used_data_snapshot = streamlit_app._load_collected_data_for_render(filters, page, page_size)
 
     assert total_count == 1
+    assert used_data_snapshot is True
     assert df.equals(snapshot_df)
     load_collected_data.assert_not_called()
+
+
+def test_collected_data_comments_prefers_snapshot_for_optimistic_refresh(monkeypatch):
+    signature = ("filters", 1)
+    comments_data = {"domain-1": [{"message": "keep"}], "domain-2": [{"message": "reuse"}]}
+    df = pd.DataFrame({"id": ["domain-2"]})
+    load_comments = MagicMock(side_effect=AssertionError("load_comments should not run"))
+
+    monkeypatch.setattr(
+        streamlit_app.st,
+        "session_state",
+        {
+            "_collected_comments_snapshot": {
+                "signature": signature,
+                "comments_data": comments_data,
+            },
+        },
+    )
+    monkeypatch.setattr(streamlit_app, "load_comments", load_comments)
+
+    result = streamlit_app._load_comments_for_render(df, signature, use_snapshot=True)
+
+    assert result == comments_data
+    load_comments.assert_not_called()
+
+
+def test_collected_data_comments_loads_and_snapshots_normal_render(monkeypatch):
+    signature = ("filters", 1)
+    comments_data = {"domain-1": [{"message": "fresh"}]}
+    df = pd.DataFrame({"id": ["domain-1"]})
+    load_comments = MagicMock(return_value=comments_data)
+
+    monkeypatch.setattr(streamlit_app.st, "session_state", {})
+    monkeypatch.setattr(streamlit_app, "load_comments", load_comments)
+
+    result = streamlit_app._load_comments_for_render(df, signature, use_snapshot=False)
+
+    assert result == comments_data
+    load_comments.assert_called_once_with(["domain-1"])
+    assert streamlit_app.st.session_state["_collected_comments_snapshot"] == {
+        "signature": signature,
+        "comments_data": comments_data,
+    }
 
 
 def test_confirmed_review_status_updates_are_pruned():
