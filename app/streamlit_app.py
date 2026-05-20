@@ -1751,6 +1751,7 @@ def render_page_header(title: str, subtitle: str) -> None:
 
 def on_status_change(domain_id: str, new_status: str) -> None:
     st.session_state.setdefault("_pending_domain_status_updates", {})[domain_id] = new_status
+    st.session_state["_collected_optimistic_refresh"] = True
     _STATUS_UPDATE_EXECUTOR.submit(_persist_domain_status_change, domain_id, new_status)
     st.rerun()
 
@@ -1986,8 +1987,6 @@ def render_collected_data_page() -> None:
         pending_status_updates,
         filters["show_reviewed"],
     )
-    if pending_status_updates and not filters["show_reviewed"]:
-        st.session_state["_collected_optimistic_refresh"] = True
 
     render_page_header(
         "Collected Data",

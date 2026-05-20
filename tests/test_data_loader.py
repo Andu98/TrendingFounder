@@ -161,6 +161,7 @@ def test_status_change_clears_dashboard_cache_before_rerun(monkeypatch):
     streamlit_app.on_status_change("domain-1", "exists")
 
     assert streamlit_app.st.session_state["_pending_domain_status_updates"] == {"domain-1": "exists"}
+    assert streamlit_app.st.session_state["_collected_optimistic_refresh"] is True
     executor.submit.assert_called_once_with(streamlit_app._persist_domain_status_change, "domain-1", "exists")
     clear_dashboard_caches.assert_not_called()
     rerun.assert_called_once_with()
