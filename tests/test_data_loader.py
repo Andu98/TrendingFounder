@@ -162,9 +162,22 @@ def test_status_change_clears_dashboard_cache_before_rerun(monkeypatch):
     streamlit_app.on_status_change("domain-1", "exists")
 
     assert streamlit_app.st.session_state["_pending_domain_status_updates"] == {"domain-1": "exists"}
-    clear_dashboard_caches.assert_called_once_with()
     executor.submit.assert_called_once_with(streamlit_app._persist_domain_status_change, "domain-1", "exists")
+    clear_dashboard_caches.assert_not_called()
     rerun.assert_called_once_with()
+
+
+def test_persist_domain_status_change_clears_dashboard_caches(monkeypatch):
+    repo = MagicMock()
+    clear_dashboard_caches = MagicMock()
+
+    monkeypatch.setattr(streamlit_app, "DomainRepository", lambda: repo)
+    monkeypatch.setattr(streamlit_app, "clear_dashboard_caches", clear_dashboard_caches)
+
+    streamlit_app._persist_domain_status_change("domain-1", "exists")
+
+    repo.update_review_status.assert_called_once_with("domain-1", streamlit_app.ReviewStatus("exists"))
+    clear_dashboard_caches.assert_called_once_with()
 
 
 def test_confirmed_review_status_updates_are_pruned():

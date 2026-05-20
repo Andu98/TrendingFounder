@@ -14,7 +14,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 - Removed the local `nvidia-proxy.js` Node shim. `LMStudioClient` now sends `Authorization: Bearer $NVIDIA_API_KEY` directly to the OpenAI-compatible endpoint configured in `LMSTUDIO_BASE_URL` (default now `https://integrate.api.nvidia.com/v1`). `./start`, `./start-score`, and `./crawl` no longer launch a Node process.
-- Collected Data status actions now optimistically hide reviewed rows when `Show reviewed` is off, clear dashboard caches immediately, and persist the review status to Supabase in the background.
+- Collected Data status actions now optimistically hide reviewed rows when `Show reviewed` is off and persist the review status to Supabase in the background, with dashboard caches cleared after the async write completes.
 - GitHub Opencode now has a "Mark all as seen" action that marks every repository in the current filtered view as ignored.
 - Collected Data now defaults to hiding reviewed rows and loading the full current month date range.
 
