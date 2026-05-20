@@ -41,6 +41,7 @@ def _status_filter_from_values(values: dict[str, bool]) -> str:
 
 
 def render_filters(show_reviewed_default: bool = False, expanded: bool = True) -> dict:
+    # Alias for backward compatibility
     """Render the dashboard filter controls and return selected values.
 
     Returns dict with keys:
@@ -138,3 +139,6 @@ def render_filters(show_reviewed_default: bool = False, expanded: bool = True) -
         "hide_global_giants": hide_global_giants,
         "opportunity_type_filter": opportunity_type_filter,
     }
+
+# Alias for backward compatibility
+render_filter = render_filters
