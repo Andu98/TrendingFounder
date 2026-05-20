@@ -4,7 +4,30 @@ from unittest.mock import MagicMock
 
 import pandas as pd
 from app import data_loader, streamlit_app
-from app.components import filters
+from app.components import domain_table, filters
+
+
+class _FakeContext:
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc, tb):
+        return False
+
+
+class _FakeStatusActionStreamlit:
+    def __init__(self):
+        self.buttons = []
+
+    def container(self, **kwargs):
+        return _FakeContext()
+
+    def columns(self, *args, **kwargs):
+        return [_FakeContext(), _FakeContext()]
+
+    def button(self, label, **kwargs):
+        self.buttons.append((label, kwargs))
+        return False
 
 
 def _mock_rpc_client(rows: list[dict]):
@@ -148,7 +171,25 @@ def test_pending_review_status_updates_hide_reviewed_rows_until_refetch():
     assert visible_df["id"].tolist() == ["domain-2"]
 
 
-def test_status_change_clears_dashboard_cache_before_rerun(monkeypatch):
+def test_status_actions_register_pre_render_callbacks(monkeypatch):
+    fake_st = _FakeStatusActionStreamlit()
+    on_status_change = MagicMock()
+    monkeypatch.setattr(domain_table, "st", fake_st)
+
+    domain_table._render_status_actions("domain-1", "pending", on_status_change)
+
+    button_kwargs = {label: kwargs for label, kwargs in fake_st.buttons}
+    assert "on_click" not in button_kwargs["Pending"]
+    assert button_kwargs["OK"]["on_click"] is on_status_change
+    assert button_kwargs["OK"]["args"] == ("domain-1", "ok")
+    assert button_kwargs["Exists"]["on_click"] is on_status_change
+    assert button_kwargs["Exists"]["args"] == ("domain-1", "exists")
+    assert button_kwargs["Bad"]["on_click"] is on_status_change
+    assert button_kwargs["Bad"]["args"] == ("domain-1", "bad")
+    on_status_change.assert_not_called()
+
+
+def test_status_change_queues_optimistic_update_for_streamlit_callback(monkeypatch):
     executor = MagicMock()
     clear_dashboard_caches = MagicMock()
     rerun = MagicMock()
@@ -164,7 +205,7 @@ def test_status_change_clears_dashboard_cache_before_rerun(monkeypatch):
     assert streamlit_app.st.session_state["_collected_optimistic_refresh"] is True
     executor.submit.assert_called_once_with(streamlit_app._persist_domain_status_change, "domain-1", "exists")
     clear_dashboard_caches.assert_not_called()
-    rerun.assert_called_once_with()
+    rerun.assert_not_called()
 
 
 def test_persist_domain_status_change_clears_dashboard_caches(monkeypatch):

@@ -1753,7 +1753,6 @@ def on_status_change(domain_id: str, new_status: str) -> None:
     st.session_state.setdefault("_pending_domain_status_updates", {})[domain_id] = new_status
     st.session_state["_collected_optimistic_refresh"] = True
     _STATUS_UPDATE_EXECUTOR.submit(_persist_domain_status_change, domain_id, new_status)
-    st.rerun()
 
 
 def _persist_domain_status_change(domain_id: str, new_status: str) -> None:
