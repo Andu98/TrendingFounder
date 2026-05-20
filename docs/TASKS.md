@@ -15,6 +15,7 @@
 - [x] **A2026-05-20.01** — Make Collected Data status actions hide reviewed rows optimistically while Supabase writes finish in the background.
 - [x] **A2026-05-20.02** — Add a GitHub Opencode "Mark all as seen" action that ignores all repositories in the current filtered view.
 - [x] **A2026-05-20.03** — Default Collected Data to hide reviewed rows and load the full current month date range.
+- [x] **A2026-05-20.04** — Clear dashboard caches immediately on Collected Data status changes so the optimistic hide reruns against fresh data sooner.
 
 - Implement async bulk DB client for domain deduplication and observation insertion.
 - Load existing domains into memory at crawl start.

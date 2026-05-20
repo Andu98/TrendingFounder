@@ -149,6 +149,24 @@ def test_pending_review_status_updates_hide_reviewed_rows_until_refetch():
     assert visible_df["id"].tolist() == ["domain-2"]
 
 
+def test_status_change_clears_dashboard_cache_before_rerun(monkeypatch):
+    executor = MagicMock()
+    clear_dashboard_caches = MagicMock()
+    rerun = MagicMock()
+
+    monkeypatch.setattr(streamlit_app, "_STATUS_UPDATE_EXECUTOR", executor)
+    monkeypatch.setattr(streamlit_app, "clear_dashboard_caches", clear_dashboard_caches)
+    monkeypatch.setattr(streamlit_app.st, "session_state", {})
+    monkeypatch.setattr(streamlit_app.st, "rerun", rerun)
+
+    streamlit_app.on_status_change("domain-1", "exists")
+
+    assert streamlit_app.st.session_state["_pending_domain_status_updates"] == {"domain-1": "exists"}
+    clear_dashboard_caches.assert_called_once_with()
+    executor.submit.assert_called_once_with(streamlit_app._persist_domain_status_change, "domain-1", "exists")
+    rerun.assert_called_once_with()
+
+
 def test_confirmed_review_status_updates_are_pruned():
     df = pd.DataFrame(
         {
