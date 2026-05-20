@@ -586,6 +586,17 @@ def mark_github_repo_seen(repository_id: str) -> None:
     clear_github_caches()
 
 
+def mark_github_repos_seen(repository_ids: list[str]) -> int:
+    repo_ids = [str(repo_id) for repo_id in repository_ids if repo_id]
+    if not repo_ids:
+        return 0
+
+    repo = GitHubRepositoryRepository()
+    updated = repo.mark_seen_many(repo_ids)
+    clear_github_caches()
+    return updated
+
+
 def clear_dashboard_caches() -> None:
     """Clear cached dashboard reads after a write."""
     for loader in (

@@ -15,6 +15,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Changed
 - Removed the local `nvidia-proxy.js` Node shim. `LMStudioClient` now sends `Authorization: Bearer $NVIDIA_API_KEY` directly to the OpenAI-compatible endpoint configured in `LMSTUDIO_BASE_URL` (default now `https://integrate.api.nvidia.com/v1`). `./start`, `./start-score`, and `./crawl` no longer launch a Node process.
 - Collected Data status actions now optimistically hide reviewed rows when `Show reviewed` is off, while persisting the review status to Supabase in the background.
+- GitHub Opencode now has a "Mark all as seen" action that marks every repository in the current filtered view as ignored.
+- Collected Data now defaults to hiding reviewed rows and loading the full current month date range.
 
 ### Added
 - Project skeleton with src/ package structure
@@ -96,6 +98,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - **Streamlit production warnings fixed**: Replaced deprecated `use_container_width` calls with `width`, removed the deprecated HTML component usage, and added short TTL caching for dashboard Supabase reads with cache clearing after writes.
 - **GitHub opencode discovery added**: Added separate GitHub Search API crawl flow, `github_*` Supabase schema, `./start-git-crawl`, baseline/new repository semantics, GitHub Opencode dashboard tab, inline review/notes actions, and focused tests.
 - **GitHub crawl progress and bulk writes**: `./start-git-crawl` now prints flushed progress while it works and persists repository snapshots plus observations in bulk, avoiding the silent multi-minute first-run path.
+- **GitHub filtered bulk ignore**: GitHub Opencode can now mark all currently filtered repositories as seen in one action, using a bulk Supabase update.
+- **Collected Data defaults updated**: The dashboard now starts with reviewed rows hidden and the date range set to the full current month.
 - **Crawler completion fix**: Removed the broken post-crawl opportunity scoring hook that was nested after `return` and crashed completed crawls with `AttributeError`. Opportunity scoring remains an explicit follow-up command.
 - **Scoring docs synced**: README, RUNBOOK, Architecture, prompt docs, and opportunity scoring design notes now document the split concurrency model, explicit scoring command, homepage-miss policy, and failure-status columns.
 - **LM Studio `json_schema` fix**: Changed `response_format` from `{"type": "json_object"}` to `{"type": "json_schema", "json_schema": {...}}` — LM Studio requires OpenAI-compatible JSON schema format, not legacy `json_object`. Fixes 400 Bad Request on all LLM calls.

@@ -544,3 +544,14 @@ class GitHubRepositoryRepository:
         }
         result = self._client.table("github_repositories").update(row).eq("id", repository_id).execute()
         return result.data[0] if result.data else {}
+
+    def mark_seen_many(self, repository_ids: list[str]) -> int:
+        if not repository_ids:
+            return 0
+
+        row = {
+            "is_new": False,
+            "review_status": GitHubRepoReviewStatus.IGNORED.value,
+        }
+        result = self._client.table("github_repositories").update(row).in_("id", repository_ids).execute()
+        return len(result.data or [])

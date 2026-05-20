@@ -163,6 +163,19 @@ def test_confirmed_review_status_updates_are_pruned():
     assert pending_updates == {"domain-2": "ok"}
 
 
+def test_mark_github_repos_seen_marks_visible_repository_ids(monkeypatch):
+    repo = MagicMock()
+    repo.mark_seen_many.return_value = 2
+    monkeypatch.setattr(data_loader, "GitHubRepositoryRepository", lambda: repo)
+    monkeypatch.setattr(data_loader, "clear_github_caches", MagicMock())
+
+    updated = data_loader.mark_github_repos_seen(["repo-1", "repo-2"])
+
+    assert updated == 2
+    repo.mark_seen_many.assert_called_once_with(["repo-1", "repo-2"])
+    data_loader.clear_github_caches.assert_called_once_with()
+
+
 def test_status_filter_from_checkbox_values():
     assert (
         filters._status_filter_from_values({"pending": True, "ok": True, "exists": True, "bad": True}) == "All Statuses"
@@ -174,6 +187,35 @@ def test_status_filter_from_checkbox_values():
     assert (
         filters._status_filter_from_values({"pending": False, "ok": False, "exists": False, "bad": False}) == "__none__"
     )
+
+
+def test_default_date_range_uses_full_current_month(monkeypatch):
+    class FixedDate(date):
+        @classmethod
+        def today(cls):
+            return cls(2026, 5, 20)
+
+    monkeypatch.setattr(filters, "date", FixedDate)
+
+    assert filters._default_date_range() == (date(2026, 5, 1), date(2026, 5, 31))
+
+
+def test_session_date_range_defaults_to_full_current_month(monkeypatch):
+    class FixedDate(date):
+        @classmethod
+        def today(cls):
+            return cls(2026, 5, 20)
+
+    monkeypatch.setattr(filters, "date", FixedDate)
+    monkeypatch.setattr(streamlit_app.st, "session_state", {})
+
+    assert streamlit_app._date_range_from_session() == (date(2026, 5, 1), date(2026, 5, 31))
+
+
+def test_current_filter_values_defaults_show_reviewed_to_false(monkeypatch):
+    monkeypatch.setattr(streamlit_app.st, "session_state", {})
+
+    assert streamlit_app.current_filter_values()["show_reviewed"] is False
 
 
 def test_range_rpc_newest_sort_uses_domain_first_seen_timestamp():

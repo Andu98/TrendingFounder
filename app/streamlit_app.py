@@ -16,7 +16,7 @@ if str(project_root) not in sys.path:
     sys.path.insert(0, str(project_root))
 
 from app.components.domain_table import render_domain_table
-from app.components.filters import render_filters
+from app.components.filters import _default_date_range, render_filters
 from app.components.metrics_cards import render_metrics_cards, render_progress_bar
 from app.data_loader import (
     CATEGORY_FILTER_OPTIONS,
@@ -36,6 +36,7 @@ from app.data_loader import (
     load_reviewed_count,
     load_stats,
     mark_github_repo_seen,
+    mark_github_repos_seen,
     update_github_repo_notes,
     update_github_repo_review_status,
 )
@@ -1788,16 +1789,16 @@ def _status_filter_from_session() -> str:
 
 def _date_range_from_session() -> tuple[date, date]:
     value = st.session_state.get("filter_date_range")
-    today = date.today()
     if isinstance(value, date):
         return value, value
     if isinstance(value, tuple | list):
         if not value:
-            return today, today
-        start = value[0] or today
+            return _default_date_range()
+        default_start, default_end = _default_date_range()
+        start = value[0] or default_start
         end = value[1] if len(value) > 1 and value[1] else start
         return (end, start) if start > end else (start, end)
-    return today, today
+    return _default_date_range()
 
 
 def _session_page_size() -> int:
@@ -1877,7 +1878,7 @@ def current_filter_values() -> dict:
         "search_query": "",
         "status_filter": _status_filter_from_session(),
         "category_filter": _session_option("filter_category", CATEGORY_FILTER_OPTIONS, CATEGORY_FILTER_OPTIONS[0]),
-        "show_reviewed": bool(st.session_state.get("filter_show_reviewed", True)),
+        "show_reviewed": bool(st.session_state.get("filter_show_reviewed", False)),
         "sort_by": _session_option("filter_sort", SORT_OPTIONS, SORT_OPTIONS[0]),
         "min_score": 0,
         "date_start": date_start,
@@ -2095,6 +2096,13 @@ def render_github_opencode_page() -> None:
             unsafe_allow_html=True,
         )
         return
+
+    action_cols = st.columns([1, 4], gap="medium")
+    with action_cols[0]:
+        if st.button("Mark all as seen", type="secondary", width="stretch"):
+            updated = mark_github_repos_seen(df["id"].dropna().astype(str).tolist())
+            st.toast(f"Marked {updated} GitHub repo{'s' if updated != 1 else ''} as seen.")
+            st.rerun()
 
     columns = [
         "full_name",

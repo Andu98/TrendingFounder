@@ -13,6 +13,8 @@
 - [x] **A2026-05-19.10** — Add GitHub opencode repository discovery: schema, crawler, CLI wrapper, dashboard tab, review actions, and tests.
 - [x] **A2026-05-19.11** — Make `./start-git-crawl` visible and faster with flushed progress output plus bulk GitHub repository and observation writes.
 - [x] **A2026-05-20.01** — Make Collected Data status actions hide reviewed rows optimistically while Supabase writes finish in the background.
+- [x] **A2026-05-20.02** — Add a GitHub Opencode "Mark all as seen" action that ignores all repositories in the current filtered view.
+- [x] **A2026-05-20.03** — Default Collected Data to hide reviewed rows and load the full current month date range.
 
 - Implement async bulk DB client for domain deduplication and observation insertion.
 - Load existing domains into memory at crawl start.

@@ -2,12 +2,13 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from src.config.constants import ReviewStatus
+from src.config.constants import GitHubRepoReviewStatus, ReviewStatus
 from src.db.repositories import (
     CommentRepository,
     CrawlCountryStatusRepository,
     CrawlRunRepository,
     DomainRepository,
+    GitHubRepositoryRepository,
     ObservationRepository,
 )
 
@@ -149,6 +150,26 @@ class TestCrawlCountryStatusRepository:
 
         mock_client.table.assert_called_with("crawl_country_status")
         assert result["id"] == "status-uuid-1"
+
+
+class TestGitHubRepositoryRepository:
+    def test_mark_seen_many_updates_visible_repository_ids(self, mock_client):
+        response = MagicMock()
+        response.data = [{"id": "repo-1"}, {"id": "repo-2"}]
+        mock_client.table.return_value.update.return_value.in_.return_value.execute.return_value = response
+
+        repo = GitHubRepositoryRepository(client=mock_client)
+        result = repo.mark_seen_many(["repo-1", "repo-2"])
+
+        mock_client.table.assert_called_with("github_repositories")
+        mock_client.table.return_value.update.assert_called_once_with(
+            {
+                "is_new": False,
+                "review_status": GitHubRepoReviewStatus.IGNORED.value,
+            }
+        )
+        mock_client.table.return_value.update.return_value.in_.assert_called_once_with("id", ["repo-1", "repo-2"])
+        assert result == 2
 
 
 class TestCommentRepository:

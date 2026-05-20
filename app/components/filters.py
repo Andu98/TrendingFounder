@@ -7,6 +7,17 @@ from app.data_loader import CATEGORY_FILTER_OPTIONS, OPPORTUNITY_TYPE_OPTIONS, S
 STATUS_CHECKBOX_OPTIONS = STATUS_FILTER_OPTIONS[1:]
 
 
+def _default_date_range() -> tuple[date, date]:
+    today = date.today()
+    month_start = today.replace(day=1)
+    if today.month == 12:
+        next_month = today.replace(year=today.year + 1, month=1, day=1)
+    else:
+        next_month = today.replace(month=today.month + 1, day=1)
+    month_end = date.fromordinal(next_month.toordinal() - 1)
+    return month_start, month_end
+
+
 def _normalize_date_range(value) -> tuple[date, date]:
     today = date.today()
     if isinstance(value, date):
@@ -43,7 +54,7 @@ def render_filters(show_reviewed_default: bool = False, expanded: bool = True) -
         with cols[0]:
             date_range = st.date_input(
                 "Date range",
-                value=(date.today(), date.today()),
+                value=_default_date_range(),
                 key="filter_date_range",
             )
 
