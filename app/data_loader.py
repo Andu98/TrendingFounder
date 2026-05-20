@@ -172,40 +172,6 @@ def _display_url(row: pd.Series) -> str:
     return f"https://{domain}" if domain else ""
 
 
-def _enrich_domain_details(df: pd.DataFrame) -> pd.DataFrame:
-    """Attach domain-table-only fields not present in the dashboard view."""
-    if df.empty or "id" not in df.columns:
-        return df
-
-    try:
-        client = get_supabase_client()
-        domain_ids = df["id"].dropna().astype(str).tolist()
-        if not domain_ids:
-            return df
-
-        response = (
-            client.table("domains")
-            .select(
-                "id,first_seen_at,first_country_code,first_country_name,first_ranking_type,"
-                "llm_target_users,llm_localization_angle,llm_risk_notes,initial_score"
-            )
-            .in_("id", domain_ids)
-            .execute()
-        )
-        if not response.data:
-            return df
-
-        details_df = pd.DataFrame(response.data)
-        merged = df.merge(details_df, on="id", how="left", suffixes=("", "_detail"))
-
-        if "initial_score_detail" in merged.columns:
-            merged["initial_score"] = _series(merged, "initial_score").fillna(merged["initial_score_detail"])
-
-        return merged
-    except Exception:
-        return df
-
-
 def _format_today_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     if df.empty:
         return df
@@ -227,7 +193,7 @@ def _format_today_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     df["Country Names"] = df["Country Codes"].apply(_country_names)
     df["Ranking types"] = _series(df, "ranking_types", []).apply(_as_list)
     df["First country"] = df.apply(_first_country_name, axis=1)
-    df["First seen"] = _series(df, "first_seen_at").fillna(_series(df, "first_seen_date")).fillna("")
+    df["First seen"] = _series(df, "first_seen_at").fillna("")
     df["First seen in range"] = _series(df, "first_seen_in_range").fillna("")
     df["Last seen in range"] = _series(df, "last_seen_in_range").fillna("")
     df["Times observed"] = _numeric_series(df, "times_observed").round().astype(int)
@@ -329,7 +295,6 @@ def load_collected_data(
 
         df = pd.DataFrame(response.data)
         total_count = int(_numeric_series(df, "total_count").max()) if "total_count" in df.columns else len(df)
-        df = _enrich_domain_details(df)
         return _format_today_dataframe(df), total_count
 
     except Exception as e:
