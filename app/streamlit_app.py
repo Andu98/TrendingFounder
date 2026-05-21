@@ -581,7 +581,7 @@ def inject_styles(theme_name: str) -> None:
             font-size: 0.75rem;
             font-weight: 850;
             gap: 1rem;
-            grid-template-columns: 2fr 0.65fr 3.1fr 0.65fr 1.7fr 0.85fr;
+            grid-template-columns: 2fr 1.7fr 0.65fr 3.1fr 0.65fr 0.85fr;
             letter-spacing: 0.04em;
             margin: 1.2rem 0 0.55rem;
             padding: 0.78rem 1rem;
@@ -629,7 +629,7 @@ def inject_styles(theme_name: str) -> None:
             align-items: center !important;
             display: grid !important;
             gap: 1rem !important;
-            grid-template-columns: 2fr 0.65fr 3.1fr 0.65fr 1.7fr 0.85fr !important;
+            grid-template-columns: 2fr 1.7fr 0.65fr 3.1fr 0.65fr 0.85fr !important;
             width: 100% !important;
         }
 

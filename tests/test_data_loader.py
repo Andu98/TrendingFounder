@@ -209,11 +209,16 @@ def test_status_actions_register_pre_render_callbacks(monkeypatch):
     on_status_change.assert_not_called()
 
 
-def test_domain_table_headers_place_status_second():
-    desktop_headers, mobile_headers = domain_table._domain_table_headers()
+def test_domain_table_layout_places_status_buttons_second():
+    layout = domain_table._domain_table_layout()
 
-    assert desktop_headers[1] == "Status"
-    assert mobile_headers[1] == "Review"
+    assert [name for name, _ in layout[:3]] == ["domain", "status", "score"]
+
+
+def test_domain_table_css_widths_match_status_second_layout():
+    css = Path("app/streamlit_app.py").read_text()
+
+    assert "grid-template-columns: 2fr 1.7fr 0.65fr 3.1fr 0.65fr 0.85fr" in css
 
 
 def test_status_change_queues_optimistic_update_for_streamlit_callback(monkeypatch):

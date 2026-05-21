@@ -23,6 +23,8 @@
 - [x] **A2026-05-21.02** — Keep disconnected Streamlit browser sessions for 24 hours before server-side session cleanup.
 - [x] **A2026-05-21.03** — Make GitHub Opencode `Seen` the first table column and apply seen checkbox edits through a pre-render callback so rows disappear immediately after marking.
 - [x] **A2026-05-21.04** — Move Collected Data `Status` to the second visual column in the shared domain table header order.
+- [x] **A2026-05-21.05** — Move the Collected Data status buttons into the second visual slot of each card so the layout matches the header order.
+- [x] **A2026-05-21.06** — Align Collected Data CSS grid widths with the reordered row layout so the `Status` controls get the intended column width.
 
 - Implement async bulk DB client for domain deduplication and observation insertion.
 - Load existing domains into memory at crawl start.

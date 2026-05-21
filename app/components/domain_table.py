@@ -265,6 +265,17 @@ def _domain_table_headers() -> tuple[list[str], list[str]]:
     )
 
 
+def _domain_table_layout() -> list[tuple[str, float]]:
+    return [
+        ("domain", 2.0),
+        ("status", 1.7),
+        ("score", 0.65),
+        ("summary", 3.1),
+        ("country", 0.65),
+        ("comments", 0.85),
+    ]
+
+
 def render_domain_table(
     df,
     on_status_change=None,
@@ -324,9 +335,11 @@ def render_domain_table(
         ranking_types = _list(row.get("Ranking types"))
 
         with st.container(border=True):
-            cols = st.columns([2.0, 0.65, 3.1, 0.65, 1.7, 0.85], gap="medium", vertical_alignment="center")
+            layout = _domain_table_layout()
+            cols = st.columns([width for _, width in layout], gap="medium", vertical_alignment="center")
+            col_map = {name: col for (name, _), col in zip(layout, cols)}
 
-            cols[0].markdown(
+            col_map["domain"].markdown(
                 (
                     "<div class='tf-domain-cell'>"
                     "<div class='tf-domain-primary'>"
@@ -344,8 +357,15 @@ def render_domain_table(
                 ),
                 unsafe_allow_html=True,
             )
-            cols[1].markdown(score_badge, unsafe_allow_html=True)
-            cols[2].markdown(
+            col_map["status"].markdown(
+                "<div class='tf-mobile-field-label tf-mobile-widget-label'>Status</div>",
+                unsafe_allow_html=True,
+            )
+            with col_map["status"]:
+                _render_status_actions(domain_id, status, on_status_change)
+
+            col_map["score"].markdown(score_badge, unsafe_allow_html=True)
+            col_map["summary"].markdown(
                 (
                     "<div class='tf-mobile-field-label'>Summary</div>"
                     f"<div class='tf-summary' title='{escape(summary)}'>{escape(summary)}</div>"
@@ -353,7 +373,7 @@ def render_domain_table(
                 unsafe_allow_html=True,
             )
             extra_countries = f" +{countries - 1}" if countries > 1 else ""
-            cols[3].markdown(
+            col_map["country"].markdown(
                 (
                     "<div class='tf-mobile-field-label'>Country</div>"
                     f"<span class='tf-country'>{escape(first_country)}{escape(extra_countries)}</span>"
@@ -361,14 +381,7 @@ def render_domain_table(
                 unsafe_allow_html=True,
             )
 
-            cols[4].markdown(
-                "<div class='tf-mobile-field-label tf-mobile-widget-label'>Status</div>",
-                unsafe_allow_html=True,
-            )
-            with cols[4]:
-                _render_status_actions(domain_id, status, on_status_change)
-
-            with cols[5]:
+            with col_map["comments"]:
                 st.markdown(
                     "<div class='tf-mobile-field-label tf-mobile-widget-label'>Comments</div>",
                     unsafe_allow_html=True,

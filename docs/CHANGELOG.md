@@ -23,6 +23,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - GitHub Opencode now has a "Mark all as seen" action that marks every repository in the current filtered view as ignored.
 - GitHub Opencode now shows the `Seen` checkbox as the first table column and applies seen edits through a pre-render callback so marked rows disappear immediately after the checkbox change.
 - Collected Data now shows `Status` as the second visible column in the shared domain table header order.
+- Collected Data now moves the status buttons into the second visual slot of each card so the layout matches the header order.
+- Collected Data now aligns the CSS grid widths with the reordered row layout so the `Status` controls get the intended space.
 - Collected Data now defaults to hiding reviewed rows and loading the full current month date range.
 
 ### Added
