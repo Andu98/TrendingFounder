@@ -13,6 +13,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - `.streamlit/secrets.toml.example` documenting the GH_* secrets.
 
 ### Changed
+- Added `.streamlit/config.toml` with `server.websocketPingInterval = 60` so Streamlit's Uvicorn websocket timeout is less aggressive for slow, paused, or proxied browser connections.
+- Set Streamlit `server.disconnectedSessionTTL = 86400` so disconnected browser sessions can retain server-side state for 24 hours before cleanup.
 - Removed the local `nvidia-proxy.js` Node shim. `LMStudioClient` now sends `Authorization: Bearer $NVIDIA_API_KEY` directly to the OpenAI-compatible endpoint configured in `LMSTUDIO_BASE_URL` (default now `https://integrate.api.nvidia.com/v1`). `./start`, `./start-score`, and `./crawl` no longer launch a Node process.
 - Collected Data status actions now optimistically hide reviewed rows when `Show reviewed` is off, set the snapshot flag at click time, reuse the current snapshot for the first rerun, and persist the review status to Supabase in the background with dashboard caches cleared after the async write completes.
 - Collected Data status buttons now use Streamlit pre-render callbacks, so production reruns apply the optimistic hide state before blocking on the full Supabase fetch.

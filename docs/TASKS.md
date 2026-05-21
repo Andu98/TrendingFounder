@@ -19,6 +19,8 @@
 - [x] **A2026-05-20.05** — Remove stale test monkeypatches and verify the collected-data rerender path with the new snapshot helper.
 - [x] **A2026-05-20.06** — Move Collected Data status actions onto Streamlit pre-render callbacks so production reruns can apply optimistic hiding before the full data load path.
 - [x] **A2026-05-20.07** — Default Collected Data to 25 rows per page and reuse the comments snapshot during the one optimistic rerender after status changes.
+- [x] **A2026-05-21.01** — Configure Streamlit websocket ping interval to reduce intermittent Uvicorn keepalive timeout noise in production logs.
+- [x] **A2026-05-21.02** — Keep disconnected Streamlit browser sessions for 24 hours before server-side session cleanup.
 
 - Implement async bulk DB client for domain deduplication and observation insertion.
 - Load existing domains into memory at crawl start.
