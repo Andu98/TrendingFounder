@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [Unreleased]
 
 ### Added
+- `PRODUCT.md`, `DESIGN.md`, and `.impeccable/design.json` capture the product register, design principles, visual tokens, and component guardrails for future UI work.
 - `.github/workflows/crawl.yml` — `workflow_dispatch` workflow that installs deps with uv and runs `./start crawler` + `./start-git-crawl`, with `skip_domain`, `skip_github`, `skip_score` inputs. Uploads `logs/` as an artifact.
 - `src/integrations/github_actions.py` — helper to trigger and list runs of the workflow via the GitHub REST API. Reads `GH_REPO`, `GH_DISPATCH_TOKEN`, `GH_WORKFLOW_FILE`, `GH_WORKFLOW_REF` from env or `st.secrets`.
 - Streamlit "Run Crawl" panel on the Reports page with a dispatch form and the last 5 runs.
@@ -25,7 +26,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Collected Data now shows `Status` as the second visible column in the shared domain table header order.
 - Collected Data now moves the status buttons into the second visual slot of each card so the layout matches the header order.
 - Collected Data now aligns the CSS grid widths with the reordered row layout so the `Status` controls get the intended space.
+- Collected Data selected status buttons are now disabled and use semantic status colors, avoiding no-op reruns while making the active review state clearer.
+- Collected Data status buttons no longer show hover tooltips.
 - Collected Data now defaults to hiding reviewed rows and loading the full current month date range.
+- GitHub Actions crawl scheduling now targets 07:00, 14:00, and 20:00 Europe/Bucharest with DST-safe UTC trigger candidates.
 
 ### Added
 - Project skeleton with src/ package structure

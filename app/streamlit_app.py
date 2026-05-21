@@ -1174,6 +1174,36 @@ def inject_styles(theme_name: str) -> None:
             color: var(--tf-button-active-text) !important;
         }
 
+        div[class*="st-key-status_action_"] button:disabled,
+        div[class*="st-key-status_action_"] button:disabled:hover {
+            cursor: default !important;
+            opacity: 1 !important;
+        }
+
+        div[class*="st-key-status_action_pending_"] button[kind="primary"] {
+            background: var(--tf-status-pending-bg) !important;
+            border-color: var(--tf-status-pending-border) !important;
+            color: var(--tf-status-pending-text) !important;
+        }
+
+        div[class*="st-key-status_action_ok_"] button[kind="primary"] {
+            background: var(--tf-status-ok-bg) !important;
+            border-color: var(--tf-status-ok-border) !important;
+            color: var(--tf-status-ok-text) !important;
+        }
+
+        div[class*="st-key-status_action_exists_"] button[kind="primary"] {
+            background: var(--tf-status-exists-bg) !important;
+            border-color: var(--tf-status-exists-border) !important;
+            color: var(--tf-status-exists-text) !important;
+        }
+
+        div[class*="st-key-status_action_bad_"] button[kind="primary"] {
+            background: var(--tf-status-bad-bg) !important;
+            border-color: var(--tf-status-bad-border) !important;
+            color: var(--tf-status-bad-text) !important;
+        }
+
         [data-testid="stHorizontalBlock"]:has(.tf-domain-link)
         > [data-testid="stColumn"]:nth-child(6)
         button[data-testid="stPopoverButton"] {

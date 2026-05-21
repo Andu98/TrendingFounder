@@ -18,8 +18,10 @@ class _FakeContext:
 class _FakeStatusActionStreamlit:
     def __init__(self):
         self.buttons = []
+        self.containers = []
 
     def container(self, **kwargs):
+        self.containers.append(kwargs)
         return _FakeContext()
 
     def columns(self, *args, **kwargs):
@@ -200,12 +202,18 @@ def test_status_actions_register_pre_render_callbacks(monkeypatch):
 
     button_kwargs = {label: kwargs for label, kwargs in fake_st.buttons}
     assert "on_click" not in button_kwargs["Pending"]
+    assert button_kwargs["Pending"]["disabled"] is True
+    assert "help" not in button_kwargs["Pending"]
     assert button_kwargs["OK"]["on_click"] is on_status_change
     assert button_kwargs["OK"]["args"] == ("domain-1", "ok")
+    assert button_kwargs["OK"]["disabled"] is False
+    assert "help" not in button_kwargs["OK"]
     assert button_kwargs["Exists"]["on_click"] is on_status_change
     assert button_kwargs["Exists"]["args"] == ("domain-1", "exists")
     assert button_kwargs["Bad"]["on_click"] is on_status_change
     assert button_kwargs["Bad"]["args"] == ("domain-1", "bad")
+    assert {"key": "status_action_pending_domain-1"} in fake_st.containers
+    assert {"key": "status_action_ok_domain-1"} in fake_st.containers
     on_status_change.assert_not_called()
 
 

@@ -1,0 +1,112 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-05-21T00:00:00Z",
+  "title": "Design System: TrendingFounder",
+  "extensions": {
+    "colorMeta": {
+      "dark-accent": {
+        "role": "primary",
+        "displayName": "Radar Cyan",
+        "canonical": "#18c4c7",
+        "tonalRamp": ["#0b171b", "#13252b", "#18c4c7", "#3fe6c7"]
+      },
+      "light-accent": {
+        "role": "primary",
+        "displayName": "Radar Cyan Light",
+        "canonical": "#11b9bd",
+        "tonalRamp": ["#edf5f7", "#e3fbfb", "#11b9bd", "#078f99"]
+      },
+      "semantic-ok": {
+        "role": "secondary",
+        "displayName": "Decision Green",
+        "canonical": "#43d990",
+        "tonalRamp": ["#e8fff4", "#90e6b8", "#43d990", "#11784c"]
+      },
+      "semantic-pending": {
+        "role": "secondary",
+        "displayName": "Watch Amber",
+        "canonical": "#d6a33d",
+        "tonalRamp": ["#fff6df", "#eed690", "#d6a33d", "#75550b"]
+      },
+      "semantic-exists": {
+        "role": "secondary",
+        "displayName": "Known Purple",
+        "canonical": "#a98dff",
+        "tonalRamp": ["#f0edff", "#c6baff", "#a98dff", "#5144a5"]
+      },
+      "semantic-bad": {
+        "role": "secondary",
+        "displayName": "Reject Red",
+        "canonical": "#ef6363",
+        "tonalRamp": ["#fff0f0", "#f2b1b1", "#ef6363", "#9c2e2e"]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Page Display",
+        "purpose": "Primary page titles only."
+      },
+      "body": {
+        "displayName": "Interface Body",
+        "purpose": "Summaries, details, notes, and input text."
+      },
+      "label": {
+        "displayName": "Operational Label",
+        "purpose": "Table headers, compact metadata, KPI labels, and filter group labels."
+      }
+    },
+    "shadows": [
+      {
+        "name": "surface-shadow-dark",
+        "value": "0 12px 36px rgba(2, 13, 17, 0.2)",
+        "purpose": "Default dark-theme card and filter-panel separation."
+      },
+      {
+        "name": "surface-shadow-light",
+        "value": "0 12px 32px rgba(26, 62, 72, 0.1)",
+        "purpose": "Default light-theme card and filter-panel separation."
+      },
+      {
+        "name": "brand-mark-glow",
+        "value": "0 12px 35px rgba(24, 196, 199, 0.24)",
+        "purpose": "Reserved for the small brand mark."
+      }
+    ],
+    "motion": [
+      {
+        "name": "state-transition",
+        "value": "160ms ease",
+        "purpose": "Default hover and selection color transitions."
+      },
+      {
+        "name": "card-hover",
+        "value": "180ms ease",
+        "purpose": "Domain card border and tiny translate response on hover."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "mobile",
+        "value": "760px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Status Action",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Mutually exclusive review status action inside a domain card.",
+      "html": "<button class=\"ds-status-action ds-status-action-selected\">OK</button>",
+      "css": ".ds-status-action { border: 1px solid var(--tf-border); border-radius: 6px; min-height: 2rem; padding: 0 0.42rem; font-size: 0.72rem; font-weight: 850; } .ds-status-action-selected { background: var(--tf-accent); border-color: var(--tf-accent); color: var(--tf-button-active-text); }"
+    },
+    {
+      "name": "Domain Review Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "The primary triage row combining domain identity, status, score, summary, country, comments, and details.",
+      "html": "<article class=\"ds-domain-card\"><a class=\"ds-domain-link\">example.com</a><div class=\"ds-status-actions\">...</div></article>",
+      "css": ".ds-domain-card { background: var(--tf-surface); border: 1px solid var(--tf-card-border); border-radius: 8px; box-shadow: var(--tf-shadow); padding: 1rem; } .ds-domain-link { color: var(--tf-accent-2); font-weight: 800; }"
+    }
+  ]
+}

@@ -25,6 +25,10 @@
 - [x] **A2026-05-21.04** — Move Collected Data `Status` to the second visual column in the shared domain table header order.
 - [x] **A2026-05-21.05** — Move the Collected Data status buttons into the second visual slot of each card so the layout matches the header order.
 - [x] **A2026-05-21.06** — Align Collected Data CSS grid widths with the reordered row layout so the `Status` controls get the intended column width.
+- [x] **A2026-05-21.07** — Add Impeccable project context files (`PRODUCT.md`, `DESIGN.md`, `.impeccable/design.json`) for future product UI work.
+- [x] **A2026-05-21.08** — Make the selected Collected Data status button disabled and semantically colored to avoid no-op reruns and clarify the current review state.
+- [x] **A2026-05-21.09** — Remove hover tooltips from Collected Data status buttons while keeping selected-state styling and no-op prevention.
+- [x] **A2026-05-21.10** — Schedule the GitHub Actions crawl workflow for 07:00, 14:00, and 20:00 Europe/Bucharest with DST-safe UTC trigger candidates.
 
 - Implement async bulk DB client for domain deduplication and observation insertion.
 - Load existing domains into memory at crawl start.

@@ -156,15 +156,18 @@ def _render_status_actions(domain_id: str, status: str, on_status_change=None) -
             status_cols = st.columns(2, gap="small")
             for col, option in zip(status_cols, row_options):
                 with col:
+                    is_current = option == current_status
                     button_kwargs = {
                         "key": f"status_{domain_id}_{option}",
-                        "type": "primary" if option == current_status else "secondary",
+                        "type": "primary" if is_current else "secondary",
                         "width": "stretch",
+                        "disabled": is_current,
                     }
-                    if option != current_status and on_status_change:
+                    if not is_current and on_status_change:
                         button_kwargs["on_click"] = on_status_change
                         button_kwargs["args"] = (domain_id, option)
-                    st.button(STATUS_LABELS[option], **button_kwargs)
+                    with st.container(key=f"status_action_{option}_{domain_id}"):
+                        st.button(STATUS_LABELS[option], **button_kwargs)
 
 
 def _comment_html(comment: dict) -> str:

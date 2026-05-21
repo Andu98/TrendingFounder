@@ -16,13 +16,14 @@ on:
         type: boolean
         default: false
   schedule:
-    # Target: 03:00 and 20:00 Europe/Bucharest, every day.
-    # GH cron is UTC-only and doesn't honour DST, so we fire at all four
+    # Target: 07:00, 14:00, and 20:00 Europe/Bucharest, every day.
+    # GH cron is UTC-only and doesn't honour DST, so we fire at all six
     # candidate UTC hours (winter UTC+2 / summer UTC+3) and the gate job
     # below decides whether to actually run.
-    #   03:00 Bucharest → 00:00 UTC (summer) / 01:00 UTC (winter)
+    #   07:00 Bucharest → 04:00 UTC (summer) / 05:00 UTC (winter)
+    #   14:00 Bucharest → 11:00 UTC (summer) / 12:00 UTC (winter)
     #   20:00 Bucharest → 17:00 UTC (summer) / 18:00 UTC (winter)
-    - cron: "0 0,1,17,18 * * *"
+    - cron: "0 4,5,11,12,17,18 * * *"
 
 concurrency:
   group: crawl
@@ -44,11 +45,11 @@ jobs:
           fi
           HOUR=$(TZ=Europe/Bucharest date +%H)
           echo "Current Bucharest hour: $HOUR"
-          if [[ "$HOUR" == "03" || "$HOUR" == "20" ]]; then
+          if [[ "$HOUR" == "07" || "$HOUR" == "14" || "$HOUR" == "20" ]]; then
             echo "Allowed hour — running."
             echo "run=true" >> "$GITHUB_OUTPUT"
           else
-            echo "Not 03:00 or 20:00 Bucharest — skipping."
+            echo "Not 07:00, 14:00, or 20:00 Bucharest — skipping."
             echo "run=false" >> "$GITHUB_OUTPUT"
           fi
 

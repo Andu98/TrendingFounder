@@ -76,6 +76,8 @@ TrendingFounder/
 
 | File | Purpose |
 |---|---|
+| [PRODUCT.md](PRODUCT.md) | Product design context for AI/UI work |
+| [DESIGN.md](DESIGN.md) | Visual design system tokens and component guardrails |
 | [docs/PLAN.md](docs/PLAN.md) | Full product plan, architecture, data model |
 | [docs/AGENTS.md](docs/AGENTS.md) | Rules for AI coding agents |
 | [docs/TASKS.md](docs/TASKS.md) | Phase-by-phase task checklist |
