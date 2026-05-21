@@ -2105,6 +2105,45 @@ def _apply_github_table_edits(original_df, edited_df) -> int:
     return updates
 
 
+def _github_editor_columns() -> list[str]:
+    return [
+        "mark_seen",
+        "full_name",
+        "html_url",
+        "description",
+        "language",
+        "stargazers_count",
+        "forks_count",
+        "open_issues_count",
+        "created_at",
+        "pushed_at",
+        "first_seen_at",
+        "review_status",
+        "notes",
+    ]
+
+
+def _apply_github_editor_state_seen_edits(editor_state: dict, repo_ids: list[str]) -> int:
+    updates = 0
+    edited_rows = editor_state.get("edited_rows", {}) if isinstance(editor_state, dict) else {}
+    for row_position, row_edits in edited_rows.items():
+        if not isinstance(row_edits, dict) or not bool(row_edits.get("mark_seen")):
+            continue
+        try:
+            repo_id = repo_ids[int(row_position)]
+        except (IndexError, TypeError, ValueError):
+            continue
+        mark_github_repo_seen(str(repo_id))
+        updates += 1
+    return updates
+
+
+def _on_github_editor_change(repo_ids: list[str]) -> None:
+    updates = _apply_github_editor_state_seen_edits(st.session_state.get("github_opencode_editor", {}), repo_ids)
+    if updates:
+        st.toast(f"Marked {updates} GitHub repo{'s' if updates != 1 else ''} as seen.")
+
+
 def render_github_opencode_page() -> None:
     stats = load_github_crawl_stats()
     render_page_header("GitHub Opencode", "New repositories entering the top topic snapshot by stars")
@@ -2135,22 +2174,9 @@ def render_github_opencode_page() -> None:
             st.toast(f"Marked {updated} GitHub repo{'s' if updated != 1 else ''} as seen.")
             st.rerun()
 
-    columns = [
-        "full_name",
-        "html_url",
-        "description",
-        "language",
-        "stargazers_count",
-        "forks_count",
-        "open_issues_count",
-        "created_at",
-        "pushed_at",
-        "first_seen_at",
-        "review_status",
-        "notes",
-        "mark_seen",
-    ]
+    columns = _github_editor_columns()
     editor_df = df.set_index("id")[[column for column in columns if column in df.columns]]
+    repo_ids = editor_df.index.astype(str).tolist()
     edited_df = st.data_editor(
         editor_df,
         width="stretch",
@@ -2188,6 +2214,8 @@ def render_github_opencode_page() -> None:
             "mark_seen": st.column_config.CheckboxColumn("Seen", help="Mark as seen and ignore", width="small"),
         },
         key="github_opencode_editor",
+        on_change=_on_github_editor_change,
+        args=(repo_ids,),
     )
 
     updates = _apply_github_table_edits(editor_df, edited_df)

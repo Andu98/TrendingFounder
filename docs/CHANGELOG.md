@@ -21,6 +21,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Collected Data now defaults to 25 rows per page and reuses the comments snapshot for the one optimistic rerender after a status change, reducing the remaining production rerender work.
 - Removed a stale `test_load_collected_data_calls_range_rpc` monkeypatch and added coverage for the one-rerun snapshot path used after status changes.
 - GitHub Opencode now has a "Mark all as seen" action that marks every repository in the current filtered view as ignored.
+- GitHub Opencode now shows the `Seen` checkbox as the first table column and applies seen edits through a pre-render callback so marked rows disappear immediately after the checkbox change.
+- Collected Data now shows `Status` as the second visible column in the shared domain table header order.
 - Collected Data now defaults to hiding reviewed rows and loading the full current month date range.
 
 ### Added

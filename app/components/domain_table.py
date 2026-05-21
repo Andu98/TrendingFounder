@@ -258,6 +258,13 @@ def _detail_value(label: str, value: str) -> str:
     )
 
 
+def _domain_table_headers() -> tuple[list[str], list[str]]:
+    return (
+        ["Domain", "Status", "Score", "Summary", "Country", "Actions"],
+        ["Domain", "Review", "Score"],
+    )
+
+
 def render_domain_table(
     df,
     on_status_change=None,
@@ -279,24 +286,18 @@ def render_domain_table(
         )
         return
 
+    desktop_headers, mobile_headers = _domain_table_headers()
     st.markdown(
-        """
-        <div class="tf-table-head-wrapper">
-            <div class="tf-table-head tf-table-head-desktop">
-                <span>Domain</span>
-                <span>Score</span>
-                <span>Summary</span>
-                <span>Country</span>
-                <span>Status</span>
-                <span>Actions</span>
-            </div>
-            <div class="tf-table-head tf-table-head-mobile">
-                <span>Domain</span>
-                <span>Score</span>
-                <span>Review</span>
-            </div>
-        </div>
-        """,
+        (
+            '<div class="tf-table-head-wrapper">'
+            '<div class="tf-table-head tf-table-head-desktop">'
+            + ''.join(f'<span>{escape(label)}</span>' for label in desktop_headers)
+            + '</div>'
+            '<div class="tf-table-head tf-table-head-mobile">'
+            + ''.join(f'<span>{escape(label)}</span>' for label in mobile_headers)
+            + '</div>'
+            '</div>'
+        ),
         unsafe_allow_html=True,
     )
 

@@ -209,6 +209,13 @@ def test_status_actions_register_pre_render_callbacks(monkeypatch):
     on_status_change.assert_not_called()
 
 
+def test_domain_table_headers_place_status_second():
+    desktop_headers, mobile_headers = domain_table._domain_table_headers()
+
+    assert desktop_headers[1] == "Status"
+    assert mobile_headers[1] == "Review"
+
+
 def test_status_change_queues_optimistic_update_for_streamlit_callback(monkeypatch):
     executor = MagicMock()
     clear_dashboard_caches = MagicMock()
@@ -347,6 +354,23 @@ def test_mark_github_repos_seen_marks_visible_repository_ids(monkeypatch):
     assert updated == 2
     repo.mark_seen_many.assert_called_once_with(["repo-1", "repo-2"])
     data_loader.clear_github_caches.assert_called_once_with()
+
+
+def test_github_seen_column_is_first():
+    assert streamlit_app._github_editor_columns()[0] == "mark_seen"
+
+
+def test_github_editor_state_seen_edits_mark_rows_immediately(monkeypatch):
+    mark_github_repo_seen = MagicMock()
+    monkeypatch.setattr(streamlit_app, "mark_github_repo_seen", mark_github_repo_seen)
+
+    updates = streamlit_app._apply_github_editor_state_seen_edits(
+        {"edited_rows": {1: {"mark_seen": True}, 2: {"mark_seen": False}}},
+        ["repo-1", "repo-2", "repo-3"],
+    )
+
+    assert updates == 1
+    mark_github_repo_seen.assert_called_once_with("repo-2")
 
 
 def test_status_filter_from_checkbox_values():
