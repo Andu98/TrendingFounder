@@ -8,6 +8,7 @@ from html import escape
 from math import ceil, isnan
 from pathlib import Path
 
+import pandas as pd
 import streamlit as st
 
 # Add project root to sys.path so we can import from src/
@@ -1913,6 +1914,12 @@ def _load_collected_data_for_render(filters: dict, page: int, page_size: int):
         st.session_state["_collected_optimistic_refresh"] = False
         return snapshot["df"], snapshot["total_count"], True
 
+    df, total_count = _load_collected_data_page(filters, page, page_size)
+    st.session_state["_collected_data_snapshot"] = {"signature": signature, "df": df, "total_count": total_count}
+    return df, total_count, False
+
+
+def _load_collected_data_page(filters: dict, page: int, page_size: int):
     df, total_count = load_collected_data(
         show_reviewed=filters["show_reviewed"],
         sort_by=filters["sort_by"],
@@ -1928,8 +1935,103 @@ def _load_collected_data_for_render(filters: dict, page: int, page_size: int):
         opportunity_type_filter=filters["opportunity_type_filter"],
         hide_global_giants=filters["hide_global_giants"],
     )
-    st.session_state["_collected_data_snapshot"] = {"signature": signature, "df": df, "total_count": total_count}
-    return df, total_count, False
+    return df, total_count
+
+
+def _clear_collected_data_loader_cache() -> None:
+    clear_cache = getattr(load_collected_data, "clear", None)
+    if callable(clear_cache):
+        clear_cache()
+
+
+def _refill_page_limit(page: int, page_size: int, total_count: int, pending_updates: dict) -> int:
+    total_pages = max(page + 1, ceil(max(total_count, page_size) / page_size))
+    pending_pages = max(1, ceil(len(pending_updates) / page_size))
+    return min(total_pages, page + pending_pages)
+
+
+def _combine_collected_frames(frames: list, page_size: int):
+    if not frames:
+        return pd.DataFrame()
+
+    combined = pd.concat(frames, ignore_index=True)
+    if "id" in combined.columns:
+        combined = combined.drop_duplicates(subset=["id"], keep="first")
+    return combined.head(page_size)
+
+
+def _load_collected_data_refill_batch(
+    filters: dict,
+    page: int,
+    page_size: int,
+    total_count: int,
+    pending_updates: dict,
+):
+    _clear_collected_data_loader_cache()
+    latest_total_count = total_count
+    visible_frames = []
+    last_page = _refill_page_limit(page, page_size, total_count, pending_updates)
+
+    for refill_page in range(page, last_page + 1):
+        candidate_df, candidate_total_count = _load_collected_data_page(filters, refill_page, page_size)
+        if candidate_total_count:
+            latest_total_count = candidate_total_count
+        if candidate_df is None or candidate_df.empty:
+            continue
+
+        _prune_confirmed_review_status_updates(candidate_df, pending_updates)
+        candidate_visible_df = _apply_pending_review_status_updates(
+            candidate_df,
+            pending_updates,
+            show_reviewed=False,
+        )
+        if candidate_visible_df is None or candidate_visible_df.empty:
+            continue
+
+        visible_frames.append(candidate_visible_df)
+        combined_df = _combine_collected_frames(visible_frames, page_size)
+        if len(combined_df) >= page_size:
+            return combined_df, latest_total_count
+
+    return _combine_collected_frames(visible_frames, page_size), latest_total_count
+
+
+def _maybe_refill_collected_data_after_optimistic_clear(
+    filters: dict,
+    page: int,
+    page_size: int,
+    visible_df,
+    source_df,
+    total_count: int,
+    pending_updates: dict,
+    render_signature: tuple,
+):
+    if (
+        filters["show_reviewed"]
+        or not pending_updates
+        or source_df is None
+        or source_df.empty
+        or visible_df is None
+        or not visible_df.empty
+    ):
+        return visible_df, total_count, False
+
+    refill_df, refill_total_count = _load_collected_data_refill_batch(
+        filters,
+        page,
+        page_size,
+        total_count,
+        pending_updates,
+    )
+    if refill_df.empty:
+        return visible_df, total_count, False
+
+    st.session_state["_collected_data_snapshot"] = {
+        "signature": render_signature,
+        "df": refill_df,
+        "total_count": refill_total_count,
+    }
+    return refill_df, refill_total_count, True
 
 
 def _load_comments_for_render(df, signature: tuple, use_snapshot: bool):
@@ -2029,11 +2131,23 @@ def render_collected_data_page() -> None:
         st.rerun()
     pending_status_updates = st.session_state.get("_pending_domain_status_updates", {})
     _prune_confirmed_review_status_updates(df, pending_status_updates)
+    source_df = df
     df = _apply_pending_review_status_updates(
         df,
         pending_status_updates,
         filters["show_reviewed"],
     )
+    df, total_count, refilled_after_clear = _maybe_refill_collected_data_after_optimistic_clear(
+        filters=filters,
+        page=page,
+        page_size=page_size,
+        visible_df=df,
+        source_df=source_df,
+        total_count=total_count,
+        pending_updates=pending_status_updates,
+        render_signature=render_signature,
+    )
+    used_data_snapshot = used_data_snapshot and not refilled_after_clear
 
     render_page_header(
         "Collected Data",

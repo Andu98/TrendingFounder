@@ -51,6 +51,22 @@ def _mock_rpc_client(rows: list[dict]):
     return client
 
 
+def _collected_filters(show_reviewed: bool = False) -> dict:
+    return {
+        "search_query": "",
+        "status_filter": "All Statuses",
+        "category_filter": "All Categories",
+        "show_reviewed": show_reviewed,
+        "sort_by": "Score High → Low",
+        "date_start": date(2026, 5, 1),
+        "date_end": date(2026, 5, 31),
+        "min_opportunity_score": 0,
+        "min_opportunity_confidence": 0,
+        "hide_global_giants": False,
+        "opportunity_type_filter": "All Types",
+    }
+
+
 def test_load_collected_data_calls_range_rpc(monkeypatch):
     rows = [
         {
@@ -340,6 +356,46 @@ def test_collected_data_comments_loads_and_snapshots_normal_render(monkeypatch):
         "signature": signature,
         "comments_data": comments_data,
     }
+
+
+def test_collected_data_refills_after_optimistic_page_clear(monkeypatch):
+    filters = _collected_filters()
+    render_signature = streamlit_app._render_signature(filters, page=1, page_size=1)
+    source_df = pd.DataFrame({"id": ["domain-1"], "Status": ["pending"], "Domain": ["one.test"]})
+    visible_df = source_df.iloc[0:0].copy()
+    replacement_df = pd.DataFrame({"id": ["domain-2"], "Status": ["pending"], "Domain": ["two.test"]})
+    load_collected_data = MagicMock(
+        side_effect=[
+            (source_df, 2),
+            (replacement_df, 2),
+        ]
+    )
+    load_collected_data.clear = MagicMock()
+
+    monkeypatch.setattr(streamlit_app.st, "session_state", {})
+    monkeypatch.setattr(streamlit_app, "load_collected_data", load_collected_data)
+
+    df, total_count, refilled = streamlit_app._maybe_refill_collected_data_after_optimistic_clear(
+        filters=filters,
+        page=1,
+        page_size=1,
+        visible_df=visible_df,
+        source_df=source_df,
+        total_count=2,
+        pending_updates={"domain-1": "exists"},
+        render_signature=render_signature,
+    )
+
+    assert refilled is True
+    assert total_count == 2
+    assert df["id"].tolist() == ["domain-2"]
+    assert streamlit_app.st.session_state["_collected_data_snapshot"] == {
+        "signature": render_signature,
+        "df": df,
+        "total_count": 2,
+    }
+    load_collected_data.clear.assert_called_once_with()
+    assert [call.kwargs["page"] for call in load_collected_data.call_args_list] == [1, 2]
 
 
 def test_confirmed_review_status_updates_are_pruned():

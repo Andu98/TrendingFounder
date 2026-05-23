@@ -29,6 +29,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Collected Data selected status buttons are now disabled and use semantic status colors, avoiding no-op reruns while making the active review state clearer.
 - Collected Data status buttons no longer show hover tooltips.
 - Collected Data now defaults to hiding reviewed rows and loading the full current month date range.
+- Collected Data now fetches a replacement visible batch when optimistic status updates clear the current page, so finishing 25 rows loads the next rows without a manual browser refresh.
 - GitHub Actions crawl scheduling now runs four times daily at 05:00, 11:00, 17:00, and 23:00 UTC without a runtime Bucharest-hour gate, so delayed scheduled starts still execute the crawl pipeline.
 
 ### Added
