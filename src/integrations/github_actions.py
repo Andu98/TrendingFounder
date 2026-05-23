@@ -62,7 +62,7 @@ def load_config() -> WorkflowConfig:
     if missing:
         raise GitHubActionsError(
             "Missing GitHub Actions config: " + ", ".join(missing)
-            + ". Set env vars or .streamlit/secrets.toml."
+            + ". Set env vars, Streamlit Community Cloud secrets, or local .streamlit/secrets.toml."
         )
     return WorkflowConfig(
         repo=repo,  # type: ignore[arg-type]

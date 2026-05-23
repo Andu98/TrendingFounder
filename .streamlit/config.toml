@@ -1,0 +1,8 @@
+[server]
+# Give slower or paused browser connections more time to answer websocket pings.
+# Streamlit sets the websocket ping timeout to this same value when configured.
+websocketPingInterval = 60
+
+# Keep disconnected browser sessions around for 24 hours before Streamlit may
+# clean up their session state. This does not override hosting-provider app sleep.
+disconnectedSessionTTL = 86400

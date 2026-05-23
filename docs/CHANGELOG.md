@@ -11,10 +11,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - `.github/workflows/crawl.yml` — `workflow_dispatch` workflow that installs deps with uv and runs `./start crawler` + `./start-git-crawl`, with `skip_domain`, `skip_github`, `skip_score` inputs. Uploads `logs/` as an artifact.
 - `src/integrations/github_actions.py` — helper to trigger and list runs of the workflow via the GitHub REST API. Reads `GH_REPO`, `GH_DISPATCH_TOKEN`, `GH_WORKFLOW_FILE`, `GH_WORKFLOW_REF` from env or `st.secrets`.
 - Streamlit "Run Crawl" panel on the Reports page with a dispatch form and the last 5 runs.
-- `.streamlit/secrets.toml.example` documenting the GH_* secrets.
+- `docs/streamlit-secrets.toml.example` documenting the GH_* secrets.
 
 ### Changed
-- Removed the versioned `.streamlit/config.toml` after Streamlit Community Cloud auto-update failures required manual reboot recovery. Community Cloud now uses its default server config so GitHub sync can reset the app checkout cleanly.
+- Restored the versioned `.streamlit/config.toml` server keepalive settings after Streamlit Cloud websocket timeout errors returned.
+- Moved the Streamlit secrets example to `docs/` and ignored non-config `.streamlit/` files to keep secrets/runtime files out of the tracked Streamlit directory.
 - Removed the local `nvidia-proxy.js` Node shim. `LMStudioClient` now sends `Authorization: Bearer $NVIDIA_API_KEY` directly to the OpenAI-compatible endpoint configured in `LMSTUDIO_BASE_URL` (default now `https://integrate.api.nvidia.com/v1`). `./start`, `./start-score`, and `./crawl` no longer launch a Node process.
 - Collected Data status actions now optimistically hide reviewed rows when `Show reviewed` is off, set the snapshot flag at click time, reuse the current snapshot for the first rerun, and persist the review status to Supabase in the background with dashboard caches cleared after the async write completes.
 - Collected Data status buttons now use Streamlit pre-render callbacks, so production reruns apply the optimistic hide state before blocking on the full Supabase fetch.
