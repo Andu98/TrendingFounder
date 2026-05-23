@@ -16,10 +16,10 @@ on:
         type: boolean
         default: false
   schedule:
-    # GitHub cron is UTC-only. During Bucharest DST, these are 08:17, 14:17, 20:17, and 02:17.
+    # GitHub cron is UTC-only. During Bucharest DST, these are 08:17, 10:17, 14:17, 19:17, and 21:17.
     # Do not add a runtime hour gate here: GitHub may start scheduled jobs late.
     # Avoid minute 0 because GitHub documents higher schedule delays at the start of each hour.
-    - cron: "17 5,11,17,23 * * *"
+    - cron: "17 5,7,11,16,18 * * *"
 
 concurrency:
   group: crawl

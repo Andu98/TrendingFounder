@@ -184,7 +184,7 @@ This separation avoids mixing repository discovery with domain observations, pre
 
 The GitHub Actions crawl workflow runs on a single UTC cron entry and does not use a runtime Europe/Bucharest hour gate. GitHub can start scheduled workflows late, and a strict runtime-hour check can mark the workflow successful while skipping the actual crawl job.
 
-The current schedule is `05:17`, `11:17`, `17:17`, and `23:17` UTC, which corresponds to `08:17`, `14:17`, `20:17`, and `02:17` Europe/Bucharest during daylight saving time. The non-zero minute avoids GitHub's documented start-of-hour load window, while still favoring reliably running the pipeline for each scheduled trigger over enforcing exact local wall-clock hours inside the workflow.
+The current schedule is `05:17`, `07:17`, `11:17`, `16:17`, and `18:17` UTC, which corresponds to `08:17`, `10:17`, `14:17`, `19:17`, and `21:17` Europe/Bucharest during daylight saving time. The non-zero minute avoids GitHub's documented start-of-hour load window, while still favoring reliably running the pipeline for each scheduled trigger over enforcing exact local wall-clock hours inside the workflow.
 
 ## ADR-028: Version only required Streamlit server config
 
