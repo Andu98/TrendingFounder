@@ -89,7 +89,7 @@ def test_list_recent_runs_summary(monkeypatch, cfg):
 def test_crawl_workflow_schedule_runs_pipeline_without_time_gate():
     workflow = Path(".github/workflows/crawl.yml").read_text()
 
-    assert 'cron: "0 5,11,17,23 * * *"' in workflow
+    assert 'cron: "17 5,11,17,23 * * *"' in workflow
     assert "Time gate" not in workflow
     assert "needs: gate" not in workflow
     assert "needs.gate.outputs.run" not in workflow

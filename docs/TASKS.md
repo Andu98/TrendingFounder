@@ -29,7 +29,7 @@
 - [x] **A2026-05-21.08** — Make the selected Collected Data status button disabled and semantically colored to avoid no-op reruns and clarify the current review state.
 - [x] **A2026-05-21.09** — Remove hover tooltips from Collected Data status buttons while keeping selected-state styling and no-op prevention.
 - [x] **A2026-05-21.10** — Schedule the GitHub Actions crawl workflow for 07:00, 14:00, and 20:00 Europe/Bucharest with DST-safe UTC trigger candidates.
-- [x] **A2026-05-23.01** — Remove the GitHub Actions runtime time gate so delayed scheduled starts still run the crawl pipeline, with four daily UTC triggers.
+- [x] **A2026-05-23.01** — Remove the GitHub Actions runtime time gate so delayed scheduled starts still run the crawl pipeline, with four daily UTC triggers offset from minute 0.
 - [x] **A2026-05-23.02** — Refill Collected Data with the next visible batch after optimistic status updates clear the current page.
 
 - Implement async bulk DB client for domain deduplication and observation insertion.
