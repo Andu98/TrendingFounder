@@ -1,0 +1,25 @@
+name: Schedule Probe
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Temporary debug workflow. Avoid minute 0 to reduce GitHub schedule delay.
+    - cron: "7,22,37,52 * * * *"
+
+concurrency:
+  group: schedule-probe
+  cancel-in-progress: false
+
+jobs:
+  probe:
+    name: Probe scheduled workflows
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Print schedule context
+        run: |
+          echo "event=${{ github.event_name }}"
+          echo "ref=${{ github.ref }}"
+          echo "sha=${{ github.sha }}"
+          echo "utc=$(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+          echo "bucharest=$(TZ=Europe/Bucharest date '+%Y-%m-%d %H:%M:%S %Z %z')"

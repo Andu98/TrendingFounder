@@ -193,3 +193,11 @@ The current schedule is `05:17`, `07:17`, `11:17`, `16:17`, and `18:17` UTC, whi
 The repository versions `.streamlit/config.toml` because Streamlit Community Cloud logs showed recurring websocket keepalive timeout errors without the server keepalive settings. Non-config files under `.streamlit/` remain ignored.
 
 The secrets example lives at `docs/streamlit-secrets.toml.example`. This keeps local secrets and runtime files out of the tracked Streamlit directory while preserving the server settings needed for stable browser sessions.
+
+## ADR-029: Use a temporary schedule probe for GitHub Actions delivery
+
+**Status:** Accepted
+
+A temporary `.github/workflows/schedule-probe.yml` workflow runs every 15 minutes without secrets or crawler commands. It prints only GitHub event/ref/SHA and UTC/Bucharest timestamps.
+
+This isolates GitHub scheduled workflow delivery from crawler runtime, Supabase writes, Cloudflare API calls, and long dependency installs. Once scheduled workflow delivery is confirmed, the probe should be removed.

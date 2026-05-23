@@ -93,3 +93,12 @@ def test_crawl_workflow_schedule_runs_pipeline_without_time_gate():
     assert "Time gate" not in workflow
     assert "needs: gate" not in workflow
     assert "needs.gate.outputs.run" not in workflow
+
+
+def test_schedule_probe_workflow_is_lightweight_and_frequent():
+    workflow = Path(".github/workflows/schedule-probe.yml").read_text()
+
+    assert 'cron: "7,22,37,52 * * * *"' in workflow
+    assert "CLOUDFLARE_API_TOKEN" not in workflow
+    assert "SUPABASE_SERVICE_ROLE_KEY" not in workflow
+    assert "./start" not in workflow

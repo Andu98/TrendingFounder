@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Added
 - `PRODUCT.md`, `DESIGN.md`, and `.impeccable/design.json` capture the product register, design principles, visual tokens, and component guardrails for future UI work.
 - `.github/workflows/crawl.yml` — `workflow_dispatch` workflow that installs deps with uv and runs `./start crawler` + `./start-git-crawl`, with `skip_domain`, `skip_github`, `skip_score` inputs. Uploads `logs/` as an artifact.
+- `.github/workflows/schedule-probe.yml` — temporary lightweight scheduled workflow that prints event/ref/time context every 15 minutes for debugging GitHub schedule delivery.
 - `src/integrations/github_actions.py` — helper to trigger and list runs of the workflow via the GitHub REST API. Reads `GH_REPO`, `GH_DISPATCH_TOKEN`, `GH_WORKFLOW_FILE`, `GH_WORKFLOW_REF` from env or `st.secrets`.
 - Streamlit "Run Crawl" panel on the Reports page with a dispatch form and the last 5 runs.
 - `docs/streamlit-secrets.toml.example` documenting the GH_* secrets.

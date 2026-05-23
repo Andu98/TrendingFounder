@@ -36,6 +36,7 @@
 - [x] **A2026-05-23.05** — Remove all versioned files from `.streamlit/` after auto-update still failed and move the secrets example to `docs/`.
 - [x] **A2026-05-23.06** — Restore `.streamlit/config.toml` server keepalive settings after Streamlit Cloud websocket timeout errors returned.
 - [x] **A2026-05-23.07** — Reschedule GitHub Actions crawl to 08:17, 10:17, 14:17, 19:17, and 21:17 Europe/Bucharest during daylight saving time.
+- [x] **A2026-05-23.08** — Add a temporary lightweight GitHub Actions schedule probe to diagnose whether scheduled workflows fire at all.
 
 - Implement async bulk DB client for domain deduplication and observation insertion.
 - Load existing domains into memory at crawl start.
