@@ -2509,7 +2509,7 @@ def render_run_crawl_panel() -> None:
 def render_reports_page() -> None:
     stats = load_stats()
     country_df = load_country_progress()
-    render_page_header("Reports", "Crawl metrics, enrichment progress, and country-by-country status")
+    render_page_header("Reports", "Crawl metrics, enrichment progress, and regional status")
 
     render_run_crawl_panel()
 

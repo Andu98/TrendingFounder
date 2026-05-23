@@ -30,6 +30,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Collected Data now defaults to hiding reviewed rows and loading the full current month date range.
 - Collected Data now fetches a replacement visible batch when optimistic status updates clear the current page, so finishing 25 rows loads the next rows without a manual browser refresh.
 - GitHub Actions crawl scheduling now runs four times daily at 05:17, 11:17, 17:17, and 23:17 UTC without a runtime Bucharest-hour gate, avoiding GitHub's documented start-of-hour schedule delays while still executing delayed starts.
+- Reports page header copy was lightly adjusted to verify Streamlit Community Cloud auto-updates after removing the server config file.
 
 ### Added
 - Project skeleton with src/ package structure
