@@ -177,3 +177,11 @@ The first run is treated as a baseline snapshot of the current top repositories 
 Repository snapshots and observations are persisted in batches, and the CLI emits flushed progress messages. This keeps the first-run baseline from appearing stalled while avoiding hundreds of sequential Supabase requests.
 
 This separation avoids mixing repository discovery with domain observations, prevents accidental LLM/scoring calls for GitHub data, and keeps review statuses domain-specific versus GitHub-specific.
+
+## ADR-027: Prefer scheduled crawl execution over exact local-hour gating
+
+**Status:** Accepted
+
+The GitHub Actions crawl workflow runs on a single UTC cron entry and does not use a runtime Europe/Bucharest hour gate. GitHub can start scheduled workflows late, and a strict runtime-hour check can mark the workflow successful while skipping the actual crawl job.
+
+The current schedule is `05:00`, `11:00`, `17:00`, and `23:00` UTC, which corresponds to `08:00`, `14:00`, `20:00`, and `02:00` Europe/Bucharest during daylight saving time. This favors reliably running the pipeline for each scheduled trigger over enforcing exact local wall-clock hours inside the workflow.

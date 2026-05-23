@@ -1,4 +1,5 @@
 import json
+from pathlib import Path
 
 import httpx
 import pytest
@@ -14,6 +15,7 @@ def cfg() -> ga.WorkflowConfig:
 def test_load_config_missing(monkeypatch):
     for name in ("GH_REPO", "GH_DISPATCH_TOKEN", "GH_WORKFLOW_FILE", "GH_WORKFLOW_REF"):
         monkeypatch.delenv(name, raising=False)
+    monkeypatch.setattr(ga, "_read_secret", lambda name: None)
     with pytest.raises(ga.GitHubActionsError):
         ga.load_config()
 
@@ -82,3 +84,12 @@ def test_list_recent_runs_summary(monkeypatch, cfg):
     assert len(runs) == 1
     assert runs[0]["conclusion"] == "success"
     assert runs[0]["html_url"].endswith("/runs/1")
+
+
+def test_crawl_workflow_schedule_runs_pipeline_without_time_gate():
+    workflow = Path(".github/workflows/crawl.yml").read_text()
+
+    assert 'cron: "0 5,11,17,23 * * *"' in workflow
+    assert "Time gate" not in workflow
+    assert "needs: gate" not in workflow
+    assert "needs.gate.outputs.run" not in workflow

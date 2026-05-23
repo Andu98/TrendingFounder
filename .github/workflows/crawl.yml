@@ -16,47 +16,17 @@ on:
         type: boolean
         default: false
   schedule:
-    # Target: 07:00, 14:00, and 20:00 Europe/Bucharest, every day.
-    # GH cron is UTC-only and doesn't honour DST, so we fire at all six
-    # candidate UTC hours (winter UTC+2 / summer UTC+3) and the gate job
-    # below decides whether to actually run.
-    #   07:00 Bucharest → 04:00 UTC (summer) / 05:00 UTC (winter)
-    #   14:00 Bucharest → 11:00 UTC (summer) / 12:00 UTC (winter)
-    #   20:00 Bucharest → 17:00 UTC (summer) / 18:00 UTC (winter)
-    - cron: "0 4,5,11,12,17,18 * * *"
+    # GitHub cron is UTC-only. During Bucharest DST, these are 08:00, 14:00, 20:00, and 02:00.
+    # Do not add a runtime hour gate here: GitHub may start scheduled jobs late.
+    - cron: "0 5,11,17,23 * * *"
 
 concurrency:
   group: crawl
   cancel-in-progress: false
 
 jobs:
-  gate:
-    name: Time gate (Europe/Bucharest)
-    runs-on: ubuntu-latest
-    outputs:
-      run: ${{ steps.check.outputs.run }}
-    steps:
-      - id: check
-        run: |
-          if [[ "${{ github.event_name }}" != "schedule" ]]; then
-            echo "Manual dispatch — running."
-            echo "run=true" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-          HOUR=$(TZ=Europe/Bucharest date +%H)
-          echo "Current Bucharest hour: $HOUR"
-          if [[ "$HOUR" == "07" || "$HOUR" == "14" || "$HOUR" == "20" ]]; then
-            echo "Allowed hour — running."
-            echo "run=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "Not 07:00, 14:00, or 20:00 Bucharest — skipping."
-            echo "run=false" >> "$GITHUB_OUTPUT"
-          fi
-
   crawl:
     name: Run crawl pipeline
-    needs: gate
-    if: needs.gate.outputs.run == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 330
     env:
@@ -84,7 +54,7 @@ jobs:
         run: uv sync --frozen
 
       - name: Domain crawl + scoring
-        if: ${{ !inputs.skip_domain }}
+        if: ${{ github.event_name != 'workflow_dispatch' || !inputs.skip_domain }}
         run: |
           if [[ "${{ inputs.skip_score }}" == "true" ]]; then
             ./start crawler --skip-score
@@ -93,7 +63,7 @@ jobs:
           fi
 
       - name: GitHub opencode crawl
-        if: ${{ !inputs.skip_github }}
+        if: ${{ github.event_name != 'workflow_dispatch' || !inputs.skip_github }}
         run: ./start-git-crawl
 
       - name: Upload logs
