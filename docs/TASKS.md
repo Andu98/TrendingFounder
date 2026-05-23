@@ -31,6 +31,7 @@
 - [x] **A2026-05-21.10** — Schedule the GitHub Actions crawl workflow for 07:00, 14:00, and 20:00 Europe/Bucharest with DST-safe UTC trigger candidates.
 - [x] **A2026-05-23.01** — Remove the GitHub Actions runtime time gate so delayed scheduled starts still run the crawl pipeline, with four daily UTC triggers offset from minute 0.
 - [x] **A2026-05-23.02** — Refill Collected Data with the next visible batch after optimistic status updates clear the current page.
+- [x] **A2026-05-23.03** — Remove the versioned Streamlit config file after Community Cloud auto-update failures required manual reboot recovery.
 
 - Implement async bulk DB client for domain deduplication and observation insertion.
 - Load existing domains into memory at crawl start.

@@ -185,3 +185,11 @@ This separation avoids mixing repository discovery with domain observations, pre
 The GitHub Actions crawl workflow runs on a single UTC cron entry and does not use a runtime Europe/Bucharest hour gate. GitHub can start scheduled workflows late, and a strict runtime-hour check can mark the workflow successful while skipping the actual crawl job.
 
 The current schedule is `05:17`, `11:17`, `17:17`, and `23:17` UTC, which corresponds to `08:17`, `14:17`, `20:17`, and `02:17` Europe/Bucharest during daylight saving time. The non-zero minute avoids GitHub's documented start-of-hour load window, while still favoring reliably running the pipeline for each scheduled trigger over enforcing exact local wall-clock hours inside the workflow.
+
+## ADR-028: Do not version Streamlit Community Cloud runtime config
+
+**Status:** Accepted
+
+The repository no longer versions `.streamlit/config.toml`. Streamlit Community Cloud auto-update failures required manual reboot recovery, and similar Streamlit Cloud failures have been tied to permission errors while resetting versioned `.streamlit/config.toml` files.
+
+The deployed app now relies on Streamlit Community Cloud's default server settings. This prioritizes reliable GitHub auto-sync over local tuning of websocket ping interval and disconnected session TTL.
