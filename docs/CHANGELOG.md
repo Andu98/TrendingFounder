@@ -34,6 +34,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - GitHub Actions crawl scheduling now runs five times daily at 05:17, 07:17, 11:17, 16:17, and 18:17 UTC, matching 08:17, 10:17, 14:17, 19:17, and 21:17 in Bucharest during daylight saving time, without a runtime Bucharest-hour gate.
 - Reports page header copy was lightly adjusted to verify Streamlit Community Cloud auto-updates after removing the server config file.
 - Collected Data category filtering is now multi-select, defaults to SaaS, Productivity, and Developer Tools, starts sorted by score, hides global giants by default, and selects the previous plus current month date range. The range RPC now accepts comma-separated category filters.
+- Collected Data mobile cards now keep the review status buttons visible with larger touch targets.
 
 ### Added
 - Project skeleton with src/ package structure

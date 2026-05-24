@@ -245,6 +245,14 @@ def test_domain_table_css_widths_match_status_second_layout():
     assert "grid-template-columns: 2fr 1.7fr 0.65fr 3.1fr 0.65fr 0.85fr" in css
 
 
+def test_mobile_domain_table_keeps_status_buttons_visible():
+    css = Path("app/streamlit_app.py").read_text()
+
+    assert "nth-child(2) {\n                display: block !important;" in css
+    assert "nth-child(3) {\n                display: none !important;" in css
+    assert "min-height: 2.35rem !important;" in css
+
+
 def test_status_change_queues_optimistic_update_for_streamlit_callback(monkeypatch):
     executor = MagicMock()
     clear_dashboard_caches = MagicMock()

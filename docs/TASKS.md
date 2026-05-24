@@ -38,6 +38,7 @@
 - [x] **A2026-05-23.07** — Reschedule GitHub Actions crawl to 08:17, 10:17, 14:17, 19:17, and 21:17 Europe/Bucharest during daylight saving time.
 - [x] **A2026-05-23.08** — Add a temporary lightweight GitHub Actions schedule probe to diagnose whether scheduled workflows fire at all.
 - [x] **A2026-05-24.01** — Make Collected Data category filtering multi-select with SaaS, Productivity, and Developer Tools selected by default, score sorting, hidden global giants, and a previous-plus-current-month default date range.
+- [x] **A2026-05-24.02** — Keep Collected Data status buttons visible and tappable in the mobile domain card layout.
 
 - Implement async bulk DB client for domain deduplication and observation insertion.
 - Load existing domains into memory at crawl start.

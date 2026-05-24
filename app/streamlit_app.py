@@ -1467,12 +1467,18 @@ def inject_styles(theme_name: str) -> None:
                 width: 100% !important;
             }
 
-            [data-testid="stHorizontalBlock"]:has(.tf-domain-link) > [data-testid="stColumn"]:nth-child(2) {
+            [data-testid="stHorizontalBlock"]:has(.tf-domain-link) > [data-testid="stColumn"]:nth-child(3) {
                 display: none !important;
             }
 
-            [data-testid="stHorizontalBlock"]:has(.tf-domain-link) > [data-testid="stColumn"]:nth-child(3) {
-                display: none !important;
+            [data-testid="stHorizontalBlock"]:has(.tf-domain-link) > [data-testid="stColumn"]:nth-child(2) {
+                display: block !important;
+            }
+
+            [data-testid="stHorizontalBlock"]:has(.tf-domain-link) > [data-testid="stColumn"]:nth-child(2)
+            div[class*="st-key-status_actions_"] button {
+                font-size: 0.78rem !important;
+                min-height: 2.35rem !important;
             }
 
             [data-testid="stVerticalBlock"]:has(
