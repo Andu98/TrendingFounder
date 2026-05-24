@@ -2,20 +2,34 @@ from datetime import date
 
 import streamlit as st
 
-from app.data_loader import CATEGORY_FILTER_OPTIONS, OPPORTUNITY_TYPE_OPTIONS, SORT_OPTIONS, STATUS_FILTER_OPTIONS
+from app.data_loader import (
+    CATEGORY_FILTER_OPTIONS,
+    OPPORTUNITY_TYPE_OPTIONS,
+    SORT_OPTIONS,
+    STATUS_FILTER_OPTIONS,
+)
 
 STATUS_CHECKBOX_OPTIONS = STATUS_FILTER_OPTIONS[1:]
+CATEGORY_MULTISELECT_OPTIONS = CATEGORY_FILTER_OPTIONS
+CATEGORY_MATCH_OPTIONS = CATEGORY_FILTER_OPTIONS[1:]
+DEFAULT_CATEGORY_FILTER_SELECTION = ["SaaS", "Productivity", "Developer Tools"]
+DEFAULT_SORT_OPTION = "Score High → Low"
+DEFAULT_HIDE_GLOBAL_GIANTS = True
 
 
 def _default_date_range() -> tuple[date, date]:
     today = date.today()
-    month_start = today.replace(day=1)
-    if today.month == 12:
-        next_month = today.replace(year=today.year + 1, month=1, day=1)
+    if today.month == 1:
+        previous_month_start = date(today.year - 1, 12, 1)
     else:
-        next_month = today.replace(month=today.month + 1, day=1)
+        previous_month_start = date(today.year, today.month - 1, 1)
+
+    if today.month == 12:
+        next_month = date(today.year + 1, 1, 1)
+    else:
+        next_month = date(today.year, today.month + 1, 1)
     month_end = date.fromordinal(next_month.toordinal() - 1)
-    return month_start, month_end
+    return previous_month_start, month_end
 
 
 def _normalize_date_range(value) -> tuple[date, date]:
@@ -40,6 +54,28 @@ def _status_filter_from_values(values: dict[str, bool]) -> str:
     return ",".join(selected)
 
 
+def _coerce_category_values(value) -> list[str]:
+    if isinstance(value, str):
+        return [part.strip() for part in value.split(",") if part.strip()]
+    if isinstance(value, tuple | list | set):
+        return [str(item).strip() for item in value if item is not None and str(item).strip()]
+    if value is None:
+        return []
+    text = str(value).strip()
+    return [text] if text else []
+
+
+def _category_filter_from_values(values) -> str:
+    selected_values = set(_coerce_category_values(values))
+    if "All Categories" in selected_values:
+        return "All Categories"
+
+    selected = [category for category in CATEGORY_MATCH_OPTIONS if category in selected_values]
+    if not selected or len(selected) == len(CATEGORY_MATCH_OPTIONS):
+        return "All Categories"
+    return ",".join(selected)
+
+
 def render_filters(show_reviewed_default: bool = False, expanded: bool = True) -> dict:
     # Alias for backward compatibility
     """Render the dashboard filter controls and return selected values.
@@ -50,7 +86,7 @@ def render_filters(show_reviewed_default: bool = False, expanded: bool = True) -
     """
     with st.expander("Filters", expanded=expanded):
         st.markdown('<span class="tf-filters-anchor"></span>', unsafe_allow_html=True)
-        cols = st.columns([1.25, 1.1, 1, 0.86], gap="medium", vertical_alignment="bottom")
+        cols = st.columns([1.2, 1.7, 1, 0.86], gap="medium", vertical_alignment="bottom")
 
         with cols[0]:
             date_range = st.date_input(
@@ -60,16 +96,19 @@ def render_filters(show_reviewed_default: bool = False, expanded: bool = True) -
             )
 
         with cols[1]:
-            category_filter = st.selectbox(
-                "Category",
-                CATEGORY_FILTER_OPTIONS,
-                key="filter_category",
+            category_values = st.multiselect(
+                "Categories",
+                CATEGORY_MULTISELECT_OPTIONS,
+                default=DEFAULT_CATEGORY_FILTER_SELECTION,
+                key="filter_categories",
             )
+            category_filter = _category_filter_from_values(category_values)
 
         with cols[2]:
             sort_by = st.selectbox(
                 "Sort",
                 SORT_OPTIONS,
+                index=SORT_OPTIONS.index(DEFAULT_SORT_OPTION),
                 key="filter_sort",
             )
 
@@ -118,7 +157,7 @@ def render_filters(show_reviewed_default: bool = False, expanded: bool = True) -
         with opp_cols[3]:
             hide_global_giants = st.checkbox(
                 "Hide global giants",
-                value=False,
+                value=DEFAULT_HIDE_GLOBAL_GIANTS,
                 key="filter_hide_giants",
             )
 

@@ -151,6 +151,25 @@ def _date_iso(value: date | datetime | str | None, default: date | None = None) 
     return str(value)
 
 
+def _category_filter_text(value) -> str:
+    if isinstance(value, str):
+        text = value.strip()
+        return text or "All Categories"
+    if isinstance(value, tuple | list | set):
+        selected_values = {str(item).strip() for item in value if item is not None and str(item).strip()}
+        if "All Categories" in selected_values:
+            return "All Categories"
+        filterable_categories = CATEGORY_FILTER_OPTIONS[1:]
+        selected = [category for category in filterable_categories if category in selected_values]
+        if not selected or len(selected) == len(filterable_categories):
+            return "All Categories"
+        return ",".join(selected)
+    if value is None:
+        return "All Categories"
+    text = str(value).strip()
+    return text or "All Categories"
+
+
 def _parse_date(value) -> date | None:
     if value is None:
         return None
@@ -250,7 +269,7 @@ def load_collected_data(
     sort_by: str = "Score High → Low",
     search_query: str = "",
     status_filter: str = "All Statuses",
-    category_filter: str = "All Categories",
+    category_filter: str | list[str] | tuple[str, ...] | set[str] = "All Categories",
     date_start: date | datetime | str | None = None,
     date_end: date | datetime | str | None = None,
     page: int = 1,
@@ -266,6 +285,7 @@ def load_collected_data(
         end_iso = _date_iso(date_end) if date_end is not None else start_iso
         page = max(1, int(page or 1))
         page_size = max(1, int(page_size or DEFAULT_PAGE_SIZE))
+        category_filter_value = _category_filter_text(category_filter)
 
         client = get_supabase_client()
         response = (
@@ -276,7 +296,7 @@ def load_collected_data(
                     "end_date": end_iso,
                     "show_reviewed": show_reviewed,
                     "status_filter": status_filter,
-                    "category_filter": category_filter,
+                    "category_filter": category_filter_value,
                     "search_query": search_query,
                     "sort_by": sort_by,
                     "page": page,

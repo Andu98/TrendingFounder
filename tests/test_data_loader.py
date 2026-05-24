@@ -98,7 +98,7 @@ def test_load_collected_data_calls_range_rpc(monkeypatch):
         sort_by="Newest",
         search_query="example",
         status_filter="ok,exists",
-        category_filter="SaaS",
+        category_filter="SaaS,Productivity",
         date_start=date(2026, 5, 15),
         date_end=date(2026, 5, 16),
         page=2,
@@ -112,7 +112,7 @@ def test_load_collected_data_calls_range_rpc(monkeypatch):
         "end_date": "2026-05-16",
         "show_reviewed": True,
         "status_filter": "ok,exists",
-        "category_filter": "SaaS",
+        "category_filter": "SaaS,Productivity",
         "search_query": "example",
         "sort_by": "Newest",
         "min_opportunity_score": 0,
@@ -455,7 +455,14 @@ def test_status_filter_from_checkbox_values():
     )
 
 
-def test_default_date_range_uses_full_current_month(monkeypatch):
+def test_category_filter_from_multiselect_values():
+    assert filters._category_filter_from_values(["Developer Tools", "SaaS"]) == "SaaS,Developer Tools"
+    assert filters._category_filter_from_values([]) == "All Categories"
+    assert filters._category_filter_from_values(["Unknown", "SaaS", "SaaS"]) == "SaaS"
+    assert filters._category_filter_from_values(["All Categories", "SaaS"]) == "All Categories"
+
+
+def test_default_date_range_uses_previous_and_current_month(monkeypatch):
     class FixedDate(date):
         @classmethod
         def today(cls):
@@ -463,10 +470,10 @@ def test_default_date_range_uses_full_current_month(monkeypatch):
 
     monkeypatch.setattr(filters, "date", FixedDate)
 
-    assert filters._default_date_range() == (date(2026, 5, 1), date(2026, 5, 31))
+    assert filters._default_date_range() == (date(2026, 4, 1), date(2026, 5, 31))
 
 
-def test_session_date_range_defaults_to_full_current_month(monkeypatch):
+def test_session_date_range_defaults_to_previous_and_current_month(monkeypatch):
     class FixedDate(date):
         @classmethod
         def today(cls):
@@ -475,13 +482,18 @@ def test_session_date_range_defaults_to_full_current_month(monkeypatch):
     monkeypatch.setattr(filters, "date", FixedDate)
     monkeypatch.setattr(streamlit_app.st, "session_state", {})
 
-    assert streamlit_app._date_range_from_session() == (date(2026, 5, 1), date(2026, 5, 31))
+    assert streamlit_app._date_range_from_session() == (date(2026, 4, 1), date(2026, 5, 31))
 
 
-def test_current_filter_values_defaults_show_reviewed_to_false(monkeypatch):
+def test_current_filter_values_defaults_for_collected_data_triage(monkeypatch):
     monkeypatch.setattr(streamlit_app.st, "session_state", {})
 
-    assert streamlit_app.current_filter_values()["show_reviewed"] is False
+    values = streamlit_app.current_filter_values()
+
+    assert values["show_reviewed"] is False
+    assert values["category_filter"] == "SaaS,Productivity,Developer Tools"
+    assert values["sort_by"] == "Score High → Low"
+    assert values["hide_global_giants"] is True
 
 
 def test_range_rpc_newest_sort_uses_domain_first_seen_timestamp():
@@ -497,6 +509,14 @@ def test_range_rpc_accepts_multiple_status_filters():
     assert "p.status_filter = '__none__'" in sql
     assert "STRING_TO_ARRAY(p.status_filter, ',')" in sql
     assert "TRIM(status_value) IN ('pending', 'ok', 'exists', 'bad')" in sql
+
+
+def test_range_rpc_accepts_multiple_category_filters():
+    sql = Path("supabase/schemas/002_views.sql").read_text()
+
+    assert "STRING_TO_ARRAY(p.category_filter, ',')" in sql
+    assert "TRIM(category_value)" in sql
+    assert "COALESCE(NULLIF(dom.llm_category, ''), 'Other') = ANY" in sql
 
 
 def test_range_rpc_score_sort_has_fallback_for_unscored_observations():

@@ -159,7 +159,13 @@ aggregated AS (
         AND (
             p.category_filter IS NULL
             OR p.category_filter = 'All Categories'
-            OR COALESCE(NULLIF(dom.llm_category, ''), 'Other') = p.category_filter
+            OR COALESCE(NULLIF(dom.llm_category, ''), 'Other') = ANY(
+                ARRAY(
+                    SELECT TRIM(category_value)
+                    FROM UNNEST(STRING_TO_ARRAY(p.category_filter, ',')) AS categories(category_value)
+                    WHERE TRIM(category_value) <> ''
+                )
+            )
         )
         AND (
             p.search_query IS NULL

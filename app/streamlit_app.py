@@ -17,10 +17,16 @@ if str(project_root) not in sys.path:
     sys.path.insert(0, str(project_root))
 
 from app.components.domain_table import render_domain_table
-from app.components.filters import _default_date_range, render_filters
+from app.components.filters import (
+    DEFAULT_CATEGORY_FILTER_SELECTION,
+    DEFAULT_HIDE_GLOBAL_GIANTS,
+    DEFAULT_SORT_OPTION,
+    _category_filter_from_values,
+    _default_date_range,
+    render_filters,
+)
 from app.components.metrics_cards import render_metrics_cards, render_progress_bar
 from app.data_loader import (
-    CATEGORY_FILTER_OPTIONS,
     DEFAULT_PAGE_SIZE,
     OPPORTUNITY_TYPE_OPTIONS,
     PAGE_SIZE_OPTIONS,
@@ -2053,15 +2059,17 @@ def current_filter_values() -> dict:
     return {
         "search_query": "",
         "status_filter": _status_filter_from_session(),
-        "category_filter": _session_option("filter_category", CATEGORY_FILTER_OPTIONS, CATEGORY_FILTER_OPTIONS[0]),
+        "category_filter": _category_filter_from_values(
+            st.session_state.get("filter_categories", DEFAULT_CATEGORY_FILTER_SELECTION)
+        ),
         "show_reviewed": bool(st.session_state.get("filter_show_reviewed", False)),
-        "sort_by": _session_option("filter_sort", SORT_OPTIONS, SORT_OPTIONS[0]),
+        "sort_by": _session_option("filter_sort", SORT_OPTIONS, DEFAULT_SORT_OPTION),
         "min_score": 0,
         "date_start": date_start,
         "date_end": date_end,
         "min_opportunity_score": int(st.session_state.get("filter_min_opp_score", 0)),
         "min_opportunity_confidence": int(st.session_state.get("filter_min_opp_confidence", 0)),
-        "hide_global_giants": bool(st.session_state.get("filter_hide_giants", False)),
+        "hide_global_giants": bool(st.session_state.get("filter_hide_giants", DEFAULT_HIDE_GLOBAL_GIANTS)),
         "opportunity_type_filter": _session_option(
             "filter_opp_type",
             OPPORTUNITY_TYPE_OPTIONS,
