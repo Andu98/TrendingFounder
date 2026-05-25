@@ -40,42 +40,50 @@ class TestFormatProgress:
 
 class TestGetOrCreateTodayRun:
     def test_creates_new_run_when_none_exists(self):
+        target_date = date(2026, 5, 25)
         crawl_run_repo = MagicMock()
         crawl_run_repo.get_today_run.return_value = None
         crawl_run_repo.create_run.return_value = {"id": "new-run"}
 
         country_status_repo = MagicMock()
 
-        result = get_or_create_today_run(crawl_run_repo, country_status_repo)
+        result = get_or_create_today_run(crawl_run_repo, country_status_repo, run_date=target_date)
 
-        crawl_run_repo.create_run.assert_called_once()
+        crawl_run_repo.get_today_run.assert_called_once_with(run_date=target_date)
+        crawl_run_repo.create_run.assert_called_once_with(run_date=target_date)
         assert result["resume"] is False
 
     def test_resumes_existing_running_run(self):
+        target_date = date(2026, 5, 25)
         existing = {"id": "existing-run", "status": "running"}
         crawl_run_repo = MagicMock()
         crawl_run_repo.get_today_run.return_value = existing
 
         country_status_repo = MagicMock()
 
-        result = get_or_create_today_run(crawl_run_repo, country_status_repo)
+        result = get_or_create_today_run(crawl_run_repo, country_status_repo, run_date=target_date)
 
+        crawl_run_repo.get_today_run.assert_called_once_with(run_date=target_date)
         crawl_run_repo.create_run.assert_not_called()
         assert result["resume"] is True
         assert result["id"] == "existing-run"
 
     def test_resumes_partial_run(self):
+        target_date = date(2026, 5, 25)
         existing = {"id": "partial-run", "status": "partial"}
         crawl_run_repo = MagicMock()
         crawl_run_repo.get_today_run.return_value = existing
 
         country_status_repo = MagicMock()
 
-        result = get_or_create_today_run(crawl_run_repo, country_status_repo)
+        result = get_or_create_today_run(crawl_run_repo, country_status_repo, run_date=target_date)
 
+        crawl_run_repo.get_today_run.assert_called_once_with(run_date=target_date)
+        crawl_run_repo.create_run.assert_not_called()
         assert result["resume"] is True
 
     def test_creates_new_when_completed(self):
+        target_date = date(2026, 5, 25)
         existing = {"id": "old-run", "status": "completed"}
         crawl_run_repo = MagicMock()
         crawl_run_repo.get_today_run.return_value = existing
@@ -83,9 +91,10 @@ class TestGetOrCreateTodayRun:
 
         country_status_repo = MagicMock()
 
-        result = get_or_create_today_run(crawl_run_repo, country_status_repo)
+        result = get_or_create_today_run(crawl_run_repo, country_status_repo, run_date=target_date)
 
-        crawl_run_repo.create_run.assert_called_once()
+        crawl_run_repo.get_today_run.assert_called_once_with(run_date=target_date)
+        crawl_run_repo.create_run.assert_called_once_with(run_date=target_date)
         assert result["resume"] is False
 
 
@@ -130,6 +139,7 @@ async def test_orchestrator_runs_with_mocked_repos():
     mock_observation_repo.insert_observation.return_value = {"id": "obs-uuid"}
 
     mock_crawl_repo = MagicMock()
+    mock_crawl_repo.get_today_run.return_value = None
     mock_crawl_repo.create_run.return_value = {"id": "run-uuid"}
     mock_crawl_repo.update_progress.return_value = {}
     mock_crawl_repo.complete_run.return_value = {"id": "run-uuid", "status": "completed"}

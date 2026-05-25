@@ -289,6 +289,11 @@ $$;
 
 -- Stats view: aggregated metrics for the dashboard
 CREATE OR REPLACE VIEW v_crawl_stats AS
+WITH latest_runs AS (
+    SELECT DISTINCT ON (run_date) *
+    FROM crawl_runs
+    ORDER BY run_date DESC, started_at DESC
+)
 SELECT
     runs.run_date, runs.status AS crawl_status,
     runs.countries_total, runs.countries_completed, runs.countries_failed,
@@ -322,16 +327,22 @@ SELECT
         FROM v_domains_today v
         WHERE v.best_score_today > 80
     ) AS high_score_today
-FROM crawl_runs runs;
+FROM latest_runs runs;
 
--- Country-level status for today's crawl
+-- Country-level status for the latest current-date crawl
 CREATE OR REPLACE VIEW v_crawl_country_progress AS
+WITH latest_run AS (
+    SELECT *
+    FROM crawl_runs
+    WHERE run_date = CURRENT_DATE
+    ORDER BY started_at DESC
+    LIMIT 1
+)
 SELECT
     runs.id AS crawl_run_id, runs.run_date, runs.status AS crawl_status,
     ccs.country_code, ccs.country_name, ccs.status AS country_status,
     ccs.started_at, ccs.finished_at, ccs.error_message,
     ccs.items_found, ccs.new_domains, ccs.duplicate_domains
-FROM crawl_runs runs
+FROM latest_run runs
 LEFT JOIN crawl_country_status ccs ON ccs.crawl_run_id = runs.id
-WHERE runs.run_date = CURRENT_DATE
 ORDER BY ccs.country_code;

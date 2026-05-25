@@ -82,7 +82,7 @@ class CrawlOrchestrator:
         existing_domains = await load_existing_domains()
         self._existing_domains = existing_domains
 
-        run = get_or_create_today_run(self._crawl_run_repo, self._country_status_repo)
+        run = get_or_create_today_run(self._crawl_run_repo, self._country_status_repo, run_date=today)
         run_id = run["id"]
         is_resume = run.get("resume", False)
 

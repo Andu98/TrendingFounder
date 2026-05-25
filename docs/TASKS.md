@@ -39,6 +39,7 @@
 - [x] **A2026-05-23.08** — Add a temporary lightweight GitHub Actions schedule probe to diagnose whether scheduled workflows fire at all.
 - [x] **A2026-05-24.01** — Make Collected Data category filtering multi-select with SaaS, Productivity, and Developer Tools selected by default, score sorting, hidden global giants, and a previous-plus-current-month default date range.
 - [x] **A2026-05-24.02** — Keep Collected Data status buttons visible and tappable in the mobile domain card layout.
+- [x] **A2026-05-25.01** — Allow multiple domain crawl runs per calendar date by removing the `crawl_runs.run_date` uniqueness constraint, selecting the latest run for resume, and applying the Supabase migration.
 
 - Implement async bulk DB client for domain deduplication and observation insertion.
 - Load existing domains into memory at crawl start.

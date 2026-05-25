@@ -84,7 +84,7 @@ Tracks each daily crawl execution.
 | Column | Type | Notes |
 |---|---|---|
 | id | UUID | PK |
-| run_date | DATE | UNIQUE |
+| run_date | DATE | Multiple runs per date are allowed |
 | status | TEXT | Enum: `pending`, `running`, `completed`, `failed`, `partial` |
 | started_at | TIMESTAMPTZ | |
 | finished_at | TIMESTAMPTZ | Nullable |
@@ -149,13 +149,13 @@ Same shape as `v_domains_today` but filtered to last 7 days. Extra columns: `fir
 
 ### `v_crawl_stats`
 
-Aggregated metrics from `crawl_runs` + derived counts.
+Aggregated metrics from the latest `crawl_runs` row for each date + derived counts.
 
 Columns: `run_date`, `crawl_status`, `countries_total`, `countries_completed`, `countries_failed`, `requests_total`, `requests_failed`, `new_domains_count`, `duplicate_domains_count`, `llm_processed_count`, `llm_skipped_count`, `started_at`, `finished_at`, `new_domains_today`, `observations_today`, `reviewed_today`, `reviewed_total`, `high_score_today`
 
 ### `v_crawl_country_progress`
 
-Per-country status for today's run.
+Per-country status for the latest current-day run.
 
 Columns: `crawl_run_id`, `run_date`, `crawl_status`, `country_code`, `country_name`, `country_status`, `started_at`, `finished_at`, `error_message`, `items_found`, `new_domains`, `duplicate_domains`
 

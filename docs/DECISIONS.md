@@ -201,3 +201,13 @@ The secrets example lives at `docs/streamlit-secrets.toml.example`. This keeps l
 A temporary `.github/workflows/schedule-probe.yml` workflow runs every 15 minutes without secrets or crawler commands. It prints only GitHub event/ref/SHA and UTC/Bucharest timestamps.
 
 This isolates GitHub scheduled workflow delivery from crawler runtime, Supabase writes, Cloudflare API calls, and long dependency installs. Once scheduled workflow delivery is confirmed, the probe should be removed.
+
+## ADR-030: Allow multiple domain crawl runs per date
+
+**Status:** Accepted
+
+The scheduled crawl can run several times per Europe/Bucharest day, so `crawl_runs.run_date` must not be unique. Each execution gets its own `crawl_runs` row, while `run_date` remains the business date used for observations and reports.
+
+Resume behavior is based on the latest `crawl_runs` row for the requested date, ordered by `started_at DESC`. If that latest run is `running` or `partial`, the crawler resumes it. If it is `completed` or `failed`, the crawler creates a new run for the same date.
+
+Dashboard reporting views use the same latest-run rule so multiple executions on one date do not mix country progress rows from separate runs.

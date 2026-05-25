@@ -36,7 +36,7 @@ CREATE INDEX IF NOT EXISTS idx_domains_first_seen_date ON domains (first_seen_da
 -- Crawl runs: tracks each daily crawl execution
 CREATE TABLE IF NOT EXISTS crawl_runs (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    run_date DATE NOT NULL UNIQUE DEFAULT CURRENT_DATE,
+    run_date DATE NOT NULL DEFAULT CURRENT_DATE,
     status TEXT NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'running', 'completed', 'failed', 'partial')),
     started_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     finished_at TIMESTAMPTZ,
@@ -55,6 +55,7 @@ CREATE TABLE IF NOT EXISTS crawl_runs (
 );
 
 CREATE INDEX IF NOT EXISTS idx_crawl_runs_run_date ON crawl_runs (run_date);
+CREATE INDEX IF NOT EXISTS idx_crawl_runs_run_date_started_at ON crawl_runs (run_date, started_at DESC);
 CREATE INDEX IF NOT EXISTS idx_crawl_runs_status ON crawl_runs (status);
 
 -- Domain observations: one row per appearance in a country/day/ranking type

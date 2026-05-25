@@ -1,5 +1,7 @@
 """Crawl progress tracking utilities."""
 
+from datetime import date
+
 from src.db.repositories import CrawlCountryStatusRepository, CrawlRunRepository
 from src.utils.logging import get_logger
 
@@ -9,8 +11,9 @@ logger = get_logger(__name__)
 def get_or_create_today_run(
     crawl_run_repo: CrawlRunRepository,
     country_status_repo: CrawlCountryStatusRepository,
+    run_date: date | None = None,
 ) -> dict:
-    """Get today's existing crawl run or create a new one.
+    """Get the latest crawl run for a date or create a new one.
 
     If a run exists and is in 'running' or 'partial' state, it can be resumed.
     If it's 'completed' or 'failed', a new run is created.
@@ -18,7 +21,8 @@ def get_or_create_today_run(
     Returns:
         The crawl_run dict with a 'resume' flag indicating if this is a resume.
     """
-    existing = crawl_run_repo.get_today_run()
+    target_date = run_date or date.today()
+    existing = crawl_run_repo.get_today_run(run_date=target_date)
 
     if existing and existing["status"] in ("running", "partial"):
         logger.info(f"Resuming existing crawl run {existing['id']} " f"(status={existing['status']})")
@@ -26,9 +30,9 @@ def get_or_create_today_run(
         return existing
 
     if existing:
-        logger.info(f"Today already has a {existing['status']} run. " f"Creating a new run.")
+        logger.info(f"{target_date} already has a {existing['status']} run. " f"Creating a new run.")
 
-    run = crawl_run_repo.create_run()
+    run = crawl_run_repo.create_run(run_date=target_date)
     run["resume"] = False
     return run
 

@@ -190,7 +190,7 @@ class CrawlRunRepository:
         row = {
             "run_date": today.isoformat(),
             "status": CrawlRunStatus.RUNNING.value,
-            "started_at": datetime.now().isoformat(),
+            "started_at": datetime.now(UTC).isoformat(),
         }
         result = self._client.table("crawl_runs").insert(row).execute()
         run = result.data[0] if result.data else {}
@@ -240,19 +240,22 @@ class CrawlRunRepository:
         """Mark a crawl run as completed, optionally with an error message."""
         row = {
             "status": status.value,
-            "finished_at": datetime.now().isoformat(),
+            "finished_at": datetime.now(UTC).isoformat(),
         }
         if error_message:
             row["error_message"] = error_message
         result = self._client.table("crawl_runs").update(row).eq("id", run_id).execute()
         return result.data[0] if result.data else {}
 
-    def get_today_run(self) -> dict | None:
-        """Retrieve today's crawl run record, if it exists."""
+    def get_today_run(self, run_date: date | None = None) -> dict | None:
+        """Retrieve the latest crawl run record for a date, if one exists."""
+        target_date = run_date or date.today()
         result = (
             self._client.table("crawl_runs")
             .select("*")
-            .eq("run_date", date.today().isoformat())
+            .eq("run_date", target_date.isoformat())
+            .order("started_at", desc=True)
+            .limit(1)
             .execute()
         )
         return result.data[0] if result.data else None

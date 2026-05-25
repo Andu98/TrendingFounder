@@ -1,3 +1,4 @@
+from datetime import date
 from unittest.mock import MagicMock
 
 import pytest
@@ -96,9 +97,12 @@ class TestCrawlRunRepository:
         mock_client.table.return_value.insert.return_value.execute.return_value = response
 
         repo = CrawlRunRepository(client=mock_client)
-        result = repo.create_run()
+        result = repo.create_run(run_date=date(2026, 5, 25))
 
         mock_client.table.assert_called_with("crawl_runs")
+        row = mock_client.table.return_value.insert.call_args.args[0]
+        assert row["run_date"] == "2026-05-25"
+        assert row["started_at"].endswith("+00:00")
         assert result["id"] == "run-uuid-1"
 
     def test_complete_run(self, mock_client):
@@ -109,26 +113,33 @@ class TestCrawlRunRepository:
         repo = CrawlRunRepository(client=mock_client)
         result = repo.complete_run("run-uuid-1")
 
+        row = mock_client.table.return_value.update.call_args.args[0]
+        assert row["finished_at"].endswith("+00:00")
         assert result["status"] == "completed"
 
     def test_get_today_run_found(self, mock_client):
         response = MagicMock()
         response.data = [{"id": "run-uuid-1", "status": "running"}]
-        mock_client.table.return_value.select.return_value.eq.return_value.execute.return_value = response
+        query = mock_client.table.return_value.select.return_value.eq.return_value
+        query.order.return_value.limit.return_value.execute.return_value = response
 
         repo = CrawlRunRepository(client=mock_client)
-        result = repo.get_today_run()
+        result = repo.get_today_run(run_date=date(2026, 5, 25))
 
+        mock_client.table.return_value.select.return_value.eq.assert_called_once_with("run_date", "2026-05-25")
+        query.order.assert_called_once_with("started_at", desc=True)
+        query.order.return_value.limit.assert_called_once_with(1)
         assert result is not None
         assert result["id"] == "run-uuid-1"
 
     def test_get_today_run_not_found(self, mock_client):
         response = MagicMock()
         response.data = []
-        mock_client.table.return_value.select.return_value.eq.return_value.execute.return_value = response
+        query = mock_client.table.return_value.select.return_value.eq.return_value
+        query.order.return_value.limit.return_value.execute.return_value = response
 
         repo = CrawlRunRepository(client=mock_client)
-        result = repo.get_today_run()
+        result = repo.get_today_run(run_date=date(2026, 5, 25))
 
         assert result is None
 

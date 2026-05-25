@@ -35,6 +35,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Reports page header copy was lightly adjusted to verify Streamlit Community Cloud auto-updates after removing the server config file.
 - Collected Data category filtering is now multi-select, defaults to SaaS, Productivity, and Developer Tools, starts sorted by score, hides global giants by default, and selects the previous plus current month date range. The range RPC now accepts comma-separated category filters.
 - Collected Data mobile cards now keep the review status buttons visible with larger touch targets.
+- Domain crawl runs can now repeat on the same calendar date: `crawl_runs.run_date` is no longer unique, the repository selects the latest run for resume checks, the orchestrator passes the requested crawl date into run lookup/creation, and crawl reporting views use the latest run for each date.
 
 ### Added
 - Project skeleton with src/ package structure
