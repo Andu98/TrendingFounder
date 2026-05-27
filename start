@@ -13,6 +13,95 @@ load_env() {
   fi
 }
 
+find_understand_plugin_root() {
+  local skill_real=""
+  local skill_root=""
+  local candidates=()
+
+  if command -v realpath >/dev/null 2>&1 && [[ -e "$HOME/.agents/skills/understand-dashboard" ]]; then
+    skill_real="$(realpath "$HOME/.agents/skills/understand-dashboard" 2>/dev/null || true)"
+  elif command -v readlink >/dev/null 2>&1 && [[ -e "$HOME/.agents/skills/understand-dashboard" ]]; then
+    skill_real="$(readlink "$HOME/.agents/skills/understand-dashboard" 2>/dev/null || true)"
+  fi
+
+  if [[ -n "$skill_real" ]]; then
+    skill_root="$(cd "$skill_real/../.." 2>/dev/null && pwd || true)"
+  fi
+
+  candidates+=("${UNDERSTAND_PLUGIN_ROOT:-}")
+  candidates+=("$HOME/.understand-anything-plugin")
+  candidates+=("$skill_root")
+  candidates+=("$HOME/.understand-anything/repo/understand-anything-plugin")
+  candidates+=("$HOME/.codex/understand-anything/understand-anything-plugin")
+  candidates+=("$HOME/.opencode/understand-anything/understand-anything-plugin")
+  candidates+=("$HOME/understand-anything/understand-anything-plugin")
+
+  local candidate
+  for candidate in "${candidates[@]}"; do
+    if [[ -n "$candidate" && -d "$candidate/packages/dashboard" ]]; then
+      printf "%s\n" "$candidate"
+      return 0
+    fi
+  done
+
+  return 1
+}
+
+start_understand_dashboard() {
+  if [[ ! -f "$ROOT_DIR/.understand-anything/knowledge-graph.json" ]]; then
+    echo "No Understand Anything graph found at $ROOT_DIR/.understand-anything/knowledge-graph.json"
+    echo "Run /understand --full first, then retry: ./start understand"
+    exit 1
+  fi
+
+  local plugin_root=""
+  if ! plugin_root="$(find_understand_plugin_root)"; then
+    echo "Could not find the Understand Anything plugin root."
+    echo "Expected one of:"
+    echo "  $HOME/.understand-anything/repo/understand-anything-plugin"
+    echo "  $HOME/.understand-anything-plugin"
+    echo "  $HOME/.agents/skills/understand-dashboard -> plugin skills"
+    exit 1
+  fi
+
+  local dashboard_dir="$plugin_root/packages/dashboard"
+
+  if [[ ! -d "$plugin_root/node_modules" || ! -d "$dashboard_dir/node_modules" ]]; then
+    if ! command -v pnpm >/dev/null 2>&1; then
+      echo "Understand Anything dashboard dependencies are missing."
+      echo "Install Node.js >= 22 and pnpm >= 10, then retry: ./start understand"
+      exit 1
+    fi
+    echo "Installing Understand Anything dashboard dependencies..."
+    (cd "$plugin_root" && (pnpm install --frozen-lockfile || pnpm install))
+  fi
+
+  if [[ ! -f "$plugin_root/packages/core/dist/index.js" ]]; then
+    if ! command -v pnpm >/dev/null 2>&1; then
+      echo "Understand Anything core build is missing."
+      echo "Install Node.js >= 22 and pnpm >= 10, then retry: ./start understand"
+      exit 1
+    fi
+    echo "Building Understand Anything core..."
+    (cd "$plugin_root" && pnpm --filter @understand-anything/core build)
+  fi
+
+  echo "Starting Understand Anything dashboard..."
+  echo "Viewing: $ROOT_DIR/.understand-anything/knowledge-graph.json"
+  echo "Use the Dashboard URL printed below, including the ?token= value."
+
+  cd "$dashboard_dir"
+  if command -v pnpm >/dev/null 2>&1; then
+    GRAPH_DIR="$ROOT_DIR" exec pnpm exec vite --host 127.0.0.1 "$@"
+  fi
+  if command -v npx >/dev/null 2>&1; then
+    GRAPH_DIR="$ROOT_DIR" exec npx vite --host 127.0.0.1 "$@"
+  fi
+
+  echo "Could not find pnpm or npx. Install Node.js >= 22 and pnpm >= 10."
+  exit 1
+}
+
 CMD="${1:-}"
 
 case "$CMD" in
@@ -76,10 +165,16 @@ case "$CMD" in
     exit 0
     ;;
 
+  understand)
+    shift
+    start_understand_dashboard "$@"
+    ;;
+
   *)
     echo "Usage:"
     echo "  ./start trending [streamlit args]"
     echo "  ./start crawler [crawler args]"
+    echo "  ./start understand [vite args]"
     echo
     echo "Examples:"
     echo "  ./start trending"
@@ -89,6 +184,8 @@ case "$CMD" in
     echo "  ./start crawler --skip-llm"
     echo "  ./start crawler --skip-score"
     echo "  ./start crawler --date 2026-05-15"
+    echo "  ./start understand"
+    echo "  ./start understand --port 5174"
     echo "  ./start-score [scoring args]"
     echo "  ./start-git-crawl [GitHub crawl args]"
     exit 2

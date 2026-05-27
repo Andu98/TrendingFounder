@@ -1,0 +1,7000 @@
+{
+  "version": "1.0.0",
+  "gitCommitHash": "1ef8a0bf1184d579e88b59b080751b77ec50d724",
+  "generatedAt": "2026-05-27T10:05:26.572Z",
+  "files": {
+    ".claude/plans/optimize-collected-data-performance.md": {
+      "filePath": ".claude/plans/optimize-collected-data-performance.md",
+      "contentHash": "d02eb2b52e8fcb93b13335c9d00e53292291d6c7ebce88e9e695d710792af60b",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 120,
+      "hasStructuralAnalysis": true
+    },
+    ".devcontainer/devcontainer.json": {
+      "filePath": ".devcontainer/devcontainer.json",
+      "contentHash": "519ea290ccc850e1da768631b1cce4fc10899bbef162cadaf447b89e15675135",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 33,
+      "hasStructuralAnalysis": true
+    },
+    ".env.example": {
+      "filePath": ".env.example",
+      "contentHash": "efdf018f092d36d72ef8af7bb6becadeb19951c473692834450b6821c806515d",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 20,
+      "hasStructuralAnalysis": true
+    },
+    ".gemini/settings.json": {
+      "filePath": ".gemini/settings.json",
+      "contentHash": "a4245f31c910eae43b3df4ffa4fb455ee3c7530ea18fe8fb6ea0ca772c72001f",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 24,
+      "hasStructuralAnalysis": true
+    },
+    ".github/workflows/crawl.yml": {
+      "filePath": ".github/workflows/crawl.yml",
+      "contentHash": "d45423545bdf65af7a5ea389004208c2b447e3b128bd4df310d73bdd1b6df729",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 78,
+      "hasStructuralAnalysis": true
+    },
+    ".github/workflows/schedule-probe.yml": {
+      "filePath": ".github/workflows/schedule-probe.yml",
+      "contentHash": "abe7c0b21bcfd4474b20555f5a6c0f813ff54b624eabc9ce99383b9fe3a0bbb5",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 26,
+      "hasStructuralAnalysis": true
+    },
+    ".impeccable/design.json": {
+      "filePath": ".impeccable/design.json",
+      "contentHash": "eae0ccbf29dad8c4e06badf72cf8a41ec0f86322b1c2c30fb9ecc68a9c03fac4",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 113,
+      "hasStructuralAnalysis": true
+    },
+    ".streamlit/config.toml": {
+      "filePath": ".streamlit/config.toml",
+      "contentHash": "5285d3bf6451c69be4d75a65fbb69eb71e430c32a4bb45486ef850aa21c332a6",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 9,
+      "hasStructuralAnalysis": true
+    },
+    ".understand-anything/.understandignore": {
+      "filePath": ".understand-anything/.understandignore",
+      "contentHash": "d392d2a53a2cd016daee5b5544664df83eb863c15e9091c04b6590a92382c1bc",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 30,
+      "hasStructuralAnalysis": false
+    },
+    "AGENTS.md": {
+      "filePath": "AGENTS.md",
+      "contentHash": "dce953570e3a813f500a24887d162143f2d48b89ae556210b3547f6233abc3e0",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 146,
+      "hasStructuralAnalysis": true
+    },
+    "app/__init__.py": {
+      "filePath": "app/__init__.py",
+      "contentHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 1,
+      "hasStructuralAnalysis": true
+    },
+    "app/components/__init__.py": {
+      "filePath": "app/components/__init__.py",
+      "contentHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 1,
+      "hasStructuralAnalysis": true
+    },
+    "app/components/comments_dialog.py": {
+      "filePath": "app/components/comments_dialog.py",
+      "contentHash": "d7ec533c4121e1766888760e075ec84763ac4d3e0462cbc6aa6596fc4353bbf6",
+      "functions": [
+        {
+          "name": "render_comments_dialog",
+          "params": [
+            "domain_id",
+            "comments",
+            "on_add"
+          ],
+          "exported": true,
+          "lineCount": 42
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "datetime",
+          "specifiers": [
+            "datetime"
+          ]
+        },
+        {
+          "source": "pytz",
+          "specifiers": [
+            "pytz"
+          ]
+        },
+        {
+          "source": "streamlit",
+          "specifiers": [
+            "st"
+          ]
+        },
+        {
+          "source": "src.config.settings",
+          "specifiers": [
+            "settings"
+          ]
+        }
+      ],
+      "exports": [
+        "render_comments_dialog"
+      ],
+      "totalLines": 51,
+      "hasStructuralAnalysis": true
+    },
+    "app/components/domain_table.py": {
+      "filePath": "app/components/domain_table.py",
+      "contentHash": "61bcd52439470b76cddb67a6ede6ad94da46691989e7fa950f8ca37d1f4202af",
+      "functions": [
+        {
+          "name": "_is_global_giant",
+          "params": [
+            "domain"
+          ],
+          "returnType": "bool",
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "_is_blank",
+          "params": [
+            "value"
+          ],
+          "returnType": "bool",
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "_text",
+          "params": [
+            "value",
+            "default"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "_int",
+          "params": [
+            "value",
+            "default"
+          ],
+          "returnType": "int",
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "_list",
+          "params": [
+            "value"
+          ],
+          "returnType": "list[str]",
+          "exported": true,
+          "lineCount": 11
+        },
+        {
+          "name": "_country_name",
+          "params": [
+            "value"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "_country_names",
+          "params": [
+            "value"
+          ],
+          "returnType": "list[str]",
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "_domain_from_url",
+          "params": [
+            "url",
+            "fallback"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "_truncate",
+          "params": [
+            "value",
+            "max_chars"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "_format_timestamp",
+          "params": [
+            "value"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "_pill",
+          "params": [
+            "label",
+            "class_name"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "_business_model_pill",
+          "params": [
+            "label"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "_pills",
+          "params": [
+            "labels",
+            "class_name"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "_score_badge",
+          "params": [
+            "score"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "_opportunity_score_badge",
+          "params": [
+            "score"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 10
+        },
+        {
+          "name": "_taxonomy_label",
+          "params": [
+            "value"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "_status_pill",
+          "params": [
+            "status"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "_render_status_actions",
+          "params": [
+            "domain_id",
+            "status",
+            "on_status_change"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 19
+        },
+        {
+          "name": "_comment_html",
+          "params": [
+            "comment"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 13
+        },
+        {
+          "name": "_render_comments",
+          "params": [
+            "domain_id",
+            "domain_name",
+            "comment_count",
+            "comments",
+            "on_add_comment"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 65
+        },
+        {
+          "name": "_detail_value",
+          "params": [
+            "label",
+            "value"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "_domain_table_headers",
+          "params": [],
+          "returnType": "tuple[list[str], list[str]]",
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "_domain_table_layout",
+          "params": [],
+          "returnType": "list[tuple[str, float]]",
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "render_domain_table",
+          "params": [
+            "df",
+            "on_status_change",
+            "on_add_comment",
+            "comments_data"
+          ],
+          "exported": true,
+          "lineCount": 211
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "datetime",
+          "specifiers": [
+            "datetime"
+          ]
+        },
+        {
+          "source": "html",
+          "specifiers": [
+            "escape"
+          ]
+        },
+        {
+          "source": "math",
+          "specifiers": [
+            "isnan"
+          ]
+        },
+        {
+          "source": "urllib.parse",
+          "specifiers": [
+            "urlparse"
+          ]
+        },
+        {
+          "source": "streamlit",
+          "specifiers": [
+            "st"
+          ]
+        },
+        {
+          "source": "src.config.constants",
+          "specifiers": [
+            "COUNTRY_CODES"
+          ]
+        }
+      ],
+      "exports": [
+        "_is_global_giant",
+        "_is_blank",
+        "_text",
+        "_int",
+        "_list",
+        "_country_name",
+        "_country_names",
+        "_domain_from_url",
+        "_truncate",
+        "_format_timestamp",
+        "_pill",
+        "_business_model_pill",
+        "_pills",
+        "_score_badge",
+        "_opportunity_score_badge",
+        "_taxonomy_label",
+        "_status_pill",
+        "_render_status_actions",
+        "_comment_html",
+        "_render_comments",
+        "_detail_value",
+        "_domain_table_headers",
+        "_domain_table_layout",
+        "render_domain_table"
+      ],
+      "totalLines": 493,
+      "hasStructuralAnalysis": true
+    },
+    "app/components/filters.py": {
+      "filePath": "app/components/filters.py",
+      "contentHash": "7e1f6a9850d43027481f60669e0f72b84a26a983350dda9cc5ff827028299d4c",
+      "functions": [
+        {
+          "name": "_default_date_range",
+          "params": [],
+          "returnType": "tuple[date, date]",
+          "exported": true,
+          "lineCount": 13
+        },
+        {
+          "name": "_normalize_date_range",
+          "params": [
+            "value"
+          ],
+          "returnType": "tuple[date, date]",
+          "exported": true,
+          "lineCount": 11
+        },
+        {
+          "name": "_status_filter_from_values",
+          "params": [
+            "values"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "_coerce_category_values",
+          "params": [
+            "value"
+          ],
+          "returnType": "list[str]",
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "_category_filter_from_values",
+          "params": [
+            "values"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "render_filters",
+          "params": [
+            "show_reviewed_default",
+            "expanded"
+          ],
+          "returnType": "dict",
+          "exported": true,
+          "lineCount": 102
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "datetime",
+          "specifiers": [
+            "date"
+          ]
+        },
+        {
+          "source": "streamlit",
+          "specifiers": [
+            "st"
+          ]
+        },
+        {
+          "source": "app.data_loader",
+          "specifiers": [
+            "CATEGORY_FILTER_OPTIONS",
+            "OPPORTUNITY_TYPE_OPTIONS",
+            "SORT_OPTIONS",
+            "STATUS_FILTER_OPTIONS"
+          ]
+        }
+      ],
+      "exports": [
+        "_default_date_range",
+        "_normalize_date_range",
+        "_status_filter_from_values",
+        "_coerce_category_values",
+        "_category_filter_from_values",
+        "render_filters"
+      ],
+      "totalLines": 184,
+      "hasStructuralAnalysis": true
+    },
+    "app/components/metrics_cards.py": {
+      "filePath": "app/components/metrics_cards.py",
+      "contentHash": "59978b58f063a541f72d8b7dfa76351d7ac25b076740c201162972f4ed52f426",
+      "functions": [
+        {
+          "name": "_metric_card",
+          "params": [
+            "label",
+            "value",
+            "detail"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 11
+        },
+        {
+          "name": "render_metrics_cards",
+          "params": [
+            "metrics"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 26
+        },
+        {
+          "name": "render_progress_bar",
+          "params": [
+            "current",
+            "total"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 8
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "html",
+          "specifiers": [
+            "escape"
+          ]
+        },
+        {
+          "source": "streamlit",
+          "specifiers": [
+            "st"
+          ]
+        }
+      ],
+      "exports": [
+        "_metric_card",
+        "render_metrics_cards",
+        "render_progress_bar"
+      ],
+      "totalLines": 55,
+      "hasStructuralAnalysis": true
+    },
+    "app/data_loader.py": {
+      "filePath": "app/data_loader.py",
+      "contentHash": "2bbe444e9bae642f393a832c2a73a069d194939c4d0d4a45d09f970fdb6ab18a",
+      "functions": [
+        {
+          "name": "_as_list",
+          "params": [
+            "value"
+          ],
+          "returnType": "list",
+          "exported": true,
+          "lineCount": 18
+        },
+        {
+          "name": "_first_value",
+          "params": [
+            "values",
+            "fallback"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "_country_name",
+          "params": [
+            "value"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 10
+        },
+        {
+          "name": "_country_names",
+          "params": [
+            "values"
+          ],
+          "returnType": "list[str]",
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "_first_country_name",
+          "params": [
+            "row"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 11
+        },
+        {
+          "name": "_series",
+          "params": [
+            "df",
+            "column",
+            "default"
+          ],
+          "returnType": "pd.Series",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "_numeric_series",
+          "params": [
+            "df",
+            "column",
+            "default"
+          ],
+          "returnType": "pd.Series",
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "_date_iso",
+          "params": [
+            "value",
+            "default"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "_category_filter_text",
+          "params": [
+            "value"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 17
+        },
+        {
+          "name": "_parse_date",
+          "params": [
+            "value"
+          ],
+          "returnType": "date | None",
+          "exported": true,
+          "lineCount": 11
+        },
+        {
+          "name": "_display_url",
+          "params": [
+            "row"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "_format_today_dataframe",
+          "params": [
+            "df"
+          ],
+          "returnType": "pd.DataFrame",
+          "exported": true,
+          "lineCount": 70
+        },
+        {
+          "name": "load_collected_data",
+          "params": [
+            "show_reviewed",
+            "sort_by",
+            "search_query",
+            "status_filter",
+            "category_filter",
+            "date_start",
+            "date_end",
+            "page",
+            "page_size",
+            "min_opportunity_score",
+            "min_opportunity_confidence",
+            "opportunity_type_filter",
+            "hide_global_giants"
+          ],
+          "returnType": "tuple[pd.DataFrame, int]",
+          "exported": true,
+          "lineCount": 56
+        },
+        {
+          "name": "load_today_data",
+          "params": [
+            "show_reviewed",
+            "sort_by",
+            "min_score",
+            "search_query",
+            "status_filter",
+            "category_filter"
+          ],
+          "returnType": "pd.DataFrame",
+          "exported": true,
+          "lineCount": 23
+        },
+        {
+          "name": "load_stats",
+          "params": [],
+          "returnType": "dict",
+          "exported": true,
+          "lineCount": 10
+        },
+        {
+          "name": "load_comments",
+          "params": [
+            "domain_ids"
+          ],
+          "returnType": "dict[str, list[dict]]",
+          "exported": true,
+          "lineCount": 19
+        },
+        {
+          "name": "load_high_score_count",
+          "params": [
+            "min_score"
+          ],
+          "returnType": "int",
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "load_reviewed_count",
+          "params": [],
+          "returnType": "int",
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "load_country_progress",
+          "params": [],
+          "returnType": "pd.DataFrame",
+          "exported": true,
+          "lineCount": 10
+        },
+        {
+          "name": "load_github_language_options",
+          "params": [],
+          "returnType": "list[str]",
+          "exported": true,
+          "lineCount": 15
+        },
+        {
+          "name": "load_new_github_repositories",
+          "params": [
+            "language_filter",
+            "review_status_filter",
+            "min_stars",
+            "first_seen_start",
+            "first_seen_end",
+            "search_query"
+          ],
+          "returnType": "pd.DataFrame",
+          "exported": true,
+          "lineCount": 64
+        },
+        {
+          "name": "load_github_crawl_stats",
+          "params": [],
+          "returnType": "dict",
+          "exported": true,
+          "lineCount": 38
+        },
+        {
+          "name": "clear_github_caches",
+          "params": [],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "update_github_repo_review_status",
+          "params": [
+            "repository_id",
+            "status"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "update_github_repo_notes",
+          "params": [
+            "repository_id",
+            "notes"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "mark_github_repo_seen",
+          "params": [
+            "repository_id"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "mark_github_repos_seen",
+          "params": [
+            "repository_ids"
+          ],
+          "returnType": "int",
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "clear_dashboard_caches",
+          "params": [],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 12
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "datetime",
+          "specifiers": [
+            "date",
+            "datetime",
+            "timedelta"
+          ]
+        },
+        {
+          "source": "pandas",
+          "specifiers": [
+            "pd"
+          ]
+        },
+        {
+          "source": "streamlit",
+          "specifiers": [
+            "st"
+          ]
+        },
+        {
+          "source": "src.config.constants",
+          "specifiers": [
+            "COUNTRY_CODES",
+            "GitHubRepoReviewStatus"
+          ]
+        },
+        {
+          "source": "src.db.repositories",
+          "specifiers": [
+            "CrawlRunRepository",
+            "GitHubRepositoryRepository"
+          ]
+        },
+        {
+          "source": "src.db.supabase_client",
+          "specifiers": [
+            "get_supabase_client"
+          ]
+        }
+      ],
+      "exports": [
+        "_as_list",
+        "_first_value",
+        "_country_name",
+        "_country_names",
+        "_first_country_name",
+        "_series",
+        "_numeric_series",
+        "_date_iso",
+        "_category_filter_text",
+        "_parse_date",
+        "_display_url",
+        "_format_today_dataframe",
+        "load_collected_data",
+        "load_today_data",
+        "load_stats",
+        "load_comments",
+        "load_high_score_count",
+        "load_reviewed_count",
+        "load_country_progress",
+        "load_github_language_options",
+        "load_new_github_repositories",
+        "load_github_crawl_stats",
+        "clear_github_caches",
+        "update_github_repo_review_status",
+        "update_github_repo_notes",
+        "mark_github_repo_seen",
+        "mark_github_repos_seen",
+        "clear_dashboard_caches"
+      ],
+      "totalLines": 597,
+      "hasStructuralAnalysis": true
+    },
+    "app/pages/__init__.py": {
+      "filePath": "app/pages/__init__.py",
+      "contentHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 1,
+      "hasStructuralAnalysis": true
+    },
+    "app/pages/1_Today.py": {
+      "filePath": "app/pages/1_Today.py",
+      "contentHash": "3dfd9ce2aa99478a3689c8fbd9f3d5123d00d1546108fb15862f4e38914f1761",
+      "functions": [
+        {
+          "name": "on_status_change",
+          "params": [
+            "domain_id",
+            "new_status"
+          ],
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "on_add_comment",
+          "params": [
+            "domain_id",
+            "author",
+            "message"
+          ],
+          "exported": true,
+          "lineCount": 5
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "sys",
+          "specifiers": [
+            "sys"
+          ]
+        },
+        {
+          "source": "pathlib",
+          "specifiers": [
+            "Path"
+          ]
+        },
+        {
+          "source": "streamlit",
+          "specifiers": [
+            "st"
+          ]
+        },
+        {
+          "source": "app.components.domain_table",
+          "specifiers": [
+            "render_domain_table"
+          ]
+        },
+        {
+          "source": "app.components.filters",
+          "specifiers": [
+            "render_filters"
+          ]
+        },
+        {
+          "source": "app.components.metrics_cards",
+          "specifiers": [
+            "render_metrics_cards"
+          ]
+        },
+        {
+          "source": "app.data_loader",
+          "specifiers": [
+            "clear_dashboard_caches",
+            "load_comments",
+            "load_high_score_count",
+            "load_stats",
+            "load_today_data"
+          ]
+        },
+        {
+          "source": "src.config.constants",
+          "specifiers": [
+            "ReviewStatus"
+          ]
+        },
+        {
+          "source": "src.db.repositories",
+          "specifiers": [
+            "CommentRepository",
+            "DomainRepository"
+          ]
+        }
+      ],
+      "exports": [
+        "on_status_change",
+        "on_add_comment"
+      ],
+      "totalLines": 66,
+      "hasStructuralAnalysis": true
+    },
+    "app/pages/2_This_Week.py": {
+      "filePath": "app/pages/2_This_Week.py",
+      "contentHash": "38ec9299c3bb6022754c7797023ddf008d75e2894ad3c8a3c8da6d1385a35fe5",
+      "functions": [
+        {
+          "name": "load_week_data",
+          "params": [
+            "show_reviewed",
+            "sort_by",
+            "min_score"
+          ],
+          "returnType": "pd.DataFrame",
+          "exported": true,
+          "lineCount": 59
+        },
+        {
+          "name": "on_status_change",
+          "params": [
+            "domain_id",
+            "new_status"
+          ],
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "on_add_comment",
+          "params": [
+            "domain_id",
+            "author",
+            "message"
+          ],
+          "exported": true,
+          "lineCount": 5
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "sys",
+          "specifiers": [
+            "sys"
+          ]
+        },
+        {
+          "source": "pathlib",
+          "specifiers": [
+            "Path"
+          ]
+        },
+        {
+          "source": "pandas",
+          "specifiers": [
+            "pd"
+          ]
+        },
+        {
+          "source": "streamlit",
+          "specifiers": [
+            "st"
+          ]
+        },
+        {
+          "source": "app.components.domain_table",
+          "specifiers": [
+            "render_domain_table"
+          ]
+        },
+        {
+          "source": "app.components.filters",
+          "specifiers": [
+            "render_filters"
+          ]
+        },
+        {
+          "source": "app.components.metrics_cards",
+          "specifiers": [
+            "render_metrics_cards"
+          ]
+        },
+        {
+          "source": "app.data_loader",
+          "specifiers": [
+            "clear_dashboard_caches",
+            "load_comments",
+            "load_stats"
+          ]
+        },
+        {
+          "source": "src.config.constants",
+          "specifiers": [
+            "ReviewStatus"
+          ]
+        },
+        {
+          "source": "src.db.repositories",
+          "specifiers": [
+            "CommentRepository",
+            "DomainRepository"
+          ]
+        },
+        {
+          "source": "src.db.supabase_client",
+          "specifiers": [
+            "get_supabase_client"
+          ]
+        }
+      ],
+      "exports": [
+        "load_week_data",
+        "on_status_change",
+        "on_add_comment"
+      ],
+      "totalLines": 130,
+      "hasStructuralAnalysis": true
+    },
+    "app/pages/3_Stats.py": {
+      "filePath": "app/pages/3_Stats.py",
+      "contentHash": "e67e885263fe93ff11f34ebd5b09a5f5c0f7bbf85ef10beba6f84210ce611537",
+      "functions": [
+        {
+          "name": "load_country_progress",
+          "params": [],
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "country_display_name",
+          "params": [
+            "row"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 8
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "sys",
+          "specifiers": [
+            "sys"
+          ]
+        },
+        {
+          "source": "pathlib",
+          "specifiers": [
+            "Path"
+          ]
+        },
+        {
+          "source": "pandas",
+          "specifiers": [
+            "pd"
+          ]
+        },
+        {
+          "source": "streamlit",
+          "specifiers": [
+            "st"
+          ]
+        },
+        {
+          "source": "app.components.metrics_cards",
+          "specifiers": [
+            "render_metrics_cards",
+            "render_progress_bar"
+          ]
+        },
+        {
+          "source": "app.data_loader",
+          "specifiers": [
+            "load_high_score_count",
+            "load_stats"
+          ]
+        },
+        {
+          "source": "src.config.constants",
+          "specifiers": [
+            "COUNTRY_CODES"
+          ]
+        },
+        {
+          "source": "src.db.supabase_client",
+          "specifiers": [
+            "get_supabase_client"
+          ]
+        }
+      ],
+      "exports": [
+        "load_country_progress",
+        "country_display_name"
+      ],
+      "totalLines": 90,
+      "hasStructuralAnalysis": true
+    },
+    "app/streamlit_app.py": {
+      "filePath": "app/streamlit_app.py",
+      "contentHash": "42877753063c96ce384c0adfa9730424ba2e51a3f01317cebd6b890c95f828f1",
+      "functions": [
+        {
+          "name": "_theme_vars",
+          "params": [
+            "theme_name"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "_theme_from_query_params",
+          "params": [],
+          "returnType": "str | None",
+          "exported": true,
+          "lineCount": 13
+        },
+        {
+          "name": "inject_styles",
+          "params": [
+            "theme_name"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 1425
+        },
+        {
+          "name": "ensure_ui_state",
+          "params": [],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 44
+        },
+        {
+          "name": "_logo_data_uri",
+          "params": [],
+          "returnType": "str | None",
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "_brand_html",
+          "params": [
+            "compact"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 18
+        },
+        {
+          "name": "_sync_nav_from_widgets",
+          "params": [],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 11
+        },
+        {
+          "name": "_sync_theme_from_widgets",
+          "params": [],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 11
+        },
+        {
+          "name": "render_navbar",
+          "params": [],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 30
+        },
+        {
+          "name": "render_page_header",
+          "params": [
+            "title",
+            "subtitle"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 10
+        },
+        {
+          "name": "on_status_change",
+          "params": [
+            "domain_id",
+            "new_status"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "_persist_domain_status_change",
+          "params": [
+            "domain_id",
+            "new_status"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "on_add_comment",
+          "params": [
+            "domain_id",
+            "author",
+            "message"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "_session_option",
+          "params": [
+            "key",
+            "options",
+            "default"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "_status_filter_from_session",
+          "params": [],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "_date_range_from_session",
+          "params": [],
+          "returnType": "tuple[date, date]",
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "_session_page_size",
+          "params": [],
+          "returnType": "int",
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "_filter_signature",
+          "params": [
+            "filters",
+            "page_size"
+          ],
+          "returnType": "tuple",
+          "exported": true,
+          "lineCount": 14
+        },
+        {
+          "name": "_render_signature",
+          "params": [
+            "filters",
+            "page",
+            "page_size"
+          ],
+          "returnType": "tuple",
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "_apply_pending_review_status_updates",
+          "params": [
+            "df",
+            "pending_updates",
+            "show_reviewed"
+          ],
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "_prune_confirmed_review_status_updates",
+          "params": [
+            "df",
+            "pending_updates"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 11
+        },
+        {
+          "name": "_sync_collected_pagination",
+          "params": [
+            "filters"
+          ],
+          "returnType": "tuple[int, int]",
+          "exported": true,
+          "lineCount": 14
+        },
+        {
+          "name": "_load_collected_data_for_render",
+          "params": [
+            "filters",
+            "page",
+            "page_size"
+          ],
+          "exported": true,
+          "lineCount": 11
+        },
+        {
+          "name": "_load_collected_data_page",
+          "params": [
+            "filters",
+            "page",
+            "page_size"
+          ],
+          "exported": true,
+          "lineCount": 17
+        },
+        {
+          "name": "_clear_collected_data_loader_cache",
+          "params": [],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "_refill_page_limit",
+          "params": [
+            "page",
+            "page_size",
+            "total_count",
+            "pending_updates"
+          ],
+          "returnType": "int",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "_combine_collected_frames",
+          "params": [
+            "frames",
+            "page_size"
+          ],
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "_load_collected_data_refill_batch",
+          "params": [
+            "filters",
+            "page",
+            "page_size",
+            "total_count",
+            "pending_updates"
+          ],
+          "exported": true,
+          "lineCount": 34
+        },
+        {
+          "name": "_maybe_refill_collected_data_after_optimistic_clear",
+          "params": [
+            "filters",
+            "page",
+            "page_size",
+            "visible_df",
+            "source_df",
+            "total_count",
+            "pending_updates",
+            "render_signature"
+          ],
+          "exported": true,
+          "lineCount": 36
+        },
+        {
+          "name": "_load_comments_for_render",
+          "params": [
+            "df",
+            "signature",
+            "use_snapshot"
+          ],
+          "exported": true,
+          "lineCount": 11
+        },
+        {
+          "name": "current_filter_values",
+          "params": [],
+          "returnType": "dict",
+          "exported": true,
+          "lineCount": 23
+        },
+        {
+          "name": "_date_range_label",
+          "params": [
+            "date_start",
+            "date_end"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "render_pagination_controls",
+          "params": [
+            "total_count",
+            "page",
+            "page_size",
+            "key_prefix",
+            "show_page_size"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 40
+        },
+        {
+          "name": "render_collected_data_page",
+          "params": [],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 43
+        },
+        {
+          "name": "_github_review_status_options",
+          "params": [],
+          "returnType": "list[str]",
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "_render_github_stats",
+          "params": [
+            "stats"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 29
+        },
+        {
+          "name": "_github_filter_values",
+          "params": [],
+          "returnType": "dict",
+          "exported": true,
+          "lineCount": 23
+        },
+        {
+          "name": "_apply_github_table_edits",
+          "params": [
+            "original_df",
+            "edited_df"
+          ],
+          "returnType": "int",
+          "exported": true,
+          "lineCount": 22
+        },
+        {
+          "name": "_github_editor_columns",
+          "params": [],
+          "returnType": "list[str]",
+          "exported": true,
+          "lineCount": 16
+        },
+        {
+          "name": "_apply_github_editor_state_seen_edits",
+          "params": [
+            "editor_state",
+            "repo_ids"
+          ],
+          "returnType": "int",
+          "exported": true,
+          "lineCount": 13
+        },
+        {
+          "name": "_on_github_editor_change",
+          "params": [
+            "repo_ids"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "render_github_opencode_page",
+          "params": [],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 78
+        },
+        {
+          "name": "_status_pill",
+          "params": [
+            "status"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "_is_missing",
+          "params": [
+            "value"
+          ],
+          "returnType": "bool",
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "_display_value",
+          "params": [
+            "value",
+            "default"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "_country_display_name",
+          "params": [
+            "country_code",
+            "country_name"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "_int_value",
+          "params": [
+            "value"
+          ],
+          "returnType": "int",
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "render_country_status_table",
+          "params": [
+            "country_df"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 38
+        },
+        {
+          "name": "_format_run_time",
+          "params": [
+            "value"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "_run_status_label",
+          "params": [
+            "run"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "render_run_crawl_panel",
+          "params": [],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 45
+        },
+        {
+          "name": "render_reports_page",
+          "params": [],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 27
+        },
+        {
+          "name": "_sync_theme_preference",
+          "params": [
+            "theme_name"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 32
+        },
+        {
+          "name": "render",
+          "params": [],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 23
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "base64",
+          "specifiers": [
+            "base64"
+          ]
+        },
+        {
+          "source": "sys",
+          "specifiers": [
+            "sys"
+          ]
+        },
+        {
+          "source": "concurrent.futures",
+          "specifiers": [
+            "ThreadPoolExecutor"
+          ]
+        },
+        {
+          "source": "datetime",
+          "specifiers": [
+            "date"
+          ]
+        },
+        {
+          "source": "html",
+          "specifiers": [
+            "escape"
+          ]
+        },
+        {
+          "source": "math",
+          "specifiers": [
+            "ceil",
+            "isnan"
+          ]
+        },
+        {
+          "source": "pathlib",
+          "specifiers": [
+            "Path"
+          ]
+        },
+        {
+          "source": "pandas",
+          "specifiers": [
+            "pd"
+          ]
+        },
+        {
+          "source": "streamlit",
+          "specifiers": [
+            "st"
+          ]
+        },
+        {
+          "source": "app.components.domain_table",
+          "specifiers": [
+            "render_domain_table"
+          ]
+        },
+        {
+          "source": "app.components.filters",
+          "specifiers": [
+            "DEFAULT_CATEGORY_FILTER_SELECTION",
+            "DEFAULT_HIDE_GLOBAL_GIANTS",
+            "DEFAULT_SORT_OPTION",
+            "_category_filter_from_values",
+            "_default_date_range",
+            "render_filters"
+          ]
+        },
+        {
+          "source": "app.components.metrics_cards",
+          "specifiers": [
+            "render_metrics_cards",
+            "render_progress_bar"
+          ]
+        },
+        {
+          "source": "app.data_loader",
+          "specifiers": [
+            "DEFAULT_PAGE_SIZE",
+            "OPPORTUNITY_TYPE_OPTIONS",
+            "PAGE_SIZE_OPTIONS",
+            "SORT_OPTIONS",
+            "STATUS_FILTER_OPTIONS",
+            "clear_dashboard_caches",
+            "load_collected_data",
+            "load_comments",
+            "load_country_progress",
+            "load_github_crawl_stats",
+            "load_github_language_options",
+            "load_high_score_count",
+            "load_new_github_repositories",
+            "load_reviewed_count",
+            "load_stats",
+            "mark_github_repo_seen",
+            "mark_github_repos_seen",
+            "update_github_repo_notes",
+            "update_github_repo_review_status"
+          ]
+        },
+        {
+          "source": "src.config.constants",
+          "specifiers": [
+            "COUNTRY_CODES",
+            "GitHubRepoReviewStatus",
+            "ReviewStatus"
+          ]
+        },
+        {
+          "source": "src.db.repositories",
+          "specifiers": [
+            "CommentRepository",
+            "DomainRepository"
+          ]
+        },
+        {
+          "source": "src.integrations.github_actions",
+          "specifiers": [
+            "GitHubActionsError",
+            "list_recent_runs",
+            "trigger_workflow"
+          ]
+        }
+      ],
+      "exports": [
+        "_theme_vars",
+        "_theme_from_query_params",
+        "inject_styles",
+        "ensure_ui_state",
+        "_logo_data_uri",
+        "_brand_html",
+        "_sync_nav_from_widgets",
+        "_sync_theme_from_widgets",
+        "render_navbar",
+        "render_page_header",
+        "on_status_change",
+        "_persist_domain_status_change",
+        "on_add_comment",
+        "_session_option",
+        "_status_filter_from_session",
+        "_date_range_from_session",
+        "_session_page_size",
+        "_filter_signature",
+        "_render_signature",
+        "_apply_pending_review_status_updates",
+        "_prune_confirmed_review_status_updates",
+        "_sync_collected_pagination",
+        "_load_collected_data_for_render",
+        "_load_collected_data_page",
+        "_clear_collected_data_loader_cache",
+        "_refill_page_limit",
+        "_combine_collected_frames",
+        "_load_collected_data_refill_batch",
+        "_maybe_refill_collected_data_after_optimistic_clear",
+        "_load_comments_for_render",
+        "current_filter_values",
+        "_date_range_label",
+        "render_pagination_controls",
+        "render_collected_data_page",
+        "_github_review_status_options",
+        "_render_github_stats",
+        "_github_filter_values",
+        "_apply_github_table_edits",
+        "_github_editor_columns",
+        "_apply_github_editor_state_seen_edits",
+        "_on_github_editor_change",
+        "render_github_opencode_page",
+        "_status_pill",
+        "_is_missing",
+        "_display_value",
+        "_country_display_name",
+        "_int_value",
+        "render_country_status_table",
+        "_format_run_time",
+        "_run_status_label",
+        "render_run_crawl_panel",
+        "render_reports_page",
+        "_sync_theme_preference",
+        "render"
+      ],
+      "totalLines": 2613,
+      "hasStructuralAnalysis": true
+    },
+    "check_progress.py": {
+      "filePath": "check_progress.py",
+      "contentHash": "86d5d965314a83c633fc975a01e6b987eb5b73d92b0578f6222b76c0421f0d6c",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "sys",
+          "specifiers": [
+            "sys"
+          ]
+        },
+        {
+          "source": "src.db.supabase_client",
+          "specifiers": [
+            "get_supabase_client"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 26,
+      "hasStructuralAnalysis": true
+    },
+    "CLAUDE.md": {
+      "filePath": "CLAUDE.md",
+      "contentHash": "30484656d4e2cf55e81ace0d29aa901359977d92979c3607f6a3b6d2443fab71",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 37,
+      "hasStructuralAnalysis": true
+    },
+    "crawl": {
+      "filePath": "crawl",
+      "contentHash": "338cc690e9e33162e6153c26ef86942002166b4f8dfae50287009adbfe2ae9a2",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 49,
+      "hasStructuralAnalysis": false
+    },
+    "DESIGN.md": {
+      "filePath": "DESIGN.md",
+      "contentHash": "5cddff28f17101718cdcacf89f7e4ac4e9987df082b02edc9fb986a2351ce0d0",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 218,
+      "hasStructuralAnalysis": true
+    },
+    "docs/API_CONTRACTS.md": {
+      "filePath": "docs/API_CONTRACTS.md",
+      "contentHash": "a37030096d3c79e429c4c09e99e06d49066b25f0c68ee34fa45e09690c78a38e",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 144,
+      "hasStructuralAnalysis": true
+    },
+    "docs/APP_ANALYSIS_2026-05-18.md": {
+      "filePath": "docs/APP_ANALYSIS_2026-05-18.md",
+      "contentHash": "cf5c620e0cc9538a41065e328c0faa0488bd8f06fc95bb6f078f011c98afbf6a",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 372,
+      "hasStructuralAnalysis": true
+    },
+    "docs/Architecture.md": {
+      "filePath": "docs/Architecture.md",
+      "contentHash": "b9d452fe05b94902f514de7f617d7888248cf4c455cc8213e9638b8111f28ecc",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 144,
+      "hasStructuralAnalysis": true
+    },
+    "docs/CHANGELOG.md": {
+      "filePath": "docs/CHANGELOG.md",
+      "contentHash": "122a294f8e815f747f54d554a73801ea03ad1180f22fa3db2a3614f8b6993d12",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 167,
+      "hasStructuralAnalysis": true
+    },
+    "docs/DECISIONS.md": {
+      "filePath": "docs/DECISIONS.md",
+      "contentHash": "94c7754999f089a258a9c0b1f1b278fcf475fd6bbc9a782e353ea28f30d7eb36",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 214,
+      "hasStructuralAnalysis": true
+    },
+    "docs/diagrams/crawl-pipeline.d2": {
+      "filePath": "docs/diagrams/crawl-pipeline.d2",
+      "contentHash": "f8487ae637f0c824f50cc3cc17ad92c2ef5db97ca10ea89fd6028bad2561ee32",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 87,
+      "hasStructuralAnalysis": false
+    },
+    "docs/diagrams/external-services.d2": {
+      "filePath": "docs/diagrams/external-services.d2",
+      "contentHash": "648fc8a5ae1da7072f61b4ee9d37db76a6cfb3608409ad0f4e92852104447e05",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 45,
+      "hasStructuralAnalysis": false
+    },
+    "docs/diagrams/README.md": {
+      "filePath": "docs/diagrams/README.md",
+      "contentHash": "4f6d8f42f1fd056f1a43d9a1eb62768b0ee4c8aecfe308f29185696a899834a9",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 20,
+      "hasStructuralAnalysis": true
+    },
+    "docs/diagrams/scoring-algorithm.d2": {
+      "filePath": "docs/diagrams/scoring-algorithm.d2",
+      "contentHash": "9ac81d35c6ebbe81720a32154a39efcd3f05a683dea8cc5ce17ee48147d62a25",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 155,
+      "hasStructuralAnalysis": false
+    },
+    "docs/diagrams/system-overview.d2": {
+      "filePath": "docs/diagrams/system-overview.d2",
+      "contentHash": "f9d6752981d8bc24346a1a20113ad135c18104ffa5a8d430751bfccc4ea81d57",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 41,
+      "hasStructuralAnalysis": false
+    },
+    "docs/Github_page_plan.md": {
+      "filePath": "docs/Github_page_plan.md",
+      "contentHash": "bf5247bcb47bb6a4e960af7a2f00496331fa11c16ba03afc3e80974d382c0093",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 230,
+      "hasStructuralAnalysis": true
+    },
+    "docs/PLAN.md": {
+      "filePath": "docs/PLAN.md",
+      "contentHash": "6c3d9d92942dc79b1d0b9772e93b73f1c9980915e7300231a576745f1f41dfdf",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 937,
+      "hasStructuralAnalysis": true
+    },
+    "docs/PROMPTS.md": {
+      "filePath": "docs/PROMPTS.md",
+      "contentHash": "7799fb88e4ef1cabf5509d3f03a4cdd1bb1af938873797d03be62590bf31b7af",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 315,
+      "hasStructuralAnalysis": true
+    },
+    "docs/RUNBOOK.md": {
+      "filePath": "docs/RUNBOOK.md",
+      "contentHash": "528e18d20afe5b9bd68d55b6a1bb1e38384eb6741f3a3550770bbb87fc2e9c0f",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 198,
+      "hasStructuralAnalysis": true
+    },
+    "docs/streamlit-secrets.toml.example": {
+      "filePath": "docs/streamlit-secrets.toml.example",
+      "contentHash": "e14c1e5ee883045472ee426d3ba5a24eb945867a9613d8c95a397e42e7fc0ccb",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 15,
+      "hasStructuralAnalysis": false
+    },
+    "docs/superpowers/specs/2025-05-18-llm-opportunity-scoring-design.md": {
+      "filePath": "docs/superpowers/specs/2025-05-18-llm-opportunity-scoring-design.md",
+      "contentHash": "b45282c6feda9b0e0c9bb1ad81ab17c5cddb4c3fa619e785c16750ddf55c2fcf",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 493,
+      "hasStructuralAnalysis": true
+    },
+    "docs/TASKS.md": {
+      "filePath": "docs/TASKS.md",
+      "contentHash": "7de2cb4f939d067e6f36e0ed4ebe3a294c02f066e4f02b3246fd0f4fe0fa3685",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 171,
+      "hasStructuralAnalysis": true
+    },
+    "docs/Update_scoring.md": {
+      "filePath": "docs/Update_scoring.md",
+      "contentHash": "55e6c7f9786d68678590786f4c968edaab7607d5fa104969a679c9a4da9ccec1",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 754,
+      "hasStructuralAnalysis": true
+    },
+    "main.py": {
+      "filePath": "main.py",
+      "contentHash": "f0c53b3e4cfaec1487cbd7b4e1cec202e0873119e22a8c8aaaeb5527de884953",
+      "functions": [
+        {
+          "name": "main",
+          "params": [],
+          "exported": true,
+          "lineCount": 17
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "sys",
+          "specifiers": [
+            "sys"
+          ]
+        }
+      ],
+      "exports": [
+        "main"
+      ],
+      "totalLines": 26,
+      "hasStructuralAnalysis": true
+    },
+    "nohup.out": {
+      "filePath": "nohup.out",
+      "contentHash": "f8035176f30ba86f10ef9aadbd3ae518693ea06891bd26df0994bd751ee296f2",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 21,
+      "hasStructuralAnalysis": false
+    },
+    "PRODUCT.md": {
+      "filePath": "PRODUCT.md",
+      "contentHash": "57625f6a71cd206e9d1645fa14cfc44ed6b1dd8cbd5e3a7e8820654b7798a45c",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 34,
+      "hasStructuralAnalysis": true
+    },
+    "pyproject.toml": {
+      "filePath": "pyproject.toml",
+      "contentHash": "3bf71015b007ff94f0cf4a310b2b8fc072462992ba8570e84e5cdcd0a1c32517",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 62,
+      "hasStructuralAnalysis": true
+    },
+    "README.md": {
+      "filePath": "README.md",
+      "contentHash": "aee37b25eb1c221c26882963373351812581c07b9225c381f955fe637ffa38f8",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 120,
+      "hasStructuralAnalysis": true
+    },
+    "requirements.txt": {
+      "filePath": "requirements.txt",
+      "contentHash": "71497e098a1f02652fbd9644b20b5a8e1b32e6e887fe5360e83147a4d743b387",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 86,
+      "hasStructuralAnalysis": false
+    },
+    "run_scoring.sh": {
+      "filePath": "run_scoring.sh",
+      "contentHash": "637ea9adeec6795347530471f3eb598acc96adfb2ffab0e23c1f1649bb812123",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 5,
+      "hasStructuralAnalysis": true
+    },
+    "src/__init__.py": {
+      "filePath": "src/__init__.py",
+      "contentHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 1,
+      "hasStructuralAnalysis": true
+    },
+    "src/cli.py": {
+      "filePath": "src/cli.py",
+      "contentHash": "fb35bb8c89847e28fb5a68a2de43058444d6395d0a1f97e167ae57c8c8c12949",
+      "functions": [
+        {
+          "name": "_project_root",
+          "params": [],
+          "returnType": "Path",
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "_print_usage",
+          "params": [],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "start",
+          "params": [],
+          "returnType": "int",
+          "exported": true,
+          "lineCount": 37
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "subprocess",
+          "specifiers": [
+            "subprocess"
+          ]
+        },
+        {
+          "source": "sys",
+          "specifiers": [
+            "sys"
+          ]
+        },
+        {
+          "source": "pathlib",
+          "specifiers": [
+            "Path"
+          ]
+        }
+      ],
+      "exports": [
+        "_project_root",
+        "_print_usage",
+        "start"
+      ],
+      "totalLines": 63,
+      "hasStructuralAnalysis": true
+    },
+    "src/cloudflare/__init__.py": {
+      "filePath": "src/cloudflare/__init__.py",
+      "contentHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 1,
+      "hasStructuralAnalysis": true
+    },
+    "src/cloudflare/client.py": {
+      "filePath": "src/cloudflare/client.py",
+      "contentHash": "36a5077e65f153fff95307d4baa8d7a54d3da5900792e4981a007deb10cfe0a6",
+      "functions": [
+        {
+          "name": "_is_retryable",
+          "params": [
+            "exc"
+          ],
+          "returnType": "bool",
+          "exported": true,
+          "lineCount": 8
+        }
+      ],
+      "classes": [
+        {
+          "name": "CloudflareAPIError",
+          "methods": [
+            "__init__"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "CloudflareClient",
+          "methods": [
+            "__init__",
+            "_get_client",
+            "_check_rate_limit",
+            "request",
+            "get",
+            "close",
+            "__aenter__",
+            "__aexit__"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 78
+        }
+      ],
+      "imports": [
+        {
+          "source": "httpx",
+          "specifiers": [
+            "httpx"
+          ]
+        },
+        {
+          "source": "loguru",
+          "specifiers": [
+            "loguru_logger"
+          ]
+        },
+        {
+          "source": "tenacity",
+          "specifiers": [
+            "before_sleep_log",
+            "retry",
+            "retry_if_exception",
+            "stop_after_attempt",
+            "wait_exponential"
+          ]
+        },
+        {
+          "source": "src.config.settings",
+          "specifiers": [
+            "settings"
+          ]
+        },
+        {
+          "source": "src.utils.logging",
+          "specifiers": [
+            "get_logger"
+          ]
+        }
+      ],
+      "exports": [
+        "CloudflareAPIError",
+        "_is_retryable",
+        "CloudflareClient"
+      ],
+      "totalLines": 120,
+      "hasStructuralAnalysis": true
+    },
+    "src/cloudflare/radar_service.py": {
+      "filePath": "src/cloudflare/radar_service.py",
+      "contentHash": "70dae6c95d94b32af45f70e27f03067c86810a81ba75f70a654044278ac867ce",
+      "functions": [],
+      "classes": [
+        {
+          "name": "RadarService",
+          "methods": [
+            "__init__",
+            "get_geolocations",
+            "get_top_domains"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 68
+        }
+      ],
+      "imports": [
+        {
+          "source": "src.cloudflare.client",
+          "specifiers": [
+            "CloudflareClient"
+          ]
+        },
+        {
+          "source": "src.cloudflare.schemas",
+          "specifiers": [
+            "GeolocationsResponse",
+            "RankingEntry",
+            "RankingResponse"
+          ]
+        },
+        {
+          "source": "src.config.constants",
+          "specifiers": [
+            "COUNTRY_CODES",
+            "RankingType"
+          ]
+        },
+        {
+          "source": "src.utils.logging",
+          "specifiers": [
+            "get_logger"
+          ]
+        }
+      ],
+      "exports": [
+        "RadarService"
+      ],
+      "totalLines": 86,
+      "hasStructuralAnalysis": true
+    },
+    "src/cloudflare/schemas.py": {
+      "filePath": "src/cloudflare/schemas.py",
+      "contentHash": "ccc80b002617f7e79a0aade6b4288a4c7493ee1c62971140a46d10625f53a785",
+      "functions": [],
+      "classes": [
+        {
+          "name": "GeoParent",
+          "methods": [],
+          "properties": [
+            "geo_id",
+            "name",
+            "type",
+            "code",
+            "locale"
+          ],
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "Geolocation",
+          "methods": [],
+          "properties": [
+            "geo_id",
+            "name",
+            "type",
+            "code",
+            "locale",
+            "latitude",
+            "longitude",
+            "parent"
+          ],
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "GeolocationsResult",
+          "methods": [],
+          "properties": [
+            "geolocations"
+          ],
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "GeolocationsResponse",
+          "methods": [],
+          "properties": [
+            "success",
+            "result"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "Category",
+          "methods": [],
+          "properties": [
+            "id",
+            "name",
+            "super_category_id"
+          ],
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "RankingEntry",
+          "methods": [],
+          "properties": [
+            "domain",
+            "rank",
+            "pct_rank_change",
+            "categories"
+          ],
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "MetaConfidenceInfo",
+          "methods": [],
+          "properties": [
+            "level"
+          ],
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "MetaDateRange",
+          "methods": [],
+          "properties": [
+            "start_time",
+            "end_time"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "MetaUnit",
+          "methods": [],
+          "properties": [
+            "name",
+            "value"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "RankingMeta",
+          "methods": [
+            "ensure_list"
+          ],
+          "properties": [
+            "confidence_info",
+            "date_range",
+            "last_updated",
+            "normalization",
+            "units"
+          ],
+          "exported": true,
+          "lineCount": 11
+        },
+        {
+          "name": "RankingResult",
+          "methods": [],
+          "properties": [
+            "meta",
+            "top_0"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "RankingResponse",
+          "methods": [],
+          "properties": [
+            "success",
+            "result"
+          ],
+          "exported": true,
+          "lineCount": 3
+        }
+      ],
+      "imports": [
+        {
+          "source": "pydantic",
+          "specifiers": [
+            "BaseModel",
+            "Field",
+            "field_validator"
+          ]
+        }
+      ],
+      "exports": [
+        "GeoParent",
+        "Geolocation",
+        "GeolocationsResult",
+        "GeolocationsResponse",
+        "Category",
+        "RankingEntry",
+        "MetaConfidenceInfo",
+        "MetaDateRange",
+        "MetaUnit",
+        "RankingMeta",
+        "RankingResult",
+        "RankingResponse"
+      ],
+      "totalLines": 80,
+      "hasStructuralAnalysis": true
+    },
+    "src/config/__init__.py": {
+      "filePath": "src/config/__init__.py",
+      "contentHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 1,
+      "hasStructuralAnalysis": true
+    },
+    "src/config/constants.py": {
+      "filePath": "src/config/constants.py",
+      "contentHash": "8260f87d566d8b9ba445be76eef891bc02378c393d628e61f8dbeccc85108eee",
+      "functions": [],
+      "classes": [
+        {
+          "name": "RankingType",
+          "methods": [],
+          "properties": [],
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "ReviewStatus",
+          "methods": [],
+          "properties": [],
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "CrawlRunStatus",
+          "methods": [],
+          "properties": [],
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "CrawlCountryStatus",
+          "methods": [],
+          "properties": [],
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "GitHubRepoReviewStatus",
+          "methods": [],
+          "properties": [],
+          "exported": true,
+          "lineCount": 6
+        }
+      ],
+      "imports": [
+        {
+          "source": "enum",
+          "specifiers": [
+            "StrEnum"
+          ]
+        }
+      ],
+      "exports": [
+        "RankingType",
+        "ReviewStatus",
+        "CrawlRunStatus",
+        "CrawlCountryStatus",
+        "GitHubRepoReviewStatus"
+      ],
+      "totalLines": 362,
+      "hasStructuralAnalysis": true
+    },
+    "src/config/settings.py": {
+      "filePath": "src/config/settings.py",
+      "contentHash": "d9bbf685051d08720ba82f21099447affffb96a20e7c6265939461ae4e5a7930",
+      "functions": [],
+      "classes": [
+        {
+          "name": "Settings",
+          "methods": [],
+          "properties": [
+            "cloudflare_api_token",
+            "supabase_url",
+            "supabase_anon_key",
+            "supabase_service_role_key",
+            "lmstudio_base_url",
+            "lmstudio_model",
+            "nvidia_api_key",
+            "github_token",
+            "app_timezone",
+            "log_level"
+          ],
+          "exported": true,
+          "lineCount": 57
+        }
+      ],
+      "imports": [
+        {
+          "source": "pydantic",
+          "specifiers": [
+            "Field"
+          ]
+        },
+        {
+          "source": "pydantic_settings",
+          "specifiers": [
+            "BaseSettings",
+            "SettingsConfigDict"
+          ]
+        }
+      ],
+      "exports": [
+        "Settings"
+      ],
+      "totalLines": 65,
+      "hasStructuralAnalysis": true
+    },
+    "src/crawler/__init__.py": {
+      "filePath": "src/crawler/__init__.py",
+      "contentHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 1,
+      "hasStructuralAnalysis": true
+    },
+    "src/crawler/orchestrator.py": {
+      "filePath": "src/crawler/orchestrator.py",
+      "contentHash": "0257071a45fefe73bc016bdc42498f55917fbef62ce2300794c58391c00eb554",
+      "functions": [
+        {
+          "name": "load_existing_domains",
+          "params": [],
+          "returnType": "dict[str, str]",
+          "exported": true,
+          "lineCount": 8
+        }
+      ],
+      "classes": [
+        {
+          "name": "CrawlOrchestrator",
+          "methods": [
+            "__init__",
+            "run",
+            "_process_country"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 318
+        }
+      ],
+      "imports": [
+        {
+          "source": "asyncio",
+          "specifiers": [
+            "asyncio"
+          ]
+        },
+        {
+          "source": "os",
+          "specifiers": [
+            "os"
+          ]
+        },
+        {
+          "source": "collections.abc",
+          "specifiers": [
+            "Callable"
+          ]
+        },
+        {
+          "source": "datetime",
+          "specifiers": [
+            "date"
+          ]
+        },
+        {
+          "source": "pathlib",
+          "specifiers": [
+            "Path"
+          ]
+        },
+        {
+          "source": "src.cloudflare.client",
+          "specifiers": [
+            "CloudflareClient"
+          ]
+        },
+        {
+          "source": "src.cloudflare.radar_service",
+          "specifiers": [
+            "RadarService"
+          ]
+        },
+        {
+          "source": "src.config.constants",
+          "specifiers": [
+            "CrawlRunStatus",
+            "RankingType"
+          ]
+        },
+        {
+          "source": "src.crawler.progress",
+          "specifiers": [
+            "get_or_create_today_run"
+          ]
+        },
+        {
+          "source": "src.db.async_client",
+          "specifiers": [
+            "get"
+          ]
+        },
+        {
+          "source": "src.db.repositories",
+          "specifiers": [
+            "CrawlCountryStatusRepository",
+            "CrawlRunRepository",
+            "DomainRepository",
+            "ObservationRepository"
+          ]
+        },
+        {
+          "source": "src.domains.dedupe",
+          "specifiers": [
+            "dedupe_and_insert"
+          ]
+        },
+        {
+          "source": "src.domains.scoring",
+          "specifiers": [
+            "score_observation"
+          ]
+        },
+        {
+          "source": "src.llm.lmstudio_client",
+          "specifiers": [
+            "LMStudioClient"
+          ]
+        },
+        {
+          "source": "src.utils.logging",
+          "specifiers": [
+            "get_logger"
+          ]
+        }
+      ],
+      "exports": [
+        "load_existing_domains",
+        "CrawlOrchestrator"
+      ],
+      "totalLines": 362,
+      "hasStructuralAnalysis": true
+    },
+    "src/crawler/progress.py": {
+      "filePath": "src/crawler/progress.py",
+      "contentHash": "ca75ff51981e68e6acc4f713066a10d5ba9fdf5649da1a0ee4768addb5c3884c",
+      "functions": [
+        {
+          "name": "get_or_create_today_run",
+          "params": [
+            "crawl_run_repo",
+            "country_status_repo",
+            "run_date"
+          ],
+          "returnType": "dict",
+          "exported": true,
+          "lineCount": 27
+        },
+        {
+          "name": "get_completed_countries",
+          "params": [
+            "country_status_repo",
+            "crawl_run_id"
+          ],
+          "returnType": "set[str]",
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "format_progress",
+          "params": [
+            "run"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 12
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "datetime",
+          "specifiers": [
+            "date"
+          ]
+        },
+        {
+          "source": "src.db.repositories",
+          "specifiers": [
+            "CrawlCountryStatusRepository",
+            "CrawlRunRepository"
+          ]
+        },
+        {
+          "source": "src.utils.logging",
+          "specifiers": [
+            "get_logger"
+          ]
+        }
+      ],
+      "exports": [
+        "get_or_create_today_run",
+        "get_completed_countries",
+        "format_progress"
+      ],
+      "totalLines": 61,
+      "hasStructuralAnalysis": true
+    },
+    "src/crawler/run_daily.py": {
+      "filePath": "src/crawler/run_daily.py",
+      "contentHash": "447967196595191bdf31e3cc7f2bfd62a9681eb5eb28e26f378bbc50cee9a9a6",
+      "functions": [
+        {
+          "name": "parse_args",
+          "params": [],
+          "returnType": "argparse.Namespace",
+          "exported": true,
+          "lineCount": 20
+        },
+        {
+          "name": "main",
+          "params": [],
+          "exported": true,
+          "lineCount": 37
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "argparse",
+          "specifiers": [
+            "argparse"
+          ]
+        },
+        {
+          "source": "asyncio",
+          "specifiers": [
+            "asyncio"
+          ]
+        },
+        {
+          "source": "sys",
+          "specifiers": [
+            "sys"
+          ]
+        },
+        {
+          "source": "datetime",
+          "specifiers": [
+            "date"
+          ]
+        },
+        {
+          "source": "src.cloudflare.client",
+          "specifiers": [
+            "CloudflareClient"
+          ]
+        },
+        {
+          "source": "src.crawler.orchestrator",
+          "specifiers": [
+            "CrawlOrchestrator"
+          ]
+        },
+        {
+          "source": "src.db.repositories",
+          "specifiers": [
+            "CrawlCountryStatusRepository",
+            "CrawlRunRepository",
+            "DomainRepository",
+            "ObservationRepository"
+          ]
+        },
+        {
+          "source": "src.llm.lmstudio_client",
+          "specifiers": [
+            "LMStudioClient"
+          ]
+        },
+        {
+          "source": "src.utils.logging",
+          "specifiers": [
+            "get_logger",
+            "setup_logging"
+          ]
+        }
+      ],
+      "exports": [
+        "parse_args",
+        "main"
+      ],
+      "totalLines": 89,
+      "hasStructuralAnalysis": true
+    },
+    "src/db/__init__.py": {
+      "filePath": "src/db/__init__.py",
+      "contentHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 1,
+      "hasStructuralAnalysis": true
+    },
+    "src/db/async_client.py": {
+      "filePath": "src/db/async_client.py",
+      "contentHash": "5bc981e796feb4c9eb57de66660f062fa0d048bff45793c5012c3e4ae80054cf",
+      "functions": [
+        {
+          "name": "post",
+          "params": [
+            "endpoint",
+            "json"
+          ],
+          "returnType": "dict",
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "get",
+          "params": [
+            "endpoint",
+            "params"
+          ],
+          "returnType": "dict",
+          "exported": true,
+          "lineCount": 8
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "httpx",
+          "specifiers": [
+            "httpx"
+          ]
+        },
+        {
+          "source": "src.config.settings",
+          "specifiers": [
+            "settings"
+          ]
+        }
+      ],
+      "exports": [
+        "post",
+        "get"
+      ],
+      "totalLines": 31,
+      "hasStructuralAnalysis": true
+    },
+    "src/db/queries.py": {
+      "filePath": "src/db/queries.py",
+      "contentHash": "31abbc5b143a00277b1df6d7242670604fdc9948f4cd5173ff88c66a642cda51",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 27,
+      "hasStructuralAnalysis": true
+    },
+    "src/db/repositories.py": {
+      "filePath": "src/db/repositories.py",
+      "contentHash": "ea80db898fb57cd45882a07aa45049da4b3f1e10e344510b33eb8b1cafc71ccf",
+      "functions": [
+        {
+          "name": "bulk_upsert_domains",
+          "params": [
+            "domains"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 10
+        },
+        {
+          "name": "bulk_insert_observations",
+          "params": [
+            "observations"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 10
+        }
+      ],
+      "classes": [
+        {
+          "name": "DomainRepository",
+          "methods": [
+            "__init__",
+            "upsert_domain",
+            "get_by_normalized_domain",
+            "update_review_status",
+            "update_llm_fields",
+            "update_opportunity_fields"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 93
+        },
+        {
+          "name": "ObservationRepository",
+          "methods": [
+            "__init__",
+            "insert_observation"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 41
+        },
+        {
+          "name": "CrawlRunRepository",
+          "methods": [
+            "__init__",
+            "create_run",
+            "update_progress",
+            "complete_run",
+            "get_today_run",
+            "get_run_by_id"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 87
+        },
+        {
+          "name": "CrawlCountryStatusRepository",
+          "methods": [
+            "__init__",
+            "get_country_statuses_for_run",
+            "upsert_country_status"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 44
+        },
+        {
+          "name": "CommentRepository",
+          "methods": [
+            "__init__",
+            "add_comment",
+            "get_comments"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 25
+        },
+        {
+          "name": "GitHubRepositoryRepository",
+          "methods": [
+            "__init__",
+            "create_crawl_run",
+            "complete_crawl_run",
+            "fail_crawl_run",
+            "get_existing_repo_ids",
+            "insert_repository",
+            "insert_repositories",
+            "update_repository",
+            "update_repositories",
+            "get_repository_identity_map",
+            "insert_observation",
+            "insert_observations",
+            "update_review_status",
+            "update_notes",
+            "mark_seen",
+            "mark_seen_many"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 217
+        }
+      ],
+      "imports": [
+        {
+          "source": "datetime",
+          "specifiers": [
+            "UTC",
+            "date",
+            "datetime"
+          ]
+        },
+        {
+          "source": "supabase",
+          "specifiers": [
+            "Client"
+          ]
+        },
+        {
+          "source": "src.config.constants",
+          "specifiers": [
+            "CrawlRunStatus",
+            "GitHubRepoReviewStatus",
+            "ReviewStatus"
+          ]
+        },
+        {
+          "source": "src.db.async_client",
+          "specifiers": [
+            "post"
+          ]
+        },
+        {
+          "source": "src.db.supabase_client",
+          "specifiers": [
+            "get_supabase_client"
+          ]
+        },
+        {
+          "source": "src.github_discovery.schemas",
+          "specifiers": [
+            "GitHubRepoSnapshot"
+          ]
+        },
+        {
+          "source": "src.utils.logging",
+          "specifiers": [
+            "get_logger"
+          ]
+        }
+      ],
+      "exports": [
+        "bulk_upsert_domains",
+        "bulk_insert_observations",
+        "DomainRepository",
+        "ObservationRepository",
+        "CrawlRunRepository",
+        "CrawlCountryStatusRepository",
+        "CommentRepository",
+        "GitHubRepositoryRepository"
+      ],
+      "totalLines": 561,
+      "hasStructuralAnalysis": true
+    },
+    "src/db/supabase_client.py": {
+      "filePath": "src/db/supabase_client.py",
+      "contentHash": "55988c0ee5f7496419463b0d7f6d452e35a8cbb65cea25e13c033d02943915f3",
+      "functions": [
+        {
+          "name": "get_supabase_client",
+          "params": [],
+          "returnType": "Client",
+          "exported": true,
+          "lineCount": 2
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "supabase",
+          "specifiers": [
+            "Client",
+            "create_client"
+          ]
+        },
+        {
+          "source": "src.config.settings",
+          "specifiers": [
+            "settings"
+          ]
+        }
+      ],
+      "exports": [
+        "get_supabase_client"
+      ],
+      "totalLines": 8,
+      "hasStructuralAnalysis": true
+    },
+    "src/domains/__init__.py": {
+      "filePath": "src/domains/__init__.py",
+      "contentHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 1,
+      "hasStructuralAnalysis": true
+    },
+    "src/domains/dedupe.py": {
+      "filePath": "src/domains/dedupe.py",
+      "contentHash": "95fd25e7fdf7c37fea478458519c6d85ea4615de4fcb846b8b4d4c62bf586306",
+      "functions": [
+        {
+          "name": "dedupe_and_insert",
+          "params": [
+            "domain_repo",
+            "observation_repo",
+            "raw_domain",
+            "crawl_run_id",
+            "observed_date",
+            "country_code",
+            "country_name",
+            "ranking_type",
+            "rank",
+            "pct_rank_change",
+            "categories",
+            "observation_score",
+            "raw_payload",
+            "existing_domains"
+          ],
+          "returnType": "DedupeResult",
+          "exported": true,
+          "lineCount": 77
+        }
+      ],
+      "classes": [
+        {
+          "name": "DedupeResult",
+          "methods": [],
+          "properties": [
+            "domain_id",
+            "is_new",
+            "normalized_domain"
+          ],
+          "exported": true,
+          "lineCount": 4
+        }
+      ],
+      "imports": [
+        {
+          "source": "dataclasses",
+          "specifiers": [
+            "dataclass"
+          ]
+        },
+        {
+          "source": "datetime",
+          "specifiers": [
+            "date",
+            "datetime"
+          ]
+        },
+        {
+          "source": "src.db.repositories",
+          "specifiers": [
+            "DomainRepository",
+            "ObservationRepository"
+          ]
+        },
+        {
+          "source": "src.domains.normalize",
+          "specifiers": [
+            "build_display_url",
+            "normalize_domain"
+          ]
+        },
+        {
+          "source": "src.utils.logging",
+          "specifiers": [
+            "get_logger"
+          ]
+        }
+      ],
+      "exports": [
+        "DedupeResult",
+        "dedupe_and_insert"
+      ],
+      "totalLines": 95,
+      "hasStructuralAnalysis": true
+    },
+    "src/domains/normalize.py": {
+      "filePath": "src/domains/normalize.py",
+      "contentHash": "1dade635fa3de8f26cfde947f1c78486e25a8276d635e22ac88bfe5010672849",
+      "functions": [
+        {
+          "name": "normalize_domain",
+          "params": [
+            "raw"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 32
+        },
+        {
+          "name": "build_display_url",
+          "params": [
+            "normalized"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "is_known_giant",
+          "params": [
+            "normalized"
+          ],
+          "returnType": "bool",
+          "exported": true,
+          "lineCount": 4
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "tldextract",
+          "specifiers": [
+            "tldextract"
+          ]
+        }
+      ],
+      "exports": [
+        "normalize_domain",
+        "build_display_url",
+        "is_known_giant"
+      ],
+      "totalLines": 49,
+      "hasStructuralAnalysis": true
+    },
+    "src/domains/scoring.py": {
+      "filePath": "src/domains/scoring.py",
+      "contentHash": "db84a63b757fb7cb1bab151cbd551478842911246d9cbc2a14f02ad5a640f426",
+      "functions": [
+        {
+          "name": "score_observation",
+          "params": [
+            "ranking_type",
+            "rank",
+            "pct_rank_change",
+            "countries_seen_today",
+            "llm_category",
+            "llm_idea_potential",
+            "first_seen_date",
+            "review_status",
+            "normalized_domain"
+          ],
+          "returnType": "ScoreBreakdown",
+          "exported": true,
+          "lineCount": 58
+        }
+      ],
+      "classes": [
+        {
+          "name": "ScoreBreakdown",
+          "methods": [
+            "total",
+            "details"
+          ],
+          "properties": [
+            "base",
+            "ranking_type",
+            "rank",
+            "pct_rank_change",
+            "multi_country",
+            "category",
+            "novelty",
+            "llm_potential",
+            "known_giant",
+            "already_reviewed"
+          ],
+          "exported": true,
+          "lineCount": 41
+        }
+      ],
+      "imports": [
+        {
+          "source": "dataclasses",
+          "specifiers": [
+            "dataclass"
+          ]
+        },
+        {
+          "source": "datetime",
+          "specifiers": [
+            "date"
+          ]
+        },
+        {
+          "source": "src.config.constants",
+          "specifiers": [
+            "ALREADY_REVIEWED_PENALTY",
+            "BASE_SCORE",
+            "CATEGORY_BONUS",
+            "KNOWN_GIANT_PENALTY",
+            "MULTI_COUNTRY_MAX",
+            "MULTI_COUNTRY_PER_COUNTRY",
+            "NOVELTY_FIRST_SEEN_TODAY",
+            "NOVELTY_FIRST_SEEN_WEEK",
+            "PCT_RANK_CHANGE_DIVISOR",
+            "PCT_RANK_CHANGE_MAX",
+            "RANK_BONUS_TIERS",
+            "RANKING_TYPE_BONUS"
+          ]
+        },
+        {
+          "source": "src.domains.normalize",
+          "specifiers": [
+            "is_known_giant"
+          ]
+        }
+      ],
+      "exports": [
+        "ScoreBreakdown",
+        "score_observation"
+      ],
+      "totalLines": 123,
+      "hasStructuralAnalysis": true
+    },
+    "src/github_discovery/__init__.py": {
+      "filePath": "src/github_discovery/__init__.py",
+      "contentHash": "3bc6c5df3c60a37568a3cd5004af5fab785c36aea63fd2e3240b225509674484",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 2,
+      "hasStructuralAnalysis": true
+    },
+    "src/github_discovery/client.py": {
+      "filePath": "src/github_discovery/client.py",
+      "contentHash": "cfe900331f9767a7ec2945cb2c31c8e1e7e043de04a5ea942a5b2dbbe406bdd1",
+      "functions": [],
+      "classes": [
+        {
+          "name": "GitHubAPIError",
+          "methods": [],
+          "properties": [],
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "GitHubRateLimitError",
+          "methods": [],
+          "properties": [],
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "GitHubSearchPage",
+          "methods": [],
+          "properties": [
+            "items",
+            "incomplete_results"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "GitHubSearchClient",
+          "methods": [
+            "__init__",
+            "fetch_topic_repositories",
+            "fetch_topic_page"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 71
+        }
+      ],
+      "imports": [
+        {
+          "source": "dataclasses",
+          "specifiers": [
+            "dataclass"
+          ]
+        },
+        {
+          "source": "httpx",
+          "specifiers": [
+            "httpx"
+          ]
+        },
+        {
+          "source": "src.config.settings",
+          "specifiers": [
+            "settings"
+          ]
+        },
+        {
+          "source": "src.github_discovery.schemas",
+          "specifiers": [
+            "GitHubRepoSnapshot"
+          ]
+        }
+      ],
+      "exports": [
+        "GitHubAPIError",
+        "GitHubRateLimitError",
+        "GitHubSearchPage",
+        "GitHubSearchClient"
+      ],
+      "totalLines": 102,
+      "hasStructuralAnalysis": true
+    },
+    "src/github_discovery/crawler.py": {
+      "filePath": "src/github_discovery/crawler.py",
+      "contentHash": "3e9238938c071eaa059722c419bc4180e8abdc2028005e171fb1693b4052bbb1",
+      "functions": [],
+      "classes": [
+        {
+          "name": "GitHubCrawlSummary",
+          "methods": [],
+          "properties": [
+            "run_id",
+            "status",
+            "fetched_count",
+            "new_count",
+            "baseline_count"
+          ],
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "GitHubOpencodeCrawler",
+          "methods": [
+            "__init__",
+            "run",
+            "_emit_progress",
+            "_repository_ids_from_rows",
+            "_build_observation_rows"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 138
+        }
+      ],
+      "imports": [
+        {
+          "source": "collections.abc",
+          "specifiers": [
+            "Callable"
+          ]
+        },
+        {
+          "source": "dataclasses",
+          "specifiers": [
+            "dataclass"
+          ]
+        },
+        {
+          "source": "src.db.repositories",
+          "specifiers": [
+            "GitHubRepositoryRepository"
+          ]
+        },
+        {
+          "source": "src.github_discovery.client",
+          "specifiers": [
+            "DEFAULT_TARGET_LIMIT",
+            "DEFAULT_TOPIC",
+            "GITHUB_TOPIC_SOURCE_URL",
+            "GitHubSearchClient"
+          ]
+        },
+        {
+          "source": "src.github_discovery.schemas",
+          "specifiers": [
+            "GitHubRepoSnapshot"
+          ]
+        },
+        {
+          "source": "src.utils.logging",
+          "specifiers": [
+            "get_logger"
+          ]
+        }
+      ],
+      "exports": [
+        "GitHubCrawlSummary",
+        "GitHubOpencodeCrawler"
+      ],
+      "totalLines": 161,
+      "hasStructuralAnalysis": true
+    },
+    "src/github_discovery/run_opencode.py": {
+      "filePath": "src/github_discovery/run_opencode.py",
+      "contentHash": "62925e7a89ae5d96527658d7d09a8d935fee290ba09db574b359e1015396a17a",
+      "functions": [
+        {
+          "name": "parse_args",
+          "params": [
+            "argv"
+          ],
+          "returnType": "argparse.Namespace",
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "cli",
+          "params": [
+            "argv"
+          ],
+          "returnType": "int",
+          "exported": true,
+          "lineCount": 19
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "argparse",
+          "specifiers": [
+            "argparse"
+          ]
+        },
+        {
+          "source": "src.github_discovery.client",
+          "specifiers": [
+            "DEFAULT_TARGET_LIMIT",
+            "DEFAULT_TOPIC",
+            "GITHUB_TOPIC_SOURCE_URL"
+          ]
+        },
+        {
+          "source": "src.github_discovery.crawler",
+          "specifiers": [
+            "GitHubOpencodeCrawler"
+          ]
+        }
+      ],
+      "exports": [
+        "parse_args",
+        "cli"
+      ],
+      "totalLines": 39,
+      "hasStructuralAnalysis": true
+    },
+    "src/github_discovery/schemas.py": {
+      "filePath": "src/github_discovery/schemas.py",
+      "contentHash": "a031e59017f3ccb62cc578ffbd3b58116dcfd48d378a351da1be631edc01f872",
+      "functions": [],
+      "classes": [
+        {
+          "name": "GitHubRepoSnapshot",
+          "methods": [
+            "from_api_item",
+            "repository_row"
+          ],
+          "properties": [
+            "github_repo_id",
+            "full_name",
+            "owner",
+            "repo_name",
+            "html_url",
+            "description",
+            "language",
+            "stargazers_count",
+            "forks_count",
+            "open_issues_count",
+            "pushed_at",
+            "updated_at",
+            "created_at"
+          ],
+          "exported": true,
+          "lineCount": 52
+        }
+      ],
+      "imports": [
+        {
+          "source": "dataclasses",
+          "specifiers": [
+            "dataclass"
+          ]
+        }
+      ],
+      "exports": [
+        "GitHubRepoSnapshot"
+      ],
+      "totalLines": 59,
+      "hasStructuralAnalysis": true
+    },
+    "src/integrations/__init__.py": {
+      "filePath": "src/integrations/__init__.py",
+      "contentHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 1,
+      "hasStructuralAnalysis": true
+    },
+    "src/integrations/github_actions.py": {
+      "filePath": "src/integrations/github_actions.py",
+      "contentHash": "3d85ae19dad19a72f4e8b042552222c6b8777e4ebd69c084456edfccd4f93cd5",
+      "functions": [
+        {
+          "name": "_read_secret",
+          "params": [
+            "name"
+          ],
+          "returnType": "str | None",
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "load_config",
+          "params": [],
+          "returnType": "WorkflowConfig",
+          "exported": true,
+          "lineCount": 15
+        },
+        {
+          "name": "_headers",
+          "params": [
+            "cfg"
+          ],
+          "returnType": "dict[str, str]",
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "trigger_workflow",
+          "params": [
+            "skip_domain",
+            "skip_github",
+            "skip_score",
+            "cfg"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 23
+        },
+        {
+          "name": "list_recent_runs",
+          "params": [
+            "limit",
+            "cfg"
+          ],
+          "returnType": "list[dict[str, Any]]",
+          "exported": true,
+          "lineCount": 28
+        }
+      ],
+      "classes": [
+        {
+          "name": "GitHubActionsError",
+          "methods": [],
+          "properties": [],
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "WorkflowConfig",
+          "methods": [
+            "runs_url",
+            "dispatch_url"
+          ],
+          "properties": [
+            "repo",
+            "token",
+            "workflow",
+            "ref"
+          ],
+          "exported": true,
+          "lineCount": 13
+        }
+      ],
+      "imports": [
+        {
+          "source": "os",
+          "specifiers": [
+            "os"
+          ]
+        },
+        {
+          "source": "dataclasses",
+          "specifiers": [
+            "dataclass"
+          ]
+        },
+        {
+          "source": "typing",
+          "specifiers": [
+            "Any"
+          ]
+        },
+        {
+          "source": "httpx",
+          "specifiers": [
+            "httpx"
+          ]
+        }
+      ],
+      "exports": [
+        "GitHubActionsError",
+        "_read_secret",
+        "WorkflowConfig",
+        "load_config",
+        "_headers",
+        "trigger_workflow",
+        "list_recent_runs"
+      ],
+      "totalLines": 136,
+      "hasStructuralAnalysis": true
+    },
+    "src/llm/__init__.py": {
+      "filePath": "src/llm/__init__.py",
+      "contentHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 1,
+      "hasStructuralAnalysis": true
+    },
+    "src/llm/lmstudio_client.py": {
+      "filePath": "src/llm/lmstudio_client.py",
+      "contentHash": "00477749e7fa688e26ec4fd42ea8bf379d26c753276ef70b94812c6d8305dfa2",
+      "functions": [
+        {
+          "name": "_is_retryable_lmstudio_error",
+          "params": [
+            "exc"
+          ],
+          "returnType": "bool",
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "_retry_after_seconds",
+          "params": [
+            "exc"
+          ],
+          "returnType": "float | None",
+          "exported": true,
+          "lineCount": 10
+        },
+        {
+          "name": "_strip_json_fence",
+          "params": [
+            "content"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 5
+        }
+      ],
+      "classes": [
+        {
+          "name": "LMStudioClient",
+          "methods": [
+            "__init__",
+            "_get_client",
+            "close",
+            "call",
+            "call_json_schema",
+            "__aenter__",
+            "__aexit__",
+            "_build_payload",
+            "_post",
+            "enrich",
+            "_parse_response"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 255
+        }
+      ],
+      "imports": [
+        {
+          "source": "asyncio",
+          "specifiers": [
+            "asyncio"
+          ]
+        },
+        {
+          "source": "json",
+          "specifiers": [
+            "json"
+          ]
+        },
+        {
+          "source": "typing",
+          "specifiers": [
+            "Any"
+          ]
+        },
+        {
+          "source": "httpx",
+          "specifiers": [
+            "httpx"
+          ]
+        },
+        {
+          "source": "pydantic",
+          "specifiers": [
+            "ValidationError"
+          ]
+        },
+        {
+          "source": "src.config.settings",
+          "specifiers": [
+            "settings"
+          ]
+        },
+        {
+          "source": "src.domains.normalize",
+          "specifiers": [
+            "is_known_giant"
+          ]
+        },
+        {
+          "source": "src.llm.prompts",
+          "specifiers": [
+            "SYSTEM_PROMPT",
+            "build_enrichment_prompt"
+          ]
+        },
+        {
+          "source": "src.llm.schemas",
+          "specifiers": [
+            "LLMEnrichmentResult"
+          ]
+        },
+        {
+          "source": "src.utils.logging",
+          "specifiers": [
+            "get_logger"
+          ]
+        }
+      ],
+      "exports": [
+        "_is_retryable_lmstudio_error",
+        "_retry_after_seconds",
+        "_strip_json_fence",
+        "LMStudioClient"
+      ],
+      "totalLines": 302,
+      "hasStructuralAnalysis": true
+    },
+    "src/llm/prompts.py": {
+      "filePath": "src/llm/prompts.py",
+      "contentHash": "a8df1963cfec23e8004f81211064efd4381d87bab30c5b59bb6c7dd2bb8f17b1",
+      "functions": [
+        {
+          "name": "build_enrichment_prompt",
+          "params": [
+            "domain",
+            "title",
+            "meta_description",
+            "categories",
+            "country_code",
+            "ranking_type",
+            "rank",
+            "pct_rank_change",
+            "homepage_snippet"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 47
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [
+        "build_enrichment_prompt"
+      ],
+      "totalLines": 64,
+      "hasStructuralAnalysis": true
+    },
+    "src/llm/schemas.py": {
+      "filePath": "src/llm/schemas.py",
+      "contentHash": "a0cb14b8d24b7a06593a92bbe774b2282cd1ffbb1728b3b42716c281ae2af12e",
+      "functions": [],
+      "classes": [
+        {
+          "name": "LLMEnrichmentResult",
+          "methods": [
+            "failed"
+          ],
+          "properties": [
+            "summary",
+            "category",
+            "business_model",
+            "target_users",
+            "localization_angle",
+            "risk_notes",
+            "novelty",
+            "idea_potential",
+            "confidence"
+          ],
+          "exported": true,
+          "lineCount": 24
+        }
+      ],
+      "imports": [
+        {
+          "source": "pydantic",
+          "specifiers": [
+            "BaseModel",
+            "Field"
+          ]
+        }
+      ],
+      "exports": [
+        "LLMEnrichmentResult"
+      ],
+      "totalLines": 61,
+      "hasStructuralAnalysis": true
+    },
+    "src/opportunity/__init__.py": {
+      "filePath": "src/opportunity/__init__.py",
+      "contentHash": "7c735601dfd8889a0c5838b729ae40a7719f30b21db126a80adc07b61620be17",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 2,
+      "hasStructuralAnalysis": true
+    },
+    "src/opportunity/constants.py": {
+      "filePath": "src/opportunity/constants.py",
+      "contentHash": "a57ba43accb311531f2c7f30bc763176a1eb876fdddac526d4e1901105343e70",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 12,
+      "hasStructuralAnalysis": true
+    },
+    "src/opportunity/prompt.py": {
+      "filePath": "src/opportunity/prompt.py",
+      "contentHash": "51b0088b132c69bdb954a30994d625efc006f9a8dc5ffc6630a2a9ee94a63ced",
+      "functions": [
+        {
+          "name": "build_opportunity_prompt",
+          "params": [
+            "domain",
+            "display_url",
+            "trend_score",
+            "countries_observed",
+            "ranking_types",
+            "best_rank",
+            "pct_rank_change",
+            "first_seen_at",
+            "existing_category",
+            "existing_summary",
+            "existing_llm_potential",
+            "review_status",
+            "romanian_signals",
+            "homepage_excerpt"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 149
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "typing",
+          "specifiers": [
+            "Optional"
+          ]
+        }
+      ],
+      "exports": [
+        "build_opportunity_prompt"
+      ],
+      "totalLines": 154,
+      "hasStructuralAnalysis": true
+    },
+    "src/opportunity/schemas.py": {
+      "filePath": "src/opportunity/schemas.py",
+      "contentHash": "fbba129c2f9c8be6f42f3247d80e7f640ecbc34db2a199cc145b382eabad9173",
+      "functions": [
+        {
+          "name": "_clean_text",
+          "params": [
+            "value",
+            "fallback",
+            "max_length"
+          ],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 11
+        }
+      ],
+      "classes": [
+        {
+          "name": "OpportunityScoreResult",
+          "methods": [
+            "llm_json_schema",
+            "normalize_opportunity_type",
+            "normalize_category",
+            "normalize_summary",
+            "normalize_adaptation",
+            "normalize_explanation",
+            "normalize_mvp",
+            "normalize_red_flags"
+          ],
+          "properties": [
+            "opportunity_score",
+            "confidence",
+            "is_global_giant",
+            "is_too_generic",
+            "romania_market_fit",
+            "local_gap",
+            "buildability",
+            "monetization_clarity",
+            "novelty",
+            "trend_relevance",
+            "competition_saturation",
+            "complexity",
+            "regulatory_risk",
+            "recommended_category",
+            "opportunity_type",
+            "one_sentence_summary",
+            "romania_adaptation_idea",
+            "why_it_scores_this_way",
+            "red_flags",
+            "suggested_mvp"
+          ],
+          "exported": true,
+          "lineCount": 118
+        }
+      ],
+      "imports": [
+        {
+          "source": "pydantic",
+          "specifiers": [
+            "BaseModel",
+            "Field",
+            "field_validator"
+          ]
+        }
+      ],
+      "exports": [
+        "_clean_text",
+        "OpportunityScoreResult"
+      ],
+      "totalLines": 145,
+      "hasStructuralAnalysis": true
+    },
+    "src/opportunity/scorer.py": {
+      "filePath": "src/opportunity/scorer.py",
+      "contentHash": "92b3beb91737f5ea6098725bc6bb98e6bade3cb4a65460f0c615e202e618d444",
+      "functions": [],
+      "classes": [
+        {
+          "name": "OpportunityScorer",
+          "methods": [
+            "__init__",
+            "close",
+            "_call_llm",
+            "score_domain"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 100
+        }
+      ],
+      "imports": [
+        {
+          "source": "asyncio",
+          "specifiers": [
+            "asyncio"
+          ]
+        },
+        {
+          "source": "logging",
+          "specifiers": [
+            "logging"
+          ]
+        },
+        {
+          "source": "typing",
+          "specifiers": [
+            "Any"
+          ]
+        },
+        {
+          "source": "pydantic",
+          "specifiers": [
+            "ValidationError"
+          ]
+        },
+        {
+          "source": "src.llm.lmstudio_client",
+          "specifiers": [
+            "LMStudioClient"
+          ]
+        },
+        {
+          "source": "src.opportunity.schemas",
+          "specifiers": [
+            "OpportunityScoreResult"
+          ]
+        }
+      ],
+      "exports": [
+        "OpportunityScorer"
+      ],
+      "totalLines": 115,
+      "hasStructuralAnalysis": true
+    },
+    "src/opportunity/update_opportunity_scores.py": {
+      "filePath": "src/opportunity/update_opportunity_scores.py",
+      "contentHash": "e889670ebb283b276b87863c768ea97f6a0edac3f19f1d525f3b26dd4f7f35c4",
+      "functions": [
+        {
+          "name": "utc_now_iso",
+          "params": [],
+          "returnType": "str",
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "_setup_logging",
+          "params": [],
+          "returnType": "logging.FileHandler",
+          "exported": true,
+          "lineCount": 19
+        },
+        {
+          "name": "_increment",
+          "params": [
+            "stats",
+            "key",
+            "amount"
+          ],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "_is_missing_status_column_error",
+          "params": [
+            "exc"
+          ],
+          "returnType": "bool",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "_update_opportunity_fields",
+          "params": [
+            "domain_repo",
+            "domain_id",
+            "update"
+          ],
+          "returnType": "dict",
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "is_known_global_giant",
+          "params": [
+            "domain"
+          ],
+          "returnType": "bool",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "apply_giant_cap",
+          "params": [
+            "domain",
+            "score"
+          ],
+          "returnType": "int",
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "fetch_homepage_excerpt",
+          "params": [
+            "url"
+          ],
+          "returnType": "str | None",
+          "exported": true,
+          "lineCount": 60
+        },
+        {
+          "name": "compute_trend_score",
+          "params": [
+            "observations"
+          ],
+          "returnType": "float",
+          "exported": true,
+          "lineCount": 20
+        },
+        {
+          "name": "get_domain_context",
+          "params": [
+            "domain_repo",
+            "observation_repo",
+            "domain_id",
+            "domain",
+            "display_url",
+            "review_status",
+            "existing_llm_summary",
+            "existing_llm_category",
+            "existing_llm_potential",
+            "first_seen_at"
+          ],
+          "returnType": "dict[str, Any]",
+          "exported": true,
+          "lineCount": 71
+        },
+        {
+          "name": "score_single_domain",
+          "params": [
+            "domain_repo",
+            "observation_repo",
+            "scorer",
+            "domain_row",
+            "fetch_homepage",
+            "dry_run",
+            "stats"
+          ],
+          "returnType": "dict[str, Any]",
+          "exported": true,
+          "lineCount": 104
+        },
+        {
+          "name": "update_opportunity_scores",
+          "params": [
+            "only_missing",
+            "limit",
+            "min_trend_score",
+            "dry_run",
+            "force",
+            "fetch_homepage",
+            "concurrency",
+            "llm_concurrency",
+            "model"
+          ],
+          "returnType": "int",
+          "exported": true,
+          "lineCount": 168
+        },
+        {
+          "name": "cli",
+          "params": [
+            "argv"
+          ],
+          "exported": true,
+          "lineCount": 47
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "argparse",
+          "specifiers": [
+            "argparse"
+          ]
+        },
+        {
+          "source": "asyncio",
+          "specifiers": [
+            "asyncio"
+          ]
+        },
+        {
+          "source": "logging",
+          "specifiers": [
+            "logging"
+          ]
+        },
+        {
+          "source": "datetime",
+          "specifiers": [
+            "UTC",
+            "datetime"
+          ]
+        },
+        {
+          "source": "pathlib",
+          "specifiers": [
+            "Path"
+          ]
+        },
+        {
+          "source": "typing",
+          "specifiers": [
+            "Any"
+          ]
+        },
+        {
+          "source": "httpx",
+          "specifiers": [
+            "httpx"
+          ]
+        },
+        {
+          "source": "src.config.settings",
+          "specifiers": [
+            "Settings"
+          ]
+        },
+        {
+          "source": "src.db.repositories",
+          "specifiers": [
+            "DomainRepository",
+            "ObservationRepository"
+          ]
+        },
+        {
+          "source": "src.opportunity.constants",
+          "specifiers": [
+            "KNOWN_GLOBAL_GIANTS"
+          ]
+        },
+        {
+          "source": "src.opportunity.scorer",
+          "specifiers": [
+            "OpportunityScorer"
+          ]
+        }
+      ],
+      "exports": [
+        "utc_now_iso",
+        "_setup_logging",
+        "_increment",
+        "_is_missing_status_column_error",
+        "_update_opportunity_fields",
+        "is_known_global_giant",
+        "apply_giant_cap",
+        "fetch_homepage_excerpt",
+        "compute_trend_score",
+        "get_domain_context",
+        "score_single_domain",
+        "update_opportunity_scores",
+        "cli"
+      ],
+      "totalLines": 612,
+      "hasStructuralAnalysis": true
+    },
+    "src/utils/__init__.py": {
+      "filePath": "src/utils/__init__.py",
+      "contentHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 1,
+      "hasStructuralAnalysis": true
+    },
+    "src/utils/logging.py": {
+      "filePath": "src/utils/logging.py",
+      "contentHash": "073278d46a3d2ebe44d18f27772db2498c28e62ba429474bc987288806ff6751",
+      "functions": [
+        {
+          "name": "setup_logging",
+          "params": [],
+          "returnType": "None",
+          "exported": true,
+          "lineCount": 24
+        },
+        {
+          "name": "get_logger",
+          "params": [
+            "name"
+          ],
+          "exported": true,
+          "lineCount": 2
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "sys",
+          "specifiers": [
+            "sys"
+          ]
+        },
+        {
+          "source": "loguru",
+          "specifiers": [
+            "logger"
+          ]
+        },
+        {
+          "source": "src.config.settings",
+          "specifiers": [
+            "settings"
+          ]
+        }
+      ],
+      "exports": [
+        "setup_logging",
+        "get_logger"
+      ],
+      "totalLines": 36,
+      "hasStructuralAnalysis": true
+    },
+    "start": {
+      "filePath": "start",
+      "contentHash": "1a9f8ba3ea5671db664af2ae13b57c435bdea795b96a917177d8264778b5e065",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 97,
+      "hasStructuralAnalysis": false
+    },
+    "start-git-crawl": {
+      "filePath": "start-git-crawl",
+      "contentHash": "bbd8861a5f97299051209f2ba78f0e18726c0a1eabab40b62ce1b2998218239f",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 50,
+      "hasStructuralAnalysis": false
+    },
+    "start-score": {
+      "filePath": "start-score",
+      "contentHash": "34bfe1ae61b8bcdffaf297cc990f633c5ce63fe84d6a9fb8f6cfa00cac9b9cad",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 71,
+      "hasStructuralAnalysis": false
+    },
+    "supabase/schemas/001_core.sql": {
+      "filePath": "supabase/schemas/001_core.sql",
+      "contentHash": "1792b7b0fd752662f3037e937f66b2925b35857c1e600a231aad7bbcb31a5b83",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 116,
+      "hasStructuralAnalysis": true
+    },
+    "supabase/schemas/002_views.sql": {
+      "filePath": "supabase/schemas/002_views.sql",
+      "contentHash": "fb53ffe44c43a0243156903b64a4931473ae78459ae9558dee1f5ec86acbce0f",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 349,
+      "hasStructuralAnalysis": true
+    },
+    "supabase/schemas/003_rls.sql": {
+      "filePath": "supabase/schemas/003_rls.sql",
+      "contentHash": "9726b064f746aa4f4a9f4d88bbceda885819056385d37d43adfa0834cfc0adb3",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 48,
+      "hasStructuralAnalysis": true
+    },
+    "supabase/schemas/004_opportunity_scores.sql": {
+      "filePath": "supabase/schemas/004_opportunity_scores.sql",
+      "contentHash": "7c2c6c1887cf7813ea2e33116db6fac7f75c9a0723bd492ee683d9f601d9dc86",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 20,
+      "hasStructuralAnalysis": true
+    },
+    "supabase/schemas/005_github_opencode.sql": {
+      "filePath": "supabase/schemas/005_github_opencode.sql",
+      "contentHash": "04b560c1c5d712646b4a841ae9279fb46d4dbf9c9f4569bd36cd8eef77af4abe",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 115,
+      "hasStructuralAnalysis": true
+    },
+    "supabase/schemas/006_optimize_domain_query.sql": {
+      "filePath": "supabase/schemas/006_optimize_domain_query.sql",
+      "contentHash": "171ee9b3802d7501b17570519f16edfbc127ebe592fa14c7f2f0a72e09bce00a",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 269,
+      "hasStructuralAnalysis": true
+    },
+    "supabase/schemas/007_allow_multiple_crawl_runs_per_day.sql": {
+      "filePath": "supabase/schemas/007_allow_multiple_crawl_runs_per_day.sql",
+      "contentHash": "7a881447a51a9518030ad18f2a6a1e201b56ad3644df8d975b87000e39d09503",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 9,
+      "hasStructuralAnalysis": true
+    },
+    "supabase/schemas/008_latest_crawl_run_views.sql": {
+      "filePath": "supabase/schemas/008_latest_crawl_run_views.sql",
+      "contentHash": "20fb4029752cdc4365f463cdb61d33d9c2e875aa23c6491a3a54f222cbe98d2b",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 61,
+      "hasStructuralAnalysis": true
+    },
+    "tests/__init__.py": {
+      "filePath": "tests/__init__.py",
+      "contentHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 1,
+      "hasStructuralAnalysis": true
+    },
+    "tests/opportunity/__init__.py": {
+      "filePath": "tests/opportunity/__init__.py",
+      "contentHash": "c274ad0cc9406188bce21ab4ca5db17f3a7493a42c9e091cf9acb9c7e7f1f22e",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 2,
+      "hasStructuralAnalysis": true
+    },
+    "tests/opportunity/test_command_args.py": {
+      "filePath": "tests/opportunity/test_command_args.py",
+      "contentHash": "4e08b228d6828ebf6f477ec424a9d5c88d6758852424591f38d9756b7c6b52f8",
+      "functions": [
+        {
+          "name": "test_cli_default_args",
+          "params": [
+            "monkeypatch"
+          ],
+          "exported": true,
+          "lineCount": 24
+        },
+        {
+          "name": "test_cli_all_flags",
+          "params": [
+            "monkeypatch"
+          ],
+          "exported": true,
+          "lineCount": 37
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "argparse",
+          "specifiers": [
+            "argparse"
+          ]
+        }
+      ],
+      "exports": [
+        "test_cli_default_args",
+        "test_cli_all_flags"
+      ],
+      "totalLines": 69,
+      "hasStructuralAnalysis": true
+    },
+    "tests/opportunity/test_guardrails.py": {
+      "filePath": "tests/opportunity/test_guardrails.py",
+      "contentHash": "954435a8984f37fd69916d345b4cd3b10e8a3a7edfc68cad8ee7407fb9cb7e61",
+      "functions": [
+        {
+          "name": "test_known_global_giants",
+          "params": [],
+          "exported": true,
+          "lineCount": 10
+        },
+        {
+          "name": "test_non_giants",
+          "params": [],
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "test_case_insensitive",
+          "params": [],
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "test_giant_cap_applies",
+          "params": [],
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "test_non_giant_unchanged",
+          "params": [],
+          "exported": true,
+          "lineCount": 4
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "src.opportunity.update_opportunity_scores",
+          "specifiers": [
+            "is_known_global_giant",
+            "apply_giant_cap"
+          ]
+        }
+      ],
+      "exports": [
+        "test_known_global_giants",
+        "test_non_giants",
+        "test_case_insensitive",
+        "test_giant_cap_applies",
+        "test_non_giant_unchanged"
+      ],
+      "totalLines": 44,
+      "hasStructuralAnalysis": true
+    },
+    "tests/opportunity/test_homepage_fetch.py": {
+      "filePath": "tests/opportunity/test_homepage_fetch.py",
+      "contentHash": "2db758999915eae24b2d94ec5c05057df54675cf4b66e89c5242cd8d8ec75946",
+      "functions": [
+        {
+          "name": "test_fetch_homepage_excerpt_from_html",
+          "params": [],
+          "exported": true,
+          "lineCount": 31
+        },
+        {
+          "name": "test_fetch_homepage_excerpt_on_failure",
+          "params": [],
+          "exported": true,
+          "lineCount": 12
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "pytest",
+          "specifiers": [
+            "pytest"
+          ]
+        },
+        {
+          "source": "unittest.mock",
+          "specifiers": [
+            "patch",
+            "AsyncMock"
+          ]
+        },
+        {
+          "source": "src.opportunity.update_opportunity_scores",
+          "specifiers": [
+            "fetch_homepage_excerpt"
+          ]
+        }
+      ],
+      "exports": [
+        "test_fetch_homepage_excerpt_from_html",
+        "test_fetch_homepage_excerpt_on_failure"
+      ],
+      "totalLines": 55,
+      "hasStructuralAnalysis": true
+    },
+    "tests/opportunity/test_prompt.py": {
+      "filePath": "tests/opportunity/test_prompt.py",
+      "contentHash": "80b146b0b32de5c601bcad5b6ebb18b0bae2fd39815cdefc7e85bea4c1fc7842",
+      "functions": [
+        {
+          "name": "test_prompt_includes_all_fields",
+          "params": [],
+          "exported": true,
+          "lineCount": 30
+        },
+        {
+          "name": "test_prompt_handles_none_values",
+          "params": [],
+          "exported": true,
+          "lineCount": 19
+        },
+        {
+          "name": "test_prompt_includes_homepage_excerpt",
+          "params": [],
+          "exported": true,
+          "lineCount": 20
+        },
+        {
+          "name": "test_prompt_includes_scoring_guidance",
+          "params": [],
+          "exported": true,
+          "lineCount": 22
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "src.opportunity.prompt",
+          "specifiers": [
+            "build_opportunity_prompt"
+          ]
+        }
+      ],
+      "exports": [
+        "test_prompt_includes_all_fields",
+        "test_prompt_handles_none_values",
+        "test_prompt_includes_homepage_excerpt",
+        "test_prompt_includes_scoring_guidance"
+      ],
+      "totalLines": 103,
+      "hasStructuralAnalysis": true
+    },
+    "tests/opportunity/test_schemas.py": {
+      "filePath": "tests/opportunity/test_schemas.py",
+      "contentHash": "e57e5f7e27335d10a4b6d8d2a2902f33c788b95318aa412007792ca15fa8228f",
+      "functions": [
+        {
+          "name": "test_valid_result",
+          "params": [],
+          "exported": true,
+          "lineCount": 27
+        },
+        {
+          "name": "test_score_bounds",
+          "params": [],
+          "exported": true,
+          "lineCount": 46
+        },
+        {
+          "name": "test_dimension_bounds",
+          "params": [],
+          "exported": true,
+          "lineCount": 46
+        },
+        {
+          "name": "test_invalid_opportunity_type",
+          "params": [],
+          "exported": true,
+          "lineCount": 24
+        },
+        {
+          "name": "test_all_valid_opportunity_types",
+          "params": [],
+          "exported": true,
+          "lineCount": 36
+        },
+        {
+          "name": "test_opportunity_type_normalization",
+          "params": [],
+          "exported": true,
+          "lineCount": 25
+        },
+        {
+          "name": "test_required_text_fields_normalize_nulls",
+          "params": [],
+          "exported": true,
+          "lineCount": 29
+        },
+        {
+          "name": "test_llm_json_schema_requires_all_fields",
+          "params": [],
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "test_empty_red_flags_allowed",
+          "params": [],
+          "exported": true,
+          "lineCount": 23
+        },
+        {
+          "name": "test_model_dump",
+          "params": [],
+          "exported": true,
+          "lineCount": 28
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "pytest",
+          "specifiers": [
+            "pytest"
+          ]
+        },
+        {
+          "source": "src.opportunity.schemas",
+          "specifiers": [
+            "OpportunityScoreResult"
+          ]
+        }
+      ],
+      "exports": [
+        "test_valid_result",
+        "test_score_bounds",
+        "test_dimension_bounds",
+        "test_invalid_opportunity_type",
+        "test_all_valid_opportunity_types",
+        "test_opportunity_type_normalization",
+        "test_required_text_fields_normalize_nulls",
+        "test_llm_json_schema_requires_all_fields",
+        "test_empty_red_flags_allowed",
+        "test_model_dump"
+      ],
+      "totalLines": 316,
+      "hasStructuralAnalysis": true
+    },
+    "tests/opportunity/test_scorer.py": {
+      "filePath": "tests/opportunity/test_scorer.py",
+      "contentHash": "a566a93e5de37121d3017c323f728d8c931a620425f117a93126757fe8da248d",
+      "functions": [
+        {
+          "name": "_valid_response",
+          "params": [
+            "**overrides"
+          ],
+          "exported": true,
+          "lineCount": 25
+        },
+        {
+          "name": "test_scorer_uses_json_schema_call",
+          "params": [
+            "monkeypatch"
+          ],
+          "exported": true,
+          "lineCount": 27
+        },
+        {
+          "name": "test_scorer_retries_validation_once",
+          "params": [
+            "monkeypatch"
+          ],
+          "exported": true,
+          "lineCount": 17
+        },
+        {
+          "name": "test_scorer_does_not_swallow_second_validation_failure",
+          "params": [
+            "monkeypatch"
+          ],
+          "exported": true,
+          "lineCount": 10
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "pytest",
+          "specifiers": [
+            "pytest"
+          ]
+        },
+        {
+          "source": "pydantic",
+          "specifiers": [
+            "ValidationError"
+          ]
+        },
+        {
+          "source": "src.opportunity.scorer",
+          "specifiers": [
+            "OpportunityScorer"
+          ]
+        }
+      ],
+      "exports": [
+        "_valid_response",
+        "test_scorer_uses_json_schema_call",
+        "test_scorer_retries_validation_once",
+        "test_scorer_does_not_swallow_second_validation_failure"
+      ],
+      "totalLines": 95,
+      "hasStructuralAnalysis": true
+    },
+    "tests/opportunity/test_update_opportunity_scores.py": {
+      "filePath": "tests/opportunity/test_update_opportunity_scores.py",
+      "contentHash": "f051842816ec239ddae0c1e3801af657ec4e76ff526df07e8cbe8ce3111aa961",
+      "functions": [
+        {
+          "name": "_valid_result",
+          "params": [
+            "**overrides"
+          ],
+          "exported": true,
+          "lineCount": 25
+        },
+        {
+          "name": "_patch_command_dependencies",
+          "params": [
+            "monkeypatch",
+            "tmp_path",
+            "query"
+          ],
+          "exported": true,
+          "lineCount": 10
+        },
+        {
+          "name": "test_update_opportunity_fields_falls_back_when_status_columns_are_missing",
+          "params": [],
+          "exported": true,
+          "lineCount": 22
+        },
+        {
+          "name": "test_only_missing_force_still_queries_missing_scores",
+          "params": [
+            "monkeypatch",
+            "tmp_path"
+          ],
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "test_only_missing_logs_force_hint_when_all_missing_rows_failed",
+          "params": [
+            "monkeypatch",
+            "tmp_path",
+            "caplog"
+          ],
+          "exported": true,
+          "lineCount": 14
+        },
+        {
+          "name": "test_score_single_domain_scores_without_homepage_when_fetch_misses",
+          "params": [
+            "monkeypatch"
+          ],
+          "exported": true,
+          "lineCount": 55
+        }
+      ],
+      "classes": [
+        {
+          "name": "FakeDomainRepo",
+          "methods": [
+            "__init__",
+            "update_opportunity_fields"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "FakeQuery",
+          "methods": [
+            "__init__",
+            "select",
+            "order",
+            "is_",
+            "gte",
+            "range",
+            "execute"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 24
+        },
+        {
+          "name": "FakeClient",
+          "methods": [
+            "__init__",
+            "table"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "FakeScorerForCommand",
+          "methods": [
+            "__init__",
+            "close"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 10
+        }
+      ],
+      "imports": [
+        {
+          "source": "logging",
+          "specifiers": [
+            "logging"
+          ]
+        },
+        {
+          "source": "types",
+          "specifiers": [
+            "SimpleNamespace"
+          ]
+        },
+        {
+          "source": "pytest",
+          "specifiers": [
+            "pytest"
+          ]
+        },
+        {
+          "source": "src.opportunity.update_opportunity_scores",
+          "specifiers": [
+            "update_module"
+          ]
+        },
+        {
+          "source": "src.opportunity.schemas",
+          "specifiers": [
+            "OpportunityScoreResult"
+          ]
+        },
+        {
+          "source": "src.opportunity.update_opportunity_scores",
+          "specifiers": [
+            "_update_opportunity_fields",
+            "score_single_domain",
+            "update_opportunity_scores"
+          ]
+        }
+      ],
+      "exports": [
+        "_valid_result",
+        "FakeDomainRepo",
+        "FakeQuery",
+        "FakeClient",
+        "FakeScorerForCommand",
+        "_patch_command_dependencies",
+        "test_update_opportunity_fields_falls_back_when_status_columns_are_missing",
+        "test_only_missing_force_still_queries_missing_scores",
+        "test_only_missing_logs_force_hint_when_all_missing_rows_failed",
+        "test_score_single_domain_scores_without_homepage_when_fetch_misses"
+      ],
+      "totalLines": 217,
+      "hasStructuralAnalysis": true
+    },
+    "tests/test_bulk_upsert.py": {
+      "filePath": "tests/test_bulk_upsert.py",
+      "contentHash": "8e5d7bcf0c363b6d159ca88c9351163ff270f98f625803ced379e924ab2d62d0",
+      "functions": [
+        {
+          "name": "test_bulk_upsert_domains_batch_calls",
+          "params": [
+            "monkeypatch"
+          ],
+          "exported": true,
+          "lineCount": 30
+        },
+        {
+          "name": "test_bulk_insert_observations_batch_calls",
+          "params": [
+            "monkeypatch"
+          ],
+          "exported": true,
+          "lineCount": 22
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "pytest",
+          "specifiers": [
+            "pytest"
+          ]
+        },
+        {
+          "source": "unittest.mock",
+          "specifiers": [
+            "AsyncMock"
+          ]
+        },
+        {
+          "source": "src.db",
+          "specifiers": [
+            "repositories"
+          ]
+        }
+      ],
+      "exports": [
+        "test_bulk_upsert_domains_batch_calls",
+        "test_bulk_insert_observations_batch_calls"
+      ],
+      "totalLines": 62,
+      "hasStructuralAnalysis": true
+    },
+    "tests/test_cloudflare_client.py": {
+      "filePath": "tests/test_cloudflare_client.py",
+      "contentHash": "41c61abb08f2557676e359c9f89784ae5e4c3f0c2f9bfc5fdcefca937a61f188",
+      "functions": [
+        {
+          "name": "_mock_response",
+          "params": [
+            "status_code",
+            "json_body",
+            "headers"
+          ],
+          "returnType": "httpx.Response",
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "mock_client",
+          "params": [],
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "test_client_sets_auth_header",
+          "params": [],
+          "exported": true,
+          "lineCount": 22
+        },
+        {
+          "name": "test_client_raises_on_4xx",
+          "params": [],
+          "exported": true,
+          "lineCount": 15
+        },
+        {
+          "name": "test_client_raises_on_429",
+          "params": [],
+          "exported": true,
+          "lineCount": 15
+        },
+        {
+          "name": "test_client_close",
+          "params": [],
+          "exported": true,
+          "lineCount": 3
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "json",
+          "specifiers": [
+            "json"
+          ]
+        },
+        {
+          "source": "httpx",
+          "specifiers": [
+            "httpx"
+          ]
+        },
+        {
+          "source": "pytest",
+          "specifiers": [
+            "pytest"
+          ]
+        },
+        {
+          "source": "src.cloudflare.client",
+          "specifiers": [
+            "CloudflareAPIError",
+            "CloudflareClient"
+          ]
+        }
+      ],
+      "exports": [
+        "_mock_response",
+        "mock_client",
+        "test_client_sets_auth_header",
+        "test_client_raises_on_4xx",
+        "test_client_raises_on_429",
+        "test_client_close"
+      ],
+      "totalLines": 88,
+      "hasStructuralAnalysis": true
+    },
+    "tests/test_cloudflare_radar_service.py": {
+      "filePath": "tests/test_cloudflare_radar_service.py",
+      "contentHash": "18a553ef96beb698194525de04fd9735cf7ec64d83e192364b70b25637212a31",
+      "functions": [
+        {
+          "name": "_mock_response",
+          "params": [
+            "status_code",
+            "json_body"
+          ],
+          "returnType": "httpx.Response",
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "geolocations_raw",
+          "params": [],
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "ranking_raw",
+          "params": [],
+          "exported": true,
+          "lineCount": 27
+        },
+        {
+          "name": "test_get_geolocations_filters_countries",
+          "params": [
+            "geolocations_raw"
+          ],
+          "exported": true,
+          "lineCount": 18
+        },
+        {
+          "name": "test_get_top_domains_returns_entries",
+          "params": [
+            "ranking_raw"
+          ],
+          "exported": true,
+          "lineCount": 20
+        },
+        {
+          "name": "test_get_top_domains_returns_empty_on_success_false",
+          "params": [],
+          "exported": true,
+          "lineCount": 18
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "json",
+          "specifiers": [
+            "json"
+          ]
+        },
+        {
+          "source": "httpx",
+          "specifiers": [
+            "httpx"
+          ]
+        },
+        {
+          "source": "pytest",
+          "specifiers": [
+            "pytest"
+          ]
+        },
+        {
+          "source": "src.cloudflare.client",
+          "specifiers": [
+            "CloudflareClient"
+          ]
+        },
+        {
+          "source": "src.cloudflare.radar_service",
+          "specifiers": [
+            "RadarService"
+          ]
+        },
+        {
+          "source": "src.config.constants",
+          "specifiers": [
+            "RankingType"
+          ]
+        }
+      ],
+      "exports": [
+        "_mock_response",
+        "geolocations_raw",
+        "ranking_raw",
+        "test_get_geolocations_filters_countries",
+        "test_get_top_domains_returns_entries",
+        "test_get_top_domains_returns_empty_on_success_false"
+      ],
+      "totalLines": 119,
+      "hasStructuralAnalysis": true
+    },
+    "tests/test_cloudflare_schemas.py": {
+      "filePath": "tests/test_cloudflare_schemas.py",
+      "contentHash": "eff0b882778cd524f2d009cd2e3e0efe8eb15a14aea4daefebb62c781a8717e4",
+      "functions": [
+        {
+          "name": "test_geolocations_response_parsing",
+          "params": [],
+          "exported": true,
+          "lineCount": 34
+        },
+        {
+          "name": "test_ranking_response_parsing",
+          "params": [],
+          "exported": true,
+          "lineCount": 35
+        },
+        {
+          "name": "test_ranking_response_empty_top",
+          "params": [],
+          "exported": true,
+          "lineCount": 18
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "src.cloudflare.schemas",
+          "specifiers": [
+            "GeolocationsResponse",
+            "RankingResponse"
+          ]
+        }
+      ],
+      "exports": [
+        "test_geolocations_response_parsing",
+        "test_ranking_response_parsing",
+        "test_ranking_response_empty_top"
+      ],
+      "totalLines": 98,
+      "hasStructuralAnalysis": true
+    },
+    "tests/test_constants.py": {
+      "filePath": "tests/test_constants.py",
+      "contentHash": "3bd7d67c3d2b637963b3884758b0e20c4f75c7842dc263817c94a7ebf9540451",
+      "functions": [
+        {
+          "name": "test_ranking_type_values",
+          "params": [],
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "test_review_status_values",
+          "params": [],
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "test_crawl_run_status_values",
+          "params": [],
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "test_crawl_country_status_values",
+          "params": [],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "test_known_giants_is_frozenset",
+          "params": [],
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "test_base_score",
+          "params": [],
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "test_ranking_type_bonus",
+          "params": [],
+          "exported": true,
+          "lineCount": 4
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "src.config.constants",
+          "specifiers": [
+            "BASE_SCORE",
+            "KNOWN_GIANTS",
+            "RANKING_TYPE_BONUS",
+            "CrawlCountryStatus",
+            "CrawlRunStatus",
+            "RankingType",
+            "ReviewStatus"
+          ]
+        }
+      ],
+      "exports": [
+        "test_ranking_type_values",
+        "test_review_status_values",
+        "test_crawl_run_status_values",
+        "test_crawl_country_status_values",
+        "test_known_giants_is_frozenset",
+        "test_base_score",
+        "test_ranking_type_bonus"
+      ],
+      "totalLines": 52,
+      "hasStructuralAnalysis": true
+    },
+    "tests/test_crawler.py": {
+      "filePath": "tests/test_crawler.py",
+      "contentHash": "2e71f9233223eff3ac8dffbab3a0fde52ae9569987a6fc85772fad9f106b2644",
+      "functions": [
+        {
+          "name": "test_orchestrator_runs_with_mocked_repos",
+          "params": [],
+          "exported": true,
+          "lineCount": 70
+        }
+      ],
+      "classes": [
+        {
+          "name": "TestFormatProgress",
+          "methods": [
+            "test_zero_total",
+            "test_partial_progress",
+            "test_completed"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 29
+        },
+        {
+          "name": "TestGetOrCreateTodayRun",
+          "methods": [
+            "test_creates_new_run_when_none_exists",
+            "test_resumes_existing_running_run",
+            "test_resumes_partial_run",
+            "test_creates_new_when_completed"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 58
+        }
+      ],
+      "imports": [
+        {
+          "source": "datetime",
+          "specifiers": [
+            "date"
+          ]
+        },
+        {
+          "source": "unittest.mock",
+          "specifiers": [
+            "AsyncMock",
+            "MagicMock",
+            "patch"
+          ]
+        },
+        {
+          "source": "pytest",
+          "specifiers": [
+            "pytest"
+          ]
+        },
+        {
+          "source": "src.crawler.orchestrator",
+          "specifiers": [
+            "CrawlOrchestrator"
+          ]
+        },
+        {
+          "source": "src.crawler.progress",
+          "specifiers": [
+            "format_progress",
+            "get_or_create_today_run"
+          ]
+        }
+      ],
+      "exports": [
+        "TestFormatProgress",
+        "TestGetOrCreateTodayRun",
+        "test_orchestrator_runs_with_mocked_repos"
+      ],
+      "totalLines": 172,
+      "hasStructuralAnalysis": true
+    },
+    "tests/test_data_loader.py": {
+      "filePath": "tests/test_data_loader.py",
+      "contentHash": "8fcd6b037346bf727a2dba3630cef8a32b8da45a40b2a6549266aa5eb3b522cc",
+      "functions": [
+        {
+          "name": "_mock_rpc_client",
+          "params": [
+            "rows"
+          ],
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "_collected_filters",
+          "params": [
+            "show_reviewed"
+          ],
+          "returnType": "dict",
+          "exported": true,
+          "lineCount": 14
+        },
+        {
+          "name": "test_load_collected_data_calls_range_rpc",
+          "params": [
+            "monkeypatch"
+          ],
+          "exported": true,
+          "lineCount": 63
+        },
+        {
+          "name": "test_load_collected_data_empty_response",
+          "params": [
+            "monkeypatch"
+          ],
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "test_load_today_data_keeps_legacy_dataframe_shape",
+          "params": [
+            "monkeypatch"
+          ],
+          "exported": true,
+          "lineCount": 16
+        },
+        {
+          "name": "test_filter_signature_changes_for_range_and_page_size",
+          "params": [],
+          "exported": true,
+          "lineCount": 20
+        },
+        {
+          "name": "test_pending_review_status_updates_hide_reviewed_rows_until_refetch",
+          "params": [],
+          "exported": true,
+          "lineCount": 16
+        },
+        {
+          "name": "test_collected_data_default_page_size_is_25",
+          "params": [
+            "monkeypatch"
+          ],
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "test_status_actions_register_pre_render_callbacks",
+          "params": [
+            "monkeypatch"
+          ],
+          "exported": true,
+          "lineCount": 22
+        },
+        {
+          "name": "test_domain_table_layout_places_status_buttons_second",
+          "params": [],
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "test_domain_table_css_widths_match_status_second_layout",
+          "params": [],
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "test_mobile_domain_table_keeps_status_buttons_visible",
+          "params": [],
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "test_status_change_queues_optimistic_update_for_streamlit_callback",
+          "params": [
+            "monkeypatch"
+          ],
+          "exported": true,
+          "lineCount": 17
+        },
+        {
+          "name": "test_persist_domain_status_change_clears_dashboard_caches",
+          "params": [
+            "monkeypatch"
+          ],
+          "exported": true,
+          "lineCount": 11
+        },
+        {
+          "name": "test_collected_data_render_prefers_snapshot_for_one_optimistic_refresh",
+          "params": [
+            "monkeypatch"
+          ],
+          "exported": true,
+          "lineCount": 36
+        },
+        {
+          "name": "test_collected_data_comments_prefers_snapshot_for_optimistic_refresh",
+          "params": [
+            "monkeypatch"
+          ],
+          "exported": true,
+          "lineCount": 22
+        },
+        {
+          "name": "test_collected_data_comments_loads_and_snapshots_normal_render",
+          "params": [
+            "monkeypatch"
+          ],
+          "exported": true,
+          "lineCount": 17
+        },
+        {
+          "name": "test_collected_data_refills_after_optimistic_page_clear",
+          "params": [
+            "monkeypatch"
+          ],
+          "exported": true,
+          "lineCount": 38
+        },
+        {
+          "name": "test_confirmed_review_status_updates_are_pruned",
+          "params": [],
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "test_mark_github_repos_seen_marks_visible_repository_ids",
+          "params": [
+            "monkeypatch"
+          ],
+          "exported": true,
+          "lineCount": 11
+        },
+        {
+          "name": "test_github_seen_column_is_first",
+          "params": [],
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "test_github_editor_state_seen_edits_mark_rows_immediately",
+          "params": [
+            "monkeypatch"
+          ],
+          "exported": true,
+          "lineCount": 11
+        },
+        {
+          "name": "test_status_filter_from_checkbox_values",
+          "params": [],
+          "exported": true,
+          "lineCount": 11
+        },
+        {
+          "name": "test_category_filter_from_multiselect_values",
+          "params": [],
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "test_default_date_range_uses_previous_and_current_month",
+          "params": [
+            "monkeypatch"
+          ],
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "test_session_date_range_defaults_to_previous_and_current_month",
+          "params": [
+            "monkeypatch"
+          ],
+          "exported": true,
+          "lineCount": 10
+        },
+        {
+          "name": "test_current_filter_values_defaults_for_collected_data_triage",
+          "params": [
+            "monkeypatch"
+          ],
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "test_range_rpc_newest_sort_uses_domain_first_seen_timestamp",
+          "params": [],
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "test_range_rpc_accepts_multiple_status_filters",
+          "params": [],
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "test_range_rpc_accepts_multiple_category_filters",
+          "params": [],
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "test_range_rpc_score_sort_has_fallback_for_unscored_observations",
+          "params": [],
+          "exported": true,
+          "lineCount": 7
+        }
+      ],
+      "classes": [
+        {
+          "name": "_FakeContext",
+          "methods": [
+            "__enter__",
+            "__exit__"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "_FakeStatusActionStreamlit",
+          "methods": [
+            "__init__",
+            "container",
+            "columns",
+            "button"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 15
+        },
+        {
+          "name": "_FakeSessionState",
+          "methods": [
+            "__getattr__",
+            "__setattr__"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 9
+        }
+      ],
+      "imports": [
+        {
+          "source": "datetime",
+          "specifiers": [
+            "date"
+          ]
+        },
+        {
+          "source": "pathlib",
+          "specifiers": [
+            "Path"
+          ]
+        },
+        {
+          "source": "unittest.mock",
+          "specifiers": [
+            "MagicMock"
+          ]
+        },
+        {
+          "source": "pandas",
+          "specifiers": [
+            "pd"
+          ]
+        },
+        {
+          "source": "app",
+          "specifiers": [
+            "data_loader",
+            "streamlit_app"
+          ]
+        },
+        {
+          "source": "app.components",
+          "specifiers": [
+            "domain_table",
+            "filters"
+          ]
+        }
+      ],
+      "exports": [
+        "_FakeContext",
+        "_FakeStatusActionStreamlit",
+        "_FakeSessionState",
+        "_mock_rpc_client",
+        "_collected_filters",
+        "test_load_collected_data_calls_range_rpc",
+        "test_load_collected_data_empty_response",
+        "test_load_today_data_keeps_legacy_dataframe_shape",
+        "test_filter_signature_changes_for_range_and_page_size",
+        "test_pending_review_status_updates_hide_reviewed_rows_until_refetch",
+        "test_collected_data_default_page_size_is_25",
+        "test_status_actions_register_pre_render_callbacks",
+        "test_domain_table_layout_places_status_buttons_second",
+        "test_domain_table_css_widths_match_status_second_layout",
+        "test_mobile_domain_table_keeps_status_buttons_visible",
+        "test_status_change_queues_optimistic_update_for_streamlit_callback",
+        "test_persist_domain_status_change_clears_dashboard_caches",
+        "test_collected_data_render_prefers_snapshot_for_one_optimistic_refresh",
+        "test_collected_data_comments_prefers_snapshot_for_optimistic_refresh",
+        "test_collected_data_comments_loads_and_snapshots_normal_render",
+        "test_collected_data_refills_after_optimistic_page_clear",
+        "test_confirmed_review_status_updates_are_pruned",
+        "test_mark_github_repos_seen_marks_visible_repository_ids",
+        "test_github_seen_column_is_first",
+        "test_github_editor_state_seen_edits_mark_rows_immediately",
+        "test_status_filter_from_checkbox_values",
+        "test_category_filter_from_multiselect_values",
+        "test_default_date_range_uses_previous_and_current_month",
+        "test_session_date_range_defaults_to_previous_and_current_month",
+        "test_current_filter_values_defaults_for_collected_data_triage",
+        "test_range_rpc_newest_sort_uses_domain_first_seen_timestamp",
+        "test_range_rpc_accepts_multiple_status_filters",
+        "test_range_rpc_accepts_multiple_category_filters",
+        "test_range_rpc_score_sort_has_fallback_for_unscored_observations"
+      ],
+      "totalLines": 537,
+      "hasStructuralAnalysis": true
+    },
+    "tests/test_db_repositories.py": {
+      "filePath": "tests/test_db_repositories.py",
+      "contentHash": "c10de3e683d0852e2cc1b9ae2bc449f84067894efc56f0610d75312700245fc0",
+      "functions": [
+        {
+          "name": "mock_client",
+          "params": [],
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "mock_response",
+          "params": [],
+          "exported": true,
+          "lineCount": 4
+        }
+      ],
+      "classes": [
+        {
+          "name": "TestDomainRepository",
+          "methods": [
+            "test_upsert_domain",
+            "test_get_by_normalized_domain_found",
+            "test_get_by_normalized_domain_not_found",
+            "test_update_review_status"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 38
+        },
+        {
+          "name": "TestObservationRepository",
+          "methods": [
+            "test_insert_observation"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 22
+        },
+        {
+          "name": "TestCrawlRunRepository",
+          "methods": [
+            "test_create_run",
+            "test_complete_run",
+            "test_get_today_run_found",
+            "test_get_today_run_not_found"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 52
+        },
+        {
+          "name": "TestCrawlCountryStatusRepository",
+          "methods": [
+            "test_upsert_country_status"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 17
+        },
+        {
+          "name": "TestGitHubRepositoryRepository",
+          "methods": [
+            "test_mark_seen_many_updates_visible_repository_ids"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 18
+        },
+        {
+          "name": "TestCommentRepository",
+          "methods": [
+            "test_add_comment",
+            "test_get_comments",
+            "test_get_comments_empty"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 36
+        }
+      ],
+      "imports": [
+        {
+          "source": "datetime",
+          "specifiers": [
+            "date"
+          ]
+        },
+        {
+          "source": "unittest.mock",
+          "specifiers": [
+            "MagicMock"
+          ]
+        },
+        {
+          "source": "pytest",
+          "specifiers": [
+            "pytest"
+          ]
+        },
+        {
+          "source": "src.config.constants",
+          "specifiers": [
+            "GitHubRepoReviewStatus",
+            "ReviewStatus"
+          ]
+        },
+        {
+          "source": "src.db.repositories",
+          "specifiers": [
+            "CommentRepository",
+            "CrawlCountryStatusRepository",
+            "CrawlRunRepository",
+            "DomainRepository",
+            "GitHubRepositoryRepository",
+            "ObservationRepository"
+          ]
+        }
+      ],
+      "exports": [
+        "mock_client",
+        "mock_response",
+        "TestDomainRepository",
+        "TestObservationRepository",
+        "TestCrawlRunRepository",
+        "TestCrawlCountryStatusRepository",
+        "TestGitHubRepositoryRepository",
+        "TestCommentRepository"
+      ],
+      "totalLines": 222,
+      "hasStructuralAnalysis": true
+    },
+    "tests/test_domain_dedupe.py": {
+      "filePath": "tests/test_domain_dedupe.py",
+      "contentHash": "17e8ff57310cbd8c1cbc5a517ac002b848c1e82a485a548e4384da08fb7c927a",
+      "functions": [
+        {
+          "name": "_mock_repo",
+          "params": [
+            "existing_domain"
+          ],
+          "exported": true,
+          "lineCount": 16
+        }
+      ],
+      "classes": [
+        {
+          "name": "TestDedupeAndInsert",
+          "methods": [
+            "test_new_domain_creates_domain_and_observation",
+            "test_existing_domain_skips_upsert_but_inserts_observation",
+            "test_same_domain_different_country_creates_new_observation"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 66
+        }
+      ],
+      "imports": [
+        {
+          "source": "datetime",
+          "specifiers": [
+            "date"
+          ]
+        },
+        {
+          "source": "unittest.mock",
+          "specifiers": [
+            "MagicMock"
+          ]
+        },
+        {
+          "source": "src.domains.dedupe",
+          "specifiers": [
+            "dedupe_and_insert"
+          ]
+        }
+      ],
+      "exports": [
+        "_mock_repo",
+        "TestDedupeAndInsert"
+      ],
+      "totalLines": 91,
+      "hasStructuralAnalysis": true
+    },
+    "tests/test_domain_normalize.py": {
+      "filePath": "tests/test_domain_normalize.py",
+      "contentHash": "f85ee40ea877f88cfb6ea7c9fc19016888b9115b89fe668b2e5d5579e2ab3c9e",
+      "functions": [],
+      "classes": [
+        {
+          "name": "TestNormalizeDomain",
+          "methods": [
+            "test_plain_domain",
+            "test_uppercase",
+            "test_with_https",
+            "test_with_http",
+            "test_with_www",
+            "test_with_path_and_query",
+            "test_with_subdomain",
+            "test_with_mobile_subdomain",
+            "test_co_uk_domain",
+            "test_com_br_domain",
+            "test_with_trailing_slash",
+            "test_with_whitespace",
+            "test_empty_string_raises",
+            "test_whitespace_only_raises",
+            "test_invalid_domain_raises"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 48
+        },
+        {
+          "name": "TestBuildDisplayUrl",
+          "methods": [
+            "test_adds_https",
+            "test_already_has_no_prefix"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "TestIsKnownGiant",
+          "methods": [
+            "test_google_is_giant",
+            "test_youtube_is_giant",
+            "test_random_domain_not_giant",
+            "test_case_sensitive_match"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 12
+        }
+      ],
+      "imports": [
+        {
+          "source": "pytest",
+          "specifiers": [
+            "pytest"
+          ]
+        },
+        {
+          "source": "src.domains.normalize",
+          "specifiers": [
+            "build_display_url",
+            "is_known_giant",
+            "normalize_domain"
+          ]
+        }
+      ],
+      "exports": [
+        "TestNormalizeDomain",
+        "TestBuildDisplayUrl",
+        "TestIsKnownGiant"
+      ],
+      "totalLines": 76,
+      "hasStructuralAnalysis": true
+    },
+    "tests/test_github_actions_integration.py": {
+      "filePath": "tests/test_github_actions_integration.py",
+      "contentHash": "cc5213bb28be16f36d1c65105c266958721f98ce5605a6ab9ff6faf2d5f4045a",
+      "functions": [
+        {
+          "name": "cfg",
+          "params": [],
+          "returnType": "ga.WorkflowConfig",
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "test_load_config_missing",
+          "params": [
+            "monkeypatch"
+          ],
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "test_load_config_from_env",
+          "params": [
+            "monkeypatch"
+          ],
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "test_trigger_workflow_posts_inputs",
+          "params": [
+            "monkeypatch",
+            "cfg"
+          ],
+          "exported": true,
+          "lineCount": 21
+        },
+        {
+          "name": "test_trigger_workflow_raises_on_error",
+          "params": [
+            "monkeypatch",
+            "cfg"
+          ],
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "test_list_recent_runs_summary",
+          "params": [
+            "monkeypatch",
+            "cfg"
+          ],
+          "exported": true,
+          "lineCount": 23
+        },
+        {
+          "name": "test_crawl_workflow_schedule_runs_pipeline_without_time_gate",
+          "params": [],
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "test_schedule_probe_workflow_is_lightweight_and_frequent",
+          "params": [],
+          "exported": true,
+          "lineCount": 7
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "json",
+          "specifiers": [
+            "json"
+          ]
+        },
+        {
+          "source": "pathlib",
+          "specifiers": [
+            "Path"
+          ]
+        },
+        {
+          "source": "httpx",
+          "specifiers": [
+            "httpx"
+          ]
+        },
+        {
+          "source": "pytest",
+          "specifiers": [
+            "pytest"
+          ]
+        },
+        {
+          "source": "src.integrations",
+          "specifiers": [
+            "ga"
+          ]
+        }
+      ],
+      "exports": [
+        "cfg",
+        "test_load_config_missing",
+        "test_load_config_from_env",
+        "test_trigger_workflow_posts_inputs",
+        "test_trigger_workflow_raises_on_error",
+        "test_list_recent_runs_summary",
+        "test_crawl_workflow_schedule_runs_pipeline_without_time_gate",
+        "test_schedule_probe_workflow_is_lightweight_and_frequent"
+      ],
+      "totalLines": 105,
+      "hasStructuralAnalysis": true
+    },
+    "tests/test_github_discovery.py": {
+      "filePath": "tests/test_github_discovery.py",
+      "contentHash": "fe54592718066712e6681e60a7e2c0f0ae0baed3c555bfac008f36e4d6140da1",
+      "functions": [
+        {
+          "name": "_repo",
+          "params": [
+            "repo_id",
+            "stars",
+            "forks"
+          ],
+          "returnType": "GitHubRepoSnapshot",
+          "exported": true,
+          "lineCount": 16
+        },
+        {
+          "name": "test_first_github_run_creates_baseline_and_no_new_repos",
+          "params": [],
+          "exported": true,
+          "lineCount": 15
+        },
+        {
+          "name": "test_second_github_run_with_same_repos_creates_no_new_repos",
+          "params": [],
+          "exported": true,
+          "lineCount": 13
+        },
+        {
+          "name": "test_second_github_run_marks_only_unseen_repo_as_new",
+          "params": [],
+          "exported": true,
+          "lineCount": 14
+        },
+        {
+          "name": "test_existing_github_repos_get_updated_counts",
+          "params": [],
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "test_failed_github_api_call_marks_run_failed",
+          "params": [],
+          "exported": true,
+          "lineCount": 11
+        },
+        {
+          "name": "test_github_crawler_reports_progress",
+          "params": [],
+          "exported": true,
+          "lineCount": 14
+        },
+        {
+          "name": "_api_item",
+          "params": [
+            "repo_id"
+          ],
+          "returnType": "dict",
+          "exported": true,
+          "lineCount": 17
+        },
+        {
+          "name": "test_github_client_stops_when_fewer_than_500_repos_are_available",
+          "params": [],
+          "exported": true,
+          "lineCount": 15
+        },
+        {
+          "name": "test_github_ui_query_excludes_baseline_repositories",
+          "params": [
+            "monkeypatch"
+          ],
+          "exported": true,
+          "lineCount": 24
+        }
+      ],
+      "classes": [
+        {
+          "name": "FakeSearchClient",
+          "methods": [
+            "__init__",
+            "fetch_topic_repositories"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "FakeGitHubRepository",
+          "methods": [
+            "__init__",
+            "create_crawl_run",
+            "get_existing_repo_ids",
+            "insert_repository",
+            "insert_repositories",
+            "update_repository",
+            "update_repositories",
+            "get_repository_identity_map",
+            "insert_observation",
+            "insert_observations",
+            "complete_crawl_run",
+            "fail_crawl_run"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 90
+        },
+        {
+          "name": "FakeHTTPClient",
+          "methods": [
+            "__init__",
+            "get",
+            "close"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 13
+        }
+      ],
+      "imports": [
+        {
+          "source": "httpx",
+          "specifiers": [
+            "httpx"
+          ]
+        },
+        {
+          "source": "pytest",
+          "specifiers": [
+            "pytest"
+          ]
+        },
+        {
+          "source": "app",
+          "specifiers": [
+            "data_loader"
+          ]
+        },
+        {
+          "source": "src.github_discovery.client",
+          "specifiers": [
+            "GitHubAPIError",
+            "GitHubSearchClient"
+          ]
+        },
+        {
+          "source": "src.github_discovery.crawler",
+          "specifiers": [
+            "GitHubOpencodeCrawler"
+          ]
+        },
+        {
+          "source": "src.github_discovery.schemas",
+          "specifiers": [
+            "GitHubRepoSnapshot"
+          ]
+        }
+      ],
+      "exports": [
+        "_repo",
+        "FakeSearchClient",
+        "FakeGitHubRepository",
+        "test_first_github_run_creates_baseline_and_no_new_repos",
+        "test_second_github_run_with_same_repos_creates_no_new_repos",
+        "test_second_github_run_marks_only_unseen_repo_as_new",
+        "test_existing_github_repos_get_updated_counts",
+        "test_failed_github_api_call_marks_run_failed",
+        "test_github_crawler_reports_progress",
+        "FakeHTTPClient",
+        "_api_item",
+        "test_github_client_stops_when_fewer_than_500_repos_are_available",
+        "test_github_ui_query_excludes_baseline_repositories"
+      ],
+      "totalLines": 299,
+      "hasStructuralAnalysis": true
+    },
+    "tests/test_llm_enrichment.py": {
+      "filePath": "tests/test_llm_enrichment.py",
+      "contentHash": "d56de3079509e81c838ad9c01d6622c3b8ffcd5b5edd4804b76c8b2516f91a4e",
+      "functions": [
+        {
+          "name": "_mock_response",
+          "params": [
+            "status_code",
+            "json_body"
+          ],
+          "returnType": "httpx.Response",
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "valid_llm_response",
+          "params": [],
+          "exported": true,
+          "lineCount": 22
+        },
+        {
+          "name": "test_enrich_returns_parsed_result",
+          "params": [
+            "valid_llm_response"
+          ],
+          "exported": true,
+          "lineCount": 22
+        },
+        {
+          "name": "test_enrich_returns_failed_on_http_error",
+          "params": [],
+          "exported": true,
+          "lineCount": 23
+        },
+        {
+          "name": "test_post_does_not_retry_non_transient_http_error",
+          "params": [],
+          "exported": true,
+          "lineCount": 17
+        },
+        {
+          "name": "test_post_retries_rate_limit_then_succeeds",
+          "params": [],
+          "exported": true,
+          "lineCount": 23
+        },
+        {
+          "name": "test_enrich_returns_failed_on_invalid_json",
+          "params": [],
+          "exported": true,
+          "lineCount": 17
+        },
+        {
+          "name": "test_enrich_returns_failed_on_validation_error",
+          "params": [],
+          "exported": true,
+          "lineCount": 40
+        },
+        {
+          "name": "test_enrich_strips_markdown_code_blocks",
+          "params": [],
+          "exported": true,
+          "lineCount": 32
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "json",
+          "specifiers": [
+            "json"
+          ]
+        },
+        {
+          "source": "httpx",
+          "specifiers": [
+            "httpx"
+          ]
+        },
+        {
+          "source": "pytest",
+          "specifiers": [
+            "pytest"
+          ]
+        },
+        {
+          "source": "src.llm.lmstudio_client",
+          "specifiers": [
+            "LMStudioClient"
+          ]
+        }
+      ],
+      "exports": [
+        "_mock_response",
+        "valid_llm_response",
+        "test_enrich_returns_parsed_result",
+        "test_enrich_returns_failed_on_http_error",
+        "test_post_does_not_retry_non_transient_http_error",
+        "test_post_retries_rate_limit_then_succeeds",
+        "test_enrich_returns_failed_on_invalid_json",
+        "test_enrich_returns_failed_on_validation_error",
+        "test_enrich_strips_markdown_code_blocks"
+      ],
+      "totalLines": 235,
+      "hasStructuralAnalysis": true
+    },
+    "tests/test_llm_prompts.py": {
+      "filePath": "tests/test_llm_prompts.py",
+      "contentHash": "a0ab987f1e13dce42bdc5a203a42442ed6bf77876e235c9de2c68ac38f953d94",
+      "functions": [
+        {
+          "name": "test_system_prompt_exists",
+          "params": [],
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "test_build_prompt_minimal",
+          "params": [],
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "test_build_prompt_with_all_fields",
+          "params": [],
+          "exported": true,
+          "lineCount": 22
+        },
+        {
+          "name": "test_build_prompt_truncates_snippet",
+          "params": [],
+          "exported": true,
+          "lineCount": 8
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "src.llm.prompts",
+          "specifiers": [
+            "SYSTEM_PROMPT",
+            "build_enrichment_prompt"
+          ]
+        }
+      ],
+      "exports": [
+        "test_system_prompt_exists",
+        "test_build_prompt_minimal",
+        "test_build_prompt_with_all_fields",
+        "test_build_prompt_truncates_snippet"
+      ],
+      "totalLines": 48,
+      "hasStructuralAnalysis": true
+    },
+    "tests/test_llm_schemas.py": {
+      "filePath": "tests/test_llm_schemas.py",
+      "contentHash": "bafb4ea98c629788d91da1b158ad54c3584f9ab87f118f72f32cc17a2b6e43c8",
+      "functions": [
+        {
+          "name": "test_valid_result",
+          "params": [],
+          "exported": true,
+          "lineCount": 15
+        },
+        {
+          "name": "test_failed_result",
+          "params": [],
+          "exported": true,
+          "lineCount": 10
+        },
+        {
+          "name": "test_invalid_score_too_low",
+          "params": [],
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "test_invalid_score_too_high",
+          "params": [],
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "test_empty_summary_rejected",
+          "params": [],
+          "exported": true,
+          "lineCount": 12
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "pytest",
+          "specifiers": [
+            "pytest"
+          ]
+        },
+        {
+          "source": "src.llm.schemas",
+          "specifiers": [
+            "LLMEnrichmentResult"
+          ]
+        }
+      ],
+      "exports": [
+        "test_valid_result",
+        "test_failed_result",
+        "test_invalid_score_too_low",
+        "test_invalid_score_too_high",
+        "test_empty_summary_rejected"
+      ],
+      "totalLines": 75,
+      "hasStructuralAnalysis": true
+    },
+    "tests/test_scoring.py": {
+      "filePath": "tests/test_scoring.py",
+      "contentHash": "4c59596e04e9bae018d9dd958b1cddf36d05821bf9f9e98b705c4e844ae71511",
+      "functions": [],
+      "classes": [
+        {
+          "name": "TestScoreBreakdown",
+          "methods": [
+            "test_total_is_sum_of_parts",
+            "test_details_returns_all_keys"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 21
+        },
+        {
+          "name": "TestScoreObservation",
+          "methods": [
+            "test_base_score",
+            "test_ranking_type_bonus_rise",
+            "test_ranking_type_bonus_steady",
+            "test_ranking_type_bonus_popular",
+            "test_rank_bonus_top_10",
+            "test_rank_bonus_11_to_25",
+            "test_rank_bonus_26_to_50",
+            "test_rank_bonus_51_to_100",
+            "test_rank_bonus_out_of_range",
+            "test_pct_rank_change_bonus",
+            "test_pct_rank_change_bonus_capped",
+            "test_pct_rank_change_none",
+            "test_multi_country_bonus",
+            "test_multi_country_bonus_capped",
+            "test_multi_country_single_country",
+            "test_category_bonus_ai",
+            "test_category_bonus_ecommerce",
+            "test_category_penalty_adult",
+            "test_category_unknown_zero",
+            "test_novelty_first_seen_today",
+            "test_novelty_first_seen_this_week",
+            "test_novelty_older_than_week",
+            "test_llm_potential_bonus",
+            "test_llm_potential_bonus_mid",
+            "test_llm_potential_minimum",
+            "test_known_giant_penalty",
+            "test_already_reviewed_penalty",
+            "test_pending_no_penalty",
+            "test_full_score_calculation"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 242
+        }
+      ],
+      "imports": [
+        {
+          "source": "datetime",
+          "specifiers": [
+            "date",
+            "timedelta"
+          ]
+        },
+        {
+          "source": "src.domains.scoring",
+          "specifiers": [
+            "ScoreBreakdown",
+            "score_observation"
+          ]
+        }
+      ],
+      "exports": [
+        "TestScoreBreakdown",
+        "TestScoreObservation"
+      ],
+      "totalLines": 271,
+      "hasStructuralAnalysis": true
+    },
+    "tests/test_settings.py": {
+      "filePath": "tests/test_settings.py",
+      "contentHash": "34992c43dde4f62e88ea8ec24342f29796e51da545ed9fff6f8383bf6d037421",
+      "functions": [
+        {
+          "name": "valid_env_vars",
+          "params": [
+            "monkeypatch"
+          ],
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "test_settings_loads_from_env",
+          "params": [
+            "valid_env_vars"
+          ],
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "test_settings_defaults",
+          "params": [
+            "valid_env_vars",
+            "monkeypatch"
+          ],
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "test_settings_missing_required",
+          "params": [
+            "monkeypatch"
+          ],
+          "exported": true,
+          "lineCount": 6
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "pytest",
+          "specifiers": [
+            "pytest"
+          ]
+        },
+        {
+          "source": "src.config.settings",
+          "specifiers": [
+            "Settings"
+          ]
+        }
+      ],
+      "exports": [
+        "valid_env_vars",
+        "test_settings_loads_from_env",
+        "test_settings_defaults",
+        "test_settings_missing_required"
+      ],
+      "totalLines": 36,
+      "hasStructuralAnalysis": true
+    },
+    "tests/test_supabase_schema.py": {
+      "filePath": "tests/test_supabase_schema.py",
+      "contentHash": "6b3fafcaf6e65b64669225faccfa80c5553bc31506fe8c2ce696dada10018231",
+      "functions": [
+        {
+          "name": "test_crawl_runs_run_date_allows_multiple_runs_per_day",
+          "params": [],
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "test_crawl_reporting_views_use_latest_run_for_date",
+          "params": [],
+          "exported": true,
+          "lineCount": 8
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "pathlib",
+          "specifiers": [
+            "Path"
+          ]
+        }
+      ],
+      "exports": [
+        "test_crawl_runs_run_date_allows_multiple_runs_per_day",
+        "test_crawl_reporting_views_use_latest_run_for_date"
+      ],
+      "totalLines": 21,
+      "hasStructuralAnalysis": true
+    },
+    "tests/test_ui_metrics.py": {
+      "filePath": "tests/test_ui_metrics.py",
+      "contentHash": "df8f979ee6c193ef4944beda73d9545104160bdb24d704681bd3a27bd617b85e",
+      "functions": [],
+      "classes": [
+        {
+          "name": "TestRenderProgressBar",
+          "methods": [
+            "test_zero_total_shows_no_crawl_message",
+            "test_partial_progress",
+            "test_full_progress"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 9
+        }
+      ],
+      "imports": [
+        {
+          "source": "app.components.metrics_cards",
+          "specifiers": [
+            "render_progress_bar"
+          ]
+        }
+      ],
+      "exports": [
+        "TestRenderProgressBar"
+      ],
+      "totalLines": 13,
+      "hasStructuralAnalysis": true
+    }
+  }
+}

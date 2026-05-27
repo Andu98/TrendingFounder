@@ -10,3 +10,8 @@ logs/
 
 # opencode local config (may contain API keys)
 opencode.json
+
+# Understand Anything local scratch files. Commit the graph JSON if sharing it.
+.understand-anything/intermediate/
+.understand-anything/tmp/
+.understand-anything/diff-overlay.json

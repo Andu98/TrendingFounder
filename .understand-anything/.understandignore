@@ -1,0 +1,62 @@
+# .understandignore — patterns for files/dirs to exclude from analysis
+# Syntax: same as .gitignore (globs, # comments, ! negation, trailing / for dirs)
+# Lines below are suggestions — uncomment to activate.
+# Use ! prefix to force-include something excluded by defaults.
+#
+# Built-in defaults (always excluded unless negated):
+#   node_modules/, .git/, dist/, build/, obj/, *.lock, *.min.js, etc.
+#
+# --- Project-specific exclusions ---
+
+# Secrets and local-only runtime configuration.
+.env
+.env.*
+!.env.example
+opencode.json
+
+# Streamlit secrets/runtime files; keep the checked-in server config.
+.streamlit/*
+!.streamlit/config.toml
+
+# Runtime outputs and local logs.
+logs/
+*.log
+*.out
+nohup.out
+scoring_final.log
+
+# Python caches, coverage reports, and packaging output.
+*.pyc
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+*.egg-info/
+
+# Local assistant/tooling state that is not part of the product architecture.
+.claude/
+.gemini/
+
+# Understand Anything outputs are shareable project artifacts, not source inputs.
+.understand-anything/*.json
+
+# Understand Anything scratch files.
+.understand-anything/intermediate/
+.understand-anything/tmp/
+.understand-anything/diff-overlay.json
+
+# OS/editor noise.
+.DS_Store
+
+# --- Detected directories (uncomment to exclude) ---
+
+# tests/
+# docs/
+
+# --- Test file patterns (uncomment to exclude) ---
+
+# *.test.*
+# *.spec.*
+# *.snap

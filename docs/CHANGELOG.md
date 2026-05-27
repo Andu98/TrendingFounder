@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [Unreleased]
 
 ### Added
+- `./start understand` launches the Understand Anything dashboard for this repo's `.understand-anything/knowledge-graph.json`, resolving the local plugin install and passing the required `GRAPH_DIR`.
 - `PRODUCT.md`, `DESIGN.md`, and `.impeccable/design.json` capture the product register, design principles, visual tokens, and component guardrails for future UI work.
 - `.github/workflows/crawl.yml` — `workflow_dispatch` workflow that installs deps with uv and runs `./start crawler` + `./start-git-crawl`, with `skip_domain`, `skip_github`, `skip_score` inputs. Uploads `logs/` as an artifact.
 - `.github/workflows/schedule-probe.yml` — temporary lightweight scheduled workflow that prints event/ref/time context every 15 minutes for debugging GitHub schedule delivery.
@@ -15,6 +16,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - `docs/streamlit-secrets.toml.example` documenting the GH_* secrets.
 
 ### Changed
+- Tightened Understand Anything ignore rules to keep source, tests, docs, schemas, and tracked design context in generated graphs while excluding local logs, secrets, Python caches, assistant/tooling state, generated graph JSON, and Understand Anything scratch files.
+- `.gitignore` now excludes Understand Anything scratch outputs (`intermediate/`, `tmp/`, and `diff-overlay.json`) while leaving the shareable graph JSON files commit-ready.
 - Restored the versioned `.streamlit/config.toml` server keepalive settings after Streamlit Cloud websocket timeout errors returned.
 - Moved the Streamlit secrets example to `docs/` and ignored non-config `.streamlit/` files to keep secrets/runtime files out of the tracked Streamlit directory.
 - Removed the local `nvidia-proxy.js` Node shim. `LMStudioClient` now sends `Authorization: Bearer $NVIDIA_API_KEY` directly to the OpenAI-compatible endpoint configured in `LMSTUDIO_BASE_URL` (default now `https://integrate.api.nvidia.com/v1`). `./start`, `./start-score`, and `./crawl` no longer launch a Node process.
